@@ -3,6 +3,7 @@ import java.util.Calendar;
 //TESTING2
 //testinggggg
 //This is the skeleton class specifying all attributes that each task should have
+//TAI YI IN THE HOUSE!!!
 public class TaskDetails {
 	
 	private int serialNum;
