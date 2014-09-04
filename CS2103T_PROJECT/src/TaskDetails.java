@@ -4,6 +4,7 @@ import java.util.Calendar;
 //testinggggg
 //This is the skeleton class specifying all attributes that each task should have
 //TAI YI IN THE HOUSE!!!
+//HUANG LI TESTING
 public class TaskDetails {
 	
 	private int serialNum;
