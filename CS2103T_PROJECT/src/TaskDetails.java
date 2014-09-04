@@ -94,4 +94,8 @@ public class TaskDetails {
 	{
 		return"[Serial: "+serialNum+" folder name:"+ this.getFolder()+ " Task:" +this.getTaskDescription()+ " Priority: "+this.getPriority()+ "Date of Entry" +getDateOfEntry().get(Calendar.DAY_OF_MONTH)+ " deadline "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+ "]";
 	}
+	
+	public String toString(String name){
+		return "TEsting for git";
+	}
 }
