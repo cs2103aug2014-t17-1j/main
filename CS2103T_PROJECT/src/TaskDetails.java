@@ -100,4 +100,8 @@ public class TaskDetails {
 	public String toString(String name){
 		return "TEsting for git";
 	}
+	
+	public static void aaron(){
+	
+	}
 }
