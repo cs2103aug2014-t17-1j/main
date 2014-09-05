@@ -1,9 +1,7 @@
 
 import java.util.Calendar;
-//TESTING2
-//testinggggg
-//This is the skeleton class specifying all attributes that each task should have
-//TAI YI IN THE HOUSE!!!
+
+//This is the skeleton class specifying all attributes that each task should have//TAI YI IN THE HOUSE!!!
 //HUANG LI TESTING
 public class TaskDetails {
 	
@@ -97,12 +95,5 @@ public class TaskDetails {
 		return"[Serial: "+serialNum+" folder name:"+ this.getFolder()+ " Task:" +this.getTaskDescription()+ " Priority: "+this.getPriority()+ "Date of Entry" +getDateOfEntry().get(Calendar.DAY_OF_MONTH)+ " deadline "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+ "]";
 	}
 	
-	public String toString(String name){
-		return "TEsting for git";
-	}
-	
-	public static void aaron(){
-		System.out.println("hihih");
-		System.out.println("ARRON");
-	}
+
 }
