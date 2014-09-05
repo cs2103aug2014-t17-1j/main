@@ -5,94 +5,66 @@ import java.util.Calendar;
 //HUANG LI TESTING
 public class TaskDetails {
 	
-	private int serialNum;
-	private String folder;
+	private String catogory;
 	private String taskDescription;  
 	private String priorityField;
-	private String details;
-	private Calendar dateOfEntry;
 	private Calendar deadLine;
-	private Calendar reminder;
+	private boolean isCompleted;
 
 
 
-	public TaskDetails(int serialNum,String folder,String taskDescription,String details,String priorityField,Calendar dateOfEntry,Calendar deadLine,Calendar reminder)
+	public TaskDetails(String catogory,String taskDescription,String priorityField,Calendar deadLine,boolean isCompleted)
 	{
-		setSerialNum(serialNum);
-		setFolder(folder);
+		setCatogory(catogory);
 		setEvent(taskDescription);
-		setDetails(details);
 		setPriority(priorityField);
-		setEntryDate(dateOfEntry);
 		setDeadLine(deadLine);
-		setReminder(reminder);
+		setStatus(isCompleted);
 	}
 
-
-	public int getSerialNum(){
-		return this.serialNum;
-	}
-	public String getFolder(){
-		return this.folder;
+	public String getCatogory(){
+		return this.catogory;
 	}
 	public String getTaskDescription(){
 		return this.taskDescription;
 	}
-	public String getDetails(){
-		return this.details;
-	}
 	public String getPriority(){
 		return this.priorityField;
-	}
-	public Calendar getDateOfEntry(){
-		return this.dateOfEntry;
 	}
 	public Calendar getDeadLine(){
 		return this.deadLine;
 	}
-	public Calendar getReminder(){
-		return this.reminder;
+	public boolean getStatus(){
+		return this.isCompleted;
 	}
 
 //*********************Mutators***************************
-	public void setSerialNum(int serialNum)
-	{
-		this.serialNum=serialNum;
-	}
-	public void setFolder(String folder){
-		this.folder = folder;
+
+	public void setCatogory(String catogory){
+		this.catogory = catogory;
 	}
 	public void setEvent(String taskDescription)
 	{
 		this.taskDescription = taskDescription;
 	}
-	public void setDetails(String details){
-		this.details = details;
-	}
 	public void setPriority(String priorityField)
 	{
 		this.priorityField = priorityField;
 	}
-
-	public void setEntryDate(Calendar dateOfEntry)
-	{
-		this.dateOfEntry=dateOfEntry;
-	}
-
 	public void setDeadLine(Calendar deadLine)
 	{
 		this.deadLine=deadLine;
 	}
 
-	public void setReminder(Calendar reminder)
+	public void setStatus(boolean isCompleted)
 	{
-		this.reminder=reminder;
+		this.isCompleted=isCompleted;
 	}
 
 
 	public String toString()
 	{
-		return"[Serial: "+serialNum+" folder name:"+ this.getFolder()+ " Task:" +this.getTaskDescription()+ " Priority: "+this.getPriority()+ "Date of Entry" +getDateOfEntry().get(Calendar.DAY_OF_MONTH)+ " deadline "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+ "]";
+		return"[Catogory: "+ this.getCatogory()+ " Task:" +this.getTaskDescription()+ " Priority: "+this.getPriority()+ "Deadline "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+ "Status: "+this.getStatus()+"]";
 	}
 	
 
