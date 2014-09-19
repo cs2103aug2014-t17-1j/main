@@ -15,7 +15,7 @@ public class Task {
 			boolean important, Calendar dueDate, Calendar startDate,
 			boolean completed) {
 		this.id = id;
-		this.catogory = catogory;
+		this.category = catogory;
 		this.description = description;
 		this.important = important;
 		this.dueDate = dueDate;
@@ -32,11 +32,11 @@ public class Task {
 	}
 
 	public String getCatogory() {
-		return catogory;
+		return category;
 	}
 
 	public void setCatogory(String catogory) {
-		this.catogory = catogory;
+		this.category = catogory;
 	}
 
 	public String getDescription() {
