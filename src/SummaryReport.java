@@ -4,31 +4,35 @@ import java.util.ArrayList;
  * @author Paing Zin Oo(Jack)
  */
 public class SummaryReport {
-	private String feedBackMsg;
-	private String header;
-	private ArrayList<Task> dsiplayList;
 	
-	public String getFeedBackMsg() {
+	private static String feedBackMsg;
+	private static String header;
+	private static ArrayList<Task> displayList;
+	
+	public static String getFeedBackMsg() {
 		return feedBackMsg;
 	}
-	public void setFeedBackMsg(String feedBackMsg) {
-		this.feedBackMsg = feedBackMsg;
+	public static void setFeedBackMsg(String feedBackMsg) {
+		SummaryReport.feedBackMsg = feedBackMsg;
 	}
-	public String getHeader() {
+	public static String getHeader() {
 		return header;
 	}
-	public void setHeader(String header) {
-		this.header = header;
+	public static void setHeader(String header) {
+		SummaryReport.header = header;
 	}
-	public ArrayList<Task> getDsiplayList() {
-		return dsiplayList;
+	public static ArrayList<Task> getDsiplayList() {
+		return displayList;
 	}
-	public void setDsiplayList(ArrayList<Task> dsiplayList) {
-		this.dsiplayList = dsiplayList;
+	public static void setDsiplayList(ArrayList<Task> dsiplayList) {
+		SummaryReport.displayList = dsiplayList;
 	}
 	
+	public static int getTaskId(int id){
+		return displayList.get(id-1).getId();
+	}
 	
-	
-	
-
+	public static void sortByDueDate(){
+		
+	}
 }
