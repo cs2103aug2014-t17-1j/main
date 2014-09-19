@@ -1,7 +1,7 @@
 import java.util.Calendar;
 
 //This is the skeleton class specifying all attributes that each task should have
-public class Task {
+public class Task implements Comparable<Task>{
 	//test
 	private int id;
 	private String category;
@@ -85,6 +85,12 @@ public class Task {
 		// "dueDate "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+
 		// "Status: "+this.getStatus()+"]";
 		return "test string";
+	}
+
+	@Override
+	public int compareTo(Task task) {
+		
+		return 0;
 	}
 
 }
