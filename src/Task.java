@@ -4,7 +4,7 @@ import java.util.Calendar;
 public class Task {
 	//test
 	private int id;
-	private String catogory;
+	private String category;
 	private String description;
 	private boolean important;
 	private Calendar dueDate;
@@ -14,7 +14,6 @@ public class Task {
 	public Task(int id, String catogory, String description,
 			boolean important, Calendar dueDate, Calendar startDate,
 			boolean completed) {
-		super();
 		this.id = id;
 		this.catogory = catogory;
 		this.description = description;
