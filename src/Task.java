@@ -12,6 +12,7 @@ public class Task implements Comparable<Task>{
 	private boolean completed;
 	
 	
+	@SuppressWarnings("null")
 	public Task() {
 		this.id = (Integer) null;
 		this.category = null;
