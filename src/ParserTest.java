@@ -7,7 +7,8 @@ public class ParserTest {
 
 	@Test
 	public void test() {
-		Parser.parserInit();
+		Parser.parseString("add [Test command parameter] due 15th oct");
+		
 	}
 
 }

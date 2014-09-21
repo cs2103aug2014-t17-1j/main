@@ -1,19 +1,36 @@
 
 public class Parser {
 	
+	private static final int PARAM_STARTING_INDEX = 1;
+
 	public static void parserInit() {
-		parseString("add 123");
+		
 	}
 	
 	public static void parseString(String input) {
+		
 		String commandWord = getCommandWord(input);
 		CommandType command = identifyCommand(commandWord.toLowerCase());
 		String remainingInput = removeCommandWord(input, command);
 		
+		String commandParam = getParam(remainingInput);
+		remainingInput = removeParam(remainingInput);
+		
 		System.out.println(commandWord);
+		System.out.println(commandParam);
 		System.out.println(remainingInput);
 	}
-	
+
+	private static String removeParam(String remainingInput) {
+		int indexEndOfParam = remainingInput.indexOf(']');
+		
+		//Adjust index to take substring after ']'
+		indexEndOfParam++;
+		remainingInput = remainingInput.substring(indexEndOfParam);
+		
+		return remainingInput.trim();
+	}
+
 	private static String getCommandWord(String input) {
 		String[] splittedCommand = input.split(" ");
 		
@@ -66,5 +83,11 @@ public class Parser {
 		}
 		
 		return ""; //by default return nothing
+	}
+	
+	private static String getParam(String remainingInput) {
+		int indexEndOfParam = remainingInput.indexOf(']');
+		
+		return remainingInput.substring(PARAM_STARTING_INDEX, indexEndOfParam);
 	}
 }
