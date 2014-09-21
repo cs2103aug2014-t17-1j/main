@@ -10,7 +10,18 @@ public class Task implements Comparable<Task>{
 	private Calendar dueDate;
 	private Calendar startDate;
 	private boolean completed;
-
+	
+	
+	public Task() {
+		this.id = (Integer) null;
+		this.category = null;
+		this.description = null;
+		this.important = (Boolean) null;
+		this.dueDate = null;
+		this.startDate = null;
+		this.completed = (Boolean) null;
+	}
+	
 	public Task(int id, String catogory, String description,
 			boolean important, Calendar dueDate, Calendar startDate,
 			boolean completed) {

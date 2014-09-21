@@ -1,0 +1,4 @@
+
+public enum CommandType {
+	ADD,DELETE,DISPLAY,SEARCH,INIT,EDIT,UNDO,SAVE,INVALID
+}
