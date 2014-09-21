@@ -2,13 +2,16 @@
 public class Parser {
 	
 	private static final int PARAM_STARTING_INDEX = 1;
-
+	
+	enum OptionalCommand {
+		DUE, FROM, TO, CATEGORY, IMPT, INVALID
+	}
 	public static void parserInit() {
 		
 	}
 	
 	public static void parseString(String input) {
-		
+		resetParsedResult();
 		String commandWord = getCommandWord(input);
 		CommandType command = identifyCommand(commandWord.toLowerCase());
 		String remainingInput = removeCommandWord(input, command);
@@ -16,9 +19,95 @@ public class Parser {
 		String commandParam = getParam(remainingInput);
 		remainingInput = removeParam(remainingInput);
 		
+		updateParsedResult(command,commandParam);
+
+		while(remainingInput.isEmpty() == false) {
+			remainingInput = identifyOptionalCommandAndUpdate(remainingInput);
+		}
 		System.out.println(commandWord);
 		System.out.println(commandParam);
 		System.out.println(remainingInput);
+	}
+
+	private static String identifyOptionalCommandAndUpdate(String remainingInput) {
+		String commandWord = getCommandWord(remainingInput);
+		
+		OptionalCommand command = identifyOptionalCommand(commandWord.toLowerCase());
+		remainingInput = removeOptionalCommand(remainingInput, command);
+		String commandParam = getParam(remainingInput);
+		optionsUpdateParsedResult(command,commandParam);
+		
+		remainingInput = removeParam(remainingInput);
+		return remainingInput;
+	}
+
+	private static void optionsUpdateParsedResult(OptionalCommand command,
+			String commandParam) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private static String removeOptionalCommand(String remainingInput,
+			OptionalCommand commandWord) {
+		
+		switch(commandWord) {
+		
+			case DUE:
+				return remainingInput.substring(4); //Length of word "due "
+				
+			case FROM:
+				return remainingInput.substring(5);
+				
+			case TO:
+				return remainingInput.substring(3);
+				
+			case IMPT:
+				return remainingInput.substring(5);
+			
+			case INVALID:
+				return "INVALID!";
+				
+			default:
+				return "";
+		}
+	}
+
+	private static OptionalCommand identifyOptionalCommand(String commandWord) {
+		
+		switch(commandWord) {
+			
+			case "due":
+				return OptionalCommand.DUE;
+			
+			case "from":
+				return OptionalCommand.FROM;
+			
+			case "to":
+				return OptionalCommand.TO;
+				
+			case "category":
+				return OptionalCommand.CATEGORY;
+				
+			case "impt":
+				return OptionalCommand.IMPT;
+				
+			default:
+				return OptionalCommand.INVALID;
+		}
+		
+	}
+
+	private static void updateParsedResult(CommandType command,
+			String commandParam) {
+		ParsedResult.setCommandType(command);
+		Task task = ParsedResult.getTaskDetails();
+		task.setDescription(commandParam);
+		//Need to set endDueDate with some constant(No deadline)
+	}
+
+	private static void resetParsedResult() {
+		ParsedResult.clear();
+		
 	}
 
 	private static String removeParam(String remainingInput) {
@@ -80,9 +169,15 @@ public class Parser {
 		
 		case EDIT:
 			return input.substring(5);
+			
+		case INVALID:
+			return "INVALID!";
+			
+		default:
+			return "";
+			
 		}
 		
-		return ""; //by default return nothing
 	}
 	
 	private static String getParam(String remainingInput) {
