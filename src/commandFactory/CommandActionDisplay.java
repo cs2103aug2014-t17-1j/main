@@ -1,7 +1,7 @@
 package commandFactory;
 
 
-public class DisplayCommandAction implements CommandAction{
+public class CommandActionDisplay implements CommandAction{
 	@Override
 	public void execute(){
 		System.out.println("display task list");

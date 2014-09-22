@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import taskDo.Task;
 
 
-public class AddCommandAction implements CommandAction{
+public class CommandActionAdd implements CommandAction{
 	@Override
 	public void execute(){
 		ArrayList<Object> task = new ArrayList<Object>();
