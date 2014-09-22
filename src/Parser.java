@@ -107,7 +107,6 @@ public class Parser {
 
 	private static void resetParsedResult() {
 		ParsedResult.clear();
-		
 	}
 
 	private static String removeParam(String remainingInput) {
@@ -183,6 +182,8 @@ public class Parser {
 	private static String getParam(String remainingInput) {
 		int indexEndOfParam = remainingInput.indexOf(']');
 		
-		return remainingInput.substring(PARAM_STARTING_INDEX, indexEndOfParam);
+		remainingInput = remainingInput.substring(PARAM_STARTING_INDEX, indexEndOfParam);
+		
+		return remainingInput.trim();
 	}
 }

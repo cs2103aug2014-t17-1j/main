@@ -6,6 +6,13 @@ public class ParsedResult {
 	private static Task task;
 	private static SearchType searchMode;
 	
+	private ParsedResult() {
+		parsedCommand = null;
+		task = new Task();
+		searchMode = null;
+	}
+	
+	
 	//constructor
 /*	public ParsedResults() {
 		parsedCommand = null;
@@ -62,7 +69,7 @@ public class ParsedResult {
 	
 	public static void clear() {
 		parsedCommand = null;
-		//task = new Task();
+		task = new Task();
 		searchMode = null;
 	}
 }
