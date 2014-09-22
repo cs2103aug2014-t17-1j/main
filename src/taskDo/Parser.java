@@ -48,7 +48,30 @@ public class Parser {
 	private static void optionsUpdateParsedResult(OptionalCommand command,
 			String commandParam) {
 		
+		switch(command) {
 		
+			case DUE:
+				//do sth
+				break;
+				
+			case FROM:
+				//do sth
+				break;
+				
+			case TO:
+				//do sth
+				break;
+				
+			case CATEGORY:
+				//do sth
+				break;
+				
+			case INVALID:
+				//do sth
+				break;
+				
+			default:// do nothing
+		}
 	}
 
 	private static String removeOptionalCommand(String remainingInput,
