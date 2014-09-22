@@ -105,11 +105,11 @@ public class Task implements Comparable<Task>{
 	}
 
 	public String toString() {
-		// return"[Catogory: "+ this.getCatogory()+ " Task:"
-		// +this.getTaskDescription()+ " Priority: "+this.getPriority()+
-		// "dueDate "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+
-		// "Status: "+this.getStatus()+"]";
-		return "test string";
+		 return "ID" + this.id + "[Catogory: "+ this.getCatogory()+ " Task:"
+		 +this.getDescription();
+//		 + " Priority: "+this.getPriority()+
+//		 "dueDate "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+
+//		 "Status: "+this.getStatus()+"]";
 	}
 
 	@Override
@@ -118,7 +118,5 @@ public class Task implements Comparable<Task>{
 			 return -1;
 		 }
 		 return getDueDate().compareTo(task.getDueDate());
-		
 	}
-
 }
