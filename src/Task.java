@@ -34,6 +34,14 @@ public class Task implements Comparable<Task>{
 		this.startDate = startDate;
 		this.completed = completed;
 	}
+	
+	/*
+	 * Testing purpose
+	 */
+	public Task(String description){
+		this.description = description;
+		
+	}
 
 	public int getId() {
 		return id;
