@@ -1,8 +1,14 @@
 package taskDo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import commandFactory.CommandType;
 
-
+//NOTE: Have not done a logic to settle invalid commands. Probably set a flag. If invalid command program stops.
+//Boolean(flag) in summaryReport isValidCommand??
 public class Parser {
 	
 	private static final int PARAM_STARTING_INDEX = 1;
@@ -47,23 +53,46 @@ public class Parser {
 
 	private static void optionsUpdateParsedResult(OptionalCommand command,
 			String commandParam) {
-		
+
+		Task task = ParsedResult.getTaskDetails();
+		Calendar setDate = Calendar.getInstance();
+		Date date = null;
 		switch(command) {
-		
 			case DUE:
-				//do sth
+				date = getDate(commandParam);
+				if(date == null) {
+					//Update summary report feedback msg invalid date 
+				}
+				else {
+					setDate.setTime(date);
+					task.setDueDate(setDate);
+				}
 				break;
 				
 			case FROM:
-				//do sth
+				date = getDate(commandParam);
+				if(date == null) {
+					//Update summary report feedback msg invalid date 
+				}
+				else {
+					setDate.setTime(date);
+					task.setStartDate(setDate);
+				}
 				break;
 				
 			case TO:
-				//do sth
+				date = getDate(commandParam);
+				if(date == null) {
+					//Update summary report feedback msg invalid date 
+				}
+				else {
+					setDate.setTime(date);
+					task.setDueDate(setDate);
+				}
 				break;
 				
 			case CATEGORY:
-				//do sth
+				task.setCatogory(commandParam); //Remind jack to change name
 				break;
 				
 			case INVALID:
@@ -72,6 +101,36 @@ public class Parser {
 				
 			default:// do nothing
 		}
+	}
+
+	private static Date getDate(String commandParam) {
+		boolean isValidDate = false;
+		int dateFormat = 0;
+		DateFormat df;
+		Date date = null;
+		while(isValidDate == false) {
+			try {
+				switch(dateFormat) {
+					//change the int to CONSTANTS for the various date formats
+					case 0:
+						df = new SimpleDateFormat("dd MMM yyyy");
+						date = df.parse(commandParam);
+						System.out.println(date.toString());
+						isValidDate = true;
+						break;
+					
+					default:
+						return null; //Date format not supported
+				}
+			}
+			catch (Exception e) {
+				isValidDate = false;
+				dateFormat++;
+			}
+			
+		}
+		
+		return date;
 	}
 
 	private static String removeOptionalCommand(String remainingInput,
@@ -90,6 +149,9 @@ public class Parser {
 				
 			case IMPT:
 				return remainingInput.substring(5);
+				
+			case CATEGORY:
+				return remainingInput.substring(9);
 			
 			case INVALID:
 				return "INVALID!";
