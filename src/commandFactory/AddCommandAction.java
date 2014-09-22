@@ -2,13 +2,15 @@ package commandFactory;
 
 import java.util.ArrayList;
 
+import taskDo.Task;
+
 
 public class AddCommandAction implements CommandAction{
 	@Override
 	public void execute(){
 		ArrayList<Object> task = new ArrayList<Object>();
 		// ======== get the global parsedResult ========
-		task.add(parsedResult.getTask());
+		Task t = new Task();
 	}
 	
 	@Override
