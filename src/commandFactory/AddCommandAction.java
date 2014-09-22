@@ -8,7 +8,7 @@ public class AddCommandAction implements CommandAction{
 	public void execute(){
 		ArrayList<Object> task = new ArrayList<Object>();
 		// ======== get the global parsedResult ========
-		task.add(parsedResult.getTask());
+		Task t = new Task();
 	}
 	
 	@Override

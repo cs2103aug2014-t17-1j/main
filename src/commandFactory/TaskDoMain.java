@@ -1,6 +1,5 @@
+package commandFactory;
 import java.util.ArrayList;
-
-import commandFactory.CommandAction;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -31,6 +30,9 @@ public class TaskDoMain {
 		taskList.add(t6);
 		ui.updateUi();
 		
+		Task t = new Task ();
+		t.setDescription("fklsdjflk");
+		System.out.println(t.getDescription());
 	}
 	
 //	public static void executor(CommandType commandType){
