@@ -1,7 +1,7 @@
 package commandFactory;
 
 
-public class ClearCommandAction implements CommandAction{
+public class CommandActionClear implements CommandAction{
 	@Override
 	public void execute(){
 		System.out.println("task is cleared");

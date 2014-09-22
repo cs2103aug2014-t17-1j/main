@@ -1,7 +1,7 @@
 package commandFactory;
 
 
-public class DeleteCommandAction implements CommandAction{
+public class CommandActionDelete implements CommandAction{
 	@Override
 	public void execute(){
 		System.out.println("task is deleted");
