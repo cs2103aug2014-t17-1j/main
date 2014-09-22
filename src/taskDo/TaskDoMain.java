@@ -4,10 +4,11 @@ import java.util.ArrayList;
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class TaskDoMain {
-	public static void main(String args[]){
-//		executor(CommandType.CLEAR);
 
+public class TaskDoMain {
+	
+	public static void main(String args[]){
+		
 		ArrayList<Task> taskList = new ArrayList<Task>();
 		
 		Task t1 = new Task("CS 2103");
@@ -32,13 +33,10 @@ public class TaskDoMain {
 		
 		Task t = new Task ();
 		t.setDescription("fklsdjflk");
-		System.out.println(t.getDescription());
+		System.out.println(taskList);
+		
+//		ParsedResult.setCommandType(CommandType.ADD);
+//		Executor executor = new Executor();
+//		executor.execute();
 	}
-	
-//	public static void executor(CommandType commandType){
-//		CommandFactory commandFactory = new CommandFactory();
-//		CommandAction commandAction = commandFactory.getCommandAction(commandType);
-//		commandAction.execute();
-//		commandAction.updateSummaryReport();
-//	}
 }

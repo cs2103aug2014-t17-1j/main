@@ -3,6 +3,7 @@ package taskDo;
 import commandFactory.CommandType;
 
 
+
 public class ParsedResult {
 	
 	//Members
