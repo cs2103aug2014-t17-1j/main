@@ -3,31 +3,23 @@ import java.util.Calendar;
 //This is the skeleton class specifying all attributes that each task should have
 public class Task implements Comparable<Task>{
 	//test
+	private final int INCREMENT = 1;
+	private static int lastTaskId = 0;
 	private int id;
-	private String category;
+	private String catogory;
 	private String description;
 	private boolean important;
 	private Calendar dueDate;
 	private Calendar startDate;
 	private boolean completed;
-	
-	
-	@SuppressWarnings("null")
-	public Task() {
-		this.id = (Integer) null;
-		this.category = null;
-		this.description = null;
-		this.important = (Boolean) null;
-		this.dueDate = null;
-		this.startDate = null;
-		this.completed = (Boolean) null;
-	}
-	
-	public Task(int id, String catogory, String description,
+
+	public Task( String catogory, String description,
 			boolean important, Calendar dueDate, Calendar startDate,
 			boolean completed) {
-		this.id = id;
-		this.category = catogory;
+		super();
+		lastTaskId++;
+		this.id = lastTaskId+INCREMENT;
+		this.catogory = catogory;
 		this.description = description;
 		this.important = important;
 		this.dueDate = dueDate;
@@ -35,14 +27,26 @@ public class Task implements Comparable<Task>{
 		this.completed = completed;
 	}
 	
-	/*
-	 * Testing purpose
-	 */
+	public Task(){
+		this.id = lastTaskId+INCREMENT;
+		this.description = "TESTING";
+	}
+	
 	public Task(String description){
 		this.description = description;
 		
 	}
-
+	
+	public static int getLastTaskId(){
+		return lastTaskId;
+	}
+	
+	//for testing only
+	public Task (Calendar dueDate){
+		this.id=lastTaskId+1;
+		lastTaskId++;
+		this.dueDate = dueDate;
+	}
 	public int getId() {
 		return id;
 	}
@@ -52,11 +56,11 @@ public class Task implements Comparable<Task>{
 	}
 
 	public String getCatogory() {
-		return category;
+		return catogory;
 	}
 
 	public void setCatogory(String catogory) {
-		this.category = catogory;
+		this.catogory = catogory;
 	}
 
 	public String getDescription() {
@@ -109,8 +113,11 @@ public class Task implements Comparable<Task>{
 
 	@Override
 	public int compareTo(Task task) {
+		 if (getDueDate() == null || task.getDueDate() == null){
+			 return -1;
+		 }
+		 return getDueDate().compareTo(task.getDueDate());
 		
-		return 0;
 	}
 
 }

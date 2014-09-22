@@ -62,7 +62,7 @@ public class ParsedResult {
 	
 	public static void clear() {
 		parsedCommand = null;
-		task = new Task();
+		//task = new Task();
 		searchMode = null;
 	}
 }
