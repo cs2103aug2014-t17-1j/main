@@ -1,8 +1,6 @@
 package taskDo;
 import java.util.ArrayList;
 
-import commandFactory.CommandType;
-
 /*
  * @author Paing Zin Oo(Jack)
  */

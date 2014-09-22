@@ -48,6 +48,7 @@ public class Task implements Comparable<Task>{
 		lastTaskId++;
 		this.dueDate = dueDate;
 	}
+	
 	public int getId() {
 		return id;
 	}
