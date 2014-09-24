@@ -18,7 +18,7 @@ public class Parser {
 	private static final int PARAM_STARTING_INDEX = 1;
 	
 	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, INVALID
+		DUE, FROM, TO, CATEGORY, IMPT, TASK, INVALID
 	}
 	public static void parserInit() {
 		
@@ -197,6 +197,9 @@ public class Parser {
 			case "impt":
 				return OptionalCommand.IMPT;
 				
+			case "task":
+				return OptionalCommand.TASK;
+				
 			default:
 				return OptionalCommand.INVALID;
 		}
@@ -218,7 +221,7 @@ public class Parser {
 				break;
 				
 			case EDIT:
-				SummaryReport.getTaskId(Integer.valueOf(commandParam));
+				ParsedResult.setTask(SummaryReport.getDsiplayList().get(Integer.valueOf(commandParam)));
 				break;
 				
 			case DISPLAY:
