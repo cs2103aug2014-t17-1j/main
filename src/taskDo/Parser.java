@@ -4,6 +4,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import com.joestelmach.natty.DateGroup;
 
 import commandFactory.CommandType;
 
@@ -36,7 +39,7 @@ public class Parser {
 		}
 		System.out.println(commandWord);
 		System.out.println(commandParam);
-		System.out.println(remainingInput);
+		System.out.println(ParsedResult.getTaskDetails().getDueDate().getTime());
 	}
 
 	private static String identifyOptionalCommandAndUpdate(String remainingInput) {
@@ -59,7 +62,7 @@ public class Parser {
 		Date date = null;
 		switch(command) {
 			case DUE:
-				date = getDate(commandParam);
+				date = getDateTest(commandParam);
 				if(date == null) {
 					//Update summary report feedback msg invalid date 
 				}
@@ -101,6 +104,15 @@ public class Parser {
 				
 			default:// do nothing
 		}
+	}
+
+	private static Date getDateTest(String commandParam) {
+		
+		com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+		List<DateGroup> group = parser.parse(commandParam);
+		Date dates = group.get(0).getDates().get(0);
+		
+		return dates;
 	}
 
 	private static Date getDate(String commandParam) {
