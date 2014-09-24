@@ -229,6 +229,13 @@ public class Parser {
 					DateTime date = getDate(commandParam);
 					task.setDueDate(date);
 				}
+				break;
+			case UNDO:
+				//do nothing
+				break;
+				
+			default:
+				//do nothing
 				
 		}
 		Task task = ParsedResult.getTaskDetails();
