@@ -1,8 +1,9 @@
 package taskDo;
-import java.util.Calendar;
 import java.util.Date;
 
-//This is the skeleton class specifying all attributes that each task should have
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class Task implements Comparable<Task>{
 	//test
 	private final int INCREMENT = 1;

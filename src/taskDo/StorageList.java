@@ -2,6 +2,9 @@ package taskDo;
 
 import java.util.ArrayList;
 
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class StorageList {
 	private static StorageList storageList = new StorageList();
 	private  ArrayList<Task> taskList = new ArrayList<Task>();
