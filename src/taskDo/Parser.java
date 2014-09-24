@@ -96,6 +96,10 @@ public class Parser {
 				task.setCatogory(commandParam); //Remind jack to change name
 				break;
 				
+			case TASK:
+				task.setDescription(commandParam);
+				break;
+				
 			case INVALID:
 				//do sth
 				break;
@@ -169,6 +173,9 @@ public class Parser {
 				
 			case CATEGORY:
 				return remainingInput.substring(9);
+				
+			case TASK:
+				return remainingInput.substring(5);
 			
 			case INVALID:
 				return "INVALID!";
@@ -222,7 +229,7 @@ public class Parser {
 				
 			case EDIT:
 				ParsedResult.setTask(SummaryReport.getDsiplayList().get(Integer.valueOf(commandParam)));
-				break;
+				break; //spelling error for SummaryReportgetdisplaylist
 				
 			case DISPLAY:
 				if(isCategory(commandParam)) {
