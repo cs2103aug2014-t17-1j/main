@@ -1,5 +1,6 @@
 package taskDo;
 import java.util.Calendar;
+import java.util.Date;
 
 //This is the skeleton class specifying all attributes that each task should have
 public class Task implements Comparable<Task>{
@@ -10,12 +11,12 @@ public class Task implements Comparable<Task>{
 	private String catogory;
 	private String description;
 	private boolean important;
-	private Calendar dueDate;
-	private Calendar startDate;
+	private Date dueDate;
+	private Date startDate;
 	private boolean completed;
 
 	public Task( String catogory, String description,
-			boolean important, Calendar dueDate, Calendar startDate,
+			boolean important, Date dueDate, Date startDate,
 			boolean completed) {
 		super();
 		lastTaskId++;
@@ -43,7 +44,7 @@ public class Task implements Comparable<Task>{
 	}
 	
 	//for testing only
-	public Task (Calendar dueDate){
+	public Task (Date dueDate){
 		this.id=lastTaskId+1;
 		lastTaskId++;
 		this.dueDate = dueDate;
@@ -81,19 +82,19 @@ public class Task implements Comparable<Task>{
 		this.important = important;
 	}
 
-	public Calendar getDueDate() {
+	public Date getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Calendar dueDate) {
+	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public Calendar getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
