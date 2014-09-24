@@ -2,9 +2,10 @@ package taskDo;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import com.joestelmach.natty.DateGroup;
 
@@ -58,17 +59,15 @@ public class Parser {
 			String commandParam) {
 
 		Task task = ParsedResult.getTaskDetails();
-		Calendar setDate = Calendar.getInstance();
-		Date date = null;
+		DateTime date = null;
 		switch(command) {
 			case DUE:
-				date = getDateTest(commandParam);
+				date = getDate(commandParam);
 				if(date == null) {
 					//Update summary report feedback msg invalid date 
 				}
 				else {
-					setDate.setTime(date);
-					task.setDueDate(setDate);
+					task.setDueDate(date);
 				}
 				break;
 				
@@ -78,8 +77,7 @@ public class Parser {
 					//Update summary report feedback msg invalid date 
 				}
 				else {
-					setDate.setTime(date);
-					task.setStartDate(setDate);
+					task.setStartDate(date);
 				}
 				break;
 				
@@ -89,8 +87,7 @@ public class Parser {
 					//Update summary report feedback msg invalid date 
 				}
 				else {
-					setDate.setTime(date);
-					task.setDueDate(setDate);
+					task.setDueDate(date);
 				}
 				break;
 				
@@ -106,16 +103,23 @@ public class Parser {
 		}
 	}
 
-	private static Date getDateTest(String commandParam) {
+	private static DateTime getDate(String commandParam) {
 		
 		com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
 		List<DateGroup> group = parser.parse(commandParam);
-		Date dates = group.get(0).getDates().get(0);
+		DateTime dates = new DateTime(group.get(0).getDates().get(0));
+		
+		DateTime currentTime = new DateTime();
+		
+		if(dates.hourOfDay() == currentTime.hourOfDay()) {
+			dates = dates.withHourOfDay(23);
+			dates = dates.withMinuteOfHour(59); //update the time to 2359
+		}
 		
 		return dates;
 	}
 
-	private static Date getDate(String commandParam) {
+/*	private static Date getDate(String commandParam) {
 		boolean isValidDate = false;
 		int dateFormat = 0;
 		DateFormat df;
@@ -143,7 +147,7 @@ public class Parser {
 		}
 		
 		return date;
-	}
+	} */
 
 	private static String removeOptionalCommand(String remainingInput,
 			OptionalCommand commandWord) {
