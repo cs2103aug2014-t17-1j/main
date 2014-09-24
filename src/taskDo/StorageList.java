@@ -19,5 +19,9 @@ public class StorageList {
 		return taskList;
 	}
 	
+	public void setTaskList(ArrayList<Task> taskList){
+		this.taskList = taskList;
+	}
+	
 	
 }
