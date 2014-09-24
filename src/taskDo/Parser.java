@@ -68,6 +68,7 @@ public class Parser {
 				}
 				else {
 					task.setDueDate(date);
+					task.setStartDate(null);
 				}
 				break;
 				
@@ -206,8 +207,38 @@ public class Parser {
 			String commandParam) {
 		ParsedResult.setCommandType(command);
 		Task task = ParsedResult.getTaskDetails();
+		switch(command) {
+		
+			case ADD:
+				task.setDescription(commandParam);
+				break;
+			
+			case DELETE:
+				SummaryReport.getTaskId(Integer.valueOf(commandParam));
+				break;
+				
+			case EDIT:
+				SummaryReport.getTaskId(Integer.valueOf(commandParam));
+				break;
+				
+			case DISPLAY:
+				if(isCategory(commandParam)) {
+					task.setCatogory(commandParam);
+				}
+				else {
+					DateTime date = getDate(commandParam);
+					task.setDueDate(date);
+				}
+				
+		}
+		Task task = ParsedResult.getTaskDetails();
 		task.setDescription(commandParam);
 		//Need to set endDueDate with some constant(No deadline)
+	}
+
+	private static boolean isCategory(String commandParam) {
+		//Check from a list of categories
+		return false;
 	}
 
 	private static void resetParsedResult() {
