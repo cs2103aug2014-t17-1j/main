@@ -1,6 +1,8 @@
 package taskDo;
 import java.util.Date;
 
+import org.joda.time.DateTime;
+
 /*
  * @author Paing Zin Oo(Jack)
  */
@@ -12,12 +14,12 @@ public class Task implements Comparable<Task>{
 	private String catogory;
 	private String description;
 	private boolean important;
-	private Date dueDate;
-	private Date startDate;
+	private DateTime dueDate;
+	private DateTime startDate;
 	private boolean completed;
 
 	public Task( String catogory, String description,
-			boolean important, Date dueDate, Date startDate,
+			boolean important, DateTime dueDate, DateTime startDate,
 			boolean completed) {
 		super();
 		lastTaskId++;
@@ -45,7 +47,7 @@ public class Task implements Comparable<Task>{
 	}
 	
 	//for testing only
-	public Task (Date dueDate){
+	public Task (DateTime dueDate){
 		this.id=lastTaskId+1;
 		lastTaskId++;
 		this.dueDate = dueDate;
@@ -83,19 +85,19 @@ public class Task implements Comparable<Task>{
 		this.important = important;
 	}
 
-	public Date getDueDate() {
+	public DateTime getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Date dueDate) {
+	public void setDueDate(DateTime dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public Date getStartDate() {
+	public DateTime getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(DateTime startDate) {
 		this.startDate = startDate;
 	}
 
