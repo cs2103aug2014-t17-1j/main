@@ -39,6 +39,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		return command;
 	}
 	
+	
 	public UiViewModifier(){
 		mainFrame = new JFrame();
 		setLayout(new BorderLayout());
@@ -128,6 +129,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		if(SummaryReport.getFeedBackMsg()==null){
 			feedBack_msg.setVisible(false);
 		}
+		lbl_header.setText(SummaryReport.getHeader());
 		centrePanel.removeAll();
 		generateCentrePanel();
 		

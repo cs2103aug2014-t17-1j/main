@@ -5,8 +5,12 @@ import java.util.ArrayList;
  * @author Paing Zin Oo(Jack)
  */
 
+
 public class TaskDoMain {
-	
+	/*
+	 * TO TAKE NOTE ....MAIN WILL CREATE CONTROLLER OBJECT AND DEN CONTROLLER WILL 
+	 * CREATE UI OBJECT AND FROM THERE PROCEED
+	 */
 	public static void main(String args[]){
 		
 		ArrayList<Task> taskList = new ArrayList<Task>();
