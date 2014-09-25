@@ -224,7 +224,7 @@ public class Parser {
 				break;
 			
 			case DELETE:
-				SummaryReport.getTaskId(Integer.valueOf(commandParam));
+				task.setId(SummaryReport.getTaskId(Integer.valueOf(commandParam)));
 				break;
 				
 			case EDIT:
@@ -248,8 +248,6 @@ public class Parser {
 				//do nothing
 				
 		}
-		Task task = ParsedResult.getTaskDetails();
-		task.setDescription(commandParam);
 		//Need to set endDueDate with some constant(No deadline)
 	}
 
