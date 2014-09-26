@@ -7,17 +7,24 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.joestelmach.natty.DateGroup;
+
 import commandFactory.CommandType;
 
-//NOTE: Have not done a logic to settle invalid commands. Probably set a flag. If invalid command program stops.
-//Boolean(flag) in summaryReport isValidCommand??
 public class Parser {
 
 	private static final int PARAM_STARTING_INDEX = 1;
 
 	private static String[] dateFormats = { "dd/MM/yyyy", "yyyy/MM/dd", "dd-MM-yyyy", "yyyy-MM-dd" };
-	private static final int DATE_FORMAT_ITERATIONS = 1;
-
+	private static final int DATE_FORMAT_ITERATIONS = 4;
+	
+	private static boolean isValid = true;
+	
+	private static final String MESSAGE_INVALID_COMMAND = "INVALID COMMAND!";
+	private static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "INVALID OPTIONAL COMMAND!";
+	private static final String MESSAGE_INVALID_DATE = "DATE NOT RECOGNIZED!";
+	private static final String MESSAGE_INVALID_DISPLAY_SELECTION = "EITHER CATEGORY DOES NOT EXIST OR DATE NOT RECOGNIZED!";
+	private static final String MESSAGE_INVALID_SELECTION = "INVALID SELECTION!";
+	
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TASK, INVALID
 	}
@@ -26,26 +33,39 @@ public class Parser {
 
 	}
 
-	public static void parseString(String input) {
+	public static boolean parseString(String input) {
 		resetParsedResult();
+		isValid = true; //Assume input is valid
+		
+		//Processing first command and getting command param
 		String commandWord = getCommandWord(input);
 		CommandType command = identifyCommand(commandWord.toLowerCase());
+		if(isValid == false) {
+			return isValid;
+		}
 		String remainingInput = removeCommandWord(input, command);
-
 		String commandParam = getParam(remainingInput);
 		remainingInput = removeParam(remainingInput);
-
 		updateParsedResult(command, commandParam);
-
+		if(isValid == false) {
+			return isValid;
+		}
+		//Processing optional commands
 		while (remainingInput.isEmpty() == false) {
 			remainingInput = identifyOptionalCommandAndUpdate(remainingInput);
+			if(isValid == false) {
+				return isValid;
+			}
 		}
+		
 		System.out.println(commandWord);
 		System.out.println(commandParam);
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalDate().toString("dd/MM/yyyy"));
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalTime().toString("HH:mm"));
+		
+		return isValid;
 	}
 
 	private static String identifyOptionalCommandAndUpdate(String remainingInput) {
@@ -53,10 +73,15 @@ public class Parser {
 
 		OptionalCommand command = identifyOptionalCommand(commandWord
 				.toLowerCase());
+		if(isValid == false) {
+			return remainingInput;
+		}
 		remainingInput = removeOptionalCommand(remainingInput, command);
 		String commandParam = getParam(remainingInput);
 		optionsUpdateParsedResult(command, commandParam);
-
+		if(isValid == false) {
+			return remainingInput;
+		}
 		remainingInput = removeParam(remainingInput);
 		return remainingInput;
 	}
@@ -70,7 +95,8 @@ public class Parser {
 		case DUE:
 			date = getDate(commandParam);
 			if (date == null) {
-				// Update summary report feedback msg invalid date
+				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
+				isValid = false;
 			} else {
 				task.setDueDate(date);
 				task.setStartDate(null);
@@ -80,7 +106,8 @@ public class Parser {
 		case FROM:
 			date = getDate(commandParam);
 			if (date == null) {
-				// Update summary report feedback msg invalid date
+				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
+				isValid = false;
 			} else {
 				task.setStartDate(date);
 			}
@@ -89,7 +116,8 @@ public class Parser {
 		case TO:
 			date = getDate(commandParam);
 			if (date == null) {
-				// Update summary report feedback msg invalid date
+				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
+				isValid = false;
 			} else {
 				task.setDueDate(date);
 			}
@@ -209,6 +237,8 @@ public class Parser {
 			return OptionalCommand.TASK;
 
 		default:
+			isValid = false;
+			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_OPTIONAL_COMMAND);
 			return OptionalCommand.INVALID;
 		}
 
@@ -225,20 +255,40 @@ public class Parser {
 			break;
 
 		case DELETE:
-			task.setId(SummaryReport.getTaskId(Integer.valueOf(commandParam)));
+			if(isValidSelection(commandParam)) {
+				task.setId(SummaryReport.getTaskId(Integer.valueOf(commandParam)));
+			}
+			else {
+				isValid = false;
+				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
+			}
 			break;
 
 		case EDIT:
-			ParsedResult.setTask(SummaryReport.getDsiplayList().get(
-					Integer.valueOf(commandParam)));
+			if(isValidSelection(commandParam)) {
+				int selection = Integer.valueOf(commandParam) - 1; //adjust to get the correct index in list
+				ParsedResult.setTask(SummaryReport.getDsiplayList().get(selection));
+			}
+			else {
+				isValid = false;
+				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
+			}
 			break; // spelling error for SummaryReportgetdisplaylist
 
 		case DISPLAY:
 			if (isCategory(commandParam)) {
 				task.setCatogory(commandParam);
+				ParsedResult.setSearchMode(SearchType.CATEGORY);
 			} else {
 				DateTime date = getDate(commandParam);
-				task.setDueDate(date);
+				if(date == null) {
+					isValid = false;
+					SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DISPLAY_SELECTION);
+				}
+				else {
+					task.setDueDate(date);
+					ParsedResult.setSearchMode(SearchType.DATE);
+				}
 			}
 			break;
 		case UNDO:
@@ -250,6 +300,21 @@ public class Parser {
 
 		}
 		// Need to set endDueDate with some constant(No deadline)
+	}
+
+	private static boolean isValidSelection(String commandParam) {
+		int selection;
+		try {
+			selection = Integer.valueOf(commandParam);
+		}
+		catch (Exception e) {
+			return false;
+		}
+		
+		if(selection >= 1 && selection <= SummaryReport.getDsiplayList().size()) {
+			return true;
+		}
+		return false;
 	}
 
 	private static boolean isCategory(String commandParam) {
@@ -300,6 +365,8 @@ public class Parser {
 
 			// not sure if I need init and save to be here
 		default:
+			isValid = false;
+			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_COMMAND);
 			return CommandType.INVALID;
 		}
 	}
