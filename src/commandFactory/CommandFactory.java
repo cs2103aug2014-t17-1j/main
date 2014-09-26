@@ -1,5 +1,6 @@
 package commandFactory;
 
+
 public class CommandFactory {
 
 	public CommandAction getCommandAction(CommandType commandType){

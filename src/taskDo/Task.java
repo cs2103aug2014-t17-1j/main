@@ -1,7 +1,11 @@
 package taskDo;
-import java.util.Calendar;
+import java.util.Date;
 
-//This is the skeleton class specifying all attributes that each task should have
+import org.joda.time.DateTime;
+
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class Task implements Comparable<Task>{
 	//test
 	private final int INCREMENT = 1;
@@ -10,12 +14,12 @@ public class Task implements Comparable<Task>{
 	private String catogory;
 	private String description;
 	private boolean important;
-	private Calendar dueDate;
-	private Calendar startDate;
+	private DateTime dueDate;
+	private DateTime startDate;
 	private boolean completed;
 
 	public Task( String catogory, String description,
-			boolean important, Calendar dueDate, Calendar startDate,
+			boolean important, DateTime dueDate, DateTime startDate,
 			boolean completed) {
 		super();
 		lastTaskId++;
@@ -43,11 +47,12 @@ public class Task implements Comparable<Task>{
 	}
 	
 	//for testing only
-	public Task (Calendar dueDate){
+	public Task (DateTime dueDate){
 		this.id=lastTaskId+1;
 		lastTaskId++;
 		this.dueDate = dueDate;
 	}
+	
 	public int getId() {
 		return id;
 	}
@@ -80,19 +85,19 @@ public class Task implements Comparable<Task>{
 		this.important = important;
 	}
 
-	public Calendar getDueDate() {
+	public DateTime getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(Calendar dueDate) {
+	public void setDueDate(DateTime dueDate) {
 		this.dueDate = dueDate;
 	}
 
-	public Calendar getStartDate() {
+	public DateTime getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Calendar startDate) {
+	public void setStartDate(DateTime startDate) {
 		this.startDate = startDate;
 	}
 
@@ -105,11 +110,11 @@ public class Task implements Comparable<Task>{
 	}
 
 	public String toString() {
-		// return"[Catogory: "+ this.getCatogory()+ " Task:"
-		// +this.getTaskDescription()+ " Priority: "+this.getPriority()+
-		// "dueDate "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+
-		// "Status: "+this.getStatus()+"]";
-		return "test string";
+		 return "ID" + this.id + "[Catogory: "+ this.getCatogory()+ " Task:"
+		 +this.getDescription();
+//		 + " Priority: "+this.getPriority()+
+//		 "dueDate "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+
+//		 "Status: "+this.getStatus()+"]";
 	}
 
 	@Override
@@ -118,7 +123,5 @@ public class Task implements Comparable<Task>{
 			 return -1;
 		 }
 		 return getDueDate().compareTo(task.getDueDate());
-		
 	}
-
 }

@@ -2,24 +2,28 @@ package commandFactory;
 
 import java.util.ArrayList;
 
+import taskDo.ParsedResult;
 import taskDo.Task;
+import taskDo.TaskList;
 
 
 public class CommandActionAdd implements CommandAction{
 	@Override
 	public void execute(){
-		ArrayList<Object> task = new ArrayList<Object>();
-		// ======== get the global parsedResult ========
-		Task t = new Task();
+		ArrayList<Task> taskList = TaskList.getTaskList();
+		taskList.add(ParsedResult.getTaskDetails());
+		System.out.println("added successfully <-- print from CommandActionAdd.java");
 	}
 	
 	@Override
 	public void undo(){
-		System.out.println("test -- undo add");
+		ArrayList<Task> taskList = TaskList.getTaskList();
+		taskList.remove(ParsedResult.getTaskDetails().getId());
+		System.out.println("undo add <-- print from CommandActionAdd.java");
 	}
 	
 	@Override
 	public void updateSummaryReport(){
-		System.out.println("test -- updateSummaryReport -- add");
+		System.out.println("updateSummaryReport -- add <-- print from CommandActionAdd.java");
 	}
 }
