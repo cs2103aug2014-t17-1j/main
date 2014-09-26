@@ -72,6 +72,10 @@ public class ParsedResult {
 		searchMode = setSearch;
 	}
 	
+	public static void setTask(Task setTask) {
+		task = setTask;
+	}
+	
 	public static void clear() {
 		parsedCommand = null;
 		task = new Task();
