@@ -1,15 +1,24 @@
 package taskDo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.joda.time.DateTime;
+
+import com.joestelmach.natty.DateGroup;
+
 import commandFactory.CommandType;
 
-
-
+//NOTE: Have not done a logic to settle invalid commands. Probably set a flag. If invalid command program stops.
+//Boolean(flag) in summaryReport isValidCommand??
 public class Parser {
 	
 	private static final int PARAM_STARTING_INDEX = 1;
 	
 	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, INVALID
+		DUE, FROM, TO, CATEGORY, IMPT, TASK, INVALID
 	}
 	public static void parserInit() {
 		
@@ -31,7 +40,7 @@ public class Parser {
 		}
 		System.out.println(commandWord);
 		System.out.println(commandParam);
-		System.out.println(remainingInput);
+		System.out.println(ParsedResult.getTaskDetails().getDueDate().getTime());
 	}
 
 	private static String identifyOptionalCommandAndUpdate(String remainingInput) {
@@ -48,9 +57,102 @@ public class Parser {
 
 	private static void optionsUpdateParsedResult(OptionalCommand command,
 			String commandParam) {
-		
-		
+
+		Task task = ParsedResult.getTaskDetails();
+		DateTime date = null;
+		switch(command) {
+			case DUE:
+				date = getDate(commandParam);
+				if(date == null) {
+					//Update summary report feedback msg invalid date 
+				}
+				else {
+					task.setDueDate(date);
+					task.setStartDate(null);
+				}
+				break;
+				
+			case FROM:
+				date = getDate(commandParam);
+				if(date == null) {
+					//Update summary report feedback msg invalid date 
+				}
+				else {
+					task.setStartDate(date);
+				}
+				break;
+				
+			case TO:
+				date = getDate(commandParam);
+				if(date == null) {
+					//Update summary report feedback msg invalid date 
+				}
+				else {
+					task.setDueDate(date);
+				}
+				break;
+				
+			case CATEGORY:
+				task.setCatogory(commandParam); //Remind jack to change name
+				break;
+				
+			case TASK:
+				task.setDescription(commandParam);
+				break;
+				
+			case INVALID:
+				//do sth
+				break;
+				
+			default:// do nothing
+		}
 	}
+
+	private static DateTime getDate(String commandParam) {
+		
+		com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+		List<DateGroup> group = parser.parse(commandParam);
+		DateTime dates = new DateTime(group.get(0).getDates().get(0));
+		
+		DateTime currentTime = new DateTime();
+		
+		if(dates.hourOfDay() == currentTime.hourOfDay()) {
+			dates = dates.withHourOfDay(23);
+			dates = dates.withMinuteOfHour(59); //update the time to 2359
+		}
+		
+		return dates;
+	}
+
+/*	private static Date getDate(String commandParam) {
+		boolean isValidDate = false;
+		int dateFormat = 0;
+		DateFormat df;
+		Date date = null;
+		while(isValidDate == false) {
+			try {
+				switch(dateFormat) {
+					//change the int to CONSTANTS for the various date formats
+					case 0:
+						df = new SimpleDateFormat("dd MMM yyyy");
+						date = df.parse(commandParam);
+						System.out.println(date.toString());
+						isValidDate = true;
+						break;
+					
+					default:
+						return null; //Date format not supported
+				}
+			}
+			catch (Exception e) {
+				isValidDate = false;
+				dateFormat++;
+			}
+			
+		}
+		
+		return date;
+	} */
 
 	private static String removeOptionalCommand(String remainingInput,
 			OptionalCommand commandWord) {
@@ -67,6 +169,12 @@ public class Parser {
 				return remainingInput.substring(3);
 				
 			case IMPT:
+				return remainingInput.substring(5);
+				
+			case CATEGORY:
+				return remainingInput.substring(9);
+				
+			case TASK:
 				return remainingInput.substring(5);
 			
 			case INVALID:
@@ -96,6 +204,9 @@ public class Parser {
 			case "impt":
 				return OptionalCommand.IMPT;
 				
+			case "task":
+				return OptionalCommand.TASK;
+				
 			default:
 				return OptionalCommand.INVALID;
 		}
@@ -106,8 +217,43 @@ public class Parser {
 			String commandParam) {
 		ParsedResult.setCommandType(command);
 		Task task = ParsedResult.getTaskDetails();
-		task.setDescription(commandParam);
+		switch(command) {
+		
+			case ADD:
+				task.setDescription(commandParam);
+				break;
+			
+			case DELETE:
+				task.setId(SummaryReport.getTaskId(Integer.valueOf(commandParam)));
+				break;
+				
+			case EDIT:
+				ParsedResult.setTask(SummaryReport.getDsiplayList().get(Integer.valueOf(commandParam)));
+				break; //spelling error for SummaryReportgetdisplaylist
+				
+			case DISPLAY:
+				if(isCategory(commandParam)) {
+					task.setCatogory(commandParam);
+				}
+				else {
+					DateTime date = getDate(commandParam);
+					task.setDueDate(date);
+				}
+				break;
+			case UNDO:
+				//do nothing
+				break;
+				
+			default:
+				//do nothing
+				
+		}
 		//Need to set endDueDate with some constant(No deadline)
+	}
+
+	private static boolean isCategory(String commandParam) {
+		//Check from a list of categories
+		return false;
 	}
 
 	private static void resetParsedResult() {
