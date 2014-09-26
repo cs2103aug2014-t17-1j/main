@@ -24,6 +24,7 @@ public class Parser {
 	private static final String MESSAGE_INVALID_DATE = "DATE NOT RECOGNIZED!";
 	private static final String MESSAGE_INVALID_DISPLAY_SELECTION = "EITHER CATEGORY DOES NOT EXIST OR DATE NOT RECOGNIZED!";
 	private static final String MESSAGE_INVALID_SELECTION = "INVALID SELECTION!";
+	private static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "IMPORTANCE LEVEL NOT RECOGNIZED!";
 	
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TASK, INVALID
@@ -130,9 +131,22 @@ public class Parser {
 		case TASK:
 			task.setDescription(commandParam);
 			break;
-
+			
+		case IMPT:
+			if(commandParam.equals("Y")) {
+				task.setImportant(true);
+			}
+			else if(commandParam.equals("N")) {
+				task.setImportant(false);
+			}
+			else {
+				isValid = false;
+				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_IMPORTANCE_PARAM);
+			}
+			break;
+			
 		case INVALID:
-			// do sth
+			// do nth
 			break;
 
 		default:// do nothing
