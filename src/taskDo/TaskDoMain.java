@@ -1,6 +1,8 @@
 package taskDo;
 import java.util.ArrayList;
 
+import commandFactory.CommandType;
+
 /*
  * @author Paing Zin Oo(Jack)
  */
@@ -39,6 +41,9 @@ public class TaskDoMain {
 		t.setDescription("fklsdjflk");
 		System.out.println(taskList);
 		
+//		Task t = new Task ();
+//		t.setDescription("this is a test task");
+//		ParsedResult.setTask(t);
 //		ParsedResult.setCommandType(CommandType.ADD);
 //		Executor executor = new Executor();
 //		executor.execute();
