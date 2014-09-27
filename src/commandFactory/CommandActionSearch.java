@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import taskDo.ParsedResult;
-import taskDo.SearchType;
+//import taskDo.SearchType;
+import taskDo.StorageList;
 import taskDo.Task;
-import taskDo.TaskList;
 
 public class CommandActionSearch implements CommandAction {
 	@Override
@@ -40,15 +40,7 @@ public class CommandActionSearch implements CommandAction {
 	}
 	
 	private void searchByID() {
-		ArrayList<Task> taskList = TaskList.getTaskList();
 
-		Iterator<Task> task = taskList.iterator();
-		while(task.hasNext()){
-			int taskListItemID = (Integer)task.next().getId();
-			int targetTaskID = ParsedResult.getTaskDetails().getId();
-//			if(taskListItemID.equals(targetTaskID){
-//			}
-		}
 	}
 	
 	private void searchByKeyword() {
