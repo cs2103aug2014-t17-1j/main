@@ -24,8 +24,9 @@ public class Controller {
 	}
 	
 	public void parseToParser(){
-		//Parser will parse boolean 
 		
+		//Parser will parse boolean 
+//		
 //		if(Parser.parseString(userCommand)){
 //			executor.execute();
 //		}

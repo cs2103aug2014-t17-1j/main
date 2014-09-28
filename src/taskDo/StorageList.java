@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class StorageList {
 	private static StorageList storageList = new StorageList();
-	private  ArrayList<Task> taskList = new ArrayList<Task>();
+	private  ArrayList<Task> mainTaskList = new ArrayList<Task>();
 	
 	private StorageList(){
 		
@@ -19,11 +19,11 @@ public class StorageList {
 	}
 	
 	public ArrayList<Task> getTaskList(){
-		return taskList;
+		return mainTaskList;
 	}
 	
 	public void setTaskList(ArrayList<Task> taskList){
-		this.taskList = taskList;
+		this.mainTaskList = taskList;
 	}
 	
 	
