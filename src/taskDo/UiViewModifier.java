@@ -35,12 +35,14 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	ArrayList<Task> taskList;
 	
 	
+	
 	public String getCommand() {
 		return command;
 	}
 	
 	
 	public UiViewModifier(){
+		
 		mainFrame = new JFrame();
 		setLayout(new BorderLayout());
 		
@@ -98,6 +100,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
+				
 				 PromptSupport.setPrompt("Enter your command here", commandBox);
 				
 				 command= commandBox.getText();
@@ -129,6 +132,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		if(SummaryReport.getFeedBackMsg()==null){
 			feedBack_msg.setVisible(false);
 		}
+		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
 		lbl_header.setText(SummaryReport.getHeader());
 		centrePanel.removeAll();
 		generateCentrePanel();

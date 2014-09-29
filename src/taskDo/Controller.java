@@ -16,7 +16,8 @@ public class Controller {
 	}
 
 	public String getUserCommand() {
-		return userCommand;
+		setUserCommand(uiViewModifier.getCommand());
+		return uiViewModifier.getCommand();
 	}
 
 	public void setUserCommand(String userCommand) {
@@ -24,15 +25,15 @@ public class Controller {
 	}
 	
 	public void parseToParser(){
-		
 		//Parser will parse boolean 
-//		
-//		if(Parser.parseString(userCommand)){
-//			executor.execute();
-//		}
-//		else{
-//			uiViewModifier.updateUi();
-//		}
+		if(getUserCommand()!=null){
+			if(Parser.parseString(userCommand)){
+				System.out.println("Parse String reached here");
+				executor.execute();
+			}
+			uiViewModifier.updateUi();
+		}
+		
 	}
 	
 	
