@@ -20,10 +20,10 @@ public class TaskDoMain {
 		 */
 		ArrayList<Task> taskList = new ArrayList<Task>();
 		SummaryReport.setDsiplayList(taskList);
-		Controller controller = new Controller ();
-		while(true){
-			controller.parseToParser();
-		}
+		UiViewModifier uiVM = new UiViewModifier();
+		Controller controller = uiVM.getControllerObject();
+		controller.setUiViewModifier(uiVM);
+		
 
 		
 //		

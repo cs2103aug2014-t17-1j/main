@@ -12,12 +12,14 @@ public class Controller {
 	public Controller(){
 		Parser.parserInit();
 		executor = new Executor();
-		uiViewModifier = new UiViewModifier();
 	}
 
+	public void setUiViewModifier(UiViewModifier uiVM){
+		this.uiViewModifier = uiVM;
+	}
+	
 	public String getUserCommand() {
-		setUserCommand(uiViewModifier.getCommand());
-		return uiViewModifier.getCommand();
+		return userCommand;
 	}
 
 	public void setUserCommand(String userCommand) {

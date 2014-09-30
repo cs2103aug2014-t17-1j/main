@@ -33,6 +33,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JPanel btmPanel;
 	JLabel feedBack_msg;
 	ArrayList<Task> taskList;
+	Controller controller;
 	
 	
 	
@@ -40,9 +41,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		return command;
 	}
 	
+	public Controller getControllerObject(){
+		return controller;
+	}
 	
 	public UiViewModifier(){
-		
+		controller = new Controller();
 		mainFrame = new JFrame();
 		setLayout(new BorderLayout());
 		
@@ -75,6 +79,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	    setVisible(true);   
 	    addWindowListener(this);
 	}
+	
+	
 
 	private void initBtmPanel(JScrollPane jsp) {
 		btmPanel = new JPanel(new BorderLayout());
@@ -104,6 +110,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				 PromptSupport.setPrompt("Enter your command here", commandBox);
 				
 				 command= commandBox.getText();
+				 controller.setUserCommand(command);
+				 controller.parseToParser();
 				 commandBox.setText("");
 				 System.out.println(command);
 			}
