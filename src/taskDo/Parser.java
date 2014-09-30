@@ -427,6 +427,7 @@ public class Parser {
 			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_PARAM_FORMATTING);
 			return remainingInput;
 		}
+		indexStartOfParam++; //adjust to get first letter of param
 		remainingInput = remainingInput.substring(indexStartOfParam,
 				indexEndOfParam);
 
