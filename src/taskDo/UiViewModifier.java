@@ -25,6 +25,7 @@ import org.jdesktop.xswingx.PromptSupport;
  * @author Paing Zin Oo(Jack)
  */
 public class UiViewModifier extends Frame implements KeyListener,WindowListener{
+	int taskSeq = 1;
 	String command;
 	JFrame mainFrame;
 	JPanel centrePanel;
@@ -128,10 +129,11 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				
 				JTextArea taskDes = new JTextArea(2, 50);
 				taskDes.setEditable(false);
-				taskDes.setText(taskList.get(i).getDescription());
+				taskDes.setText(taskSeq+". "+taskList.get(i).getDescription());
 				taskDes.setBackground(new Color(200, 200, 200));
 				taskDes.setForeground(Color.RED);
 			    centrePanel.add(taskDes);
+			    taskSeq++;
 			}
 		}
 	}
