@@ -1,5 +1,6 @@
 package taskDo;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -34,6 +35,6 @@ public class SummaryReport {
 	}
 	
 	public static void sortByDueDate(){
-		
+		Collections.sort(displayList);
 	}
 }

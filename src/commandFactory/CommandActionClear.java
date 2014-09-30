@@ -1,16 +1,12 @@
 package commandFactory;
 
-import java.util.ArrayList;
-
-import taskDo.Task;
-import taskDo.TaskList;
 
 
 public class CommandActionClear implements CommandAction{
 	@Override
 	public void execute(){
-		ArrayList<Task> taskList = TaskList.getTaskList();
-		taskList.clear();
+		//ArrayList<Task> taskList = TaskList.getTaskList();
+		//taskList.clear();
 		System.out.println("task is cleared <-- CommandActionClear.java");
 	}
 	@Override
