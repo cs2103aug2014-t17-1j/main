@@ -12,8 +12,6 @@ import commandFactory.CommandType;
 
 public class Parser {
 
-	private static final int PARAM_STARTING_INDEX = 1;
-
 	private static String[] dateFormats = { "dd/MM/yyyy", "yyyy/MM/dd", "dd-MM-yyyy", "yyyy-MM-dd" };
 	private static final int DATE_FORMAT_ITERATIONS = 4;
 	
@@ -25,6 +23,7 @@ public class Parser {
 	private static final String MESSAGE_INVALID_DISPLAY_SELECTION = "EITHER CATEGORY DOES NOT EXIST OR DATE NOT RECOGNIZED!";
 	private static final String MESSAGE_INVALID_SELECTION = "INVALID SELECTION!";
 	private static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "IMPORTANCE LEVEL NOT RECOGNIZED!";
+	private static final String MESSAGE_INVALID_PARAM_FORMATTING = "MISSING [] BRACKETS FOR COMMAND PARAMETER";
 	
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TASK, INVALID
@@ -34,7 +33,7 @@ public class Parser {
 
 	}
 
-	public static boolean parseString(String input) {
+	public static boolean parseString(String input) { //Change to try catch. make methods throw exception.
 		resetParsedResult();
 		isValid = true; //Assume input is valid
 		
@@ -46,6 +45,9 @@ public class Parser {
 		}
 		String remainingInput = removeCommandWord(input, command);
 		String commandParam = getParam(remainingInput);
+		if(isValid == false) {
+			return isValid;
+		}
 		remainingInput = removeParam(remainingInput);
 		updateParsedResult(command, commandParam);
 		if(isValid == false) {
@@ -79,6 +81,9 @@ public class Parser {
 		}
 		remainingInput = removeOptionalCommand(remainingInput, command);
 		String commandParam = getParam(remainingInput);
+		if(isValid == false) {
+			return remainingInput;
+		}
 		optionsUpdateParsedResult(command, commandParam);
 		if(isValid == false) {
 			return remainingInput;
@@ -414,9 +419,15 @@ public class Parser {
 	}
 
 	private static String getParam(String remainingInput) {
+		int indexStartOfParam = remainingInput.indexOf('[');
 		int indexEndOfParam = remainingInput.indexOf(']');
-
-		remainingInput = remainingInput.substring(PARAM_STARTING_INDEX,
+		
+		if(indexStartOfParam == -1 || indexEndOfParam == -1) {
+			isValid = false;
+			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_PARAM_FORMATTING);
+			return remainingInput;
+		}
+		remainingInput = remainingInput.substring(indexStartOfParam,
 				indexEndOfParam);
 
 		return remainingInput.trim();
