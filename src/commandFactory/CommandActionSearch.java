@@ -44,40 +44,16 @@ public class CommandActionSearch implements CommandAction {
 	}
 
 	private void searchByCategory() {
-		StorageList strageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = strageListInstance.getTaskList();
-		
-		ArrayList<Task> searchResult = new ArrayList<Task>();
-		
-		for(Task task: taskList){
-			if(task.getCatogory().equals("today")){
-				searchResult.add(task);
-			}
-		}
-		// !!!! FOR TEST ONLY !!!!
-		SummaryReport.setDsiplayList(searchResult);
+
 	}
 	
 	private void searchByDate() {
-		StorageList storageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = storageListInstance.getTaskList();
-		
-		ArrayList<Task> searchResult = new ArrayList<Task>();
-		
-		for(Task task: taskList){
-			if(task.getDueDate().toLocalDate().equals(ParsedResult.getTaskDetails().getDueDate().toLocalDate())){
-				searchResult.add(task);
-			}
-		}
-		// !!!! FOR TEST ONLY !!!!
-		SummaryReport.setDsiplayList(searchResult);
+
 	}
 	
 	@Override
 	public void updateSummaryReport(){
-//		SummaryReport.setFeedBackMsg("Searched Results");
-//		SummaryReport.setHeader("Searched Results");
-//		SummaryReport.setDsiplayList(searchResult);
+
 	}
 }
 
