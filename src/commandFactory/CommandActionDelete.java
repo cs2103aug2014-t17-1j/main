@@ -13,13 +13,6 @@ public class CommandActionDelete implements CommandAction{
 	public void execute(){
 		StorageList storageListInstance = StorageList.getInstance();
 		ArrayList<Task> taskList = storageListInstance.getTaskList();
-
-//		for(Task task: taskList){
-//			if(ParsedResult.getTaskDetails().getId() == task.getId()){
-//				taskList.remove(task);
-//				break;
-//			}
-//		}
 		
 		Search search = new Search();
 		search.setId(ParsedResult.getTaskDetails().getId());

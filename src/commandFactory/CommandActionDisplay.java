@@ -1,10 +1,8 @@
 package commandFactory;
 
-import java.util.ArrayList;
-
-import taskDo.StorageList;
+import taskDo.ParsedResult;
 import taskDo.SummaryReport;
-import taskDo.Task;
+
 
 
 public class CommandActionDisplay implements CommandAction{
@@ -16,11 +14,12 @@ public class CommandActionDisplay implements CommandAction{
 	
 	@Override
 	public void updateSummaryReport(){
-		StorageList strageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = strageListInstance.getTaskList();
+		Search search = new Search();
+		search.setDueDate(ParsedResult.getTaskDetails().getDueDate());
+		search.searchDueDate();
 		
-		SummaryReport.setFeedBackMsg("Display Task List");
-		SummaryReport.setHeader("Display Task List");
-		SummaryReport.setDisplayList(taskList);
+		SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
+		SummaryReport.setFeedBackMsg("Display by request");	
+		SummaryReport.setDisplayList(search.getReturnList());
 	}
 }
