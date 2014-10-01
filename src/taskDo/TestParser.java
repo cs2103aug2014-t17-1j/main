@@ -22,7 +22,7 @@ public class TestParser {
 		Assert.assertEquals(CommandType.ADD, ParsedResult.getCommandType());
 		Assert.assertEquals("Test add due and category", ParsedResult.getTaskDetails().getDescription());
 		Assert.assertEquals("20/08/1991",ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
-		Assert.assertEquals("testing", ParsedResult.getTaskDetails().getCatogory());
+		Assert.assertEquals("testing", ParsedResult.getTaskDetails().getCategory());
 	}
 
 }

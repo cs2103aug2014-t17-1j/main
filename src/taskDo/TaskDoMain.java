@@ -21,7 +21,7 @@ public class TaskDoMain {
 		StorageList strageListInstance = StorageList.getInstance();
 		ArrayList<Task> taskList = strageListInstance.getTaskList();
 		System.out.println(taskList);
-		SummaryReport.setDsiplayList(taskList);
+		SummaryReport.setDisplayList(taskList);
 		UiViewModifier uiVM = new UiViewModifier();
 		Controller controller = uiVM.getControllerObject();
 		controller.setUiViewModifier(uiVM);

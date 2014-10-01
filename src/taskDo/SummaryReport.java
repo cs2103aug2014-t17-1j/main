@@ -26,7 +26,7 @@ public class SummaryReport {
 	public static ArrayList<Task> getDisplayList() {
 		return displayList;
 	}
-	public static void setDsiplayList(ArrayList<Task> displayList) {
+	public static void setDisplayList(ArrayList<Task> displayList) {
 		SummaryReport.displayList = displayList;
 	}
 	

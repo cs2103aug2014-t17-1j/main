@@ -61,12 +61,12 @@ public class Task implements Comparable<Task>{
 		this.id = id;
 	}
 
-	public String getCatogory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCatogory(String catogory) {
-		this.category = catogory;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getDescription() {
@@ -110,7 +110,7 @@ public class Task implements Comparable<Task>{
 	}
 
 	public String toString() {
-		 return "ID" + this.id + "[Catogory: "+ this.getCatogory()+ " Task:"
+		 return "ID" + this.id + "[Catogory: "+ this.getCategory()+ " Task:"
 		 +this.getDescription();
 //		 + " Priority: "+this.getPriority()+
 //		 "dueDate "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+

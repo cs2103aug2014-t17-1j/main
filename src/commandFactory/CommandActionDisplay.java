@@ -21,6 +21,6 @@ public class CommandActionDisplay implements CommandAction{
 		
 		SummaryReport.setFeedBackMsg("Display Task List");
 		SummaryReport.setHeader("Display Task List");
-		SummaryReport.setDsiplayList(taskList);
+		SummaryReport.setDisplayList(taskList);
 	}
 }

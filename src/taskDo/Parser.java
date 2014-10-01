@@ -130,7 +130,7 @@ public class Parser {
 			break;
 
 		case CATEGORY:
-			task.setCatogory(commandParam); // Remind jack to change name
+			task.setCategory(commandParam); // Remind jack to change name
 			break;
 
 		case TASK:
@@ -296,7 +296,7 @@ public class Parser {
 
 		case DISPLAY:
 			if (isCategory(commandParam)) {
-				task.setCatogory(commandParam);
+				task.setCategory(commandParam);
 				ParsedResult.setSearchMode(SearchType.CATEGORY);
 			} else {
 				DateTime date = getDate(commandParam);
