@@ -130,7 +130,7 @@ public class Parser {
 			break;
 
 		case CATEGORY:
-			task.setCatogory(commandParam); // Remind jack to change name
+			task.setCatogory(commandParam);
 			break;
 
 		case TASK:
@@ -292,7 +292,7 @@ public class Parser {
 				isValid = false;
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
 			}
-			break; // spelling error for SummaryReportgetdisplaylist
+			break;
 
 		case DISPLAY:
 			if (isCategory(commandParam)) {
