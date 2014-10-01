@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +34,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JLabel lbl_header;
 	JPanel btmPanel;
 	JLabel feedBack_msg;
+	JPanel leftHelpPanel;
 	ArrayList<Task> taskList;
 	Controller controller;
 	
@@ -69,9 +71,24 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		add(headerPanel, BorderLayout.NORTH);
 		
 		/*
+		 * Left Help panel include F1,F2,F3 description
+		 */
+		leftHelpPanel = new JPanel();
+		leftHelpPanel.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));
+		leftHelpPanel.setPreferredSize(new Dimension(150,150));
+		JLabel label_f1 = new JLabel ("F1 ==> Help");
+		JLabel label_f2 = new JLabel ("F2 ==> View Details");
+		JLabel label_f3 = new JLabel ("F3 ==> View Category List");
+		leftHelpPanel.add(label_f1);
+		leftHelpPanel.add(label_f2);
+		leftHelpPanel.add(label_f3);
+		add(leftHelpPanel,BorderLayout.WEST);
+		
+		/*
 		 * Testing for the output
 		 */
 		generateCentrePanel();
+		
 		
 		initBtmPanel(jsp);
 	    
@@ -125,7 +142,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	private void generateCentrePanel() {
 		taskSeq = 1;
 		taskList = SummaryReport.getDisplayList();
-		System.out.println("GENERERATE CENTRE PANEL" + taskList.size());
+		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
 		if(taskList.size()!=0){
 			for (int i=0 ;i<taskList.size() ; i++){
 				JTextArea taskDes = new JTextArea(2, 50);
@@ -135,10 +152,14 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				taskDes.setForeground(Color.RED);
 			    centrePanel.add(taskDes);
 			    taskSeq++;
-			    revalidate();
-			    repaint();
+			    refreshFrame();
 			}
 		}
+	}
+
+	private void refreshFrame() {
+		revalidate();
+		repaint();
 	}
 	
 	public void updateUi(){
