@@ -61,12 +61,12 @@ public class Parser {
 			}
 		}
 		
-		System.out.println(commandWord);
+	/*	System.out.println(commandWord);
 		System.out.println(commandParam);
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalDate().toString("dd/MM/yyyy"));
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
-				.toLocalTime().toString("HH:mm"));
+				.toLocalTime().toString("HH:mm"));  */
 		
 		return isValid;
 	}
@@ -275,7 +275,8 @@ public class Parser {
 
 		case DELETE:
 			if(isValidSelection(commandParam)) {
-				task.setId(SummaryReport.getTaskId(Integer.valueOf(commandParam)));
+				ParsedResult.setTask(SummaryReport.getDisplayList().get(Integer.valueOf(commandParam)-1));
+				
 			}
 			else {
 				isValid = false;
