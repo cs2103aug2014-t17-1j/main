@@ -10,8 +10,8 @@ import taskDo.Task;
 public class CommandActionDelete implements CommandAction{
 	@Override
 	public void execute(){
-		StorageList strageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = strageListInstance.getTaskList();
+		StorageList storageListInstance = StorageList.getInstance();
+		ArrayList<Task> taskList = storageListInstance.getTaskList();
 		
 		// remove by ID
 		taskList.remove(ParsedResult.getTaskDetails().getId());

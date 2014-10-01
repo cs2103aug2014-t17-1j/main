@@ -1,9 +1,19 @@
 package commandFactory;
 
+import java.util.ArrayList;
+
+import taskDo.ParsedResult;
+import taskDo.StorageList;
+import taskDo.Task;
+
 public class CommandActionEdit implements CommandAction {
 	@Override
 	public void execute(){
-		System.out.println("edit <-- CommandActionEdit.java");
+		StorageList strageListInstance = StorageList.getInstance();
+		ArrayList<Task> taskList = strageListInstance.getTaskList();
+		
+		taskList.remove(ParsedResult.getTaskDetails().getId());
+		taskList.add(ParsedResult.getTaskDetails());
 	}
 	@Override
 	public void undo(){

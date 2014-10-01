@@ -6,6 +6,7 @@ import java.util.Iterator;
 import taskDo.ParsedResult;
 //import taskDo.SearchType;
 import taskDo.StorageList;
+import taskDo.SummaryReport;
 import taskDo.Task;
 
 public class CommandActionSearch implements CommandAction {
@@ -34,11 +35,6 @@ public class CommandActionSearch implements CommandAction {
 		System.out.println("CANNOT undo search <-- CommandActionSearch.java");
 	}
 	
-	@Override
-	public void updateSummaryReport(){
-		System.out.println("updateSummaryReport -- add <-- print from CommandActionSearch.java");
-	}
-	
 	private void searchByID() {
 
 	}
@@ -48,10 +44,42 @@ public class CommandActionSearch implements CommandAction {
 	}
 
 	private void searchByCategory() {
-		// TODO Auto-generated method stub
+		StorageList strageListInstance = StorageList.getInstance();
+		ArrayList<Task> taskList = strageListInstance.getTaskList();
+		
+		ArrayList<Task> searchResult = new ArrayList<Task>();
+		
+		for(Task task: taskList){
+			if(task.getCatogory().equals("today")){
+				searchResult.add(task);
+			}
+		}
+		// !!!! FOR TEST ONLY !!!!
+		SummaryReport.setDsiplayList(searchResult);
 	}
 	
 	private void searchByDate() {
-		// TODO Auto-generated method stub
+		StorageList storageListInstance = StorageList.getInstance();
+		ArrayList<Task> taskList = storageListInstance.getTaskList();
+		
+		ArrayList<Task> searchResult = new ArrayList<Task>();
+		
+		for(Task task: taskList){
+			if(task.getDueDate().toLocalDate().equals(ParsedResult.getTaskDetails().getDueDate().toLocalDate())){
+				searchResult.add(task);
+			}
+		}
+		// !!!! FOR TEST ONLY !!!!
+		SummaryReport.setDsiplayList(searchResult);
+	}
+	
+	@Override
+	public void updateSummaryReport(){
+//		SummaryReport.setFeedBackMsg("Searched Results");
+//		SummaryReport.setHeader("Searched Results");
+//		SummaryReport.setDsiplayList(searchResult);
 	}
 }
+
+
+
