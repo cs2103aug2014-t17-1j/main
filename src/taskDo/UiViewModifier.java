@@ -1,8 +1,10 @@
 package taskDo;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,6 +13,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,18 +36,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JLabel lbl_header;
 	JPanel btmPanel;
 	JLabel feedBack_msg;
+	JPanel leftHelpPanel;
 	ArrayList<Task> taskList;
 	Controller controller;
 	
-	//Creating Branch
 	
-	public String getCommand() {
-		return command;
-	}
-	
-	public Controller getControllerObject(){
-		return controller;
-	}
+
 	
 	public UiViewModifier(){
 		controller = new Controller();
@@ -55,10 +52,13 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		 * Centre Panel and scroll pane added 
 		 */
 		centrePanel = new JPanel();
-		centrePanel.setPreferredSize(new Dimension(400,150));
+		centrePanel.setPreferredSize(new Dimension(100,300));
+		
 		int v=ScrollPaneConstants. VERTICAL_SCROLLBAR_AS_NEEDED;
 		int h=ScrollPaneConstants. HORIZONTAL_SCROLLBAR_AS_NEEDED;
 		JScrollPane jsp = new JScrollPane(centrePanel,v,h);
+		jsp.setBorder(BorderFactory.createTitledBorder("Tasks List"));
+		//jsp.setSize(new Dimension(100,300));
 		
 		/*
 		 * Header panel and it lies on North part of JFrame
@@ -69,16 +69,31 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		add(headerPanel, BorderLayout.NORTH);
 		
 		/*
-		 * Testing for the output
+		 * Left Help panel include F1,F2,F3 description
 		 */
+		createLeftHelpPanel();
+		
 		generateCentrePanel();
 		
 		initBtmPanel(jsp);
 	    
 	    setTitle("Task.Do"); // "super" Frame sets title
-	    setSize(600, 300);         // "super" Frame sets initial size
+	    setSize(700, 500);         // "super" Frame sets initial size
 	    setVisible(true);   
 	    addWindowListener(this);
+	}
+
+	private void createLeftHelpPanel() {
+		leftHelpPanel = new JPanel(new GridLayout(3,1));
+		leftHelpPanel.setBorder(BorderFactory.createTitledBorder("Shortcut"));
+		leftHelpPanel.setPreferredSize(new Dimension(200,150));
+		JLabel label_f1 = new JLabel ("F1 ==> Help");
+		JLabel label_f2 = new JLabel ("F2 ==> View Details");
+		JLabel label_f3 = new JLabel ("F3 ==> View Category List");
+		leftHelpPanel.add(label_f1);
+		leftHelpPanel.add(label_f2);
+		leftHelpPanel.add(label_f3);
+		add(leftHelpPanel,BorderLayout.WEST);
 	}
 	
 	
@@ -93,7 +108,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	   
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    add(btmPanel,BorderLayout.SOUTH);
-	    add(jsp,BorderLayout.CENTER);
+	   add(jsp,BorderLayout.CENTER);
 	}
 
 	private JTextField initCommandBox() {
@@ -125,20 +140,28 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	private void generateCentrePanel() {
 		taskSeq = 1;
 		taskList = SummaryReport.getDisplayList();
-		System.out.println("GENERERATE CENTRE PANEL" + taskList.size());
+		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
+		removeAllComponentsFromCentrePanel();
+		refreshFrame();
 		if(taskList.size()!=0){
 			for (int i=0 ;i<taskList.size() ; i++){
-				JTextArea taskDes = new JTextArea(2, 50);
+				JTextArea taskDes = new JTextArea(3,40);
+				taskDes.setPreferredSize(new Dimension(50,40));
 				taskDes.setEditable(false);
-				taskDes.setText(taskSeq+". "+taskList.get(i).getDescription());
+				taskDes.setText("\n"+taskSeq+". "+taskList.get(i).getDescription());
 				taskDes.setBackground(new Color(200, 200, 200));
 				taskDes.setForeground(Color.RED);
 			    centrePanel.add(taskDes);
 			    taskSeq++;
-			    revalidate();
-			    repaint();
+			    refreshFrame();
 			}
 		}
+		
+	}
+
+	private void refreshFrame() {
+		revalidate();
+		repaint();
 	}
 	
 	public void updateUi(){
@@ -147,9 +170,19 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		}
 		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
 		lbl_header.setText(SummaryReport.getHeader());
-		centrePanel.removeAll();
 		generateCentrePanel();
 		
+	}
+
+	public String getCommand() {
+		return command;
+	}
+	
+	public Controller getControllerObject(){
+		return controller;
+	}
+	private void removeAllComponentsFromCentrePanel() {
+		centrePanel.removeAll();
 	}
 
 	@Override

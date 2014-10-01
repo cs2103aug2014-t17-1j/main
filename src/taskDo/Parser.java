@@ -61,7 +61,10 @@ public class Parser {
 			}
 		}
 		
+
 	/*	System.out.println(commandWord);
+		
+		System.out.println(commandWord);
 		System.out.println(commandParam);
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalDate().toString("dd/MM/yyyy"));
