@@ -123,10 +123,11 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	}
 
 	private void generateCentrePanel() {
+		taskSeq = 1;
 		taskList = SummaryReport.getDisplayList();
+		System.out.println("GENERERATE CENTRE PANEL" + taskList.size());
 		if(taskList.size()!=0){
 			for (int i=0 ;i<taskList.size() ; i++){
-				
 				JTextArea taskDes = new JTextArea(2, 50);
 				taskDes.setEditable(false);
 				taskDes.setText(taskSeq+". "+taskList.get(i).getDescription());
@@ -134,6 +135,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				taskDes.setForeground(Color.RED);
 			    centrePanel.add(taskDes);
 			    taskSeq++;
+			    revalidate();
+			    repaint();
 			}
 		}
 	}
