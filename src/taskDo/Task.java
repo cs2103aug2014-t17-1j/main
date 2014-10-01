@@ -18,13 +18,13 @@ public class Task implements Comparable<Task>{
 	private DateTime startDate;
 	private boolean completed;
 
-	public Task( String catogory, String description,
+	public Task( String category, String description,
 			boolean important, DateTime dueDate, DateTime startDate,
 			boolean completed) {
 		super();
 		lastTaskId++;
 		this.id = lastTaskId+INCREMENT;
-		this.category = catogory;
+		this.category = category;
 		this.description = description;
 		this.important = important;
 		this.dueDate = dueDate;
@@ -33,8 +33,9 @@ public class Task implements Comparable<Task>{
 	}
 	
 	public Task(){
+		lastTaskId++;
 		this.id = lastTaskId+INCREMENT;
-		this.description = "TESTING";
+		this.description = "";
 	}
 	
 	public Task(String description){
