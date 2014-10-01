@@ -11,7 +11,7 @@ public class Task implements Comparable<Task>{
 	private final int INCREMENT = 1;
 	private static int lastTaskId = 0;
 	private int id;
-	private String catogory;
+	private String category;
 	private String description;
 	private boolean important;
 	private DateTime dueDate;
@@ -24,7 +24,7 @@ public class Task implements Comparable<Task>{
 		super();
 		lastTaskId++;
 		this.id = lastTaskId+INCREMENT;
-		this.catogory = catogory;
+		this.category = catogory;
 		this.description = description;
 		this.important = important;
 		this.dueDate = dueDate;
@@ -62,11 +62,11 @@ public class Task implements Comparable<Task>{
 	}
 
 	public String getCatogory() {
-		return catogory;
+		return category;
 	}
 
 	public void setCatogory(String catogory) {
-		this.catogory = catogory;
+		this.category = catogory;
 	}
 
 	public String getDescription() {
