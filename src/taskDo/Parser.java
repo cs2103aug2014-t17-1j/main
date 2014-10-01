@@ -286,7 +286,7 @@ public class Parser {
 		case EDIT:
 			if(isValidSelection(commandParam)) {
 				int selection = Integer.valueOf(commandParam) - 1; //adjust to get the correct index in list
-				ParsedResult.setTask(SummaryReport.getDsiplayList().get(selection));
+				ParsedResult.setTask(SummaryReport.getDisplayList().get(selection));
 			}
 			else {
 				isValid = false;
@@ -330,7 +330,7 @@ public class Parser {
 			return false;
 		}
 		
-		if(selection >= 1 && selection <= SummaryReport.getDsiplayList().size()) {
+		if(selection >= 1 && selection <= SummaryReport.getDisplayList().size()) {
 			return true;
 		}
 		return false;

@@ -123,7 +123,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	}
 
 	private void generateCentrePanel() {
-		taskList = SummaryReport.getDsiplayList();
+		taskList = SummaryReport.getDisplayList();
 		if(taskList.size()!=0){
 			for (int i=0 ;i<taskList.size() ; i++){
 				

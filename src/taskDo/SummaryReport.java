@@ -23,11 +23,11 @@ public class SummaryReport {
 	public static void setHeader(String header) {
 		SummaryReport.header = header;
 	}
-	public static ArrayList<Task> getDsiplayList() {
+	public static ArrayList<Task> getDisplayList() {
 		return displayList;
 	}
-	public static void setDsiplayList(ArrayList<Task> dsiplayList) {
-		SummaryReport.displayList = dsiplayList;
+	public static void setDsiplayList(ArrayList<Task> displayList) {
+		SummaryReport.displayList = displayList;
 	}
 	
 	public static int getTaskId(int id){
