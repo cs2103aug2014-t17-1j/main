@@ -8,7 +8,7 @@ import taskDo.Task;
 
 public class Search {
 	int id;
-	Task returnTask;
+	int taskIndex;
 	ArrayList<Task> returnList;
 	DateTime dueDate;
 	SearchType searchType;
@@ -16,42 +16,47 @@ public class Search {
 	StorageList storageListInstance = StorageList.getInstance();
 	ArrayList<Task> taskList = storageListInstance.getTaskList();
 	
-	public int getId() {
-		return id;
-	}
+//	public int getId() {
+//		return id;
+//	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 	
-	public Task getReturnTask() {
-		return returnTask;
+	public int getTaskIndex() {
+		return taskIndex;
 	}
 
-	public void setReturnTask(Task returnTask) {
-		this.returnTask = returnTask;
-	}
+//	public void setTaskIndex(int taskIndex) {
+//		this.taskIndex = taskIndex;
+//	}
 	
 	public ArrayList<Task> getReturnList() {
 		return returnList;
 	}
 
-	public void setReturnList(ArrayList<Task> returnList) {
-		this.returnList = returnList;
-	}
+//	public void setReturnList(ArrayList<Task> returnList) {
+//		this.returnList = returnList;
+//	}
 	
-	public DateTime getDueDate() {
-		return dueDate;
-	}
+//	public DateTime getDueDate() {
+//		return dueDate;
+//	}
 
 	public void setDueDate(DateTime dueDate) {
 		this.dueDate = dueDate;
 	}
 	
-	public Search (){
+	public Search(){
+		taskIndex = -1;
+		returnList = new ArrayList<Task>();
+	}
+	
+	public void identifySearchTyep (){
 		switch(searchType){
 		case ID:
-			returnTask = searchById();	// ID referring to taskID not ScreenID
+			searchById();	// ID referring to taskID not ScreenID
 			break;
 		case KEYWORD:
 //			searchByKeyword();
@@ -60,29 +65,28 @@ public class Search {
 //			searchByCategory();
 			break;
 		case DATE:
-			returnList = searchDueDate();
+			searchDueDate();
 			break;
 		default: break;
 		}
 	}
 
-	public Task searchById(){
+	public void searchById(){
+		
 		for(Task task: taskList){
 			if(id == task.getId()){
-				return task;
+				taskIndex = taskList.indexOf(task);
+				break;
 			}
 		}
-		return null;
 	}
 	
-	public ArrayList<Task> searchDueDate() {	
-		ArrayList<Task> returnList = new ArrayList<Task>();
+	public void searchDueDate() {
 		
 		for(Task task: taskList){
 			if(task.getDueDate().toLocalDate().equals(dueDate.toLocalDate())){
 				returnList.add(task);
 			}
 		}
-		return returnList;
 	}
 }
