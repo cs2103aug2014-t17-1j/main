@@ -19,7 +19,6 @@ public class CommandActionDelete implements CommandAction{
 		search.searchById();
 		if(search.getTaskIndex() != -1){
 			taskList.remove(search.getTaskIndex());
-			System.out.println(taskList);
 		}
 	}
 	

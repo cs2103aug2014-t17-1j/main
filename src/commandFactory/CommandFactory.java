@@ -11,8 +11,8 @@ public class CommandFactory {
 			return new CommandActionDelete();
 		case DISPLAY:
 			return new CommandActionDisplay();
-		case CLEAR:
-			return new CommandActionClear();
+		case EDIT:
+			return new CommandActionEdit();
 		default:
 			return null;
 		}
