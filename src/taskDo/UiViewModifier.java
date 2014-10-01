@@ -143,6 +143,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		taskSeq = 1;
 		taskList = SummaryReport.getDisplayList();
 		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
+		removeAllComponentsFromCentrePanel();
 		if(taskList.size()!=0){
 			for (int i=0 ;i<taskList.size() ; i++){
 				JTextArea taskDes = new JTextArea(2, 50);
@@ -168,9 +169,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		}
 		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
 		lbl_header.setText(SummaryReport.getHeader());
-		centrePanel.removeAll();
 		generateCentrePanel();
 		
+	}
+
+	private void removeAllComponentsFromCentrePanel() {
+		centrePanel.removeAll();
 	}
 
 	@Override
