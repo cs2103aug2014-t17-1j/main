@@ -50,12 +50,12 @@ public class CommandActionSearch implements CommandAction {
 		ArrayList<Task> searchResult = new ArrayList<Task>();
 		
 		for(Task task: taskList){
-			if(task.getCatogory().equals("today")){
+			if(task.getCategory().equals("today")){
 				searchResult.add(task);
 			}
 		}
 		// !!!! FOR TEST ONLY !!!!
-		SummaryReport.setDsiplayList(searchResult);
+		SummaryReport.setDisplayList(searchResult);
 	}
 	
 	private void searchByDate() {
@@ -70,7 +70,7 @@ public class CommandActionSearch implements CommandAction {
 			}
 		}
 		// !!!! FOR TEST ONLY !!!!
-		SummaryReport.setDsiplayList(searchResult);
+		SummaryReport.setDisplayList(searchResult);
 	}
 	
 	@Override

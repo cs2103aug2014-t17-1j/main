@@ -10,6 +10,7 @@ public class SummaryReport {
 	private static String feedBackMsg;
 	private static String header;
 	private static ArrayList<Task> displayList;
+	//ONe arrayList for Category
 	
 	public static String getFeedBackMsg() {
 		return feedBackMsg;
