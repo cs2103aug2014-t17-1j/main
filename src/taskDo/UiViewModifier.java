@@ -77,6 +77,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	    setSize(700, 500);         // "super" Frame sets initial size
 	    setVisible(true);   
 	    addWindowListener(this);
+	    addKeyListener(this);
 	}
 
 	private void createLeftHelpPanel() {
@@ -96,7 +97,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 
 	private void initBtmPanel(JScrollPane jsp) {
 		btmPanel = new JPanel(new BorderLayout());
-		feedBack_msg = new JLabel("jfklsdjfld",JLabel.LEFT);
+		feedBack_msg = new JLabel("",JLabel.LEFT);
 		feedBack_msg.validate();
 		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
 	
@@ -104,7 +105,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	   
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    add(btmPanel,BorderLayout.SOUTH);
-	  // add(jsp,BorderLayout.CENTER);
 	}
 
 	private JTextField initCommandBox() {
@@ -125,10 +125,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				 controller.setUserCommand(command);
 				 controller.parseToParser();
 				 commandBox.setText("");
+				
 				 System.out.println(command);
 			}
 	    	
 	    });
+	   commandBox.addKeyListener(this);
 	   commandBox.setForeground(Color.BLACK);
 		return commandBox;
 	}
@@ -259,6 +261,10 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
+		if(arg0.getKeyCode()==KeyEvent.VK_F1){
+			System.out.println("you have entered F1");
+		}
+		System.out.println("You Have Entered "+arg0.getKeyText(arg0.getKeyCode()));
 		
 	}
 
@@ -270,8 +276,11 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stu
+		if(arg0.getKeyCode()==KeyEvent.VK_F1){
+			System.out.println("you have entered F1");
+		}
+		System.out.println("KEY IS "+KeyEvent.VK_F1+"   "+arg0.getKeyChar()+" KEY CODE IS "+arg0.getKeyCode());
 	}
 
 }
