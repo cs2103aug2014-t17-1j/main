@@ -1,6 +1,7 @@
 package taskDo;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -19,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 
 import org.jdesktop.xswingx.PromptSupport;
 
@@ -36,6 +36,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JPanel btmPanel;
 	JLabel feedBack_msg;
 	JPanel leftHelpPanel;
+	JPanel rightDetailPanel;
 	ArrayList<Task> taskList;
 	Controller controller;
 	
@@ -48,7 +49,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		 * Centre Panel and scroll pane added 
 		 */
 		centrePanel = new JPanel();
-		centrePanel.setPreferredSize(new Dimension(100,200));
+		centrePanel.setPreferredSize(new Dimension(500,400));
 		
 		/*
 		 * Header panel and it lies on North part of JFrame
@@ -63,21 +64,35 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		 */
 		createLeftHelpPanel();
 		
+		//createRightDetailPanel();
+		
 		generateCentrePanel();
 		
 		initBtmPanel();
 	    
 	    setTitle("Task.Do"); // "super" Frame sets title
-	    setSize(700, 500);         // "super" Frame sets initial size
-	    setVisible(true);   
+	    //setSize(700, 500);         // "super" Frame sets initial size
+	    setVisible(true);  
+	    pack();
 	    addWindowListener(this);
 	    addKeyListener(this);
+	}
+
+	private void createRightDetailPanel() {
+		// TODO Auto-generated method stub
+		JLabel test = new JLabel("jkfsjdlf");
+		
+		rightDetailPanel = new JPanel();
+		rightDetailPanel.add(test);
+		rightDetailPanel.setPreferredSize(new Dimension(400,300));
+		rightDetailPanel.setBorder(BorderFactory.createTitledBorder("HELP PANEL"));
+		add(rightDetailPanel,BorderLayout.EAST);
 	}
 
 	private void createLeftHelpPanel() {
 		leftHelpPanel = new JPanel(new GridLayout(3,1));
 		leftHelpPanel.setBorder(BorderFactory.createTitledBorder("Shortcut"));
-		leftHelpPanel.setPreferredSize(new Dimension(200,150));
+		leftHelpPanel.setPreferredSize(new Dimension(200,350));
 		JLabel label_f1 = new JLabel ("F1 ==> Help");
 		JLabel label_f2 = new JLabel ("F2 ==> View Details");
 		JLabel label_f3 = new JLabel ("F3 ==> View Category List");
@@ -128,7 +143,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	}
 
 	private void generateCentrePanel() {
-		taskSeq = 1;
 		taskList = SummaryReport.getDisplayList();
 		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
 		removeAllComponentsFromCentrePanel();
@@ -157,7 +171,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	
 	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
 		String tableContent[][] = new String [taskList.size()][3];
-		System.out.println("CHANGE TO TWODARRAY "+taskList.size());
+		System.out.println("CHANGE TO TWOD ARRAY "+taskList.size());
 		for (int i = 0; i < taskList.size(); i++){
 			tableContent[i][0] = (i+1)+"";
 			tableContent[i][1] = taskList.get(i).getDescription();
@@ -167,6 +181,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	}
 
 	private void refreshFrame() {
+		pack();
 		revalidate();
 		repaint();
 	}
@@ -240,9 +255,26 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==KeyEvent.VK_F1){
 			System.out.println("you have entered F1");
+			createRightDetailPanel();
+			checkForRightPanel();
+			refreshFrame();
+		}
+		if(arg0.getKeyCode()==KeyEvent.VK_F2){
+			remove(rightDetailPanel);
+			refreshFrame();
 		}
 		System.out.println("You Have Entered "+arg0.getKeyText(arg0.getKeyCode()));
 		
+	}
+	
+	private boolean checkForRightPanel(){
+		boolean isExisting = false;
+		for (Component c : mainFrame.getRootPane().getComponents()) {
+			if(c.equals(rightDetailPanel)){
+				
+			}
+		}
+		return isExisting;
 	}
 
 	@Override
@@ -253,11 +285,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stu
-		if(arg0.getKeyCode()==KeyEvent.VK_F1){
-			System.out.println("you have entered F1");
-		}
-		System.out.println("KEY IS "+KeyEvent.VK_F1+"   "+arg0.getKeyChar()+" KEY CODE IS "+arg0.getKeyCode());
+		// TODO Auto-generated method stub
 	}
 
 }
