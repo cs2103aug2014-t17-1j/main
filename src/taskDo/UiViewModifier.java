@@ -50,12 +50,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		centrePanel = new JPanel();
 		centrePanel.setPreferredSize(new Dimension(100,200));
 		
-		int v=ScrollPaneConstants. VERTICAL_SCROLLBAR_AS_NEEDED;
-		int h=ScrollPaneConstants. HORIZONTAL_SCROLLBAR_AS_NEEDED;
-		JScrollPane jsp = new JScrollPane(centrePanel,v,h);
-		jsp.setBorder(BorderFactory.createTitledBorder("Tasks List"));
-		
-		
 		/*
 		 * Header panel and it lies on North part of JFrame
 		 */
@@ -71,7 +65,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		
 		generateCentrePanel();
 		
-		initBtmPanel(jsp);
+		initBtmPanel();
 	    
 	    setTitle("Task.Do"); // "super" Frame sets title
 	    setSize(700, 500);         // "super" Frame sets initial size
@@ -95,14 +89,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	
 	
 
-	private void initBtmPanel(JScrollPane jsp) {
+	private void initBtmPanel() {
 		btmPanel = new JPanel(new BorderLayout());
 		feedBack_msg = new JLabel("",JLabel.LEFT);
 		feedBack_msg.validate();
 		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
-	
 	    final JTextField commandBox = initCommandBox();
-	   
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    add(btmPanel,BorderLayout.SOUTH);
 	}
@@ -160,21 +152,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			
 		}
 		add(centrePanel,BorderLayout.CENTER);
-		
-		
-//		if(taskList.size()!=0){
-//			for (int i=0 ;i<taskList.size() ; i++){
-//				JTextArea taskDes = new JTextArea(3,40);
-//				taskDes.setPreferredSize(new Dimension(50,40));
-//				taskDes.setEditable(false);
-//				taskDes.setText("\n"+taskSeq+". "+taskList.get(i).getDescription());
-//				taskDes.setBackground(new Color(200, 200, 200));
-//				taskDes.setForeground(Color.RED);
-//			    centrePanel.add(taskDes);
-//			    taskSeq++;
-//			    refreshFrame();
-//			}
-//		}
 		refreshFrame();
 	}
 	
