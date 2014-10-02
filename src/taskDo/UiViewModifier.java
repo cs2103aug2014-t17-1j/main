@@ -255,8 +255,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==KeyEvent.VK_F1){
 			System.out.println("you have entered F1");
-			createRightDetailPanel();
-			checkForRightPanel();
+			if(isRightPanelExisting()){
+				remove(rightDetailPanel);
+			}
+			else{
+				createRightDetailPanel();
+			}
 			refreshFrame();
 		}
 		if(arg0.getKeyCode()==KeyEvent.VK_F2){
@@ -267,14 +271,13 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		
 	}
 	
-	private boolean checkForRightPanel(){
-		boolean isExisting = false;
-		for (Component c : mainFrame.getRootPane().getComponents()) {
-			if(c.equals(rightDetailPanel)){
-				
+	private boolean isRightPanelExisting(){
+		if(rightDetailPanel != null){
+			if(rightDetailPanel.isDisplayable()){
+				return true;
 			}
 		}
-		return isExisting;
+		return false;
 	}
 
 	@Override
