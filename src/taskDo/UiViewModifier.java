@@ -1,7 +1,6 @@
 package taskDo;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridLayout;
@@ -18,7 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
@@ -40,9 +39,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	ArrayList<Task> taskList;
 	Controller controller;
 	
-	
-
-	
 	public UiViewModifier(){
 		controller = new Controller();
 		mainFrame = new JFrame();
@@ -52,13 +48,13 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		 * Centre Panel and scroll pane added 
 		 */
 		centrePanel = new JPanel();
-		centrePanel.setPreferredSize(new Dimension(100,300));
+		centrePanel.setPreferredSize(new Dimension(100,200));
 		
 		int v=ScrollPaneConstants. VERTICAL_SCROLLBAR_AS_NEEDED;
 		int h=ScrollPaneConstants. HORIZONTAL_SCROLLBAR_AS_NEEDED;
 		JScrollPane jsp = new JScrollPane(centrePanel,v,h);
 		jsp.setBorder(BorderFactory.createTitledBorder("Tasks List"));
-		//jsp.setSize(new Dimension(100,300));
+		
 		
 		/*
 		 * Header panel and it lies on North part of JFrame
@@ -108,7 +104,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	   
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    add(btmPanel,BorderLayout.SOUTH);
-	   add(jsp,BorderLayout.CENTER);
+	  // add(jsp,BorderLayout.CENTER);
 	}
 
 	private JTextField initCommandBox() {
@@ -143,20 +139,52 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
 		removeAllComponentsFromCentrePanel();
 		refreshFrame();
-		if(taskList.size()!=0){
-			for (int i=0 ;i<taskList.size() ; i++){
-				JTextArea taskDes = new JTextArea(3,40);
-				taskDes.setPreferredSize(new Dimension(50,40));
-				taskDes.setEditable(false);
-				taskDes.setText("\n"+taskSeq+". "+taskList.get(i).getDescription());
-				taskDes.setBackground(new Color(200, 200, 200));
-				taskDes.setForeground(Color.RED);
-			    centrePanel.add(taskDes);
-			    taskSeq++;
-			    refreshFrame();
-			}
-		}
 		
+		if(taskList.size()!=0){
+			String []columnTitle = {"ID","Description","Due Date"};
+			JTable contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
+				public boolean isCellEditable(int row, int column){
+					return false;
+				};
+				
+			};
+			contentTable.setRowHeight(40);
+			contentTable.getTableHeader().setReorderingAllowed(false);
+			contentTable.getTableHeader().setResizingAllowed(false);
+			JScrollPane jsp = new JScrollPane(contentTable);
+			jsp.setBorder(BorderFactory.createTitledBorder("Tasks List"));
+			jsp.setPreferredSize(new Dimension(450,380));
+			centrePanel.add(jsp);
+			
+		}
+		add(centrePanel,BorderLayout.CENTER);
+		
+		
+//		if(taskList.size()!=0){
+//			for (int i=0 ;i<taskList.size() ; i++){
+//				JTextArea taskDes = new JTextArea(3,40);
+//				taskDes.setPreferredSize(new Dimension(50,40));
+//				taskDes.setEditable(false);
+//				taskDes.setText("\n"+taskSeq+". "+taskList.get(i).getDescription());
+//				taskDes.setBackground(new Color(200, 200, 200));
+//				taskDes.setForeground(Color.RED);
+//			    centrePanel.add(taskDes);
+//			    taskSeq++;
+//			    refreshFrame();
+//			}
+//		}
+		refreshFrame();
+	}
+	
+	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
+		String tableContent[][] = new String [taskList.size()][3];
+		System.out.println("CHANGE TO TWODARRAY "+taskList.size());
+		for (int i = 0; i < taskList.size(); i++){
+			tableContent[i][0] = (i+1)+"";
+			tableContent[i][1] = taskList.get(i).getDescription();
+			tableContent[i][2] = taskList.get(i).getDueDate().toLocalDate().toString();
+ 		}
+		return tableContent;
 	}
 
 	private void refreshFrame() {
