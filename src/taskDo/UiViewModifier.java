@@ -149,7 +149,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		refreshFrame();
 		
 		if(taskList.size()!=0){
-			String []columnTitle = {"ID","Description","Due Date"};
+			String []columnTitle = {"ID","Description"," "};
 			JTable contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
 				public boolean isCellEditable(int row, int column){
 					return false;
@@ -175,7 +175,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		for (int i = 0; i < taskList.size(); i++){
 			tableContent[i][0] = (i+1)+"";
 			tableContent[i][1] = taskList.get(i).getDescription();
-			tableContent[i][2] = taskList.get(i).getDueDate().toLocalDate().toString();
+			//tableContent[i][2] = taskList.get(i).getDueDate().toLocalDate().toString();
+			tableContent[i][2] = " ";
  		}
 		return tableContent;
 	}
