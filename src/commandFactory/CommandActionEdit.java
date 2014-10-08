@@ -8,6 +8,9 @@ import taskDo.SummaryReport;
 import taskDo.Task;
 
 public class CommandActionEdit implements CommandAction {
+	private static final String MESSAGE_SOMEDAY = "Someday";
+	private static final String MESSAGE_SUCCESS_EDIT = "Edited successfully";
+	
 	@Override
 	public void execute(){
 		StorageList storageListInstance = StorageList.getInstance();
@@ -21,17 +24,22 @@ public class CommandActionEdit implements CommandAction {
 		
 		taskList.add(ParsedResult.getTaskDetails());
 	}
+	
 	@Override
 	public void undo(){
-		System.out.println("undo edit <-- CommandActionEdit.java");
 	}
+	
 	@Override
 	public void updateSummaryReport(){
 		Search search = new Search();
 		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
 		
-		SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
-		SummaryReport.setFeedBackMsg("Edited successfully");	
+		if(ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == 0) {
+			SummaryReport.setHeader(MESSAGE_SOMEDAY);
+		} else {
+			SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
+		}
+		SummaryReport.setFeedBackMsg(MESSAGE_SUCCESS_EDIT);	
 		SummaryReport.setDisplayList(search.getReturnList());
 	}
 }
