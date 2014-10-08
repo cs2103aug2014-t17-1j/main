@@ -30,7 +30,6 @@ import org.jdesktop.xswingx.PromptSupport;
  */
 public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	int taskSeq = 1;
-	String command;
 	JFrame mainFrame;
 	JPanel centrePanel;
 	JPanel headerPanel;
@@ -42,6 +41,34 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JTextField commandBox;
 	ArrayList<Task> taskList;
 	Controller controller;
+	String command;
+	String [] helpCommand = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
+			"add [task]",
+			"edit [index]",
+			"delete [index]",
+			"display [date]",
+			"",
+			"<html><i>Common Optional Commands</i></html>",
+			"<html><i>(Addtional commands that works with main commands)</i></html>",
+			"category [name]",
+			"due [duedate]",
+			"from [startdate] to [duedate]",
+			"important [Y/N]",
+			"",
+			"Example: add [Homework1] due [5th oct]",
+			"",
+			"<html><i>Specific Optional Commands</i></html>",
+			"<html><i>(Addtional commands thats only works with specific main commands)</i></html>",
+			"For Edit: task [taskdescription]",
+			"",
+			"Example: edit [index] task [new description]"
+			
+	};
+	String [] shortcuts = { "F1 ==> Help",
+			"F2 ==> View Details",
+			"F3 ==> View Category List"
+			
+	};
 	
 	public UiViewModifier(){
 		controller = new Controller();
@@ -53,12 +80,10 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		 */
 		centrePanel = new JPanel();
 		centrePanel.setPreferredSize(new Dimension(500,400));
-		
 		/*
 		 * Header panel and it lies on North part of JFrame
 		 */
 		initHeaderPanel();
-		
 		/*
 		 * Left Help panel include F1,F2,F3 description
 		 */
@@ -80,7 +105,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 
 	private void initHeaderPanel() {
 		headerPanel = new JPanel();
-		lbl_header = new JLabel("HEADER");
+		lbl_header = new JLabel();
 		lbl_header.setForeground(ColorBox.colorPool[24]);
 		headerPanel.add(lbl_header);
 		headerPanel.setBackground(Color.BLACK);
@@ -89,36 +114,33 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 
 	private void createRightDetailPanel() {
 		// TODO Auto-generated method stub
-		JLabel test = new JLabel("jkfsjdlf");
-		
-		rightDetailPanel = new JPanel();
-		rightDetailPanel.add(test);
-		rightDetailPanel.setPreferredSize(new Dimension(400,300));
+		rightDetailPanel = new JPanel(new GridLayout(helpCommand.length,1));
+		rightDetailPanel.setPreferredSize(new Dimension(420,400));
 		rightDetailPanel.setBorder(BorderFactory.createTitledBorder(null,"HELP PANEL", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
 		rightDetailPanel.setBackground(Color.BLACK);
+		for(int i = 0 ; i < helpCommand.length; i++){
+			JLabel lbl_helpCommand = new JLabel(helpCommand[i]);
+			lbl_helpCommand.setForeground(ColorBox.colorPool[24]);
+			rightDetailPanel.add(lbl_helpCommand);
+			
+		}
 		add(rightDetailPanel,BorderLayout.EAST);
 	}
 
 	private void createLeftHelpPanel() {
-		leftHelpPanel = new JPanel(new GridLayout(3,1));
-		leftHelpPanel.setBorder(BorderFactory.createTitledBorder(null,"Shortcuts", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
-		leftHelpPanel.setPreferredSize(new Dimension(200,350));
 		
-		JLabel label_f1 = new JLabel ("F1 ==> Help");
-		JLabel label_f2 = new JLabel ("F2 ==> View Details");
-		JLabel label_f3 = new JLabel ("F3 ==> View Category List");
-		label_f1.setForeground(ColorBox.colorPool[24]);
-		label_f2.setForeground(ColorBox.colorPool[24]);
-		label_f3.setForeground(ColorBox.colorPool[24]);
-		leftHelpPanel.add(label_f1);
-		leftHelpPanel.add(label_f2);
-		leftHelpPanel.add(label_f3);
+		leftHelpPanel = new JPanel(new GridLayout(shortcuts.length,1));
+		leftHelpPanel.setBorder(BorderFactory.createTitledBorder(null,"SHORTCUTS", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
+		leftHelpPanel.setPreferredSize(new Dimension(200,350));
+		for(int i = 0; i < shortcuts.length; i++){
+			JLabel label_shortcut = new JLabel (shortcuts[i]);
+			label_shortcut.setForeground(ColorBox.colorPool[24]);
+			leftHelpPanel.add(label_shortcut);
+		}
 		leftHelpPanel.setBackground(Color.BLACK);
 		add(leftHelpPanel,BorderLayout.WEST);
 	}
 	
-	
-
 	private void initBtmPanel() {
 		btmPanel = new JPanel(new BorderLayout());
 		feedBack_msg = new JLabel("",JLabel.LEFT);
