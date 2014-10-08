@@ -157,6 +157,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				
 			};
 			contentTable.setRowHeight(40);
+			setContentTableColumnWidth(contentTable);
+			contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			contentTable.getTableHeader().setReorderingAllowed(false);
 			contentTable.getTableHeader().setResizingAllowed(false);
 			JScrollPane jsp = new JScrollPane(contentTable);
@@ -167,6 +169,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		}
 		add(centrePanel,BorderLayout.CENTER);
 		refreshFrame();
+	}
+
+	private void setContentTableColumnWidth(JTable contentTable) {
+		contentTable.getColumnModel().getColumn(0).setMaxWidth(20);
+		contentTable.getColumnModel().getColumn(1).setMaxWidth(600);
+		contentTable.getColumnModel().getColumn(2).setMaxWidth(100);
 	}
 	
 	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
