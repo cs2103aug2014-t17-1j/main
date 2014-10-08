@@ -8,6 +8,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.joestelmach.natty.DateGroup;
+
 import commandFactory.CommandType;
 
 public class Parser {
@@ -94,6 +95,11 @@ public class Parser {
 		DateTime date = null;
 		switch (command) {
 		case DUE:
+			if(noDeadLine(commandParam)) {
+				task.setDueDate(SOMEDAY);
+				task.setStartDate(null);
+				break;
+			}
 			date = getDate(commandParam);
 			if (date == null) {
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
@@ -147,6 +153,14 @@ public class Parser {
 
 		default:// do nothing
 		}
+	}
+
+	private static boolean noDeadLine(String commandParam) {
+		if(commandParam.toUpperCase().equals("SOMEDAY")) {
+			return true;
+		}
+		
+		return false;
 	}
 
 	private static DateTime getDate(String commandParam) {
@@ -287,6 +301,11 @@ public class Parser {
 				task.setCategory(commandParam);
 				ParsedResult.setSearchMode(SearchType.CATEGORY);
 			} else {
+				if(noDeadLine(commandParam)) {
+					task.setDueDate(SOMEDAY);
+					task.setStartDate(null);
+					break;
+				}
 				DateTime date = getDate(commandParam);
 				if(date == null) {
 					SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DISPLAY_SELECTION);
