@@ -28,7 +28,11 @@ public class CommandActionAdd implements CommandAction{
 		Search search = new Search();
 		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
 		
-		SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
+		if(ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == 0) {
+			SummaryReport.setHeader("SOMEDAY");
+		} else {
+			SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
+		}
 		SummaryReport.setFeedBackMsg("Added successfully");	
 		SummaryReport.setDisplayList(search.getReturnList());
 	}
