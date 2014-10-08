@@ -26,14 +26,14 @@ public class Parser {
 	private static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
 
 	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, TASK, INVALID
+		DUE, FROM, TO, CATEGORY, IMPT, TASK
 	}
 
 	public static void parserInit() {
 
 	}
 
-	public static boolean parseString(String input) { //Change to try catch. make methods throw exception.
+	public static boolean parseString(String input) { 
 		resetParsedResult();
 
 		//Processing first command and getting command param
@@ -70,8 +70,6 @@ public class Parser {
 				.toLocalDate().toString("dd/MM/yyyy"));
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalTime().toString("HH:mm"));  */
-
-		//return isValid;
 	}
 
 	private static String identifyOptionalCommandAndUpdate(String remainingInput) throws InvalidParameterException {
@@ -99,7 +97,6 @@ public class Parser {
 			date = getDate(commandParam);
 			if (date == null) {
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
-				//isValid = false;
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
@@ -111,7 +108,6 @@ public class Parser {
 			date = getDate(commandParam);
 			if (date == null) {
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
-				//isValid = false;
 				throw new InvalidParameterException();
 			} else {
 				task.setStartDate(date);
@@ -122,7 +118,6 @@ public class Parser {
 			date = getDate(commandParam);
 			if (date == null) {
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
-				//isValid = false;
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
@@ -145,14 +140,9 @@ public class Parser {
 				task.setImportant(false);
 			}
 			else {
-				//isValid = false;
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_IMPORTANCE_PARAM);
 				throw new InvalidParameterException();
 			}
-			break;
-
-		case INVALID:
-			// do nth
 			break;
 
 		default:// do nothing
@@ -226,9 +216,6 @@ public class Parser {
 		case TASK:
 			return remainingInput.substring(5);
 
-		case INVALID:
-			return "INVALID!";
-
 		default:
 			return "";
 		}
@@ -257,10 +244,8 @@ public class Parser {
 			return OptionalCommand.TASK;
 
 		default:
-			//isValid = false;
 			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_OPTIONAL_COMMAND);
 			throw new InvalidParameterException();
-			//return OptionalCommand.INVALID;
 		}
 
 	}
@@ -281,7 +266,6 @@ public class Parser {
 
 			}
 			else {
-				//isValid = false;
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
 				throw new InvalidParameterException();
 			}
@@ -293,7 +277,6 @@ public class Parser {
 				ParsedResult.setTask(SummaryReport.getDisplayList().get(selection));
 			}
 			else {
-				//isValid = false;
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
 				throw new InvalidParameterException();
 			}
@@ -306,7 +289,6 @@ public class Parser {
 			} else {
 				DateTime date = getDate(commandParam);
 				if(date == null) {
-					//isValid = false;
 					SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DISPLAY_SELECTION);
 					throw new InvalidParameterException();
 				}
@@ -324,7 +306,6 @@ public class Parser {
 			// do nothing
 
 		}
-		// Need to set endDueDate with some constant(No deadline)
 	}
 
 	private static boolean isValidSelection(String commandParam) {
@@ -392,8 +373,6 @@ public class Parser {
 		default:
 			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_COMMAND);
 			throw new InvalidParameterException();
-			//isValid = false;
-			// return CommandType.INVALID; 
 		}
 	}
 
@@ -415,9 +394,6 @@ public class Parser {
 		case EDIT:
 			return input.substring(5);
 
-		case INVALID:
-			return "INVALID!";
-
 		default:
 			return "";
 
@@ -430,7 +406,6 @@ public class Parser {
 		int indexEndOfParam = remainingInput.indexOf(']');
 
 		if(indexStartOfParam == -1 || indexEndOfParam == -1) {
-			//isValid = false;
 			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_PARAM_FORMATTING);
 			throw new InvalidParameterException();
 			//return remainingInput;
