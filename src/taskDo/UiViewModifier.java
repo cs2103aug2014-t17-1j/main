@@ -20,10 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-
-import org.jdesktop.xswingx.PromptSupport;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -79,12 +76,9 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		 * Centre Panel and scroll pane added 
 		 */
 		centrePanel = new JPanel();
-<<<<<<< HEAD
-		centrePanel.setPreferredSize(new Dimension(100,200));
-		
-=======
+
 		centrePanel.setPreferredSize(new Dimension(500,400));
->>>>>>> Jack_UI
+
 		/*
 		 * Header panel and it lies on North part of JFrame
 		 */
@@ -145,23 +139,20 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		leftHelpPanel.setBackground(Color.BLACK);
 		add(leftHelpPanel,BorderLayout.WEST);
 	}
-	
-<<<<<<< HEAD
+
 	
 
-=======
->>>>>>> Jack_UI
 	private void initBtmPanel() {
 		btmPanel = new JPanel(new BorderLayout());
 		feedBack_msg = new JLabel("",JLabel.LEFT);
 		feedBack_msg.validate();
 		feedBack_msg.setForeground(ColorBox.colorPool[24]);
 		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
-<<<<<<< HEAD
-	    final JTextField commandBox = initCommandBox();
-=======
+
+
+
 	    initCommandBox();
->>>>>>> Jack_UI
+
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    btmPanel.setBackground(Color.BLACK);
 	    add(btmPanel,BorderLayout.SOUTH);
