@@ -1,5 +1,6 @@
 package taskDo;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -7,16 +8,13 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.joestelmach.natty.DateGroup;
-
 import commandFactory.CommandType;
 
 public class Parser {
 
 	private static String[] dateFormats = { "dd/MM/yyyy", "yyyy/MM/dd", "dd-MM-yyyy", "yyyy-MM-dd" };
 	private static final int DATE_FORMAT_ITERATIONS = 4;
-	
-	private static boolean isValid = true;
-	
+
 	private static final String MESSAGE_INVALID_COMMAND = "INVALID COMMAND!";
 	private static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "INVALID OPTIONAL COMMAND!";
 	private static final String MESSAGE_INVALID_DATE = "DATE NOT RECOGNIZED!";
@@ -24,79 +22,73 @@ public class Parser {
 	private static final String MESSAGE_INVALID_SELECTION = "INVALID SELECTION!";
 	private static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "IMPORTANCE LEVEL NOT RECOGNIZED!";
 	private static final String MESSAGE_INVALID_PARAM_FORMATTING = "MISSING [] BRACKETS FOR COMMAND PARAMETER";
-	
+
+	private static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
+
 	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, TASK, INVALID
+		DUE, FROM, TO, CATEGORY, IMPT, TASK
 	}
 
 	public static void parserInit() {
 
 	}
 
-	public static boolean parseString(String input) { //Change to try catch. make methods throw exception.
+	public static boolean parseString(String input) { 
 		resetParsedResult();
-		isValid = true; //Assume input is valid
-		
-		//Processing first command and getting command param
-		String commandWord = getCommandWord(input);
-		CommandType command = identifyCommand(commandWord.toLowerCase());
-		if(isValid == false) {
-			return isValid;
-		}
-		String remainingInput = removeCommandWord(input, command);
-		String commandParam = getParam(remainingInput);
-		if(isValid == false) {
-			return isValid;
-		}
-		remainingInput = removeParam(remainingInput);
-		updateParsedResult(command, commandParam);
-		if(isValid == false) {
-			return isValid;
-		}
-		//Processing optional commands
-		while (remainingInput.isEmpty() == false) {
-			remainingInput = identifyOptionalCommandAndUpdate(remainingInput);
-			if(isValid == false) {
-				return isValid;
-			}
-		}
-		
 
-	/*	System.out.println(commandWord);
-		
+		//Processing first command and getting command param
+		try {
+			String commandWord = getCommandWord(input);
+			CommandType command = identifyCommand(commandWord.toLowerCase());
+
+			String remainingInput = removeCommandWord(input, command);
+			String commandParam = getParam(remainingInput);
+
+			remainingInput = removeParam(remainingInput);
+			updateParsedResult(command, commandParam);
+
+			//Processing optional commands
+			while (remainingInput.isEmpty() == false) {
+				remainingInput = identifyOptionalCommandAndUpdate(remainingInput);
+			}
+			if(ParsedResult.getTaskDetails().getDueDate() == null) {
+				ParsedResult.getTaskDetails().setDueDate(SOMEDAY);
+			}
+			return true;
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+
+
+		/*	System.out.println(commandWord);
+
 		System.out.println(commandWord);
 		System.out.println(commandParam);
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalDate().toString("dd/MM/yyyy"));
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalTime().toString("HH:mm"));  */
-		
-		return isValid;
 	}
 
-	private static String identifyOptionalCommandAndUpdate(String remainingInput) {
+	private static String identifyOptionalCommandAndUpdate(String remainingInput) throws InvalidParameterException {
 		String commandWord = getCommandWord(remainingInput);
 
 		OptionalCommand command = identifyOptionalCommand(commandWord
 				.toLowerCase());
-		if(isValid == false) {
-			return remainingInput;
-		}
+
 		remainingInput = removeOptionalCommand(remainingInput, command);
 		String commandParam = getParam(remainingInput);
-		if(isValid == false) {
-			return remainingInput;
-		}
+
 		optionsUpdateParsedResult(command, commandParam);
-		if(isValid == false) {
-			return remainingInput;
-		}
+
 		remainingInput = removeParam(remainingInput);
 		return remainingInput;
 	}
 
 	private static void optionsUpdateParsedResult(OptionalCommand command,
-			String commandParam) {
+			String commandParam) throws InvalidParameterException {
 
 		Task task = ParsedResult.getTaskDetails();
 		DateTime date = null;
@@ -105,7 +97,7 @@ public class Parser {
 			date = getDate(commandParam);
 			if (date == null) {
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
-				isValid = false;
+				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
 				task.setStartDate(null);
@@ -116,7 +108,7 @@ public class Parser {
 			date = getDate(commandParam);
 			if (date == null) {
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
-				isValid = false;
+				throw new InvalidParameterException();
 			} else {
 				task.setStartDate(date);
 			}
@@ -126,7 +118,7 @@ public class Parser {
 			date = getDate(commandParam);
 			if (date == null) {
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
-				isValid = false;
+				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
 			}
@@ -139,7 +131,7 @@ public class Parser {
 		case TASK:
 			task.setDescription(commandParam);
 			break;
-			
+
 		case IMPT:
 			if(commandParam.equals("Y")) {
 				task.setImportant(true);
@@ -148,13 +140,9 @@ public class Parser {
 				task.setImportant(false);
 			}
 			else {
-				isValid = false;
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_IMPORTANCE_PARAM);
+				throw new InvalidParameterException();
 			}
-			break;
-			
-		case INVALID:
-			// do nth
 			break;
 
 		default:// do nothing
@@ -180,7 +168,7 @@ public class Parser {
 						.equals(currentTime.hourOfDay().toString())) {
 					dates = dates.withHourOfDay(23);
 					dates = dates.withMinuteOfHour(59); // update the time to
-														// 2359
+					// 2359
 				}
 
 				return dates;
@@ -228,15 +216,12 @@ public class Parser {
 		case TASK:
 			return remainingInput.substring(5);
 
-		case INVALID:
-			return "INVALID!";
-
 		default:
 			return "";
 		}
 	}
 
-	private static OptionalCommand identifyOptionalCommand(String commandWord) {
+	private static OptionalCommand identifyOptionalCommand(String commandWord) throws InvalidParameterException {
 
 		switch (commandWord) {
 
@@ -259,15 +244,14 @@ public class Parser {
 			return OptionalCommand.TASK;
 
 		default:
-			isValid = false;
 			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_OPTIONAL_COMMAND);
-			return OptionalCommand.INVALID;
+			throw new InvalidParameterException();
 		}
 
 	}
 
 	private static void updateParsedResult(CommandType command,
-			String commandParam) {
+			String commandParam) throws InvalidParameterException {
 		ParsedResult.setCommandType(command);
 		Task task = ParsedResult.getTaskDetails();
 		switch (command) {
@@ -279,11 +263,11 @@ public class Parser {
 		case DELETE:
 			if(isValidSelection(commandParam)) {
 				ParsedResult.setTask(SummaryReport.getDisplayList().get(Integer.valueOf(commandParam)-1));
-				
+
 			}
 			else {
-				isValid = false;
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
+				throw new InvalidParameterException();
 			}
 			break;
 
@@ -293,8 +277,8 @@ public class Parser {
 				ParsedResult.setTask(SummaryReport.getDisplayList().get(selection));
 			}
 			else {
-				isValid = false;
 				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
+				throw new InvalidParameterException();
 			}
 			break;
 
@@ -305,8 +289,8 @@ public class Parser {
 			} else {
 				DateTime date = getDate(commandParam);
 				if(date == null) {
-					isValid = false;
 					SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DISPLAY_SELECTION);
+					throw new InvalidParameterException();
 				}
 				else {
 					task.setDueDate(date);
@@ -322,7 +306,6 @@ public class Parser {
 			// do nothing
 
 		}
-		// Need to set endDueDate with some constant(No deadline)
 	}
 
 	private static boolean isValidSelection(String commandParam) {
@@ -333,7 +316,7 @@ public class Parser {
 		catch (Exception e) {
 			return false;
 		}
-		
+
 		if(selection >= 1 && selection <= SummaryReport.getDisplayList().size()) {
 			return true;
 		}
@@ -365,7 +348,7 @@ public class Parser {
 		return splittedCommand[0];
 	}
 
-	private static CommandType identifyCommand(String command) {
+	private static CommandType identifyCommand(String command) throws InvalidParameterException {
 
 		switch (command) {
 		case "add":
@@ -388,9 +371,8 @@ public class Parser {
 
 			// not sure if I need init and save to be here
 		default:
-			isValid = false;
 			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_COMMAND);
-			return CommandType.INVALID;
+			throw new InvalidParameterException();
 		}
 	}
 
@@ -412,9 +394,6 @@ public class Parser {
 		case EDIT:
 			return input.substring(5);
 
-		case INVALID:
-			return "INVALID!";
-
 		default:
 			return "";
 
@@ -422,14 +401,14 @@ public class Parser {
 
 	}
 
-	private static String getParam(String remainingInput) {
+	private static String getParam(String remainingInput) throws InvalidParameterException {
 		int indexStartOfParam = remainingInput.indexOf('[');
 		int indexEndOfParam = remainingInput.indexOf(']');
-		
+
 		if(indexStartOfParam == -1 || indexEndOfParam == -1) {
-			isValid = false;
 			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_PARAM_FORMATTING);
-			return remainingInput;
+			throw new InvalidParameterException();
+			//return remainingInput;
 		}
 		indexStartOfParam++; //adjust to get first letter of param
 		remainingInput = remainingInput.substring(indexStartOfParam,
