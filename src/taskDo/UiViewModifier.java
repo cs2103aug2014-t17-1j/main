@@ -2,6 +2,7 @@ package taskDo;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import org.jdesktop.xswingx.PromptSupport;
 
@@ -28,7 +30,6 @@ import org.jdesktop.xswingx.PromptSupport;
  */
 public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	int taskSeq = 1;
-	String command;
 	JFrame mainFrame;
 	JPanel centrePanel;
 	JPanel headerPanel;
@@ -36,8 +37,38 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JPanel btmPanel;
 	JLabel feedBack_msg;
 	JPanel leftHelpPanel;
+	JPanel rightDetailPanel;
+	JTextField commandBox;
 	ArrayList<Task> taskList;
 	Controller controller;
+	String command;
+	String [] helpCommand = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
+			"add [task]",
+			"edit [index]",
+			"delete [index]",
+			"display [date]",
+			"",
+			"<html><i>Common Optional Commands</i></html>",
+			"<html><i>(Addtional commands that works with main commands)</i></html>",
+			"category [name]",
+			"due [duedate]",
+			"from [startdate] to [duedate]",
+			"important [Y/N]",
+			"",
+			"Example: add [Homework1] due [5th oct]",
+			"",
+			"<html><i>Specific Optional Commands</i></html>",
+			"<html><i>(Addtional commands thats only works with specific main commands)</i></html>",
+			"For Edit: task [taskdescription]",
+			"",
+			"Example: edit [index] task [new description]"
+			
+	};
+	String [] shortcuts = { "F1 ==> Help",
+			"F2 ==> View Details",
+			"F3 ==> View Category List"
+			
+	};
 	
 	public UiViewModifier(){
 		controller = new Controller();
@@ -48,60 +79,101 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		 * Centre Panel and scroll pane added 
 		 */
 		centrePanel = new JPanel();
+<<<<<<< HEAD
 		centrePanel.setPreferredSize(new Dimension(100,200));
 		
+=======
+		centrePanel.setPreferredSize(new Dimension(500,400));
+>>>>>>> Jack_UI
 		/*
 		 * Header panel and it lies on North part of JFrame
 		 */
-		headerPanel = new JPanel();
-		lbl_header = new JLabel("HEADER");
-		headerPanel.add(lbl_header);
-		add(headerPanel, BorderLayout.NORTH);
-		
+		initHeaderPanel();
 		/*
 		 * Left Help panel include F1,F2,F3 description
 		 */
 		createLeftHelpPanel();
+		
+		//createRightDetailPanel();
 		
 		generateCentrePanel();
 		
 		initBtmPanel();
 	    
 	    setTitle("Task.Do"); // "super" Frame sets title
-	    setSize(700, 500);         // "super" Frame sets initial size
-	    setVisible(true);   
+	    //setSize(700, 500);         // "super" Frame sets initial size
+	    setVisible(true);  
+	    pack();
 	    addWindowListener(this);
 	    addKeyListener(this);
 	}
 
+	private void initHeaderPanel() {
+		headerPanel = new JPanel();
+		lbl_header = new JLabel();
+		lbl_header.setForeground(ColorBox.colorPool[24]);
+		headerPanel.add(lbl_header);
+		headerPanel.setBackground(Color.BLACK);
+		add(headerPanel, BorderLayout.NORTH);
+	}
+
+	private void createRightDetailPanel() {
+		// TODO Auto-generated method stub
+		rightDetailPanel = new JPanel(new GridLayout(helpCommand.length,1));
+		rightDetailPanel.setPreferredSize(new Dimension(420,400));
+		rightDetailPanel.setBorder(BorderFactory.createTitledBorder(null,"HELP PANEL", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
+		rightDetailPanel.setBackground(Color.BLACK);
+		for(int i = 0 ; i < helpCommand.length; i++){
+			JLabel lbl_helpCommand = new JLabel(helpCommand[i]);
+			lbl_helpCommand.setForeground(ColorBox.colorPool[24]);
+			rightDetailPanel.add(lbl_helpCommand);
+			
+		}
+		add(rightDetailPanel,BorderLayout.EAST);
+	}
+
 	private void createLeftHelpPanel() {
-		leftHelpPanel = new JPanel(new GridLayout(3,1));
-		leftHelpPanel.setBorder(BorderFactory.createTitledBorder("Shortcut"));
-		leftHelpPanel.setPreferredSize(new Dimension(200,150));
-		JLabel label_f1 = new JLabel ("F1 ==> Help");
-		JLabel label_f2 = new JLabel ("F2 ==> View Details");
-		JLabel label_f3 = new JLabel ("F3 ==> View Category List");
-		leftHelpPanel.add(label_f1);
-		leftHelpPanel.add(label_f2);
-		leftHelpPanel.add(label_f3);
+		
+		leftHelpPanel = new JPanel(new GridLayout(shortcuts.length,1));
+		leftHelpPanel.setBorder(BorderFactory.createTitledBorder(null,"SHORTCUTS", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
+		leftHelpPanel.setPreferredSize(new Dimension(200,350));
+		for(int i = 0; i < shortcuts.length; i++){
+			JLabel label_shortcut = new JLabel (shortcuts[i]);
+			label_shortcut.setForeground(ColorBox.colorPool[24]);
+			leftHelpPanel.add(label_shortcut);
+		}
+		leftHelpPanel.setBackground(Color.BLACK);
 		add(leftHelpPanel,BorderLayout.WEST);
 	}
 	
+<<<<<<< HEAD
 	
 
+=======
+>>>>>>> Jack_UI
 	private void initBtmPanel() {
 		btmPanel = new JPanel(new BorderLayout());
 		feedBack_msg = new JLabel("",JLabel.LEFT);
 		feedBack_msg.validate();
+		feedBack_msg.setForeground(ColorBox.colorPool[24]);
 		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
+<<<<<<< HEAD
 	    final JTextField commandBox = initCommandBox();
+=======
+	    initCommandBox();
+>>>>>>> Jack_UI
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
+	    btmPanel.setBackground(Color.BLACK);
 	    add(btmPanel,BorderLayout.SOUTH);
+	    commandBox.requestFocusInWindow();
 	}
 
-	private JTextField initCommandBox() {
-		final JTextField commandBox = new JTextField(); 
-	    PromptSupport.setPrompt("Enter your command here", commandBox);
+	private void initCommandBox() {
+		//final JTextField commandBox = new JTextField(); 
+		commandBox = new JTextField();
+		commandBox.requestFocusInWindow();
+		
+	  //  PromptSupport.setPrompt("Enter your command here", commandBox);
 	    commandBox.addActionListener(new ActionListener(){
 		 	/*
 	    	 * (non-Javadoc)
@@ -111,7 +183,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				 PromptSupport.setPrompt("Enter your command here", commandBox);
+			//	 PromptSupport.setPrompt("Enter your command here", commandBox);
 				
 				 command= commandBox.getText();
 				 controller.setUserCommand(command);
@@ -124,49 +196,75 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	    });
 	   commandBox.addKeyListener(this);
 	   commandBox.setForeground(Color.BLACK);
-		return commandBox;
+
 	}
 
 	private void generateCentrePanel() {
-		taskSeq = 1;
 		taskList = SummaryReport.getDisplayList();
 		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
 		removeAllComponentsFromCentrePanel();
 		refreshFrame();
 		
 		if(taskList.size()!=0){
-			String []columnTitle = {"ID","Description","Due Date"};
+			String []columnTitle = {"ID","Description"," "};
 			JTable contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
 				public boolean isCellEditable(int row, int column){
 					return false;
 				};
 				
 			};
+			setTableCellProperties(contentTable);
+			
 			contentTable.setRowHeight(40);
+			setContentTableColumnWidth(contentTable);
+			contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			contentTable.getTableHeader().setReorderingAllowed(false);
+			contentTable.getTableHeader().setForeground(ColorBox.colorPool[24]);
 			contentTable.getTableHeader().setResizingAllowed(false);
+			contentTable.getTableHeader().setBackground(Color.black);
+			contentTable.setGridColor(Color.CYAN);
+			
 			JScrollPane jsp = new JScrollPane(contentTable);
-			jsp.setBorder(BorderFactory.createTitledBorder("Tasks List"));
+			jsp.setBorder(BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
 			jsp.setPreferredSize(new Dimension(450,380));
+			jsp.setBackground(Color.BLACK);
+			jsp.getViewport().setBackground(Color.BLACK);
 			centrePanel.add(jsp);
 			
 		}
+		centrePanel.setBackground(Color.BLACK);
 		add(centrePanel,BorderLayout.CENTER);
 		refreshFrame();
+	}
+
+	private void setTableCellProperties(JTable contentTable) {
+		for(int i =0 ; i < taskList.size(); i++){
+			contentTable.getColumnModel().getColumn(0).setCellRenderer(new CustomTableRender());
+			contentTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableRender());
+			contentTable.getColumnModel().getColumn(2).setCellRenderer(new CustomTableRender());	
+		}
+	}
+
+	private void setContentTableColumnWidth(JTable contentTable) {
+		contentTable.getColumnModel().getColumn(0).setMaxWidth(20);
+		contentTable.getColumnModel().getColumn(1).setMaxWidth(600);
+		contentTable.getColumnModel().getColumn(2).setMaxWidth(100);
 	}
 	
 	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
 		String tableContent[][] = new String [taskList.size()][3];
-		System.out.println("CHANGE TO TWODARRAY "+taskList.size());
+		System.out.println("CHANGE TO TWOD ARRAY "+taskList.size());
 		for (int i = 0; i < taskList.size(); i++){
 			tableContent[i][0] = (i+1)+"";
 			tableContent[i][1] = taskList.get(i).getDescription();
-			tableContent[i][2] = taskList.get(i).getDueDate().toLocalDate().toString();
+			//tableContent[i][2] = taskList.get(i).getDueDate().toLocalDate().toString();
+			tableContent[i][2] = " ";
  		}
 		return tableContent;
 	}
 
 	private void refreshFrame() {
+		pack();
 		revalidate();
 		repaint();
 	}
@@ -240,9 +338,29 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==KeyEvent.VK_F1){
 			System.out.println("you have entered F1");
+			if(isRightPanelExisting()){
+				remove(rightDetailPanel);
+			}
+			else{
+				createRightDetailPanel();
+			}
+			refreshFrame();
+		}
+		if(arg0.getKeyCode()==KeyEvent.VK_F2){
+			remove(rightDetailPanel);
+			refreshFrame();
 		}
 		System.out.println("You Have Entered "+arg0.getKeyText(arg0.getKeyCode()));
 		
+	}
+	
+	private boolean isRightPanelExisting(){
+		if(rightDetailPanel != null){
+			if(rightDetailPanel.isDisplayable()){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
@@ -253,11 +371,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stu
-		if(arg0.getKeyCode()==KeyEvent.VK_F1){
-			System.out.println("you have entered F1");
-		}
-		System.out.println("KEY IS "+KeyEvent.VK_F1+"   "+arg0.getKeyChar()+" KEY CODE IS "+arg0.getKeyCode());
+		// TODO Auto-generated method stub
 	}
 
 }
