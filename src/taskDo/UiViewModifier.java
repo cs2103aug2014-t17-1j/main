@@ -1,8 +1,8 @@
 package taskDo;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -20,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import org.jdesktop.xswingx.PromptSupport;
 
@@ -37,6 +39,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JLabel feedBack_msg;
 	JPanel leftHelpPanel;
 	JPanel rightDetailPanel;
+	JTextField commandBox;
 	ArrayList<Task> taskList;
 	Controller controller;
 	
@@ -54,10 +57,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		/*
 		 * Header panel and it lies on North part of JFrame
 		 */
-		headerPanel = new JPanel();
-		lbl_header = new JLabel("HEADER");
-		headerPanel.add(lbl_header);
-		add(headerPanel, BorderLayout.NORTH);
+		initHeaderPanel();
 		
 		/*
 		 * Left Help panel include F1,F2,F3 description
@@ -78,6 +78,15 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	    addKeyListener(this);
 	}
 
+	private void initHeaderPanel() {
+		headerPanel = new JPanel();
+		lbl_header = new JLabel("HEADER");
+		lbl_header.setForeground(ColorBox.colorPool[24]);
+		headerPanel.add(lbl_header);
+		headerPanel.setBackground(Color.BLACK);
+		add(headerPanel, BorderLayout.NORTH);
+	}
+
 	private void createRightDetailPanel() {
 		// TODO Auto-generated method stub
 		JLabel test = new JLabel("jkfsjdlf");
@@ -85,20 +94,26 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		rightDetailPanel = new JPanel();
 		rightDetailPanel.add(test);
 		rightDetailPanel.setPreferredSize(new Dimension(400,300));
-		rightDetailPanel.setBorder(BorderFactory.createTitledBorder("HELP PANEL"));
+		rightDetailPanel.setBorder(BorderFactory.createTitledBorder(null,"HELP PANEL", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
+		rightDetailPanel.setBackground(Color.BLACK);
 		add(rightDetailPanel,BorderLayout.EAST);
 	}
 
 	private void createLeftHelpPanel() {
 		leftHelpPanel = new JPanel(new GridLayout(3,1));
-		leftHelpPanel.setBorder(BorderFactory.createTitledBorder("Shortcut"));
+		leftHelpPanel.setBorder(BorderFactory.createTitledBorder(null,"Shortcuts", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
 		leftHelpPanel.setPreferredSize(new Dimension(200,350));
+		
 		JLabel label_f1 = new JLabel ("F1 ==> Help");
 		JLabel label_f2 = new JLabel ("F2 ==> View Details");
 		JLabel label_f3 = new JLabel ("F3 ==> View Category List");
+		label_f1.setForeground(ColorBox.colorPool[24]);
+		label_f2.setForeground(ColorBox.colorPool[24]);
+		label_f3.setForeground(ColorBox.colorPool[24]);
 		leftHelpPanel.add(label_f1);
 		leftHelpPanel.add(label_f2);
 		leftHelpPanel.add(label_f3);
+		leftHelpPanel.setBackground(Color.BLACK);
 		add(leftHelpPanel,BorderLayout.WEST);
 	}
 	
@@ -108,15 +123,21 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		btmPanel = new JPanel(new BorderLayout());
 		feedBack_msg = new JLabel("",JLabel.LEFT);
 		feedBack_msg.validate();
+		feedBack_msg.setForeground(ColorBox.colorPool[24]);
 		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
-	    final JTextField commandBox = initCommandBox();
+	    initCommandBox();
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
+	    btmPanel.setBackground(Color.BLACK);
 	    add(btmPanel,BorderLayout.SOUTH);
+	    commandBox.requestFocusInWindow();
 	}
 
-	private JTextField initCommandBox() {
-		final JTextField commandBox = new JTextField(); 
-	    PromptSupport.setPrompt("Enter your command here", commandBox);
+	private void initCommandBox() {
+		//final JTextField commandBox = new JTextField(); 
+		commandBox = new JTextField();
+		commandBox.requestFocusInWindow();
+		
+	  //  PromptSupport.setPrompt("Enter your command here", commandBox);
 	    commandBox.addActionListener(new ActionListener(){
 		 	/*
 	    	 * (non-Javadoc)
@@ -126,7 +147,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
-				 PromptSupport.setPrompt("Enter your command here", commandBox);
+			//	 PromptSupport.setPrompt("Enter your command here", commandBox);
 				
 				 command= commandBox.getText();
 				 controller.setUserCommand(command);
@@ -139,7 +160,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	    });
 	   commandBox.addKeyListener(this);
 	   commandBox.setForeground(Color.BLACK);
-		return commandBox;
+
 	}
 
 	private void generateCentrePanel() {
@@ -156,19 +177,36 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				};
 				
 			};
+			setTableCellProperties(contentTable);
+			
 			contentTable.setRowHeight(40);
 			setContentTableColumnWidth(contentTable);
 			contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			contentTable.getTableHeader().setReorderingAllowed(false);
+			contentTable.getTableHeader().setForeground(ColorBox.colorPool[24]);
 			contentTable.getTableHeader().setResizingAllowed(false);
+			contentTable.getTableHeader().setBackground(Color.black);
+			contentTable.setGridColor(Color.CYAN);
+			
 			JScrollPane jsp = new JScrollPane(contentTable);
-			jsp.setBorder(BorderFactory.createTitledBorder("Tasks List"));
+			jsp.setBorder(BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
 			jsp.setPreferredSize(new Dimension(450,380));
+			jsp.setBackground(Color.BLACK);
+			jsp.getViewport().setBackground(Color.BLACK);
 			centrePanel.add(jsp);
 			
 		}
+		centrePanel.setBackground(Color.BLACK);
 		add(centrePanel,BorderLayout.CENTER);
 		refreshFrame();
+	}
+
+	private void setTableCellProperties(JTable contentTable) {
+		for(int i =0 ; i < taskList.size(); i++){
+			contentTable.getColumnModel().getColumn(0).setCellRenderer(new CustomTableRender());
+			contentTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableRender());
+			contentTable.getColumnModel().getColumn(2).setCellRenderer(new CustomTableRender());	
+		}
 	}
 
 	private void setContentTableColumnWidth(JTable contentTable) {
