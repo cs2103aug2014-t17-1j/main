@@ -26,8 +26,7 @@ public class CommandActionAdd implements CommandAction{
 	@Override
 	public void updateSummaryReport(){
 		Search search = new Search();
-		search.setDueDate(ParsedResult.getTaskDetails().getDueDate());
-		search.searchDueDate();
+		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
 		
 		SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
 		SummaryReport.setFeedBackMsg("Added successfully");	

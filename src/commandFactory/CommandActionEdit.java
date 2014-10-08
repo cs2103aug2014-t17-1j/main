@@ -14,8 +14,7 @@ public class CommandActionEdit implements CommandAction {
 		ArrayList<Task> taskList = storageListInstance.getTaskList();
 		
 		Search search = new Search();
-		search.setId(ParsedResult.getTaskDetails().getId());
-		search.searchById();
+		search.searchById(ParsedResult.getTaskDetails().getId());
 		if(search.getTaskIndex() != -1){
 			taskList.remove(search.getTaskIndex());
 		}
@@ -29,8 +28,7 @@ public class CommandActionEdit implements CommandAction {
 	@Override
 	public void updateSummaryReport(){
 		Search search = new Search();
-		search.setDueDate(ParsedResult.getTaskDetails().getDueDate());
-		search.searchDueDate();
+		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
 		
 		SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
 		SummaryReport.setFeedBackMsg("Edited successfully");	
