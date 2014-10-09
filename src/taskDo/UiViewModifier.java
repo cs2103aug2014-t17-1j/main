@@ -92,11 +92,12 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		//createRightDetailPanel();
 		
 		generateCentrePanel();
-		
 		initBtmPanel();
-	    
-	    setTitle("Task.Do"); // "super" Frame sets title
-	    //setSize(700, 500);         // "super" Frame sets initial size
+	    setJFrameProperties();
+	}
+
+	private void setJFrameProperties() {
+		setTitle("Task.Do"); 
 	    setVisible(true);
 	    setResizable(false);
 	    pack();
