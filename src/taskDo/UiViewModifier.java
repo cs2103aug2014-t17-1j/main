@@ -33,6 +33,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JLabel lbl_header;
 	JPanel btmPanel;
 	JLabel feedBack_msg;
+
 	JPanel leftHelpPanel;
 	JPanel rightDetailPanel;
 	JTextField commandBox;
@@ -96,7 +97,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	    
 	    setTitle("Task.Do"); // "super" Frame sets title
 	    //setSize(700, 500);         // "super" Frame sets initial size
-	    setVisible(true);  
+	    setVisible(true);
+	    setResizable(false);
 	    pack();
 	    addWindowListener(this);
 	    addKeyListener(this);
