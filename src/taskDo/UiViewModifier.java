@@ -23,6 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Highlighter;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -164,6 +166,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	private void initCommandBox() {
 		//final JTextField commandBox = new JTextField(); 
 		commandBox = new JTextField();
+		commandBox.setText("Enter your command here" );
+		commandBox.selectAll();
 		commandBox.requestFocusInWindow();
 		
 	  //  PromptSupport.setPrompt("Enter your command here", commandBox);
