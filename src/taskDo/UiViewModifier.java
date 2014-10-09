@@ -7,6 +7,8 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -33,9 +35,10 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JLabel lbl_header;
 	JPanel btmPanel;
 	JLabel feedBack_msg;
-
 	JPanel leftHelpPanel;
 	JPanel rightDetailPanel;
+	JTable contentTable;
+	JScrollPane jsp;
 	JTextField commandBox;
 	ArrayList<Task> taskList;
 	Controller controller;
@@ -46,7 +49,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			"delete [index]",
 			"display [date]",
 			"",
-			"<html><i>Common Optional Commands</i></html>",
+			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
 			"<html><i>(Addtional commands that works with main commands)</i></html>",
 			"category [name]",
 			"due [duedate]",
@@ -55,7 +58,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			"",
 			"Example: add [Homework1] due [5th oct]",
 			"",
-			"<html><i>Specific Optional Commands</i></html>",
+			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
 			"<html><i>(Addtional commands thats only works with specific main commands)</i></html>",
 			"For Edit: task [taskdescription]",
 			"",
@@ -151,11 +154,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		feedBack_msg.validate();
 		feedBack_msg.setForeground(ColorBox.colorPool[24]);
 		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
-
-
-
 	    initCommandBox();
-
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    btmPanel.setBackground(Color.BLACK);
 	    add(btmPanel,BorderLayout.SOUTH);
@@ -201,7 +200,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		
 		if(taskList.size()!=0){
 			String []columnTitle = {"ID","Description"," "};
-			JTable contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
+			contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
 				public boolean isCellEditable(int row, int column){
 					return false;
 				};
@@ -218,12 +217,31 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			contentTable.getTableHeader().setBackground(Color.black);
 			contentTable.setGridColor(Color.CYAN);
 			
-			JScrollPane jsp = new JScrollPane(contentTable);
-			jsp.setBorder(BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
+			jsp = new JScrollPane(contentTable);
+			final TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]);
+			jsp.setBorder(jScrollTitledBorder);
 			jsp.setPreferredSize(new Dimension(450,380));
 			jsp.setBackground(Color.BLACK);
 			jsp.getViewport().setBackground(Color.BLACK);
 			centrePanel.add(jsp);
+			contentTable.setRowSelectionInterval(0, 0);
+			contentTable.requestFocus();
+			contentTable.setFocusable(true);
+			contentTable.addFocusListener(new FocusListener(){
+
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					contentTable.changeSelection(1, 1, false, false);
+				}
+
+				@Override
+				public void focusLost(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
 			
 		}
 		centrePanel.setBackground(Color.BLACK);
