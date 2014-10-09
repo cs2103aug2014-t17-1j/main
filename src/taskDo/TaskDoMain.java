@@ -18,8 +18,7 @@ public class TaskDoMain {
 		 *Testing for integration of all the controller,executor, parser and UI
 		 * 
 		 */
-		StorageList strageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = strageListInstance.getTaskList();
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		System.out.println(taskList);
 		SummaryReport.setDisplayList(taskList);
 		UiViewModifier uiVM = new UiViewModifier();

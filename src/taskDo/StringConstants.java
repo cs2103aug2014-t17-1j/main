@@ -5,5 +5,9 @@ package taskDo;
  */
 
 public class StringConstants {
-	public static final String fefkef= "jfksdfj";
+	public static final String PARSER_MSG_SHOW_fefkef= "jfksdfj";
+
+	/*
+	 * @hugag
+	 */
 }
