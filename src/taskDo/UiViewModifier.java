@@ -7,6 +7,8 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
@@ -26,6 +28,7 @@ import javax.swing.border.TitledBorder;
  * @author Paing Zin Oo(Jack)
  */
 public class UiViewModifier extends Frame implements KeyListener,WindowListener{
+	int typeCount = 0;
 	int taskSeq = 1;
 	JFrame mainFrame;
 	JPanel centrePanel;
@@ -35,6 +38,8 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	JLabel feedBack_msg;
 	JPanel leftHelpPanel;
 	JPanel rightDetailPanel;
+	JTable contentTable;
+	JScrollPane jsp;
 	JTextField commandBox;
 	ArrayList<Task> taskList;
 	Controller controller;
@@ -45,16 +50,16 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			"delete [index]",
 			"display [date]",
 			"",
-			"<html><i>Common Optional Commands</i></html>",
+			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
 			"<html><i>(Addtional commands that works with main commands)</i></html>",
 			"category [name]",
 			"due [duedate]",
 			"from [startdate] to [duedate]",
-			"important [Y/N]",
+			"impt [Y/N]",
 			"",
 			"Example: add [Homework1] due [5th oct]",
 			"",
-			"<html><i>Specific Optional Commands</i></html>",
+			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
 			"<html><i>(Addtional commands thats only works with specific main commands)</i></html>",
 			"For Edit: task [taskdescription]",
 			"",
@@ -91,12 +96,14 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		//createRightDetailPanel();
 		
 		generateCentrePanel();
-		
 		initBtmPanel();
-	    
-	    setTitle("Task.Do"); // "super" Frame sets title
-	    //setSize(700, 500);         // "super" Frame sets initial size
-	    setVisible(true);  
+	    setJFrameProperties();
+	}
+
+	private void setJFrameProperties() {
+		setTitle("Task.Do"); 
+	    setVisible(true);
+	    setResizable(false);
 	    pack();
 	    addWindowListener(this);
 	    addKeyListener(this);
@@ -148,11 +155,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		feedBack_msg.validate();
 		feedBack_msg.setForeground(ColorBox.colorPool[24]);
 		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
-
-
-
 	    initCommandBox();
-
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    btmPanel.setBackground(Color.BLACK);
 	    add(btmPanel,BorderLayout.SOUTH);
@@ -162,6 +165,10 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	private void initCommandBox() {
 		//final JTextField commandBox = new JTextField(); 
 		commandBox = new JTextField();
+		if(typeCount == 0 ){
+			setIntroTextInCommandBox();
+		}
+		
 		commandBox.requestFocusInWindow();
 		
 	  //  PromptSupport.setPrompt("Enter your command here", commandBox);
@@ -180,14 +187,18 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 				 controller.setUserCommand(command);
 				 controller.parseToParser();
 				 commandBox.setText("");
-				
 				 System.out.println(command);
 			}
 	    	
 	    });
 	   commandBox.addKeyListener(this);
-	   commandBox.setForeground(Color.BLACK);
 
+	}
+
+	private void setIntroTextInCommandBox() {
+		commandBox.setForeground(Color.GRAY);
+		commandBox.setText("Enter your command here" );
+		
 	}
 
 	private void generateCentrePanel() {
@@ -195,10 +206,9 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
 		removeAllComponentsFromCentrePanel();
 		refreshFrame();
-		
 		if(taskList.size()!=0){
 			String []columnTitle = {"ID","Description"," "};
-			JTable contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
+			contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
 				public boolean isCellEditable(int row, int column){
 					return false;
 				};
@@ -215,17 +225,43 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			contentTable.getTableHeader().setBackground(Color.black);
 			contentTable.setGridColor(Color.CYAN);
 			
-			JScrollPane jsp = new JScrollPane(contentTable);
-			jsp.setBorder(BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
-			jsp.setPreferredSize(new Dimension(450,380));
-			jsp.setBackground(Color.BLACK);
-			jsp.getViewport().setBackground(Color.BLACK);
+			setJScrollPanePropCentrePane();
 			centrePanel.add(jsp);
+			contentTable.setRowSelectionInterval(0, 0);
+			contentTable.setRowSelectionAllowed(true);
+			contentTable.setColumnSelectionAllowed(false);
+			contentTable.changeSelection(1, 1, false, false);
+			//contentTable.requestFocus();
+			contentTable.setFocusable(true);
+			contentTable.addFocusListener(new FocusListener(){
+
+				@Override
+				public void focusGained(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					contentTable.changeSelection(1, 1, false, false);
+				}
+
+				@Override
+				public void focusLost(FocusEvent arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
 			
 		}
 		centrePanel.setBackground(Color.BLACK);
 		add(centrePanel,BorderLayout.CENTER);
 		refreshFrame();
+	}
+
+	private void setJScrollPanePropCentrePane() {
+		jsp = new JScrollPane(contentTable);
+		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]);
+		jsp.setBorder(jScrollTitledBorder);
+		jsp.setPreferredSize(new Dimension(450,380));
+		jsp.setBackground(Color.BLACK);
+		jsp.getViewport().setBackground(Color.BLACK);
 	}
 
 	private void setTableCellProperties(JTable contentTable) {
@@ -267,7 +303,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
 		lbl_header.setText(SummaryReport.getHeader());
 		generateCentrePanel();
-		
 	}
 
 	public String getCommand() {
@@ -326,6 +361,11 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
+		if(typeCount == 0){
+			commandBox.setText("");
+			commandBox.setForeground(Color.BLACK);
+		}
+		typeCount++;
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==KeyEvent.VK_F1){
 			System.out.println("you have entered F1");

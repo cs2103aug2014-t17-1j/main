@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class StorageList {
 	private static StorageList storageList = new StorageList();
-	private  ArrayList<Task> mainTaskList = new ArrayList<Task>();
+	private ArrayList<Task> mainTaskList = new ArrayList<Task>();
 	
 	private StorageList(){
 		

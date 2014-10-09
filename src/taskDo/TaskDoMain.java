@@ -1,7 +1,10 @@
 package taskDo;
 import java.util.ArrayList;
 
-import commandFactory.CommandType;
+import org.joda.time.DateTime;
+
+import readAndWriteFile.ConvertToJSonObject;
+import readAndWriteFile.ReadAndWriteToFile;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -18,8 +21,8 @@ public class TaskDoMain {
 		 *Testing for integration of all the controller,executor, parser and UI
 		 * 
 		 */
-		StorageList strageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = strageListInstance.getTaskList();
+		
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		System.out.println(taskList);
 		SummaryReport.setDisplayList(taskList);
 		UiViewModifier uiVM = new UiViewModifier();
@@ -27,15 +30,33 @@ public class TaskDoMain {
 		controller.setUiViewModifier(uiVM);
 		
 
+		//Testing for JSON OBJ
 		
-//		
+//		ArrayList<Task> taskList = new ArrayList<Task>();
 //		Task t1 = new Task("CS 2103");
 //		Task t2 = new Task ("CS 1111");
 //		Task t3 = new Task ("jsfkdlfjk");
-//		
+//		t1.setDueDate(new DateTime(0,1,1,0,0));	
 //		taskList.add(t3);
 //		taskList.add(t1);
 //		taskList.add(t2);
+//		ConvertToJSonObject ctj = new ConvertToJSonObject();
+//		ctj.setTaskList(taskList);
+//		System.out.println(ctj.changeToJSonObj());
+//		ReadAndWriteToFile rwf = new ReadAndWriteToFile();
+//		rwf.setjSonText(ctj.changeToJSonObj());
+//		System.out.println(rwf.writeToFile());
+//		
+//		ArrayList<Task> taskLIST = rwf.readFromFile();
+//		for(Task task : taskLIST){
+//			if(task.getDueDate() == null){
+//				task.setDueDate(new DateTime(0,1,1,0,0));
+//				System.out.println("HERE");
+//			}
+//			System.out.println("TASK DES "+ task.getDescription() + " DATE "+ task.getDueDate().toLocalDate().toString());
+//		}
+//		
+		
 //		SummaryReport.setDsiplayList(taskList);
 //		UiViewModifier ui = new UiViewModifier();
 //		SummaryReport.setFeedBackMsg(null);
