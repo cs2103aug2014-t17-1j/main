@@ -5,9 +5,12 @@ package taskDo;
  */
 
 public class StringConstants {
-	public static final String PARSER_MSG_SHOW_fefkef= "jfksdfj";
-
 	/*
-	 * @hugag
+	 *  @author Paing Zin Oo(Jack)
 	 */
+	
+	public static final String FILENAME = "TaskDo.json";
+	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed"} ;
+
+
 }

@@ -2,8 +2,10 @@ package readAndWriteFile;
 
 import java.util.ArrayList;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import taskDo.StringConstants;
 import taskDo.Task;
 /*
  * @author Paing Zin Oo(Jack)
@@ -21,29 +23,30 @@ public class ConvertToJSonObject {
 	
 	@SuppressWarnings("unchecked")
 	public String changeToJSonObj(){
-		String taskListResult = "";
+		JSONArray tasks = new JSONArray();
 		for (int i = 0 ; i < taskList.size(); i++){
 			Task task = taskList.get(i);
 			JSONObject taskJSonObj = new JSONObject();
-			taskJSonObj.put("category", task.getCategory());
-			taskJSonObj.put("description", task.getDescription());
-			taskJSonObj.put("important", task.isImportant());
+			taskJSonObj.put(StringConstants.TASKKEYS[0], task.getCategory());
+			taskJSonObj.put(StringConstants.TASKKEYS[1], task.getDescription());
+			taskJSonObj.put(StringConstants.TASKKEYS[2], task.isImportant());
 			if(task.getDueDate() == null){
-				taskJSonObj.put("dueDate", "");
+				taskJSonObj.put(StringConstants.TASKKEYS[3], "");
 				
 			}else{
-				taskJSonObj.put("dueDate", task.getDueDate().toString());
+				taskJSonObj.put(StringConstants.TASKKEYS[3], task.getDueDate().toString());
 			}
 			if(task.getStartDate() == null){
-				taskJSonObj.put("startDate", "");
+				taskJSonObj.put(StringConstants.TASKKEYS[4], "");
 			}else{
-				taskJSonObj.put("startDate", task.getStartDate().toString());
+				taskJSonObj.put(StringConstants.TASKKEYS[4], task.getStartDate().toString());
 			}
-			taskJSonObj.put("completed", task.isCompleted());
-			taskListResult += taskJSonObj.toString();
+			taskJSonObj.put(StringConstants.TASKKEYS[5], task.isCompleted());
+			tasks.add(taskJSonObj);
+			
 			
 		}
-		return taskListResult;
+		return tasks.toJSONString();
 	}
 	
 }
