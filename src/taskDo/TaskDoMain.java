@@ -1,7 +1,9 @@
 package taskDo;
 import java.util.ArrayList;
 
-import commandFactory.CommandType;
+import org.joda.time.DateTime;
+
+import readAndWriteFile.ConvertToJSonObject;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -18,23 +20,28 @@ public class TaskDoMain {
 		 *Testing for integration of all the controller,executor, parser and UI
 		 * 
 		 */
-		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
-		System.out.println(taskList);
-		SummaryReport.setDisplayList(taskList);
-		UiViewModifier uiVM = new UiViewModifier();
-		Controller controller = uiVM.getControllerObject();
-		controller.setUiViewModifier(uiVM);
+		
+//		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+//		System.out.println(taskList);
+//		SummaryReport.setDisplayList(taskList);
+//		UiViewModifier uiVM = new UiViewModifier();
+//		Controller controller = uiVM.getControllerObject();
+//		controller.setUiViewModifier(uiVM);
 		
 
+		//Testing for JSON OBJ
 		
-//		
-//		Task t1 = new Task("CS 2103");
-//		Task t2 = new Task ("CS 1111");
-//		Task t3 = new Task ("jsfkdlfjk");
-//		
-//		taskList.add(t3);
-//		taskList.add(t1);
-//		taskList.add(t2);
+		ArrayList<Task> taskList = new ArrayList<Task>();
+		Task t1 = new Task("CS 2103");
+		Task t2 = new Task ("CS 1111");
+		Task t3 = new Task ("jsfkdlfjk");
+		t1.setDueDate(new DateTime(0,1,1,0,0));	
+		taskList.add(t3);
+		taskList.add(t1);
+		taskList.add(t2);
+		ConvertToJSonObject ctj = new ConvertToJSonObject();
+		ctj.setTaskList(taskList);
+		System.out.print(ctj.changeToJSonObj());
 //		SummaryReport.setDsiplayList(taskList);
 //		UiViewModifier ui = new UiViewModifier();
 //		SummaryReport.setFeedBackMsg(null);
