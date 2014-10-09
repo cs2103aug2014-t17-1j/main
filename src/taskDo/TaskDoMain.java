@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 
 import readAndWriteFile.ConvertToJSonObject;
+import readAndWriteFile.ReadAndWriteToFile;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -42,6 +43,9 @@ public class TaskDoMain {
 		ConvertToJSonObject ctj = new ConvertToJSonObject();
 		ctj.setTaskList(taskList);
 		System.out.print(ctj.changeToJSonObj());
+		ReadAndWriteToFile rwf = new ReadAndWriteToFile();
+		rwf.setjSonText(ctj.changeToJSonObj());
+		System.out.print(rwf.writeToFile());
 //		SummaryReport.setDsiplayList(taskList);
 //		UiViewModifier ui = new UiViewModifier();
 //		SummaryReport.setFeedBackMsg(null);
