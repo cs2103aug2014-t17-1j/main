@@ -1,5 +1,8 @@
 package commandFactory;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import taskDo.ParsedResult;
 import taskDo.StorageList;
 import taskDo.StringConstants;
@@ -10,7 +13,7 @@ public class CommandActionDelete implements CommandAction{
 	public void execute(){		
 		Search search = new Search();
 		search.searchById(ParsedResult.getTaskDetails().getId());
-		if(search.getTaskIndex() != -1){
+		if(search.getTaskIndex() != StringConstants.NO_TASK){
 			StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
 		}
 	}
@@ -25,12 +28,18 @@ public class CommandActionDelete implements CommandAction{
 		Search search = new Search();
 		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
 		
-		if(ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == 0) {
+		if(isSomeday()) {
 			SummaryReport.setHeader(StringConstants.MESSAGE_SOMEDAY);
 		} else {
-			SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
+			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+			String dateDisplay = dateFormat.print(ParsedResult.getTaskDetails().getDueDate().toLocalDate());
+			SummaryReport.setHeader(dateDisplay);
 		}
 		SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_SUCCESS_DELETE);	
 		SummaryReport.setDisplayList(search.getReturnList());
+	}
+	
+	private boolean isSomeday() {
+		return ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == StringConstants.NILL_YEAR;
 	}
 }
