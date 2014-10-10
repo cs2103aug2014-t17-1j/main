@@ -1,26 +1,19 @@
 package commandFactory;
 
-import java.util.ArrayList;
-
 import taskDo.ParsedResult;
 import taskDo.StorageList;
 import taskDo.SummaryReport;
-import taskDo.Task;
-
 
 public class CommandActionDelete implements CommandAction{
 	private static final String MESSAGE_SOMEDAY = "Someday";
 	private static final String MESSAGE_SUCCESS_DELETE = "Deleted successfully";
 	
 	@Override
-	public void execute(){
-		StorageList storageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = storageListInstance.getTaskList();
-		
+	public void execute(){		
 		Search search = new Search();
 		search.searchById(ParsedResult.getTaskDetails().getId());
 		if(search.getTaskIndex() != -1){
-			taskList.remove(search.getTaskIndex());
+			StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
 		}
 	}
 	

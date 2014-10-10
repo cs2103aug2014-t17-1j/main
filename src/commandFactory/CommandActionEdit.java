@@ -1,11 +1,8 @@
 package commandFactory;
 
-import java.util.ArrayList;
-
 import taskDo.ParsedResult;
 import taskDo.StorageList;
 import taskDo.SummaryReport;
-import taskDo.Task;
 
 public class CommandActionEdit implements CommandAction {
 	private static final String MESSAGE_SOMEDAY = "Someday";
@@ -13,16 +10,13 @@ public class CommandActionEdit implements CommandAction {
 	
 	@Override
 	public void execute(){
-		StorageList storageListInstance = StorageList.getInstance();
-		ArrayList<Task> taskList = storageListInstance.getTaskList();
-		
 		Search search = new Search();
 		search.searchById(ParsedResult.getTaskDetails().getId());
 		if(search.getTaskIndex() != -1){
-			taskList.remove(search.getTaskIndex());
+			StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
 		}
 		
-		taskList.add(ParsedResult.getTaskDetails());
+		StorageList.getInstance().getTaskList().add(ParsedResult.getTaskDetails());
 	}
 	
 	@Override
