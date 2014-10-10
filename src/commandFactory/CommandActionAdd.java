@@ -2,15 +2,10 @@ package commandFactory;
 
 import taskDo.ParsedResult;
 import taskDo.StorageList;
+import taskDo.StringConstants;
 import taskDo.SummaryReport;
 
-
 public class CommandActionAdd implements CommandAction{
-	
-	private static final String MESSAGE_SOMEDAY = "Someday";
-	private static final String MESSAGE_SUCCESS_ADD = "Added successfully";
-
-	
 	@Override
 	public void execute(){
 		StorageList.getInstance().getTaskList().add(ParsedResult.getTaskDetails());
@@ -27,11 +22,11 @@ public class CommandActionAdd implements CommandAction{
 		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
 		
 		if(ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == 0) {
-			SummaryReport.setHeader(MESSAGE_SOMEDAY);
+			SummaryReport.setHeader(StringConstants.MESSAGE_SOMEDAY);
 		} else {
 			SummaryReport.setHeader(ParsedResult.getTaskDetails().getDueDate().toLocalDate().toString());
 		}
-		SummaryReport.setFeedBackMsg(MESSAGE_SUCCESS_ADD);	
+		SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_SUCCESS_ADD);	
 		SummaryReport.setDisplayList(search.getReturnList());
 	}
 }

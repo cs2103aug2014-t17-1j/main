@@ -11,9 +11,6 @@ public class Search {
 	ArrayList<Task> returnList;
 	SearchType searchType;
 	
-	StorageList storageListInstance = StorageList.getInstance();
-	ArrayList<Task> taskList = storageListInstance.getTaskList();
-	
 	public int getTaskIndex() {
 		return taskIndex;
 	}
@@ -47,9 +44,9 @@ public class Search {
 
 	public void searchById(int id){
 		
-		for(Task task: taskList){
+		for(Task task: StorageList.getInstance().getTaskList()){
 			if(id == task.getId()){
-				taskIndex = taskList.indexOf(task);
+				taskIndex = StorageList.getInstance().getTaskList().indexOf(task);
 				break;
 			}
 		}
@@ -57,7 +54,7 @@ public class Search {
 	
 	public void searchDueDate(DateTime dueDate) {
 		
-		for(Task task: taskList){
+		for(Task task: StorageList.getInstance().getTaskList()){
 			if(task.getDueDate().toLocalDate().equals(dueDate.toLocalDate())){
 				returnList.add(task);
 			}
