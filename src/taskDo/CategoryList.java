@@ -21,12 +21,12 @@ public class CategoryList {
 	}
 
 	//Mutator
-	public static boolean addCategory(String name) {
+	public boolean addCategory(String name) {
 		categoryList.add(new Category(name));
 		return true;
 	}
 
-	public static boolean deleteCategory(String name) {
+	public boolean deleteCategory(String name) {
 		for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
 				categoryList.remove(i);
@@ -37,7 +37,7 @@ public class CategoryList {
 	}
 
 	//Extra methods
-	public static boolean isExistingCatgory(String name) {
+	public boolean isExistingCatgory(String name) {
 		for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
 				return true;
