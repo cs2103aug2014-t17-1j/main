@@ -41,7 +41,9 @@ public class Parser {
 		try {
 			String commandWord = getCommandWord(input);
 			CommandType command = identifyCommand(commandWord.toLowerCase());
-
+			if(commandDoesNotRequireParam(command)) {
+				return true;
+			}
 			String remainingInput = removeCommandWord(input, command);
 			String commandParam = getParam(remainingInput);
 
@@ -71,6 +73,14 @@ public class Parser {
 				.toLocalDate().toString("dd/MM/yyyy"));
 		System.out.println(ParsedResult.getTaskDetails().getDueDate()
 				.toLocalTime().toString("HH:mm"));  */
+	}
+
+	private static boolean commandDoesNotRequireParam(CommandType command) {
+		
+		if(command == CommandType.UNDO || command == CommandType.SAVE)
+			return true;
+		
+		return false;
 	}
 
 	private static String identifyOptionalCommandAndUpdate(String remainingInput) throws InvalidParameterException {
