@@ -4,11 +4,11 @@ package taskDo;
  */
 public class Category {
 	private String name;
-	private int count;
+	private static int count;
 	
 	public Category(String name){
 		this.name = name;
-		this.count = 0;
+		count = 1;
 	}
 	
 	public String getName() {
@@ -20,8 +20,8 @@ public class Category {
 	public int getCount() {
 		return count;
 	}
-	public void setCount(int count) {
-		this.count = count;
+	public void setCount(int newCount) {
+		count = newCount;
 	}
 	
 	
