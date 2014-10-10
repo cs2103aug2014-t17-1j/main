@@ -1,12 +1,11 @@
 package taskDo;
 
-import java.awt.List;
 import java.util.ArrayList;
 
 public class CategoryList {
 
 	//Members
-	private ArrayList<Category> categoryList = new ArrayList<Category>();;
+	private static ArrayList<Category> categoryList;
 
 	//Constructor
 	private CategoryList() {
@@ -14,17 +13,20 @@ public class CategoryList {
 	}
 
 	//Accessor
-	public ArrayList<Category> getCategoryList() {
+	public static ArrayList<Category> getCategoryList() {
+		if(categoryList == null) {
+			categoryList = new ArrayList<Category>();
+		}
 		return categoryList;
 	}
 
 	//Mutator
-	public boolean addCategory(String name) {
+	public static boolean addCategory(String name) {
 		categoryList.add(new Category(name));
 		return true;
 	}
 
-	public boolean deleteCategory(String name) {
+	public static boolean deleteCategory(String name) {
 		for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
 				categoryList.remove(i);
@@ -35,7 +37,7 @@ public class CategoryList {
 	}
 
 	//Extra methods
-	public boolean isExistingCatgory(String name) {
+	public static boolean isExistingCatgory(String name) {
 		for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
 				return true;
@@ -43,5 +45,6 @@ public class CategoryList {
 		}
 		return false;
 	}
+	
 }
 
