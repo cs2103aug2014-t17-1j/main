@@ -8,7 +8,7 @@ public class Category {
 	
 	public Category(String name){
 		this.name = name;
-		this.count = 0;
+		this.count = 1;
 	}
 	
 	public String getName() {
@@ -18,11 +18,17 @@ public class Category {
 		this.name = name;
 	}
 	public int getCount() {
-		return count;
+		return this.count;
 	}
 	public void setCount(int count) {
 		this.count = count;
 	}
-	
+	public void addCount() {
+		this.count++;
+	}
+	public void decreaseCount() {
+		this.count--;
+	}
+ 	
 	
 }
