@@ -1,15 +1,14 @@
 package commandFactory;
 
-import taskDo.ParsedResult;
+import taskDo.History;
 
 public class CommandActionUndo implements CommandAction{
 	@Override
 	public void execute(){		
-//		pop command 
 		UndoCommandFactory undoCommandFactory = new UndoCommandFactory();
 		UndoAction undoAction = null;
 		
-		undoAction = undoCommandFactory.getUndoAction(commandType);
+		undoAction = undoCommandFactory.getUndoAction(History.getCommandHistory().pop());
 		undoAction.undo();
 	}
 }

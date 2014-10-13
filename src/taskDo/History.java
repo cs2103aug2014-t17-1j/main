@@ -7,10 +7,16 @@ import commandFactory.CommandType;
 
 public class History {
 
-	private Stack<CommandType> commandHistory = new Stack<CommandType>();
-	private Stack<ArrayList<Task>> taskHistory = new Stack<ArrayList<Task>>();
+	private static Stack<CommandType> commandHistory = new Stack<CommandType>();
+	private static Stack<ArrayList<Task>> taskHistory = new Stack<ArrayList<Task>>();
 	
-	public History() {}
-	
-//	public static Stack getCommandType
+	private History() {}
+
+	public static Stack<CommandType> getCommandHistory() {
+		return commandHistory;
+	}
+
+	public static Stack<ArrayList<Task>> getTaskHistory() {
+		return taskHistory;
+	}
 }
