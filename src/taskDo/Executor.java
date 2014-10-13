@@ -5,6 +5,10 @@ import commandFactory.CommandFactory;
 import commandFactory.CommandType;
 
 public class Executor {
+	public void Executor() {
+//		StorageList.getInstance().loadFile();
+	}
+	
 	public void execute() {
 		CommandFactory commandFactory = new CommandFactory();
 		CommandType commandType = ParsedResult.getCommandType();
@@ -15,6 +19,7 @@ public class Executor {
 		} else {
 			commandAction = commandFactory.getCommandAction(commandType);
 			commandAction.execute();
+//			StorageList.getInstance().save();
 			// push commandAction into stack
 		}
 		commandAction.updateSummaryReport();
