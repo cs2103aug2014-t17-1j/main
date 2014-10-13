@@ -17,6 +17,6 @@ public class Executor {
 		commandAction = commandFactory.getCommandAction(commandType);
 		commandAction.execute();
 //		StorageList.getInstance().save();
-		commandAction.updateSummaryReport();
+		UpdateSummaryReport.update(commandType);
 	}
 }
