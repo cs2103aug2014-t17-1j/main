@@ -13,19 +13,6 @@ import commandFactory.CommandType;
 
 public class Parser {
 
-	private static String[] dateFormats = { "dd/MM/yyyy", "yyyy/MM/dd", "dd-MM-yyyy", "yyyy-MM-dd" };
-	private static final int DATE_FORMAT_ITERATIONS = 4;
-
-	private static final String MESSAGE_INVALID_COMMAND = "INVALID COMMAND!";
-	private static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "INVALID OPTIONAL COMMAND!";
-	private static final String MESSAGE_INVALID_DATE = "DATE NOT RECOGNIZED!";
-	private static final String MESSAGE_INVALID_DISPLAY_SELECTION = "EITHER CATEGORY DOES NOT EXIST OR DATE NOT RECOGNIZED!";
-	private static final String MESSAGE_INVALID_SELECTION = "INVALID SELECTION!";
-	private static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "IMPORTANCE LEVEL NOT RECOGNIZED!";
-	private static final String MESSAGE_INVALID_PARAM_FORMATTING = "MISSING [] BRACKETS FOR COMMAND PARAMETER";
-
-	private static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
-
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TASK
 	}
@@ -55,7 +42,7 @@ public class Parser {
 				remainingInput = identifyOptionalCommandAndUpdate(remainingInput);
 			}
 			if(ParsedResult.getTaskDetails().getDueDate() == null) {
-				ParsedResult.getTaskDetails().setDueDate(SOMEDAY);
+				ParsedResult.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
 			}
 			return true;
 		}
@@ -106,13 +93,13 @@ public class Parser {
 		switch (command) {
 		case DUE:
 			if(noDeadLine(commandParam)) {
-				task.setDueDate(SOMEDAY);
+				task.setDueDate(StringConstants.SOMEDAY);
 				task.setStartDate(null);
 				break;
 			}
 			date = getDate(commandParam);
 			if (date == null) {
-				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
@@ -123,7 +110,7 @@ public class Parser {
 		case FROM:
 			date = getDate(commandParam);
 			if (date == null) {
-				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			} else {
 				task.setStartDate(date);
@@ -133,7 +120,7 @@ public class Parser {
 		case TO:
 			date = getDate(commandParam);
 			if (date == null) {
-				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DATE);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
@@ -156,7 +143,7 @@ public class Parser {
 				task.setImportant(false);
 			}
 			else {
-				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_IMPORTANCE_PARAM);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_IMPORTANCE_PARAM);
 				throw new InvalidParameterException();
 			}
 			break;
@@ -179,9 +166,9 @@ public class Parser {
 		DateTimeFormatter df;
 		DateTime date;
 		List<DateGroup> group;
-		for (int i = 0; i < DATE_FORMAT_ITERATIONS; i++) {
+		for (int i = 0; i < StringConstants.DATE_FORMAT_ITERATIONS; i++) {
 			try {
-				df = DateTimeFormat.forPattern(dateFormats[i]);
+				df = DateTimeFormat.forPattern(StringConstants.dateFormats[i]);
 				date = df.parseDateTime(commandParam);
 				group = parser.parse(date.toString());
 				DateTime dates = new DateTime(group.get(0).getDates().get(0));
@@ -268,7 +255,7 @@ public class Parser {
 			return OptionalCommand.TASK;
 
 		default:
-			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_OPTIONAL_COMMAND);
+			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_OPTIONAL_COMMAND);
 			throw new InvalidParameterException();
 		}
 
@@ -290,7 +277,7 @@ public class Parser {
 
 			}
 			else {
-				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
 				throw new InvalidParameterException();
 			}
 			break;
@@ -301,7 +288,7 @@ public class Parser {
 				ParsedResult.setTask(SummaryReport.getDisplayList().get(selection));
 			}
 			else {
-				SummaryReport.setFeedBackMsg(MESSAGE_INVALID_SELECTION);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
 				throw new InvalidParameterException();
 			}
 			break;
@@ -312,13 +299,13 @@ public class Parser {
 				ParsedResult.setSearchMode(SearchType.CATEGORY);
 			} else {
 				if(noDeadLine(commandParam)) {
-					task.setDueDate(SOMEDAY);
+					task.setDueDate(StringConstants.SOMEDAY);
 					task.setStartDate(null);
 					break;
 				}
 				DateTime date = getDate(commandParam);
 				if(date == null) {
-					SummaryReport.setFeedBackMsg(MESSAGE_INVALID_DISPLAY_SELECTION);
+					SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DISPLAY_SELECTION);
 					throw new InvalidParameterException();
 				}
 				else {
@@ -400,7 +387,7 @@ public class Parser {
 
 			// not sure if I need init and save to be here
 		default:
-			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_COMMAND);
+			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_COMMAND);
 			throw new InvalidParameterException();
 		}
 	}
@@ -435,7 +422,7 @@ public class Parser {
 		int indexEndOfParam = remainingInput.indexOf(']');
 
 		if(indexStartOfParam == -1 || indexEndOfParam == -1) {
-			SummaryReport.setFeedBackMsg(MESSAGE_INVALID_PARAM_FORMATTING);
+			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_PARAM_FORMATTING);
 			throw new InvalidParameterException();
 			//return remainingInput;
 		}
