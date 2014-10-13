@@ -1,14 +1,15 @@
 package commandFactory;
 
+import taskDo.ParsedResult;
+
 public class CommandActionUndo implements CommandAction{
 	@Override
 	public void execute(){		
-
-	}
-
-	@Override
-	public void updateSummaryReport() {
-		// TODO Auto-generated method stub
+//		pop command 
+		UndoCommandFactory undoCommandFactory = new UndoCommandFactory();
+		UndoAction undoAction = null;
 		
+		undoAction = undoCommandFactory.getUndoAction(commandType);
+		undoAction.undo();
 	}
 }

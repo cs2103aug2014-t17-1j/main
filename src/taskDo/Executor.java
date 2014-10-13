@@ -14,8 +14,10 @@ public class Executor {
 		CommandFactory commandFactory = new CommandFactory();
 		CommandType commandType = ParsedResult.getCommandType();
 		CommandAction commandAction = null;
+		
 		commandAction = commandFactory.getCommandAction(commandType);
 		commandAction.execute();
+		
 //		StorageList.getInstance().save();
 		UpdateSummaryReport.update(commandType);
 	}
