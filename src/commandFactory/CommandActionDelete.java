@@ -19,11 +19,6 @@ public class CommandActionDelete implements CommandAction{
 	}
 	
 	@Override
-	public void undo(){
-		// NEED IMPLEMENT A STACK CALLED HISTORY AS A DUSTBIN
-	}
-	
-	@Override
 	public void updateSummaryReport(){
 		Search search = new Search();
 		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());

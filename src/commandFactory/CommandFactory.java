@@ -13,6 +13,8 @@ public class CommandFactory {
 			return new CommandActionDisplay();
 		case EDIT:
 			return new CommandActionEdit();
+		case UNDO:
+			return new CommandActionUndo();
 		default:
 			return null;
 		}

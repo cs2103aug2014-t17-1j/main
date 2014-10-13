@@ -12,9 +12,6 @@ public class CommandActionDisplay implements CommandAction{
 	public void execute(){}
 	
 	@Override
-	public void undo(){}
-	
-	@Override
 	public void updateSummaryReport(){
 		Search search = new Search();
 		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
