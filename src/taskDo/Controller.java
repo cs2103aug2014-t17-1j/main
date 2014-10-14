@@ -12,6 +12,7 @@ public class Controller {
 	public Controller(){
 		Parser.parserInit();
 		executor = new Executor();
+		
 	}
 
 	public void setUiViewModifier(UiViewModifier uiVM){
