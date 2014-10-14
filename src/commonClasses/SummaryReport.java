@@ -3,16 +3,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import taskDo.Task;
+import uiView.Observer;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class SummaryReport {
-	
+public class SummaryReport{
+	private ArrayList<Observer> uiList;
 	private static String feedBackMsg;
 	private static String header;
 	private static ArrayList<Task> displayList;
-	//ONe arrayList for Category
+
+	public SummaryReport(){
+		uiList = new ArrayList<Observer>();
+	}
 	
 	public static String getFeedBackMsg() {
 		return feedBackMsg;
@@ -39,5 +43,15 @@ public class SummaryReport {
 	
 	public static void sortByDueDate(){
 		Collections.sort(displayList);
+	}
+	
+	public void addUI(Observer o){
+		uiList.add(o);
+	}
+	public void notifyUIs(){
+		
+		for(Observer o: uiList){
+			o.update();
+		}
 	}
 }

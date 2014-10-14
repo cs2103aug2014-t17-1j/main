@@ -28,14 +28,15 @@ import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 
 import taskDo.Controller;
+import taskDo.Executor;
+import taskDo.Parser;
 import taskDo.Task;
-
 import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class UiViewModifier implements KeyListener,WindowListener{
+public class UiViewModifier implements KeyListener,WindowListener,Observer{
 	private int typeCount = 0;
 	private int taskSeq = 1;
 	private final JFrame mainFrame;
@@ -47,8 +48,9 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	private JScrollPane jsp;
 	private JTextField commandBox;
 	private ArrayList<Task> taskList;
+	private static Executor executor; 
 	//private Controller controller;
-	private String command;
+	private String userCommand;
 	private String [] helpCommand = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
 			"add [task]",
 			"edit [index]",
@@ -71,7 +73,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 			"Example: edit [index] task [new description]"
 			
 	};
-	private UIPanelList uiList;
+	private static UIPanelList uiList;
 	private HeaderPanel headerPanel;
 	private HelpPanel helpPanel;
 	private CommandBoxPanel commandBoxPanel;
@@ -79,6 +81,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	
 	public UiViewModifier(){
 		//controller = new Controller();
+		executor = new Executor();
 		mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
 		
@@ -96,7 +99,9 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		mainFrame.add(helpPanel,BorderLayout.WEST);
 		commandBoxPanel = new CommandBoxPanel();
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
+		
 		//commandBoxPanel.requestFocusOnCommandBox();
+		uiList.addUI(commandBoxPanel);
 		uiList.addUI(headerPanel);
 
 		
@@ -104,6 +109,20 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		//initBtmPanel();
 	    setJFrameProperties();
 	    updateUi();
+	}
+	
+	public static void updateUIII(){
+		uiList.notifyUIs();
+	}
+	
+	public static void parseToParser(String command){
+		if(command!=null){
+			if(Parser.parseString(command)){
+				System.out.println("Parse String reached here");
+				executor.execute();
+			}
+			updateUIII();
+		}
 	}
 
 	private void setJFrameProperties() {
@@ -130,47 +149,47 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		mainFrame.add(rightDetailPanel,BorderLayout.EAST);
 	}
 
-	private void initBtmPanel() {
-		btmPanel = new JPanel(new BorderLayout());
-		feedBack_msg = new JLabel("",JLabel.LEFT);
-		feedBack_msg.validate();
-		feedBack_msg.setForeground(ColorBox.colorPool[24]);
-		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
-	    initCommandBox();
-	    btmPanel.add(commandBox,BorderLayout.SOUTH);
-	    btmPanel.setBackground(Color.BLACK);
-	    mainFrame.add(btmPanel,BorderLayout.SOUTH);
-	    commandBox.requestFocusInWindow();
-	}
-
-	private void initCommandBox() {
-		//final JTextField commandBox = new JTextField(); 
-		commandBox = new JTextField();
-		if(typeCount == 0 ){
-			setIntroTextInCommandBox();
-		}
-		
-		commandBox.requestFocusInWindow();
-	    commandBox.addActionListener(new ActionListener(){
-		 	/*
-	    	 * (non-Javadoc)
-	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	    	 */
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				 command= commandBox.getText();
-				// controller.setUserCommand(command);
-				// controller.parseToParser();
-				 commandBox.setText("");
-				 System.out.println(command);
-			}
-	    	
-	    });
-	   commandBox.addKeyListener(this);
-
-	}
+//	private void initBtmPanel() {
+//		btmPanel = new JPanel(new BorderLayout());
+//		feedBack_msg = new JLabel("",JLabel.LEFT);
+//		feedBack_msg.validate();
+//		feedBack_msg.setForeground(ColorBox.colorPool[24]);
+//		btmPanel.add(feedBack_msg,BorderLayout.NORTH);
+//	    initCommandBox();
+//	    btmPanel.add(commandBox,BorderLayout.SOUTH);
+//	    btmPanel.setBackground(Color.BLACK);
+//	    mainFrame.add(btmPanel,BorderLayout.SOUTH);
+//	    commandBox.requestFocusInWindow();
+//	}
+//
+//	private void initCommandBox() {
+//		//final JTextField commandBox = new JTextField(); 
+//		commandBox = new JTextField();
+//		if(typeCount == 0 ){
+//			setIntroTextInCommandBox();
+//		}
+//		
+//		commandBox.requestFocusInWindow();
+//	    commandBox.addActionListener(new ActionListener(){
+//		 	/*
+//	    	 * (non-Javadoc)
+//	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+//	    	 */
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				// TODO Auto-generated method stub
+//				
+//				 command= commandBox.getText();
+//				// controller.setUserCommand(command);
+//				// controller.parseToParser();
+//				 commandBox.setText("");
+//				 System.out.println(command);
+//			}
+//	    	
+//	    });
+//	   commandBox.addKeyListener(this);
+//
+//	}
 
 	private void setIntroTextInCommandBox() {
 		commandBox.setForeground(Color.GRAY);
@@ -298,14 +317,16 @@ public class UiViewModifier implements KeyListener,WindowListener{
 //		//lbl_header.setText(SummaryReport.getHeader());
 		generateCentrePanel();
 	}
-
-	public String getCommand() {
-		return command;
-	}
 	
-	public Controller getControllerObject(){
-		return commandBoxPanel.getController();
-	}
+
+
+//	public String getCommand() {
+//		return usercommand;
+//	}
+//	
+//	public Controller getControllerObject(){
+//		return commandBoxPanel.getController();
+//	}
 	private void removeAllComponentsFromCentrePanel() {
 		centrePanel.removeAll();
 	}
@@ -397,6 +418,15 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		mainFrame.pack();
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		
 	}
 
 }

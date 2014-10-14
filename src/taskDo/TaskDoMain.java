@@ -29,8 +29,7 @@ public class TaskDoMain {
 		System.out.println(taskList);
 		SummaryReport.setDisplayList(taskList);
 		UiViewModifier uiVM = new UiViewModifier();
-		Controller controller = uiVM.getControllerObject();
-		controller.setUiViewModifier(uiVM);
+
 		
 
 		//Testing for JSON OBJ

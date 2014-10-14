@@ -11,17 +11,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import commonClasses.SummaryReport;
+
 import taskDo.Controller;
 
 public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
-	private Controller controller;
 	private int typeCount;
 	private JTextField commandBox;
 	private String command;
 	private JLabel feedBackMsg;
 	
 	public CommandBoxPanel(){
-		controller = new Controller();
 		setLayout(new BorderLayout());
 		initFeedBackMsg();
 		initCommandBox();
@@ -46,17 +46,12 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 		
 		commandBox.requestFocusInWindow();
 	    commandBox.addActionListener(new ActionListener(){
-		 	/*
-	    	 * (non-Javadoc)
-	    	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	    	 */
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				
 				 command= commandBox.getText();
-				 controller.setUserCommand(command);
-				 controller.parseToParser();
+				 UiViewModifier.parseToParser(command);
 				 commandBox.setText("");
 				 System.out.println(command);
 			}
@@ -64,10 +59,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	    });
 	   commandBox.addKeyListener(this);
 	}
-	
-	public Controller getController(){
-		return controller;
-	}
+
 	
 	private void setIntroTextInCommandBox() {
 		commandBox.setForeground(Color.GRAY);
@@ -99,7 +91,13 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 
 	@Override
 	public void update() {
+		String text_feedBack = SummaryReport.getFeedBackMsg();
 		// TODO Auto-generated method stub
+		if(text_feedBack == null){
+			feedBackMsg.setText("");
+		} else{
+			feedBackMsg.setText(SummaryReport.getFeedBackMsg());
+		}
 		
 	}
 }
