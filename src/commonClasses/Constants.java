@@ -6,13 +6,19 @@ import org.joda.time.DateTime;
  * @author Paing Zin Oo(Jack)
  */
 
-public class StringConstants {
+public class Constants {
 	/*
 	 *  @author Paing Zin Oo(Jack)
 	 */
 	
 	public static final String FILENAME = "TaskDo.json";
 	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed"} ;
+	public static final String [] SHORTCUTS = { "F1 ==> Help",
+			"F2 ==> View Details",
+			"F3 ==> View Category List"
+			
+	};
+	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
 
 	/*
 	 *  @author Huang Li

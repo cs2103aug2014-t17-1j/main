@@ -5,7 +5,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import commandFactory.CommandType;
 import commandFactory.Search;
-import commonClasses.StringConstants;
+import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
 public class UpdateSummaryReport {
@@ -18,20 +18,20 @@ public class UpdateSummaryReport {
 		switch(commandType){
 		case ADD:
 			updateHeader();
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_ADD);	
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_ADD);	
 			updateDisplayTaskList(search);
 			break;
 		case DELETE:
 			updateHeader();
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_DELETE);	
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_DELETE);	
 			updateDisplayTaskList(search);
 		case EDIT:
 			updateHeader();
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_EDIT);	
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_EDIT);	
 			updateDisplayTaskList(search);
 		case DISPLAY:
 			updateHeader();
-			updateFeedbackMsg(StringConstants.MESSAGE_DISPLAY);	
+			updateFeedbackMsg(Constants.MESSAGE_DISPLAY);	
 			updateDisplayTaskList(search);
 		default:
 			break;
@@ -52,7 +52,7 @@ public class UpdateSummaryReport {
 
 	private static void updateHeader() {
 		if(isSomeday()) {
-			SummaryReport.setHeader(StringConstants.MESSAGE_SOMEDAY);
+			SummaryReport.setHeader(Constants.MESSAGE_SOMEDAY);
 		} else {
 			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
 			String dateDisplay = dateFormat.print(ParsedResult.getTaskDetails().getDueDate().toLocalDate());
@@ -62,7 +62,7 @@ public class UpdateSummaryReport {
 	}
 
 	private static boolean isSomeday() {
-		return ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == StringConstants.NILL_YEAR;
+		return ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR;
 	}
 }
 

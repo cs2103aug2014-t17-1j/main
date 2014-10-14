@@ -3,7 +3,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,16 +40,14 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	private int taskSeq = 1;
 	private final JFrame mainFrame;
 	private JPanel centrePanel;
-	private JLabel lbl_header;
 	private JPanel btmPanel;
 	private JLabel feedBack_msg;
-	private JPanel leftHelpPanel;
 	private JPanel rightDetailPanel;
 	private JTable contentTable;
 	private JScrollPane jsp;
 	private JTextField commandBox;
 	private ArrayList<Task> taskList;
-	private Controller controller;
+	//private Controller controller;
 	private String command;
 	private String [] helpCommand = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
 			"add [task]",
@@ -74,17 +71,14 @@ public class UiViewModifier implements KeyListener,WindowListener{
 			"Example: edit [index] task [new description]"
 			
 	};
-	private String [] shortcuts = { "F1 ==> Help",
-			"F2 ==> View Details",
-			"F3 ==> View Category List"
-			
-	};
 	private UIPanelList uiList;
 	private HeaderPanel headerPanel;
+	private HelpPanel helpPanel;
+	private CommandBoxPanel commandBoxPanel;
 	
 	
 	public UiViewModifier(){
-		controller = new Controller();
+		//controller = new Controller();
 		mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
 		
@@ -95,24 +89,21 @@ public class UiViewModifier implements KeyListener,WindowListener{
 
 		centrePanel.setPreferredSize(new Dimension(500,400));
 
-		/*
-		 * Header panel and it lies on North part of JFrame
-		 */
-		//initHeaderPanel();
 		uiList = new UIPanelList();
-		headerPanel = new HeaderPanel(mainFrame);
+		headerPanel = new HeaderPanel();
+		mainFrame.add(headerPanel,BorderLayout.NORTH);
+		helpPanel = new HelpPanel();
+		mainFrame.add(helpPanel,BorderLayout.WEST);
+		commandBoxPanel = new CommandBoxPanel();
+		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
+		//commandBoxPanel.requestFocusOnCommandBox();
 		uiList.addUI(headerPanel);
-		
-		/*
-		 * Left Help panel include F1,F2,F3 description
-		 */
-		createLeftHelpPanel();
-		
-		//createRightDetailPanel();
+
 		
 		generateCentrePanel();
-		initBtmPanel();
+		//initBtmPanel();
 	    setJFrameProperties();
+	    updateUi();
 	}
 
 	private void setJFrameProperties() {
@@ -138,22 +129,6 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		}
 		mainFrame.add(rightDetailPanel,BorderLayout.EAST);
 	}
-
-	private void createLeftHelpPanel() {
-		
-		leftHelpPanel = new JPanel(new GridLayout(shortcuts.length,1));
-		leftHelpPanel.setBorder(BorderFactory.createTitledBorder(null,"SHORTCUTS", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
-		leftHelpPanel.setPreferredSize(new Dimension(200,350));
-		for(int i = 0; i < shortcuts.length; i++){
-			JLabel label_shortcut = new JLabel (shortcuts[i]);
-			label_shortcut.setForeground(ColorBox.colorPool[24]);
-			leftHelpPanel.add(label_shortcut);
-		}
-		leftHelpPanel.setBackground(Color.BLACK);
-		mainFrame.add(leftHelpPanel,BorderLayout.WEST);
-	}
-
-	
 
 	private void initBtmPanel() {
 		btmPanel = new JPanel(new BorderLayout());
@@ -186,8 +161,8 @@ public class UiViewModifier implements KeyListener,WindowListener{
 				// TODO Auto-generated method stub
 				
 				 command= commandBox.getText();
-				 controller.setUserCommand(command);
-				 controller.parseToParser();
+				// controller.setUserCommand(command);
+				// controller.parseToParser();
 				 commandBox.setText("");
 				 System.out.println(command);
 			}
@@ -316,11 +291,11 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	}
 	
 	public void updateUi(){
-		if(SummaryReport.getFeedBackMsg()==null){
-			feedBack_msg.setVisible(false);
-		}
-		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
-		//lbl_header.setText(SummaryReport.getHeader());
+//		if(SummaryReport.getFeedBackMsg()==null){
+//			feedBack_msg.setVisible(false);
+//		}
+//		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
+//		//lbl_header.setText(SummaryReport.getHeader());
 		generateCentrePanel();
 	}
 
@@ -329,7 +304,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	}
 	
 	public Controller getControllerObject(){
-		return controller;
+		return commandBoxPanel.getController();
 	}
 	private void removeAllComponentsFromCentrePanel() {
 		centrePanel.removeAll();
