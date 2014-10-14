@@ -7,13 +7,11 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import taskDo.SearchType;
 import taskDo.StringConstants;
 import taskDo.SummaryReport;
 import taskDo.Task;
 
 import com.joestelmach.natty.DateGroup;
-
 import commandFactory.CommandType;
 
 public class Parser {
