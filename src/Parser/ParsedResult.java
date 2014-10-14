@@ -1,5 +1,7 @@
-package taskDo;
+package Parser;
 
+import taskDo.SearchType;
+import taskDo.Task;
 import commandFactory.CommandType;
 
 
@@ -7,14 +9,16 @@ import commandFactory.CommandType;
 public class ParsedResult {
 	
 	//Members
-	private static CommandType parsedCommand;
-	private static Task task;
-	private static SearchType searchMode;
+	private CommandType parsedCommand;
+	private Task task;
+	private SearchType searchMode;
+	private boolean isValidCommand;
 	
-	private ParsedResult() {
-		parsedCommand = null;
-		task = new Task();
-		searchMode = null;
+	public ParsedResult() {
+		this.parsedCommand = null;
+		this.task = new Task();
+		this.searchMode = null;
+		this.isValidCommand = true;
 	}
 	
 	
@@ -51,34 +55,36 @@ public class ParsedResult {
 	
 	*/
 	//Accessors
-	public static CommandType getCommandType() {
-		return parsedCommand;
+	public CommandType getCommandType() {
+		return this.parsedCommand;
 	}
 	
-	public static Task getTaskDetails() {
-		return task;
+	public Task getTaskDetails() {
+		return this.task;
 	}
 	
-	public static SearchType getSearchMode() {
-		return searchMode;
+	public SearchType getSearchMode() {
+		return this.searchMode;
+	}
+	
+	public boolean getValidationResult() {
+		return this.isValidCommand;
 	}
 	
 	//Mutators
-	public static void setCommandType(CommandType setCommand) {
-		parsedCommand = setCommand;
+	public void setCommandType(CommandType setCommand) {
+		this.parsedCommand = setCommand;
 	}
 	
-	public static void setSearchMode(SearchType setSearch) {
-		searchMode = setSearch;
+	public void setSearchMode(SearchType setSearch) {
+		this.searchMode = setSearch;
 	}
 	
-	public static void setTask(Task setTask) {
-		task = setTask;
+	public void setTask(Task setTask) {
+		this.task = setTask;
 	}
 	
-	public static void clear() {
-		parsedCommand = null;
-		task = new Task();
-		searchMode = null;
+	public void setValidationResult(boolean validation) {
+		this.isValidCommand = validation;
 	}
 }
