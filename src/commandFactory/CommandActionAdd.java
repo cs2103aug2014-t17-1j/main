@@ -1,6 +1,6 @@
 package commandFactory;
 
-import taskDo.ParsedResult;
+import Parser.ParsedResult;
 import taskDo.StorageList;
 
 public class CommandActionAdd implements CommandAction{
