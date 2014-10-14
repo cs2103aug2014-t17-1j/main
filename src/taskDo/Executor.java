@@ -11,14 +11,13 @@ public class Executor {
 //		StorageList.getInstance().loadFile();
 	}
 
-	public void execute() {
-		ParsedResult parsedResult = new ParsedResult();
+	public void execute(ParsedResult parsedResult) {
 		CommandFactory commandFactory = new CommandFactory();
 		CommandType commandType = parsedResult.getCommandType();
 		CommandAction commandAction = null;
 		
 		commandAction = commandFactory.getCommandAction(commandType);
-		commandAction.execute();
+		commandAction.execute(parsedResult);
 		
 //		StorageList.getInstance().save();
 		UpdateSummaryReport.update(commandType);

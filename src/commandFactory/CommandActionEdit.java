@@ -7,8 +7,7 @@ import taskDo.StringConstants;
 
 public class CommandActionEdit implements CommandAction {	
 	@Override
-	public void execute(){
-		ParsedResult parsedResult = new ParsedResult();
+	public void execute(ParsedResult parsedResult){
 		Search search = new Search();
 		search.searchById(parsedResult.getTaskDetails().getId());
 		if(search.getTaskIndex() != StringConstants.NO_TASK){
