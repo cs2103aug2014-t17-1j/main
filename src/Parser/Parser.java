@@ -1,4 +1,4 @@
-package taskDo;
+package Parser;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -6,6 +6,11 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import taskDo.SearchType;
+import taskDo.StringConstants;
+import taskDo.SummaryReport;
+import taskDo.Task;
 
 import com.joestelmach.natty.DateGroup;
 
@@ -16,38 +21,42 @@ public class Parser {
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TASK
 	}
-
-	public static void parserInit() {
-
+	
+	private ParsedResult result;
+	private MainCommandHandler mainHandler;
+	public Parser() {
+		mainHandler = new MainCommandHandler();
 	}
 
-	public static boolean parseString(String input) { 
-		resetParsedResult();
+	public ParsedResult parseString(String input) { 
+		result = new ParsedResult();
 
 		//Processing first command and getting command param
 		try {
 			String commandWord = getCommandWord(input);
-			CommandType command = identifyCommand(commandWord.toLowerCase());
-			if(commandDoesNotRequireParam(command)) {
-				return true;
+			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
+			if(commandDoesNotRequireParam(mainHandler.getCommand())) {
+				result.setCommandType(mainHandler.getCommand());
+				return result;
 			}
-			String remainingInput = removeCommandWord(input, command);
+			String remainingInput = mainHandler.removeCommandWord(input);
 			String commandParam = getParam(remainingInput);
 
 			remainingInput = removeParam(remainingInput);
-			updateParsedResult(command, commandParam);
+			result = mainHandler.updateResults(result,commandParam);
 
 			//Processing optional commands
 			while (remainingInput.isEmpty() == false) {
-				remainingInput = identifyOptionalCommandAndUpdate(remainingInput);
+				remainingInput = identifyOptionalCommandAndUpdate(remainingInput, result);
 			}
-			if(ParsedResult.getTaskDetails().getDueDate() == null) {
-				ParsedResult.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
+			if(result.getTaskDetails().getDueDate() == null) {
+				result.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
 			}
-			return true;
+			return result;
 		}
 		catch (Exception e) {
-			return false;
+			result.setValidationResult(false);
+			return result;
 		}
 
 
@@ -70,7 +79,7 @@ public class Parser {
 		return false;
 	}
 
-	private static String identifyOptionalCommandAndUpdate(String remainingInput) throws InvalidParameterException {
+	private static String identifyOptionalCommandAndUpdate(String remainingInput, ParsedResult result) throws InvalidParameterException {
 		String commandWord = getCommandWord(remainingInput);
 
 		OptionalCommand command = identifyOptionalCommand(commandWord
@@ -79,16 +88,16 @@ public class Parser {
 		remainingInput = removeOptionalCommand(remainingInput, command);
 		String commandParam = getParam(remainingInput);
 
-		optionsUpdateParsedResult(command, commandParam);
+		optionsUpdateParsedResult(command, commandParam, result);
 
 		remainingInput = removeParam(remainingInput);
 		return remainingInput;
 	}
 
 	private static void optionsUpdateParsedResult(OptionalCommand command,
-			String commandParam) throws InvalidParameterException {
+			String commandParam, ParsedResult result) throws InvalidParameterException {
 
-		Task task = ParsedResult.getTaskDetails();
+		Task task = result.getTaskDetails();
 		DateTime date = null;
 		switch (command) {
 		case DUE:
@@ -150,14 +159,6 @@ public class Parser {
 
 		default:// do nothing
 		}
-	}
-
-	private static boolean noDeadLine(String commandParam) {
-		if(commandParam.toUpperCase().equals("SOMEDAY")) {
-			return true;
-		}
-		
-		return false;
 	}
 
 	private static DateTime getDate(String commandParam) {
@@ -261,93 +262,6 @@ public class Parser {
 
 	}
 
-	private static void updateParsedResult(CommandType command,
-			String commandParam) throws InvalidParameterException {
-		ParsedResult.setCommandType(command);
-		Task task = ParsedResult.getTaskDetails();
-		switch (command) {
-
-		case ADD:
-			task.setDescription(commandParam);
-			break;
-
-		case DELETE:
-			if(isValidSelection(commandParam)) {
-				ParsedResult.setTask(SummaryReport.getDisplayList().get(Integer.valueOf(commandParam)-1));
-
-			}
-			else {
-				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
-				throw new InvalidParameterException();
-			}
-			break;
-
-		case EDIT:
-			if(isValidSelection(commandParam)) {
-				int selection = Integer.valueOf(commandParam) - 1; //adjust to get the correct index in list
-				ParsedResult.setTask(SummaryReport.getDisplayList().get(selection));
-			}
-			else {
-				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
-				throw new InvalidParameterException();
-			}
-			break;
-
-		case DISPLAY:
-			if (isCategory(commandParam)) {
-				task.setCategory(commandParam);
-				ParsedResult.setSearchMode(SearchType.CATEGORY);
-			} else {
-				if(noDeadLine(commandParam)) {
-					task.setDueDate(StringConstants.SOMEDAY);
-					task.setStartDate(null);
-					break;
-				}
-				DateTime date = getDate(commandParam);
-				if(date == null) {
-					SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DISPLAY_SELECTION);
-					throw new InvalidParameterException();
-				}
-				else {
-					task.setDueDate(date);
-					ParsedResult.setSearchMode(SearchType.DATE);
-				}
-			}
-			break;
-		case UNDO:
-			// do nothing
-			break;
-
-		default:
-			// do nothing
-
-		}
-	}
-
-	private static boolean isValidSelection(String commandParam) {
-		int selection;
-		try {
-			selection = Integer.valueOf(commandParam);
-		}
-		catch (Exception e) {
-			return false;
-		}
-
-		if(selection >= 1 && selection <= SummaryReport.getDisplayList().size()) {
-			return true;
-		}
-		return false;
-	}
-
-	private static boolean isCategory(String commandParam) {
-		// Check from a list of categories
-		return false;
-	}
-
-	private static void resetParsedResult() {
-		ParsedResult.clear();
-	}
-
 	private static String removeParam(String remainingInput) {
 		int indexEndOfParam = remainingInput.indexOf(']');
 
@@ -364,58 +278,6 @@ public class Parser {
 		return splittedCommand[0];
 	}
 
-	private static CommandType identifyCommand(String command) throws InvalidParameterException {
-
-		switch (command) {
-		case "add":
-			return CommandType.ADD;
-
-		case "display":
-			return CommandType.DISPLAY;
-
-		case "delete":
-			return CommandType.DELETE;
-
-		case "edit":
-			return CommandType.EDIT;
-
-		case "undo":
-			return CommandType.UNDO;
-
-		case "search":
-			return CommandType.SEARCH;
-
-			// not sure if I need init and save to be here
-		default:
-			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_COMMAND);
-			throw new InvalidParameterException();
-		}
-	}
-
-	private static String removeCommandWord(String input,
-			CommandType commandWord) {
-		switch (commandWord) {
-		case ADD:
-			return input.substring(4); // 4 is length of word "add "
-
-		case DISPLAY:
-			return input.substring(8); // 8 is length of word "display "
-
-		case DELETE:
-			return input.substring(7); // 7 is length of word "delete "
-
-		case SEARCH:
-			return input.substring(7); // 7 is length of word "search "
-
-		case EDIT:
-			return input.substring(5);
-
-		default:
-			return "";
-
-		}
-
-	}
 
 	private static String getParam(String remainingInput) throws InvalidParameterException {
 		int indexStartOfParam = remainingInput.indexOf('[');
@@ -431,5 +293,13 @@ public class Parser {
 				indexEndOfParam);
 
 		return remainingInput.trim();
+	}
+	
+	private static boolean noDeadLine(String commandParam) {
+		if(commandParam.toUpperCase().equals("SOMEDAY")) {
+			return true;
+		}
+		
+		return false;
 	}
 }
