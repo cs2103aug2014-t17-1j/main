@@ -1,5 +1,6 @@
 package taskDo;
 
+import Parser.ParsedResult;
 import commandFactory.CommandAction;
 import commandFactory.CommandFactory;
 import commandFactory.CommandType;
@@ -11,8 +12,9 @@ public class Executor {
 	}
 
 	public void execute() {
+		ParsedResult parsedResult = new ParsedResult();
 		CommandFactory commandFactory = new CommandFactory();
-		CommandType commandType = ParsedResult.getCommandType();
+		CommandType commandType = parsedResult.getCommandType();
 		CommandAction commandAction = null;
 		
 		commandAction = commandFactory.getCommandAction(commandType);

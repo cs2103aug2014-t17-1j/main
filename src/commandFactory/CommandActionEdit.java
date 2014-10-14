@@ -1,15 +1,16 @@
 package commandFactory;
 
 import taskDo.History;
-import taskDo.ParsedResult;
+import Parser.ParsedResult;
 import taskDo.StorageList;
 import taskDo.StringConstants;
 
 public class CommandActionEdit implements CommandAction {	
 	@Override
 	public void execute(){
+		ParsedResult parsedResult = new ParsedResult();
 		Search search = new Search();
-		search.searchById(ParsedResult.getTaskDetails().getId());
+		search.searchById(parsedResult.getTaskDetails().getId());
 		if(search.getTaskIndex() != StringConstants.NO_TASK){
 			StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
 			
@@ -17,6 +18,6 @@ public class CommandActionEdit implements CommandAction {
 			History.getTaskHistory().add(search.getTask());
 		}
 		
-		StorageList.getInstance().getTaskList().add(ParsedResult.getTaskDetails());
+		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 	}
 }
