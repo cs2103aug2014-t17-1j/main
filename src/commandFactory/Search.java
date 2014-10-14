@@ -8,8 +8,14 @@ import taskDo.Task;
 
 public class Search {
 	int taskIndex;
+	Task task;
 	ArrayList<Task> returnList;
 	SearchType searchType;
+	
+	public Search(){
+		taskIndex = -1;
+		returnList = new ArrayList<Task>();
+	}
 	
 	public int getTaskIndex() {
 		return taskIndex;
@@ -19,9 +25,8 @@ public class Search {
 		return returnList;
 	}
 	
-	public Search(){
-		taskIndex = -1;
-		returnList = new ArrayList<Task>();
+	public Task getTask() {
+		return task;
 	}
 	
 //	public void identifySearchTyep (){
@@ -47,6 +52,7 @@ public class Search {
 		for(Task task: StorageList.getInstance().getTaskList()){
 			if(id == task.getId()){
 				taskIndex = StorageList.getInstance().getTaskList().indexOf(task);
+				this.task = task;	// for delete, need further change
 				break;
 			}
 		}
