@@ -15,29 +15,32 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 
-import commonClasses.ColorBox;
-import commonClasses.SummaryReport;
 import taskDo.Controller;
 import taskDo.Task;
+
+import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class UiViewModifier extends Frame implements KeyListener,WindowListener{
+public class UiViewModifier implements KeyListener,WindowListener{
 	private int typeCount = 0;
 	private int taskSeq = 1;
-	private JFrame mainFrame;
+	private final JFrame mainFrame;
 	private JPanel centrePanel;
-	private JPanel headerPanel;
 	private JLabel lbl_header;
 	private JPanel btmPanel;
 	private JLabel feedBack_msg;
@@ -76,11 +79,14 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			"F3 ==> View Category List"
 			
 	};
+	private UIPanelList uiList;
+	private HeaderPanel headerPanel;
+	
 	
 	public UiViewModifier(){
 		controller = new Controller();
 		mainFrame = new JFrame();
-		setLayout(new BorderLayout());
+		mainFrame.setLayout(new BorderLayout());
 		
 		/*
 		 * Centre Panel and scroll pane added 
@@ -92,7 +98,11 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		/*
 		 * Header panel and it lies on North part of JFrame
 		 */
-		initHeaderPanel();
+		//initHeaderPanel();
+		uiList = new UIPanelList();
+		headerPanel = new HeaderPanel(mainFrame);
+		uiList.addUI(headerPanel);
+		
 		/*
 		 * Left Help panel include F1,F2,F3 description
 		 */
@@ -106,23 +116,14 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	}
 
 	private void setJFrameProperties() {
-		setTitle("Task.Do"); 
-	    setVisible(true);
-	    setResizable(false);
-	    pack();
-	    addWindowListener(this);
-	    addKeyListener(this);
+		mainFrame.setTitle("Task.Do"); 
+		mainFrame.setVisible(true);
+		mainFrame.setResizable(false);
+		mainFrame.pack();
+		mainFrame.addWindowListener(this);
+		mainFrame.addKeyListener(this);
 	}
-
-	private void initHeaderPanel() {
-		headerPanel = new JPanel();
-		lbl_header = new JLabel();
-		lbl_header.setForeground(ColorBox.colorPool[24]);
-		headerPanel.add(lbl_header);
-		headerPanel.setBackground(Color.BLACK);
-		add(headerPanel, BorderLayout.NORTH);
-	}
-
+	
 	private void createRightDetailPanel() {
 		// TODO Auto-generated method stub
 		rightDetailPanel = new JPanel(new GridLayout(helpCommand.length,1));
@@ -135,7 +136,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			rightDetailPanel.add(lbl_helpCommand);
 			
 		}
-		add(rightDetailPanel,BorderLayout.EAST);
+		mainFrame.add(rightDetailPanel,BorderLayout.EAST);
 	}
 
 	private void createLeftHelpPanel() {
@@ -149,7 +150,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			leftHelpPanel.add(label_shortcut);
 		}
 		leftHelpPanel.setBackground(Color.BLACK);
-		add(leftHelpPanel,BorderLayout.WEST);
+		mainFrame.add(leftHelpPanel,BorderLayout.WEST);
 	}
 
 	
@@ -163,7 +164,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	    initCommandBox();
 	    btmPanel.add(commandBox,BorderLayout.SOUTH);
 	    btmPanel.setBackground(Color.BLACK);
-	    add(btmPanel,BorderLayout.SOUTH);
+	    mainFrame.add(btmPanel,BorderLayout.SOUTH);
 	    commandBox.requestFocusInWindow();
 	}
 
@@ -175,8 +176,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		}
 		
 		commandBox.requestFocusInWindow();
-		
-	  //  PromptSupport.setPrompt("Enter your command here", commandBox);
 	    commandBox.addActionListener(new ActionListener(){
 		 	/*
 	    	 * (non-Javadoc)
@@ -185,8 +184,6 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				
-			//	 PromptSupport.setPrompt("Enter your command here", commandBox);
 				
 				 command= commandBox.getText();
 				 controller.setUserCommand(command);
@@ -232,11 +229,22 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			
 			setJScrollPanePropCentrePane();
 			centrePanel.add(jsp);
+			Action pressed = new AbstractAction(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					
+					System.out.println("Presdddddd");
+				}
+				
+			};
+			setKeyAction("F2",contentTable,pressed);
+			
 			contentTable.setRowSelectionInterval(0, 0);
 			contentTable.setRowSelectionAllowed(true);
 			contentTable.setColumnSelectionAllowed(false);
 			contentTable.changeSelection(1, 1, false, false);
-			//contentTable.requestFocus();
+			contentTable.requestFocus();
 			contentTable.setFocusable(true);
 			contentTable.addFocusListener(new FocusListener(){
 
@@ -256,8 +264,13 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			
 		}
 		centrePanel.setBackground(Color.BLACK);
-		add(centrePanel,BorderLayout.CENTER);
+		mainFrame.add(centrePanel,BorderLayout.CENTER);
 		refreshFrame();
+	}
+	
+	private void setKeyAction(String key,JComponent component, Action action){
+		component.getInputMap().put(KeyStroke.getKeyStroke(key), "action");
+		component.getActionMap().put("action",action);
 	}
 
 	private void setJScrollPanePropCentrePane() {
@@ -296,9 +309,10 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 	}
 
 	private void refreshFrame() {
-		pack();
-		revalidate();
-		repaint();
+		uiList.notifyUIs();
+		mainFrame.pack();
+		mainFrame.revalidate();
+		mainFrame.repaint();
 	}
 	
 	public void updateUi(){
@@ -306,7 +320,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			feedBack_msg.setVisible(false);
 		}
 		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
-		lbl_header.setText(SummaryReport.getHeader());
+		//lbl_header.setText(SummaryReport.getHeader());
 		generateCentrePanel();
 	}
 
@@ -375,7 +389,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 		if(arg0.getKeyCode()==KeyEvent.VK_F1){
 			System.out.println("you have entered F1");
 			if(isRightPanelExisting()){
-				remove(rightDetailPanel);
+				mainFrame.remove(rightDetailPanel);
 			}
 			else{
 				createRightDetailPanel();
@@ -383,7 +397,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			refreshFrame();
 		}
 		if(arg0.getKeyCode()==KeyEvent.VK_F2){
-			remove(rightDetailPanel);
+			mainFrame.remove(rightDetailPanel);
 			refreshFrame();
 		}
 		System.out.println("You Have Entered "+arg0.getKeyText(arg0.getKeyCode()));

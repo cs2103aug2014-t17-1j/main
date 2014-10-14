@@ -1,4 +1,4 @@
-package commonClasses;
+package uiView;
 
 import java.awt.Color;
 

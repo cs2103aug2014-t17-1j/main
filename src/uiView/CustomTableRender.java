@@ -6,8 +6,6 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import commonClasses.ColorBox;
-
 public class CustomTableRender extends DefaultTableCellRenderer{
 	public Component getTableCellRendererComponent(JTable table, Object value,
 		    boolean isSelected, boolean hasFocus, int row, int column) {
@@ -19,8 +17,14 @@ public class CustomTableRender extends DefaultTableCellRenderer{
 		   rendererComp.setForeground(ColorBox.colorPool[24]);
 
 		   //Set background color
-		   rendererComp .setBackground(Color.BLACK);
+		   rendererComp.setBackground(Color.BLACK);
 		   
+		   //Set background while isSelected
+		   if(isSelected){
+			   rendererComp.setBackground(ColorBox.colorPool[32]);
+		   }
+		  
+		   setBorder(noFocusBorder);
 		   return rendererComp ;
 		  }
 
