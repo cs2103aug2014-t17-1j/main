@@ -1,11 +1,14 @@
 package commandFactory;
 
+import taskDo.History;
+import taskDo.StorageList;
+
 public class UndoActionAdd implements UndoAction {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-
+		Search search = new Search();
+		search.searchById(History.getTaskHistory().pop().getId());
+		StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
 	}
-
 }
