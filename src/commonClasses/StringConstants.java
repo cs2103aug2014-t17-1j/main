@@ -1,4 +1,4 @@
-package taskDo;
+package commonClasses;
 
 import org.joda.time.DateTime;
 

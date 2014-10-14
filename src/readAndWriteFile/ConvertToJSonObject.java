@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import taskDo.StringConstants;
+import commonClasses.StringConstants;
+
 import taskDo.Task;
 /*
  * @author Paing Zin Oo(Jack)

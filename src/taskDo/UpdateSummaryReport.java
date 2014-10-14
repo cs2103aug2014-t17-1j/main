@@ -5,6 +5,8 @@ import org.joda.time.format.DateTimeFormatter;
 
 import commandFactory.CommandType;
 import commandFactory.Search;
+import commonClasses.StringConstants;
+import commonClasses.SummaryReport;
 
 public class UpdateSummaryReport {
 

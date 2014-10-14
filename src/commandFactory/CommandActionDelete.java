@@ -1,8 +1,8 @@
 package commandFactory;
 
+import commonClasses.StorageList;
+import commonClasses.StringConstants;
 import taskDo.ParsedResult;
-import taskDo.StorageList;
-import taskDo.StringConstants;
 
 public class CommandActionDelete implements CommandAction{	
 	@Override

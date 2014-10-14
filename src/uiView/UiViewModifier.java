@@ -24,32 +24,32 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import taskDo.ColorBox;
+import commonClasses.ColorBox;
+import commonClasses.SummaryReport;
 import taskDo.Controller;
-import taskDo.SummaryReport;
 import taskDo.Task;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class UiViewModifier extends Frame implements KeyListener,WindowListener{
-	int typeCount = 0;
-	int taskSeq = 1;
-	JFrame mainFrame;
-	JPanel centrePanel;
-	JPanel headerPanel;
-	JLabel lbl_header;
-	JPanel btmPanel;
-	JLabel feedBack_msg;
-	JPanel leftHelpPanel;
-	JPanel rightDetailPanel;
-	JTable contentTable;
-	JScrollPane jsp;
-	JTextField commandBox;
-	ArrayList<Task> taskList;
-	Controller controller;
-	String command;
-	String [] helpCommand = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
+	private int typeCount = 0;
+	private int taskSeq = 1;
+	private JFrame mainFrame;
+	private JPanel centrePanel;
+	private JPanel headerPanel;
+	private JLabel lbl_header;
+	private JPanel btmPanel;
+	private JLabel feedBack_msg;
+	private JPanel leftHelpPanel;
+	private JPanel rightDetailPanel;
+	private JTable contentTable;
+	private JScrollPane jsp;
+	private JTextField commandBox;
+	private ArrayList<Task> taskList;
+	private Controller controller;
+	private String command;
+	private String [] helpCommand = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
 			"add [task]",
 			"edit [index]",
 			"delete [index]",
@@ -71,7 +71,7 @@ public class UiViewModifier extends Frame implements KeyListener,WindowListener{
 			"Example: edit [index] task [new description]"
 			
 	};
-	String [] shortcuts = { "F1 ==> Help",
+	private String [] shortcuts = { "F1 ==> Help",
 			"F2 ==> View Details",
 			"F3 ==> View Category List"
 			
