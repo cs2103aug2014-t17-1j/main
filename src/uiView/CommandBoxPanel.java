@@ -13,8 +13,6 @@ import javax.swing.JTextField;
 
 import commonClasses.SummaryReport;
 
-import taskDo.Controller;
-
 public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	private int typeCount;
 	private JTextField commandBox;
@@ -75,6 +73,16 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 			commandBox.setForeground(Color.BLACK);
 		}
 		typeCount++;
+		
+		
+		if(arg0.getKeyCode()==KeyEvent.VK_F1){
+			System.out.println("you have entered F1");
+				UiViewModifier.pressedF1();
+		}
+//		if(arg0.getKeyCode()==KeyEvent.VK_F2){
+//			mainFrame.remove(rightDetailPanel);
+//			refreshFrame();
+//		}
 	}
 
 	@Override

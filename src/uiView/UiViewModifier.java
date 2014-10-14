@@ -36,10 +36,10 @@ import commonClasses.SummaryReport;
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class UiViewModifier implements KeyListener,WindowListener,Observer{
+public class UiViewModifier implements KeyListener,WindowListener{
 	private int typeCount = 0;
 	private int taskSeq = 1;
-	private final JFrame mainFrame;
+	private static JFrame mainFrame;
 	private JPanel centrePanel;
 	private JPanel btmPanel;
 	private JLabel feedBack_msg;
@@ -77,10 +77,12 @@ public class UiViewModifier implements KeyListener,WindowListener,Observer{
 	private HeaderPanel headerPanel;
 	private HelpPanel helpPanel;
 	private CommandBoxPanel commandBoxPanel;
+	private static DetailPanel detailPanel; 
+	private static ContentTablePanel contentPanel;
+	
 	
 	
 	public UiViewModifier(){
-		//controller = new Controller();
 		executor = new Executor();
 		mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
@@ -95,23 +97,27 @@ public class UiViewModifier implements KeyListener,WindowListener,Observer{
 		uiList = new UIPanelList();
 		headerPanel = new HeaderPanel();
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
+		
 		helpPanel = new HelpPanel();
 		mainFrame.add(helpPanel,BorderLayout.WEST);
+		
 		commandBoxPanel = new CommandBoxPanel();
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
-		//commandBoxPanel.requestFocusOnCommandBox();
+		detailPanel = new DetailPanel();
+		
+		contentPanel = new ContentTablePanel();
+		mainFrame.add(contentPanel,BorderLayout.CENTER);
+		
 		uiList.addUI(commandBoxPanel);
 		uiList.addUI(headerPanel);
+		uiList.addUI(contentPanel);
 
 		
-		generateCentrePanel();
-		//initBtmPanel();
 	    setJFrameProperties();
-	    updateUi();
 	}
 	
-	public static void updateUIII(){
+	public static void updateAllPanels(){
 		uiList.notifyUIs();
 	}
 	
@@ -121,7 +127,7 @@ public class UiViewModifier implements KeyListener,WindowListener,Observer{
 				System.out.println("Parse String reached here");
 				executor.execute();
 			}
-			updateUIII();
+			updateAllPanels();
 		}
 	}
 
@@ -136,17 +142,17 @@ public class UiViewModifier implements KeyListener,WindowListener,Observer{
 	
 	private void createRightDetailPanel() {
 		// TODO Auto-generated method stub
-		rightDetailPanel = new JPanel(new GridLayout(helpCommand.length,1));
-		rightDetailPanel.setPreferredSize(new Dimension(420,400));
-		rightDetailPanel.setBorder(BorderFactory.createTitledBorder(null,"HELP PANEL", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
-		rightDetailPanel.setBackground(Color.BLACK);
-		for(int i = 0 ; i < helpCommand.length; i++){
-			JLabel lbl_helpCommand = new JLabel(helpCommand[i]);
-			lbl_helpCommand.setForeground(ColorBox.colorPool[24]);
-			rightDetailPanel.add(lbl_helpCommand);
-			
-		}
-		mainFrame.add(rightDetailPanel,BorderLayout.EAST);
+//		rightDetailPanel = new JPanel(new GridLayout(helpCommand.length,1));
+//		rightDetailPanel.setPreferredSize(new Dimension(420,400));
+//		rightDetailPanel.setBorder(BorderFactory.createTitledBorder(null,"HELP PANEL", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
+//		rightDetailPanel.setBackground(Color.BLACK);
+//		for(int i = 0 ; i < helpCommand.length; i++){
+//			JLabel lbl_helpCommand = new JLabel(helpCommand[i]);
+//			lbl_helpCommand.setForeground(ColorBox.colorPool[24]);
+//			rightDetailPanel.add(lbl_helpCommand);
+//			
+//		}
+//		mainFrame.add(detailPanel,BorderLayout.EAST);
 	}
 
 //	private void initBtmPanel() {
@@ -191,11 +197,11 @@ public class UiViewModifier implements KeyListener,WindowListener,Observer{
 //
 //	}
 
-	private void setIntroTextInCommandBox() {
-		commandBox.setForeground(Color.GRAY);
-		commandBox.setText("Enter your command here" );
-		
-	}
+//	private void setIntroTextInCommandBox() {
+//		commandBox.setForeground(Color.GRAY);
+//		commandBox.setText("Enter your command here" );
+//		
+//	}
 
 	private void generateCentrePanel() {
 		taskList = SummaryReport.getDisplayList();
@@ -382,27 +388,40 @@ public class UiViewModifier implements KeyListener,WindowListener,Observer{
 		}
 		typeCount++;
 		// TODO Auto-generated method stub
-		if(arg0.getKeyCode()==KeyEvent.VK_F1){
-			System.out.println("you have entered F1");
-			if(isRightPanelExisting()){
-				mainFrame.remove(rightDetailPanel);
-			}
-			else{
-				createRightDetailPanel();
-			}
-			refreshFrame();
-		}
-		if(arg0.getKeyCode()==KeyEvent.VK_F2){
-			mainFrame.remove(rightDetailPanel);
-			refreshFrame();
-		}
-		System.out.println("You Have Entered "+arg0.getKeyText(arg0.getKeyCode()));
+//		if(arg0.getKeyCode()==KeyEvent.VK_F1){
+//			System.out.println("you have entered F1");
+//			if(isRightPanelExisting()){
+//				mainFrame.remove(rightDetailPanel);
+//			}
+//			else{
+//				createRightDetailPanel();
+//			}
+//			refreshFrame();
+//		}
+//		if(arg0.getKeyCode()==KeyEvent.VK_F2){
+//			mainFrame.remove(rightDetailPanel);
+//			refreshFrame();
+//		}
+//		System.out.println("You Have Entered "+arg0.getKeyText(arg0.getKeyCode()));
 		
 	}
 	
-	private boolean isRightPanelExisting(){
-		if(rightDetailPanel != null){
-			if(rightDetailPanel.isDisplayable()){
+	public static void pressedF1(){
+		if(isDetailPanelExisting()){
+			mainFrame.remove(detailPanel);
+		} else{
+			createdetailPanel();
+		}
+		updateAllPanels();
+	}
+	
+	private static void createdetailPanel() {
+		mainFrame.add(detailPanel,BorderLayout.EAST);	
+	}
+
+	private static boolean isDetailPanelExisting(){
+		if(detailPanel != null){
+			if(detailPanel.isDisplayable()){
 				return true;
 			}
 		}
@@ -420,8 +439,7 @@ public class UiViewModifier implements KeyListener,WindowListener,Observer{
 		// TODO Auto-generated method stub
 	}
 
-	@Override
-	public void update() {
+	public static void update() {
 		// TODO Auto-generated method stub
 		mainFrame.pack();
 		mainFrame.revalidate();

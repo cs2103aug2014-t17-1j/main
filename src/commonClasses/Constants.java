@@ -18,6 +18,29 @@ public class Constants {
 			"F3 ==> View Category List"
 			
 	};
+	public static final String [] HELPCOMMANDS = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
+			"add [task]",
+			"edit [index]",
+			"delete [index]",
+			"display [date]",
+			"",
+			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
+			"<html><i>(Addtional commands that works with main commands)</i></html>",
+			"category [name]",
+			"due [duedate]",
+			"from [startdate] to [duedate]",
+			"impt [Y/N]",
+			"",
+			"Example: add [Homework1] due [5th oct]",
+			"",
+			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
+			"<html><i>(Addtional commands thats only works with specific main commands)</i></html>",
+			"For Edit: task [taskdescription]",
+			"",
+			"Example: edit [index] task [new description]"
+			
+	};
+	public static final String []COLUMNTITLES = {"ID","Description"," "};
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
 
 	/*
