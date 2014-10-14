@@ -46,5 +46,29 @@ public class CategoryList {
 		return false;
 	}
 	
+	public int getCategoryIndex(String name) {
+		for(int i=0; i<categoryList.size(); i++) {
+			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
+				return i;
+			}
+		}
+		return -1;//index not found
+	}
+	
+	public void addCountToCategory(String name) {
+		int index = getCategoryIndex(name);
+			
+		if(index != -1) {
+			categoryList.get(index).addCount();	
+		}
+	}
+	
+	public void minusCountToCategory(String name) {
+		int index = getCategoryIndex(name);
+			
+		if(index != -1) {
+			categoryList.get(index).decreaseCount();	
+		}
+	}
 }
 
