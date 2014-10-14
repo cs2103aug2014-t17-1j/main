@@ -1,4 +1,4 @@
-package taskDo;
+package uiView;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -23,6 +23,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import taskDo.ColorBox;
+import taskDo.Controller;
+import taskDo.SummaryReport;
+import taskDo.Task;
 
 /*
  * @author Paing Zin Oo(Jack)

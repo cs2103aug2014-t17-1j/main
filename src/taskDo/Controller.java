@@ -1,5 +1,7 @@
 package taskDo;
 
+import uiView.UiViewModifier;
+
 /*
  * @author Paing Zin Oo(Jack)
  */
@@ -28,7 +30,6 @@ public class Controller {
 	}
 	
 	public void parseToParser(){
-		//Parser will parse boolean 
 		if(getUserCommand()!=null){
 			if(Parser.parseString(userCommand)){
 				System.out.println("Parse String reached here");

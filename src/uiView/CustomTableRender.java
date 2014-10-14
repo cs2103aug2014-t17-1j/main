@@ -1,10 +1,12 @@
-package taskDo;
+package uiView;
 
 import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
+
+import taskDo.ColorBox;
 
 public class CustomTableRender extends DefaultTableCellRenderer{
 	public Component getTableCellRendererComponent(JTable table, Object value,
