@@ -7,12 +7,11 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import com.joestelmach.natty.DateGroup;
-
 import taskDo.StringConstants;
 import taskDo.SummaryReport;
 import taskDo.Task;
-import Parser.Parser.OptionalCommand;
+
+import com.joestelmach.natty.DateGroup;
 
 public class OptionalCommandHandler implements CommandHandler {
 	
@@ -27,7 +26,7 @@ public class OptionalCommandHandler implements CommandHandler {
 		
 	}
 	
-	public void identifyAndSetCommand(String command) {
+	public void identifyAndSetCommand(String command) throws InvalidParameterException {
 		
 		switch (command) {
 
@@ -87,7 +86,7 @@ public class OptionalCommandHandler implements CommandHandler {
 		}
 	}
 
-	public ParsedResult updateResults(ParsedResult result, String commandParam) {
+	public ParsedResult updateResults(ParsedResult result, String commandParam) throws InvalidParameterException {
 		Task task = result.getTaskDetails();
 		DateTime date = null;
 		switch (currentCommand) {
