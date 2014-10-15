@@ -29,6 +29,7 @@ public class MainCommandHandler implements CommandHandler {
 	public CommandType getCommand() {
 		return this.currentCommand;
 	}
+	
 	public void identifyAndSetCommand(String command) throws InvalidParameterException {
 		switch (command) {
 		case "add":
@@ -52,6 +53,9 @@ public class MainCommandHandler implements CommandHandler {
 		case "search":
 			currentCommand = CommandType.SEARCH;
 			break;
+			
+		case "complete":
+				currentCommand = CommandType.COMPLETE;
 	
 		default:
 			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_COMMAND);
@@ -75,7 +79,10 @@ public class MainCommandHandler implements CommandHandler {
 
 			case EDIT:
 				return input.substring(5);
-
+			
+			case COMPLETE:
+				return input.substring(9);
+				
 			default:
 				return "";
 			}
@@ -133,7 +140,17 @@ public class MainCommandHandler implements CommandHandler {
 			case UNDO:
 				// do nothing
 				break;
-
+			
+			case COMPLETE:
+				if(isValidSelection(commandParam)) {
+					int selection = Integer.valueOf(commandParam) - 1; //adjust to get the correct index in list
+					result.setTask(SummaryReport.getDisplayList().get(selection));
+					result.getTaskDetails().setCompleted(true);
+				} else {
+					SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
+					throw new InvalidParameterException();
+				}
+				
 			default:
 				// do nothing
 

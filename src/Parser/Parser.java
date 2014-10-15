@@ -71,7 +71,7 @@ public class Parser {
 
 	private static boolean commandDoesNotRequireParam(CommandType command) {
 		
-		if(command == CommandType.UNDO || command == CommandType.SAVE)
+		if(command == CommandType.UNDO)
 			return true;
 		
 		return false;
