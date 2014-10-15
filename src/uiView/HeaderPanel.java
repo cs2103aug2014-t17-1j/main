@@ -1,9 +1,7 @@
 package uiView;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -21,7 +19,6 @@ public class HeaderPanel extends JPanel implements Observer{
 	}
 	
 	public void update(){
-		lbl_header.setText(SummaryReport.getHeader());
-		
+		lbl_header.setText(SummaryReport.getHeader());	
 	}
 }

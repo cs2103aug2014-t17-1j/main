@@ -68,17 +68,8 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		contentTable.setColumnSelectionAllowed(false);
 		contentTable.requestFocus();
 		contentTable.setFocusable(true);
-		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB,0), "Changed Focus");
-		contentTable.getActionMap().put("Changed Focus", new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				System.out.println("TAB PRESSED IN TABLE");
-				UiViewModifier.pressedTab(false);
-				
-			}
-			
-		});
+		tabKeyPressedAction();
+		f1KeyPressedAction();
 		contentTable.addFocusListener(new FocusListener(){
 
 			@Override
@@ -92,6 +83,34 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				contentTable.clearSelection();
+			}
+			
+		});
+	}
+
+
+	private void tabKeyPressedAction() {
+		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB,0), "Changed Focus");
+		contentTable.getActionMap().put("Changed Focus", new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				System.out.println("TAB PRESSED IN TABLE");
+				UiViewModifier.pressedTab(false);
+				
+			}
+			
+		});
+	}
+	
+	private void f1KeyPressedAction() {
+		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F1,0), "Event");
+		contentTable.getActionMap().put("Event", new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				UiViewModifier.pressedF1();
+				
 			}
 			
 		});
