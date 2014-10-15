@@ -116,11 +116,4 @@ public class Parser {
 		return remainingInput.trim();
 	}
 
-	private static boolean noDeadLine(String commandParam) {
-		if(commandParam.toUpperCase().equals("SOMEDAY")) {
-			return true;
-		}
-
-		return false;
-	}
 }
