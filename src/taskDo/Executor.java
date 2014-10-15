@@ -20,6 +20,6 @@ public class Executor {
 		commandAction.execute(parsedResult);
 		
 //		StorageList.getInstance().save();
-		UpdateSummaryReport.update(commandType);
+		UpdateSummaryReport.update(commandType, parsedResult);
 	}
 }

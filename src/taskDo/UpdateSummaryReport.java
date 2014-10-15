@@ -10,35 +10,26 @@ import commandFactory.Search;
 public class UpdateSummaryReport {
 
 	
-	public static void update(CommandType commandType){
+	public static void update(CommandType commandType, ParsedResult parsedResult){
 		Search search = new Search();
-		search.searchDueDate(ParsedResult.getTaskDetails().getDueDate());
+		search.searchDueDate(parsedResult.getTaskDetails().getDueDate());
+		
+		updateHeader(parsedResult);
+		updateDisplayTaskList(search);
 		
 		switch(commandType){
 		case ADD:
-			updateHeader();
 			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_ADD);	
-			updateDisplayTaskList(search);
 			break;
 		case DELETE:
-			updateHeader();
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_DELETE);	
-			updateDisplayTaskList(search);
+			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_DELETE);
 		case EDIT:
-			updateHeader();
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_EDIT);	
-			updateDisplayTaskList(search);
+			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_EDIT);
 		case DISPLAY:
-			updateHeader();
-			updateFeedbackMsg(StringConstants.MESSAGE_DISPLAY);	
-			updateDisplayTaskList(search);
+			updateFeedbackMsg(StringConstants.MESSAGE_DISPLAY);
 		default:
 			break;
 		}
-		
-
-
-
 	}
 
 	private static void updateDisplayTaskList(Search search) {
@@ -49,19 +40,19 @@ public class UpdateSummaryReport {
 		SummaryReport.setFeedBackMsg(feedbackMsg);
 	}
 
-	private static void updateHeader() {
-		if(isSomeday()) {
+	private static void updateHeader(ParsedResult parsedResult) {
+		if(isSomeday(parsedResult)) {
 			SummaryReport.setHeader(StringConstants.MESSAGE_SOMEDAY);
 		} else {
 			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
-			String dateDisplay = dateFormat.print(ParsedResult.getTaskDetails().getDueDate().toLocalDate());
+			String dateDisplay = dateFormat.print(parsedResult.getTaskDetails().getDueDate().toLocalDate());
 			
 			SummaryReport.setHeader(dateDisplay);
 		}
 	}
 
-	private static boolean isSomeday() {
-		return ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == StringConstants.NILL_YEAR;
+	private static boolean isSomeday(ParsedResult parsedResult) {
+		return parsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == StringConstants.NILL_YEAR;
 	}
 }
 
