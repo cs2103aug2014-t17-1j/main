@@ -17,7 +17,7 @@ public class HeaderPanel extends JPanel implements Observer{
 		lbl_header.setText(SummaryReport.getHeader());
 		add(lbl_header);
 		setBackground(Color.BLACK);
-
+	
 	}
 	
 	public void update(){

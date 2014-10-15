@@ -27,6 +27,7 @@ public class HelpPanel extends JPanel{
 			add(label_shortcut);
 		}
 		setBackground(Color.BLACK);
+		setFocusTraversalKeysEnabled(false);
 		
 	}
 

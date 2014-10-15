@@ -1,82 +1,28 @@
 package uiView;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.ArrayList;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.border.TitledBorder;
 
-import taskDo.Controller;
 import taskDo.Executor;
 import taskDo.Parser;
-import taskDo.Task;
-import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class UiViewModifier implements KeyListener,WindowListener{
-	private int typeCount = 0;
-	private int taskSeq = 1;
+
 	private static JFrame mainFrame;
-	private JPanel centrePanel;
-	private JPanel btmPanel;
-	private JLabel feedBack_msg;
-	private JPanel rightDetailPanel;
-	private JTable contentTable;
-	private JScrollPane jsp;
-	private JTextField commandBox;
-	private ArrayList<Task> taskList;
+
 	private static Executor executor; 
-	//private Controller controller;
-	private String userCommand;
-	private String [] helpCommand = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
-			"add [task]",
-			"edit [index]",
-			"delete [index]",
-			"display [date]",
-			"",
-			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
-			"<html><i>(Addtional commands that works with main commands)</i></html>",
-			"category [name]",
-			"due [duedate]",
-			"from [startdate] to [duedate]",
-			"impt [Y/N]",
-			"",
-			"Example: add [Homework1] due [5th oct]",
-			"",
-			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
-			"<html><i>(Addtional commands thats only works with specific main commands)</i></html>",
-			"For Edit: task [taskdescription]",
-			"",
-			"Example: edit [index] task [new description]"
-			
-	};
+
 	private static UIPanelList uiList;
 	private HeaderPanel headerPanel;
 	private HelpPanel helpPanel;
-	private CommandBoxPanel commandBoxPanel;
+	private static CommandBoxPanel commandBoxPanel;
 	private static DetailPanel detailPanel; 
 	private static ContentTablePanel contentPanel;
 	
@@ -87,12 +33,6 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
 		
-		/*
-		 * Centre Panel and scroll pane added 
-		 */
-		centrePanel = new JPanel();
-
-		centrePanel.setPreferredSize(new Dimension(500,400));
 
 		uiList = new UIPanelList();
 		headerPanel = new HeaderPanel();
@@ -140,7 +80,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		mainFrame.addKeyListener(this);
 	}
 	
-	private void createRightDetailPanel() {
+	//private void createRightDetailPanel() {
 		// TODO Auto-generated method stub
 //		rightDetailPanel = new JPanel(new GridLayout(helpCommand.length,1));
 //		rightDetailPanel.setPreferredSize(new Dimension(420,400));
@@ -153,7 +93,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 //			
 //		}
 //		mainFrame.add(detailPanel,BorderLayout.EAST);
-	}
+//	}
 
 //	private void initBtmPanel() {
 //		btmPanel = new JPanel(new BorderLayout());
@@ -203,139 +143,122 @@ public class UiViewModifier implements KeyListener,WindowListener{
 //		
 //	}
 
-	private void generateCentrePanel() {
-		taskList = SummaryReport.getDisplayList();
-		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
-		removeAllComponentsFromCentrePanel();
-		refreshFrame();
-		if(taskList.size()!=0){
-			String []columnTitle = {"ID","Description"," "};
-			contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
-				public boolean isCellEditable(int row, int column){
-					return false;
-				};
-				
-			};
-			setTableCellProperties(contentTable);
-			
-			contentTable.setRowHeight(40);
-			setContentTableColumnWidth(contentTable);
-			contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-			contentTable.getTableHeader().setReorderingAllowed(false);
-			contentTable.getTableHeader().setForeground(ColorBox.colorPool[24]);
-			contentTable.getTableHeader().setResizingAllowed(false);
-			contentTable.getTableHeader().setBackground(Color.black);
-			contentTable.setGridColor(Color.CYAN);
-			
-			setJScrollPanePropCentrePane();
-			centrePanel.add(jsp);
-			Action pressed = new AbstractAction(){
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					
-					System.out.println("Presdddddd");
-				}
-				
-			};
-			setKeyAction("F2",contentTable,pressed);
-			
-			contentTable.setRowSelectionInterval(0, 0);
-			contentTable.setRowSelectionAllowed(true);
-			contentTable.setColumnSelectionAllowed(false);
-			contentTable.changeSelection(1, 1, false, false);
-			contentTable.requestFocus();
-			contentTable.setFocusable(true);
-			contentTable.addFocusListener(new FocusListener(){
-
-				@Override
-				public void focusGained(FocusEvent arg0) {
-					// TODO Auto-generated method stub
-					contentTable.changeSelection(1, 1, false, false);
-				}
-
-				@Override
-				public void focusLost(FocusEvent arg0) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
-			
-		}
-		centrePanel.setBackground(Color.BLACK);
-		mainFrame.add(centrePanel,BorderLayout.CENTER);
-		refreshFrame();
-	}
-	
-	private void setKeyAction(String key,JComponent component, Action action){
-		component.getInputMap().put(KeyStroke.getKeyStroke(key), "action");
-		component.getActionMap().put("action",action);
-	}
-
-	private void setJScrollPanePropCentrePane() {
-		jsp = new JScrollPane(contentTable);
-		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]);
-		jsp.setBorder(jScrollTitledBorder);
-		jsp.setPreferredSize(new Dimension(450,380));
-		jsp.setBackground(Color.BLACK);
-		jsp.getViewport().setBackground(Color.BLACK);
-	}
-
-	private void setTableCellProperties(JTable contentTable) {
-		for(int i =0 ; i < taskList.size(); i++){
-			contentTable.getColumnModel().getColumn(0).setCellRenderer(new CustomTableRender());
-			contentTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableRender());
-			contentTable.getColumnModel().getColumn(2).setCellRenderer(new CustomTableRender());	
-		}
-	}
-
-	private void setContentTableColumnWidth(JTable contentTable) {
-		contentTable.getColumnModel().getColumn(0).setMaxWidth(20);
-		contentTable.getColumnModel().getColumn(1).setMaxWidth(600);
-		contentTable.getColumnModel().getColumn(2).setMaxWidth(100);
-	}
-	
-	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
-		String tableContent[][] = new String [taskList.size()][3];
-		System.out.println("CHANGE TO TWOD ARRAY "+taskList.size());
-		for (int i = 0; i < taskList.size(); i++){
-			tableContent[i][0] = (i+1)+"";
-			tableContent[i][1] = taskList.get(i).getDescription();
-			//tableContent[i][2] = taskList.get(i).getDueDate().toLocalDate().toString();
-			tableContent[i][2] = " ";
- 		}
-		return tableContent;
-	}
-
-	private void refreshFrame() {
-		uiList.notifyUIs();
-		mainFrame.pack();
-		mainFrame.revalidate();
-		mainFrame.repaint();
-	}
-	
-	public void updateUi(){
-//		if(SummaryReport.getFeedBackMsg()==null){
-//			feedBack_msg.setVisible(false);
+//	private void generateCentrePanel() {
+//		taskList = SummaryReport.getDisplayList();
+//		System.out.println("GENERERATE CENTRE PANEL ARRAYLIST SIZE" + taskList.size());
+//		removeAllComponentsFromCentrePanel();
+//		refreshFrame();
+//		if(taskList.size()!=0){
+//			String []columnTitle = {"ID","Description"," "};
+//			contentTable = new JTable(changeToTwoDArray(taskList),columnTitle){
+//				public boolean isCellEditable(int row, int column){
+//					return false;
+//				};
+//				
+//			};
+//			setTableCellProperties(contentTable);
+//			
+//			contentTable.setRowHeight(40);
+//			setContentTableColumnWidth(contentTable);
+//			contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+//			contentTable.getTableHeader().setReorderingAllowed(false);
+//			contentTable.getTableHeader().setForeground(ColorBox.colorPool[24]);
+//			contentTable.getTableHeader().setResizingAllowed(false);
+//			contentTable.getTableHeader().setBackground(Color.black);
+//			contentTable.setGridColor(Color.CYAN);
+//			
+//			setJScrollPanePropCentrePane();
+//			centrePanel.add(jsp);
+//			Action pressed = new AbstractAction(){
+//
+//				@Override
+//				public void actionPerformed(ActionEvent arg0) {
+//					
+//					System.out.println("Presdddddd");
+//				}
+//				
+//			};
+//			setKeyAction("F2",contentTable,pressed);
+//			
+//			contentTable.setRowSelectionInterval(0, 0);
+//			contentTable.setRowSelectionAllowed(true);
+//			contentTable.setColumnSelectionAllowed(false);
+//			contentTable.changeSelection(1, 1, false, false);
+//			contentTable.requestFocus();
+//			contentTable.setFocusable(true);
+//			contentTable.addFocusListener(new FocusListener(){
+//
+//				@Override
+//				public void focusGained(FocusEvent arg0) {
+//					// TODO Auto-generated method stub
+//					contentTable.changeSelection(1, 1, false, false);
+//				}
+//
+//				@Override
+//				public void focusLost(FocusEvent arg0) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//				
+//			});
+//			
 //		}
-//		feedBack_msg.setText(SummaryReport.getFeedBackMsg());
-//		//lbl_header.setText(SummaryReport.getHeader());
-		generateCentrePanel();
-	}
-	
-
-
-//	public String getCommand() {
-//		return usercommand;
+//		centrePanel.setBackground(Color.BLACK);
+//		mainFrame.add(centrePanel,BorderLayout.CENTER);
+//		refreshFrame();
 //	}
 //	
-//	public Controller getControllerObject(){
-//		return commandBoxPanel.getController();
+//	private void setKeyAction(String key,JComponent component, Action action){
+//		component.getInputMap().put(KeyStroke.getKeyStroke(key), "action");
+//		component.getActionMap().put("action",action);
 //	}
-	private void removeAllComponentsFromCentrePanel() {
-		centrePanel.removeAll();
-	}
+//
+//	private void setJScrollPanePropCentrePane() {
+//		jsp = new JScrollPane(contentTable);
+//		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,"Tasks List", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]);
+//		jsp.setBorder(jScrollTitledBorder);
+//		jsp.setPreferredSize(new Dimension(450,380));
+//		jsp.setBackground(Color.BLACK);
+//		jsp.getViewport().setBackground(Color.BLACK);
+//	}
+//
+//	private void setTableCellProperties(JTable contentTable) {
+//		for(int i =0 ; i < taskList.size(); i++){
+//			contentTable.getColumnModel().getColumn(0).setCellRenderer(new CustomTableRender());
+//			contentTable.getColumnModel().getColumn(1).setCellRenderer(new CustomTableRender());
+//			contentTable.getColumnModel().getColumn(2).setCellRenderer(new CustomTableRender());	
+//		}
+//	}
+//
+//	private void setContentTableColumnWidth(JTable contentTable) {
+//		contentTable.getColumnModel().getColumn(0).setMaxWidth(20);
+//		contentTable.getColumnModel().getColumn(1).setMaxWidth(600);
+//		contentTable.getColumnModel().getColumn(2).setMaxWidth(100);
+//	}
+//	
+//	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
+//		String tableContent[][] = new String [taskList.size()][3];
+//		System.out.println("CHANGE TO TWOD ARRAY "+taskList.size());
+//		for (int i = 0; i < taskList.size(); i++){
+//			tableContent[i][0] = (i+1)+"";
+//			tableContent[i][1] = taskList.get(i).getDescription();
+//			//tableContent[i][2] = taskList.get(i).getDueDate().toLocalDate().toString();
+//			tableContent[i][2] = " ";
+// 		}
+//		return tableContent;
+//	}
+
+//	private void refreshFrame() {
+//		uiList.notifyUIs();
+//		mainFrame.pack();
+//		mainFrame.revalidate();
+//		mainFrame.repaint();
+//	}
+	
+//	
+//	private void removeAllComponentsFromCentrePanel() {
+//		centrePanel.removeAll();
+//	}
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {
@@ -382,27 +305,6 @@ public class UiViewModifier implements KeyListener,WindowListener{
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		if(typeCount == 0){
-			commandBox.setText("");
-			commandBox.setForeground(Color.BLACK);
-		}
-		typeCount++;
-		// TODO Auto-generated method stub
-//		if(arg0.getKeyCode()==KeyEvent.VK_F1){
-//			System.out.println("you have entered F1");
-//			if(isRightPanelExisting()){
-//				mainFrame.remove(rightDetailPanel);
-//			}
-//			else{
-//				createRightDetailPanel();
-//			}
-//			refreshFrame();
-//		}
-//		if(arg0.getKeyCode()==KeyEvent.VK_F2){
-//			mainFrame.remove(rightDetailPanel);
-//			refreshFrame();
-//		}
-//		System.out.println("You Have Entered "+arg0.getKeyText(arg0.getKeyCode()));
 		
 	}
 	
@@ -413,6 +315,10 @@ public class UiViewModifier implements KeyListener,WindowListener{
 			createdetailPanel();
 		}
 		updateAllPanels();
+	}
+	
+	public static void pressedF3(){
+		
 	}
 	
 	private static void createdetailPanel() {
@@ -445,6 +351,14 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		
+	}
+
+	public static void pressedTab(boolean isCommandBox) {
+		if(isCommandBox){
+			contentPanel.requestFocusInWindow();
+		} else{
+			commandBoxPanel.setFocusToCommandBox();
+		}		
 	}
 
 }

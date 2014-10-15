@@ -26,6 +26,7 @@ public class DetailPanel extends JPanel implements Observer{
 			add(lbl_helpCommand);
 			
 		}
+		
 	}
 	public boolean isExisting(){
 		if(isDisplayable()){
