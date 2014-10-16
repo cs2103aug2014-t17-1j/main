@@ -18,14 +18,14 @@ public class Parser {
 		optionHandler = new OptionalCommandInterpreter();
 	}
 
-	public ParsedResult parseString(String input) { 
+	public ParsedResult parseString(String input) {
 		result = new ParsedResult();
 
-		//Processing first command and getting command param
+		// Processing first command and getting command param
 		try {
 			String commandWord = getCommandWord(input);
 			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
-			if(commandDoesNotRequireParam(mainHandler.getCommand())) {
+			if (commandDoesNotRequireParam(mainHandler.getCommand())) {
 				result.setCommandType(mainHandler.getCommand());
 				return result;
 			}
@@ -33,37 +33,38 @@ public class Parser {
 			String commandParam = getParam(remainingInput);
 
 			remainingInput = removeParam(remainingInput);
-			result = mainHandler.updateResults(result,commandParam);
+			result = mainHandler.updateResults(result, commandParam);
 
-			//Processing optional commands
+			// Processing optional commands
+
 
 			processOptionalCommand(remainingInput);
-			
-			if(result.getTaskDetails().getDueDate() == null) {
+
+			if (result.getTaskDetails().getDueDate() == null) {
 				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
 
 			}
 			return result;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			result.setValidationResult(false);
 			return result;
 		}
 
-		/*	System.out.println(commandWord);
-
-		System.out.println(commandWord);
-		System.out.println(commandParam);
-		System.out.println(ParsedResult.getTaskDetails().getDueDate()
-				.toLocalDate().toString("dd/MM/yyyy"));
-		System.out.println(ParsedResult.getTaskDetails().getDueDate()
-				.toLocalTime().toString("HH:mm"));  */
+		/*
+		 * System.out.println(commandWord);
+		 * 
+		 * System.out.println(commandWord); System.out.println(commandParam);
+		 * System.out.println(ParsedResult.getTaskDetails().getDueDate()
+		 * .toLocalDate().toString("dd/MM/yyyy"));
+		 * System.out.println(ParsedResult.getTaskDetails().getDueDate()
+		 * .toLocalTime().toString("HH:mm"));
+		 */
 	}
 
 	private void processOptionalCommand(String remainingInput) {
 		String commandWord;
 		String commandParam;
-		
+
 		while (remainingInput.isEmpty() == false) {
 			commandWord = getCommandWord(remainingInput);
 
@@ -81,7 +82,7 @@ public class Parser {
 
 	private static boolean commandDoesNotRequireParam(CommandType command) {
 
-		if(command == CommandType.UNDO)
+		if (command == CommandType.UNDO)
 			return true;
 
 		return false;
@@ -104,16 +105,18 @@ public class Parser {
 		return splittedCommand[0];
 	}
 
-	private static String getParam(String remainingInput) throws InvalidParameterException {
+	private static String getParam(String remainingInput)
+			throws InvalidParameterException {
 		int indexStartOfParam = remainingInput.indexOf('[');
 		int indexEndOfParam = remainingInput.indexOf(']');
 
-		if(indexStartOfParam == -1 || indexEndOfParam == -1) {
-			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_PARAM_FORMATTING);
+		if (indexStartOfParam == -1 || indexEndOfParam == -1) {
+			SummaryReport
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_PARAM_FORMATTING);
 			throw new InvalidParameterException();
-			//return remainingInput;
+			// return remainingInput;
 		}
-		indexStartOfParam++; //adjust to get first letter of param
+		indexStartOfParam++; // adjust to get first letter of param
 		remainingInput = remainingInput.substring(indexStartOfParam,
 				indexEndOfParam);
 
