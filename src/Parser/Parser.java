@@ -8,8 +8,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.SearchType;
-import taskDo.StringConstants;
-import taskDo.SummaryReport;
 import taskDo.Task;
 
 import com.joestelmach.natty.DateGroup;
@@ -51,13 +49,10 @@ public class Parser {
 			while (remainingInput.isEmpty() == false) {
 				remainingInput = identifyOptionalCommandAndUpdate(remainingInput, result);
 			}
-<<<<<<< HEAD:src/taskDo/Parser.java
-			if(ParsedResult.getTaskDetails().getDueDate() == null) {
-				ParsedResult.getTaskDetails().setDueDate(Constants.SOMEDAY);
-=======
+
 			if(result.getTaskDetails().getDueDate() == null) {
-				result.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
->>>>>>> 159447362887a1ed928e035af8f94e0322bef7c0:src/Parser/Parser.java
+				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
+
 			}
 			return result;
 		}

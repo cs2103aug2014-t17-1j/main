@@ -9,13 +9,13 @@ import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.CategoryList;
 import taskDo.SearchType;
-import taskDo.StringConstants;
-import taskDo.SummaryReport;
 import taskDo.Task;
 
 import com.joestelmach.natty.DateGroup;
 
 import commandFactory.CommandType;
+import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 public class MainCommandHandler implements CommandHandler {
 
@@ -54,7 +54,7 @@ public class MainCommandHandler implements CommandHandler {
 			break;
 	
 		default:
-			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_COMMAND);
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
 			throw new InvalidParameterException();
 		}
 	}
@@ -94,7 +94,7 @@ public class MainCommandHandler implements CommandHandler {
 				if(isValidSelection(commandParam)) {
 					result.setTask(SummaryReport.getDisplayList().get(Integer.valueOf(commandParam)-1));
 				} else {
-					SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
+					SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 					throw new InvalidParameterException();
 				}
 				break;
@@ -104,7 +104,7 @@ public class MainCommandHandler implements CommandHandler {
 					int selection = Integer.valueOf(commandParam) - 1; //adjust to get the correct index in list
 					result.setTask(SummaryReport.getDisplayList().get(selection));
 				} else {
-					SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
+					SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 					throw new InvalidParameterException();
 				}
 				break;
@@ -115,13 +115,13 @@ public class MainCommandHandler implements CommandHandler {
 					result.setSearchMode(SearchType.CATEGORY);
 				} else {
 					if(noDeadLine(commandParam)) {
-						task.setDueDate(StringConstants.SOMEDAY);
+						task.setDueDate(Constants.SOMEDAY);
 						task.setStartDate(null);
 						break;
 					}
 					DateTime date = getDate(commandParam);
 					if(date == null) {
-						SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DISPLAY_SELECTION);
+						SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
 						throw new InvalidParameterException();
 					}
 					else {
@@ -171,9 +171,9 @@ public class MainCommandHandler implements CommandHandler {
 		DateTimeFormatter df;
 		DateTime date;
 		List<DateGroup> group;
-		for (int i = 0; i < StringConstants.DATE_FORMAT_ITERATIONS; i++) {
+		for (int i = 0; i < Constants.DATE_FORMAT_ITERATIONS; i++) {
 			try {
-				df = DateTimeFormat.forPattern(StringConstants.dateFormats[i]);
+				df = DateTimeFormat.forPattern(Constants.dateFormats[i]);
 				date = df.parseDateTime(commandParam);
 				group = parser.parse(date.toString());
 				DateTime dates = new DateTime(group.get(0).getDates().get(0));
