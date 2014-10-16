@@ -1,36 +1,43 @@
 package uiView;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import taskDo.Executor;
 import Parser.ParsedResult;
 import Parser.Parser;
+
+import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 
-	private static JFrame mainFrame;
+	private JFrame mainFrame;
 
-	private static Executor executor; 
+	private Executor executor; 
 
-	private static UIPanelList uiList;
+	private UIPanelList uiList;
 	private HeaderPanel headerPanel;
 	private ShorcutPanel helpPanel;
-	private static CommandBoxPanel commandBoxPanel;
-	private static DetailPanel detailPanel; 
-	private static ContentTablePanel contentPanel;
-	private static int rowSelected;
+	private CommandBoxPanel commandBoxPanel;
+	private DetailPanel detailPanel; 
+	private ContentTablePanel contentPanel;
+	private int rowSelected;
 	private Parser parser;
 	private ParsedResult parseResult;
 	
 	public UiViewModifier(){
+		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
 		mainFrame = new JFrame();
@@ -47,9 +54,9 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		commandBoxPanel = new CommandBoxPanel(this);
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
-		detailPanel = new DetailPanel();
 		
-		contentPanel = new ContentTablePanel();
+		
+		contentPanel = new ContentTablePanel(this);
 		mainFrame.add(contentPanel,BorderLayout.CENTER);
 		
 		uiList.addUI(commandBoxPanel);
@@ -58,10 +65,32 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 
 		
 	    setJFrameProperties();
+	    System.out.println(mainFrame.getFocusOwner());
+	    if(mainFrame.getFocusOwner() instanceof JTextField ){
+	    	System.out.println("Text Field ");
+	    }
 	}
 	
-	public static void updateAllPanels(){
+	public void updateAllPanels(){
 		uiList.notifyUIs();
+	}
+	
+	public Component getCurrentFocusComponent(){
+		return mainFrame.getFocusOwner();
+	}
+	
+	public boolean isFocusOnCommandBox(){
+		if(getCurrentFocusComponent() instanceof JTextField){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isFocusOnJTable(){
+		if(getCurrentFocusComponent() instanceof JTable){
+			return true;
+		}
+		return false;
 	}
 	
 	public void passToParser(String command){
@@ -83,6 +112,100 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		mainFrame.pack();
 		mainFrame.addWindowListener(this);
 		mainFrame.addKeyListener(this);
+	}
+
+	
+	public void pressedF1(){
+		if(isDetailPanelExisting()){
+			mainFrame.remove(detailPanel);
+		} else{
+			createDetailPanel(HotKeyType.F1);
+		}
+		updateAllPanels();
+	}
+	
+
+	
+	public void pressedF2(){
+		if(rowSelected != Constants.DEFAULT_ROW_SELECTED){
+			if(isDetailPanelExisting()){
+				mainFrame.remove(detailPanel);
+			} else{
+				createDetailPanel(HotKeyType.F2);
+			}
+			updateAllPanels();
+			setFocus();
+			updateFrame();
+		}
+	
+	}
+	
+	public void pressedF3(){
+		
+	}
+	
+	private void createDetailPanel(HotKeyType hotkey) {
+		switch(hotkey){
+			case F1:
+				detailPanel = new DetailPanel();
+				break;
+			case F2:
+				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+				break;
+			default:
+				break;
+				
+		}
+		mainFrame.add(detailPanel,BorderLayout.EAST);	
+	}
+	
+	public void updateDetailPanel(){
+		
+		detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+		mainFrame.add(detailPanel,BorderLayout.EAST);
+		updateAllPanels();
+		setFocus();
+		updateFrame();
+	}
+
+	private boolean isDetailPanelExisting(){
+		if(detailPanel != null){
+			if(detailPanel.isDisplayable()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void updateFrame() {
+		mainFrame.pack();
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		
+		
+	}
+	
+	public void setFocus(){
+		if(isFocusOnJTable()){
+			System.out.println("FOCUS ON TABLE");
+			contentPanel.highlightRow();
+		}
+		if(isFocusOnCommandBox()){
+			System.out.println("FOCUS ON COMMANDBOX");
+			commandBoxPanel.setFocusToCommandBox();
+		}
+	}
+
+	public void setRowSelected (int selected){
+		rowSelected = selected;
+	}
+	
+	public void pressedTab(boolean isCommandBox) {
+		if(isCommandBox){
+			contentPanel.requestFocusInWindow();
+		} else{
+			commandBoxPanel.setFocusToCommandBox();
+		}		
 	}
 	
 
@@ -134,35 +257,6 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		
 	}
 	
-	public static void pressedF1(){
-		if(isDetailPanelExisting()){
-			mainFrame.remove(detailPanel);
-		} else{
-			createdetailPanel();
-		}
-		updateAllPanels();
-	}
-	
-	public static void pressedF3(){
-		
-	}
-	
-	public static void pressedF2(){
-		
-	}
-	
-	private static void createdetailPanel() {
-		mainFrame.add(detailPanel,BorderLayout.EAST);	
-	}
-
-	private static boolean isDetailPanelExisting(){
-		if(detailPanel != null){
-			if(detailPanel.isDisplayable()){
-				return true;
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
@@ -175,24 +269,6 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		// TODO Auto-generated method stub
 	}
 
-	public static void update() {
-		// TODO Auto-generated method stub
-		mainFrame.pack();
-		mainFrame.revalidate();
-		mainFrame.repaint();
-		
-	}
-
-	public static void setRowSelected (int selected){
-		rowSelected = selected;
-	}
 	
-	public static void pressedTab(boolean isCommandBox) {
-		if(isCommandBox){
-			contentPanel.requestFocusInWindow();
-		} else{
-			commandBoxPanel.setFocusToCommandBox();
-		}		
-	}
 
 }

@@ -28,8 +28,10 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 	private JTable contentTable;
 	private JScrollPane jsp;
 	private int rowSelected;
+	private UiParent parent;
 	
-	public ContentTablePanel(){
+	public ContentTablePanel(UiParent parent){
+		this.parent = parent; 
 		setPreferredSize(new Dimension(500,400));
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
@@ -45,7 +47,7 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 			@Override
 			public void valueChanged(ListSelectionEvent select) {
 				rowSelected = contentTable.getSelectedRow();
-				UiViewModifier.setRowSelected(rowSelected);
+				parent.setRowSelected(rowSelected);
 			}
 			
 		});
@@ -91,13 +93,15 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		contentTable.requestFocus();
 		contentTable.setFocusable(true);
 		tabKeyPressedAction();
+		f2KeyPressedAction();
 		f1KeyPressedAction();
+	
 		contentTable.addFocusListener(new FocusListener(){
 
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
-				contentTable.setRowSelectionInterval(0, 0);
+				//contentTable.setRowSelectionInterval(0, 0);
 				contentTable.changeSelection(0, 0, false, false);
 			}
 
@@ -118,7 +122,21 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("TAB PRESSED IN TABLE");
-				UiViewModifier.pressedTab(false);
+				parent.pressedTab(false);
+				
+			}
+			
+		});
+	}
+	
+	private void downKeyPressedAction() {
+		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,0), "Changed");
+		contentTable.getActionMap().put("Changed", new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				System.out.println("DOWN KEY IS PRESSED");
+				parent.updateDetailPanel();
 				
 			}
 			
@@ -131,7 +149,22 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				UiViewModifier.pressedF1();
+				parent.pressedF1();
+				
+			}
+			
+		});
+	}
+	
+	private void f2KeyPressedAction() {
+		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F2,0), "e");
+		System.out.println("F2 KEy is pressed");
+		contentTable.getActionMap().put("e", new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				parent.pressedF2();
+				contentTable.setRowSelectionInterval(rowSelected, rowSelected);
 				
 			}
 			
@@ -175,6 +208,12 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
 		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
 	}
+	
+	public void highlightRow(){
+		
+		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+		contentTable.requestFocusInWindow();
+	}
 
 	@Override
 	public void update() {
@@ -182,7 +221,7 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
-		UiViewModifier.update();
+		parent.updateFrame();
 		
 	}
 

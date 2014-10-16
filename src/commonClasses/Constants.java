@@ -73,6 +73,8 @@ public class Constants {
 
 	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension(200,350);
 	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension(420,400);
+	
+	public static final int DEFAULT_ROW_SELECTED = -1;
 	/*
 	 *  @author Huang Li
 	 */
