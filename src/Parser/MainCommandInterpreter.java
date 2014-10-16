@@ -95,7 +95,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			task.setDescription(commandParam);
 			break;
 
-		case DELETE: // TODO : Extract all these into methods.
+		case DELETE: 
 			updateForDeleteCase(result, commandParam);
 			break;
 
