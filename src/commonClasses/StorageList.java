@@ -2,6 +2,7 @@ package commonClasses;
 
 import java.util.ArrayList;
 
+import readAndWriteFile.ConvertToJson;
 import readAndWriteFile.ReadAndWriteToFile;
 import taskDo.Task;
 
@@ -11,11 +12,14 @@ import taskDo.Task;
 public class StorageList {
 	private static StorageList storageList;
 	private ArrayList<Task> mainTaskList;
-	private ReadAndWriteToFile readWrite; 
+	private ReadAndWriteToFile readWrite;
+	private ConvertToJson convertTojson;
+	private String jsonText;
 	
 	private StorageList(){
 		 mainTaskList = new ArrayList<Task>();
 		 readWrite = new ReadAndWriteToFile();
+		 convertTojson = new ConvertToJson();
 	}
 	
 	public static StorageList getInstance(){
@@ -39,6 +43,9 @@ public class StorageList {
 	}
 	
 	public void saveToFile(){
+		System.out.println("SIZE IS "+mainTaskList.size());
+		convertTojson.setTaskList(mainTaskList);
+		readWrite.setjSonText(convertTojson.changeToJSonObj());
 		readWrite.writeToFile();
 	}
 	

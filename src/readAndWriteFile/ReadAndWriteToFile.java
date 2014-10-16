@@ -1,5 +1,6 @@
 package readAndWriteFile;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,9 +13,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import commonClasses.Constants;
-
 import taskDo.Task;
+
+import commonClasses.Constants;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -46,22 +47,30 @@ public class ReadAndWriteToFile {
 	}
 	
 	public ArrayList<Task> readFromFile(){
-		JSONParser parser = new JSONParser();
 		ArrayList<Task> taskList = new ArrayList<Task>();
-		try{
-			JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME));
-			for(Object obj : jsonObjectArr){
-				JSONObject jsonObject = (JSONObject) obj;
-				Task task = extractTaskField(jsonObject);
-				taskList.add(task);
+		File f = new File(Constants.FILENAME);
+		if(f.exists()){
+			if(f.length()!=0){
+				JSONParser parser = new JSONParser();
+				
+				try{
+					JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME));
+					for(Object obj : jsonObjectArr){
+						JSONObject jsonObject = (JSONObject) obj;
+						Task task = extractTaskField(jsonObject);
+						taskList.add(task);
+					}
+				}catch(FileNotFoundException e){
+					e.printStackTrace();
+				}catch(IOException e){
+					e.printStackTrace();
+				}catch(ParseException e){
+					e.printStackTrace();
+				}
 			}
-		}catch(FileNotFoundException e){
-			e.printStackTrace();
-		}catch(IOException e){
-			e.printStackTrace();
-		}catch(ParseException e){
-			e.printStackTrace();
+			
 		}
+		
 		
 		return taskList;
 	}
