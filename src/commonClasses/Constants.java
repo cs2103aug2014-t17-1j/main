@@ -50,6 +50,7 @@ public class Constants {
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
 	public static final String HEADER_TAKSLIST = "Tasks List";
 	public static final String HEADER_HELP = "HELP PANEL";
+	public static final String HEADER_DETAIL = "DETAILS";
 	
 	public static final Color COLOR_LEFT_PANEL_BG = Color.BLACK;
 	public static final Color COLOR_LEFT_PANEL_TEXT = ColorBox.colorPool[24];

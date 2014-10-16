@@ -1,7 +1,5 @@
 package uiView;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -9,6 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import taskDo.Task;
 
 import commonClasses.Constants;
 
@@ -26,6 +26,14 @@ public class DetailPanel extends JPanel implements Observer{
 			add(lbl_helpCommand);
 			
 		}
+		
+	}
+	public DetailPanel(Task task){
+		setLayout(new GridLayout(4,1));
+		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		setBorder(BorderFactory.createTitledBorder(null,Constants.HEADER_DETAIL, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
+		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
+		
 		
 	}
 	public boolean isExisting(){

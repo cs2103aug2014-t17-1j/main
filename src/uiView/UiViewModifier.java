@@ -141,6 +141,10 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		
 	}
 	
+	public static void pressedF2(){
+		
+	}
+	
 	private static void createdetailPanel() {
 		mainFrame.add(detailPanel,BorderLayout.EAST);	
 	}
@@ -174,8 +178,9 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	}
 
 	public static void setRowSelected (int selected){
-		this.rowSelected = selected;
+		rowSelected = selected;
 	}
+	
 	public static void pressedTab(boolean isCommandBox) {
 		if(isCommandBox){
 			contentPanel.requestFocusInWindow();
