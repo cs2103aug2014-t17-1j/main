@@ -1,31 +1,21 @@
 package Parser;
 
 import java.security.InvalidParameterException;
-import java.util.List;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
-import taskDo.SearchType;
 import taskDo.StringConstants;
 import taskDo.SummaryReport;
-import taskDo.Task;
-
-import com.joestelmach.natty.DateGroup;
 
 import commandFactory.CommandType;
 
 public class Parser {
 
-	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, TASK
-	}
-	
 	private ParsedResult result;
-	private MainCommandHandler mainHandler;
+	private MainCommandInterpreter mainHandler;
+	private OptionalCommandInterpreter optionHandler;
+
 	public Parser() {
-		mainHandler = new MainCommandHandler();
+		mainHandler = new MainCommandInterpreter();
+		optionHandler = new OptionalCommandInterpreter();
 	}
 
 	public ParsedResult parseString(String input) { 
@@ -46,9 +36,14 @@ public class Parser {
 			result = mainHandler.updateResults(result,commandParam);
 
 			//Processing optional commands
+<<<<<<< HEAD
 			while (remainingInput.isEmpty() == false) {
 				remainingInput = identifyOptionalCommandAndUpdate(remainingInput, result);
 			}
+=======
+			processOptionalCommand(remainingInput);
+			
+>>>>>>> c84f0659520769fcd5ce8eaabbfacbd0da7469c6
 			if(result.getTaskDetails().getDueDate() == null) {
 				result.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
 			}
@@ -58,8 +53,6 @@ public class Parser {
 			result.setValidationResult(false);
 			return result;
 		}
-
-
 
 		/*	System.out.println(commandWord);
 
@@ -71,8 +64,11 @@ public class Parser {
 				.toLocalTime().toString("HH:mm"));  */
 	}
 
-	private static boolean commandDoesNotRequireParam(CommandType command) {
+	private void processOptionalCommand(String remainingInput) {
+		String commandWord;
+		String commandParam;
 		
+<<<<<<< HEAD
 		if(command == CommandType.UNDO || command == CommandType.SAVE)
 			return true;
 		
@@ -232,11 +228,17 @@ public class Parser {
 			return "";
 		}
 	}
+=======
+		while (remainingInput.isEmpty() == false) {
+			commandWord = getCommandWord(remainingInput);
+>>>>>>> c84f0659520769fcd5ce8eaabbfacbd0da7469c6
 
-	private static OptionalCommand identifyOptionalCommand(String commandWord) throws InvalidParameterException {
+			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
 
-		switch (commandWord) {
+			remainingInput = optionHandler.removeCommandWord(remainingInput);
+			commandParam = getParam(remainingInput);
 
+<<<<<<< HEAD
 		case "due":
 			return OptionalCommand.DUE;
 
@@ -260,6 +262,20 @@ public class Parser {
 			throw new InvalidParameterException();
 		}
 
+=======
+			result = optionHandler.updateResults(result, commandParam);
+
+			remainingInput = removeParam(remainingInput);
+		}
+	}
+
+	private static boolean commandDoesNotRequireParam(CommandType command) {
+
+		if(command == CommandType.UNDO)
+			return true;
+
+		return false;
+>>>>>>> c84f0659520769fcd5ce8eaabbfacbd0da7469c6
 	}
 
 	private static String removeParam(String remainingInput) {
@@ -278,7 +294,10 @@ public class Parser {
 		return splittedCommand[0];
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> c84f0659520769fcd5ce8eaabbfacbd0da7469c6
 	private static String getParam(String remainingInput) throws InvalidParameterException {
 		int indexStartOfParam = remainingInput.indexOf('[');
 		int indexEndOfParam = remainingInput.indexOf(']');
@@ -294,12 +313,5 @@ public class Parser {
 
 		return remainingInput.trim();
 	}
-	
-	private static boolean noDeadLine(String commandParam) {
-		if(commandParam.toUpperCase().equals("SOMEDAY")) {
-			return true;
-		}
-		
-		return false;
-	}
+
 }
