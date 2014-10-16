@@ -1,9 +1,10 @@
 package commandFactory;
 
 
+import commonClasses.StorageList;
 import taskDo.History;
 import Parser.ParsedResult;
-import taskDo.StorageList;
+
 
 public class CommandActionAdd implements CommandAction{
 	@Override

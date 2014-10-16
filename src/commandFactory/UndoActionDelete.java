@@ -1,7 +1,7 @@
 package commandFactory;
 
 import taskDo.History;
-import taskDo.StorageList;
+import commonClasses.StorageList;
 
 public class UndoActionDelete implements UndoAction {
 

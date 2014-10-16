@@ -3,8 +3,11 @@ import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
-import readAndWriteFile.ConvertToJSonObject;
+import commonClasses.StorageList;
+import commonClasses.SummaryReport;
+import readAndWriteFile.ConvertToJson;
 import readAndWriteFile.ReadAndWriteToFile;
+import uiView.UiViewModifier;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -26,8 +29,7 @@ public class TaskDoMain {
 		System.out.println(taskList);
 		SummaryReport.setDisplayList(taskList);
 		UiViewModifier uiVM = new UiViewModifier();
-		Controller controller = uiVM.getControllerObject();
-		controller.setUiViewModifier(uiVM);
+
 		
 
 		//Testing for JSON OBJ

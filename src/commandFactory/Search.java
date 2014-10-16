@@ -1,9 +1,12 @@
 package commandFactory;
 
 import java.util.ArrayList;
+
 import org.joda.time.DateTime;
+
+import commonClasses.StorageList;
+
 import taskDo.SearchType;
-import taskDo.StorageList;
 import taskDo.Task;
 
 public class Search {

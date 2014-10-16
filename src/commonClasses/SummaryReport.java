@@ -1,16 +1,18 @@
-package taskDo;
+package commonClasses;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import taskDo.Task;
+import uiView.Observer;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class SummaryReport {
-	
+public class SummaryReport{
 	private static String feedBackMsg;
 	private static String header;
 	private static ArrayList<Task> displayList;
-	//ONe arrayList for Category
+
 	
 	public static String getFeedBackMsg() {
 		return feedBackMsg;
@@ -38,4 +40,5 @@ public class SummaryReport {
 	public static void sortByDueDate(){
 		Collections.sort(displayList);
 	}
+	
 }

@@ -12,7 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import taskDo.StringConstants;
+import commonClasses.Constants;
+
 import taskDo.Task;
 
 /*
@@ -20,21 +21,21 @@ import taskDo.Task;
  */
 
 public class ReadAndWriteToFile {
-	private String jSonText;
+	private String jsonText;
 
 	public String getjSonText() {
-		return jSonText;
+		return jsonText;
 	}
 
 	public void setjSonText(String jSonText) {
-		this.jSonText = jSonText;
+		this.jsonText = jSonText;
 	} 
 	
 	public boolean writeToFile(){
 		FileWriter file = null; 
 		try {
-			file = new FileWriter(StringConstants.FILENAME);
-			file.write(jSonText);
+			file = new FileWriter(Constants.FILENAME);
+			file.write(jsonText);
 			file.flush();
 			file.close();
 			return true;
@@ -48,7 +49,7 @@ public class ReadAndWriteToFile {
 		JSONParser parser = new JSONParser();
 		ArrayList<Task> taskList = new ArrayList<Task>();
 		try{
-			JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(StringConstants.FILENAME));
+			JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME));
 			for(Object obj : jsonObjectArr){
 				JSONObject jsonObject = (JSONObject) obj;
 				Task task = extractTaskField(jsonObject);
@@ -67,18 +68,18 @@ public class ReadAndWriteToFile {
 
 	private Task extractTaskField(JSONObject jsonObject) {
 		Task task = new Task();
-		task.setCategory((String) jsonObject.get(StringConstants.TASKKEYS[0]));
-		task.setDescription((String) jsonObject.get(StringConstants.TASKKEYS[1]));
-		task.setImportant((boolean) jsonObject.get(StringConstants.TASKKEYS[2]));
-		task.setCompleted((boolean) jsonObject.get(StringConstants.TASKKEYS[5]));
-		String str_dueDate = (String) jsonObject.get(StringConstants.TASKKEYS[3]);
+		task.setCategory((String) jsonObject.get(Constants.TASKKEYS[0]));
+		task.setDescription((String) jsonObject.get(Constants.TASKKEYS[1]));
+		task.setImportant((boolean) jsonObject.get(Constants.TASKKEYS[2]));
+		task.setCompleted((boolean) jsonObject.get(Constants.TASKKEYS[5]));
+		String str_dueDate = (String) jsonObject.get(Constants.TASKKEYS[3]);
 		if(str_dueDate.isEmpty()){
 			task.setDueDate(null);
 		}else{
 			DateTime dueDate = DateTime.parse(str_dueDate);
 			task.setDueDate(dueDate);
 		}
-		String str_startDate = (String) jsonObject.get(StringConstants.TASKKEYS[4]);
+		String str_startDate = (String) jsonObject.get(Constants.TASKKEYS[4]);
 		if(str_startDate.isEmpty()){
 			task.setStartDate(null);
 		}else{
