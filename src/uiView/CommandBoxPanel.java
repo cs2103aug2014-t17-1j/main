@@ -18,8 +18,10 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	private JTextField commandBox;
 	private String command;
 	private JLabel feedBackMsg;
+	private UiParent parent;
 	
-	public CommandBoxPanel(){
+	public CommandBoxPanel(UiParent parent){
+		this.parent = parent;
 		setLayout(new BorderLayout());
 		initFeedBackMsg();
 		initCommandBox();
@@ -53,7 +55,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 				// TODO Auto-generated method stub
 				
 				 command= commandBox.getText();
-				 UiViewModifier.passToParser(command);
+				 parent.passToParser(command);
 				 commandBox.setText("");
 				 System.out.println(command);
 			}
