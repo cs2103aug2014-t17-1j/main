@@ -23,22 +23,23 @@ public class Parser {
 
 		// Processing first command and getting command param
 		try {
-			String commandWord = getCommandWord(input);
+			String[] seperatedInput = input.split("-");
+			String commandWord = getCommandWord(seperatedInput[1]);
 			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
 			if (commandDoesNotRequireParam(mainHandler.getCommand())) {
 				result.setCommandType(mainHandler.getCommand());
 				return result;
 			}
-			String remainingInput = mainHandler.removeCommandWord(input);
-			String commandParam = getParam(remainingInput);
+			String remainingInput = mainHandler.removeCommandWord(seperatedInput[1]);
+			//String commandParam = getParam(remainingInput);
 
-			remainingInput = removeParam(remainingInput);
-			result = mainHandler.updateResults(result, commandParam);
+			//remainingInput = removeParam(remainingInput);
+			result = mainHandler.updateResults(result, remainingInput.trim());
 
 			// Processing optional commands
 
 
-			processOptionalCommand(remainingInput);
+			processOptionalCommand(seperatedInput);
 
 			if (result.getTaskDetails().getDueDate() == null) {
 				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
@@ -61,22 +62,22 @@ public class Parser {
 		 */
 	}
 
-	private void processOptionalCommand(String remainingInput) {
+	private void processOptionalCommand(String[] remainingInput) {
 		String commandWord;
 		String commandParam;
 
-		while (remainingInput.isEmpty() == false) {
-			commandWord = getCommandWord(remainingInput);
+		for(int i=4; i<remainingInput.length;i+=2) {
+			commandWord = getCommandWord(remainingInput[i]);
 
 			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
 
-			remainingInput = optionHandler.removeCommandWord(remainingInput);
-			commandParam = getParam(remainingInput);
+			remainingInput[i] = optionHandler.removeCommandWord(remainingInput[i]);
+			//commandParam = getParam(remainingInput[i]);
 
 
-			result = optionHandler.updateResults(result, commandParam);
+			result = optionHandler.updateResults(result, remainingInput[i].trim());
 
-			remainingInput = removeParam(remainingInput);
+			//remainingInput = removeParam(remainingInput);
 		}
 	}
 
