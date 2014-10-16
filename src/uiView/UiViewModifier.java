@@ -1,26 +1,30 @@
 package uiView;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
-
-import commonClasses.SummaryReport;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 
 import taskDo.Executor;
 import Parser.ParsedResult;
 import Parser.Parser;
+
+import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 
-	private static JFrame mainFrame;
+	private JFrame mainFrame;
 
-	private static Executor executor; 
+	private Executor executor; 
 
 	private UIPanelList uiList;
 	private HeaderPanel headerPanel;
@@ -33,6 +37,7 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 	private ParsedResult parseResult;
 	
 	public UiViewModifier(){
+		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
 		mainFrame = new JFrame();
@@ -60,10 +65,32 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 
 		
 	    setJFrameProperties();
+	    System.out.println(mainFrame.getFocusOwner());
+	    if(mainFrame.getFocusOwner() instanceof JTextField ){
+	    	System.out.println("Text Field ");
+	    }
 	}
 	
 	public void updateAllPanels(){
 		uiList.notifyUIs();
+	}
+	
+	public Component getCurrentFocusComponent(){
+		return mainFrame.getFocusOwner();
+	}
+	
+	public boolean isFocusOnCommandBox(){
+		if(getCurrentFocusComponent() instanceof JTextField){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isFocusOnJTable(){
+		if(getCurrentFocusComponent() instanceof JTable){
+			return true;
+		}
+		return false;
 	}
 	
 	public void passToParser(String command){
@@ -97,19 +124,24 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		updateAllPanels();
 	}
 	
-	public void pressedF3(){
-		
-	}
+
 	
 	public void pressedF2(){
-		if(rowSelected != -1){
+		if(rowSelected != Constants.DEFAULT_ROW_SELECTED){
 			if(isDetailPanelExisting()){
 				mainFrame.remove(detailPanel);
 			} else{
 				createDetailPanel(HotKeyType.F2);
 			}
 			updateAllPanels();
+			setFocus();
+			updateFrame();
 		}
+	
+	}
+	
+	public void pressedF3(){
+		
 	}
 	
 	private void createDetailPanel(HotKeyType hotkey) {
@@ -126,6 +158,15 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		}
 		mainFrame.add(detailPanel,BorderLayout.EAST);	
 	}
+	
+	public void updateDetailPanel(){
+		
+		detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+		mainFrame.add(detailPanel,BorderLayout.EAST);
+		updateAllPanels();
+		setFocus();
+		updateFrame();
+	}
 
 	private boolean isDetailPanelExisting(){
 		if(detailPanel != null){
@@ -136,12 +177,23 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		return false;
 	}
 	
-	public static void update() {
-		// TODO Auto-generated method stub
+	public void updateFrame() {
 		mainFrame.pack();
 		mainFrame.revalidate();
 		mainFrame.repaint();
 		
+		
+	}
+	
+	public void setFocus(){
+		if(isFocusOnJTable()){
+			System.out.println("FOCUS ON TABLE");
+			contentPanel.highlightRow();
+		}
+		if(isFocusOnCommandBox()){
+			System.out.println("FOCUS ON COMMANDBOX");
+			commandBoxPanel.setFocusToCommandBox();
+		}
 	}
 
 	public void setRowSelected (int selected){

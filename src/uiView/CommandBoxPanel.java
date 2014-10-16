@@ -63,7 +63,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	    });
 	   commandBox.addKeyListener(this);
 	}
-
+	
 	
 	private void setIntroTextInCommandBox() {
 		commandBox.setForeground(Color.GRAY);
@@ -85,14 +85,10 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 			System.out.println("you have entered F1");
 				parent.pressedF1();
 		}
-//		if(arg0.getKeyCode() == KeyEvent.VK_TAB){
-//			System.out.println("COMMAND BOX TAB IS PRESSED");
-//			UiViewModifier.pressedTab(true);
-//		}
-//		if(arg0.getKeyCode()==KeyEvent.VK_F2){
-//			mainFrame.remove(rightDetailPanel);
-//			refreshFrame();
-//		}
+
+		if(arg0.getKeyCode()==KeyEvent.VK_F2){
+			parent.pressedF2();
+		}
 		
 	}
 
