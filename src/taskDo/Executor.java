@@ -4,11 +4,12 @@ import Parser.ParsedResult;
 import commandFactory.CommandAction;
 import commandFactory.CommandFactory;
 import commandFactory.CommandType;
+import commonClasses.StorageList;
 
 public class Executor {
 
 	public Executor() {
-		// StorageList.getInstance().loadFile();
+		StorageList.getInstance().loadFile();
 	}
 
 	public void execute(ParsedResult parsedResult) {
@@ -19,15 +20,18 @@ public class Executor {
 
 		if (commandType.equals(CommandType.UNDO)) {
 			CommandAction commandAction = History.getCommandActionHistory().pop();
-			commandAction.undo();
-		} else {
-			CommandAction commandAction = commandFactory.getCommandAction(commandType);
-			History.getCommandActionHistory().push(commandAction);
-			History.getTaskHistory().push(parsedResult.getTaskDetails());
+			Task lastTask = History.getTaskHistory().pop();
+			commandAction.undo(lastTask);
+			UpdateSummaryReport.update(commandType, lastTask.getDueDate());
 			
+		} else {
+			CommandAction commandAction = commandFactory.getCommandAction(commandType);			
 			commandAction.execute(parsedResult);
+			if(!commandType.equals(CommandType.DISPLAY)){
+				History.getCommandActionHistory().push(commandAction);
+			}
+			UpdateSummaryReport.update(commandType, parsedResult.getTaskDetails().getDueDate());
 		}
-		// StorageList.getInstance().save();
-		UpdateSummaryReport.update(commandType, parsedResult);
+		StorageList.getInstance().saveToFile();
 	}
 }

@@ -78,13 +78,14 @@ public class Constants {
 	 */
 
 	// Command Actions
-	public static final int NO_TASK = -1;
-	public static final int NILL_YEAR = 0;
-	public static final String MESSAGE_SOMEDAY = "Someday";
-	public static final String MESSAGE_SUCCESS_ADD = "Added successfully";
 	public static final String MESSAGE_SUCCESS_DELETE = "Deleted successfully";
 	public static final String MESSAGE_SUCCESS_EDIT = "Edited successfully";
+	public static final String MESSAGE_SUCCESS_ADD = "Added successfully";
+	public static final String MESSAGE_SUCCESS_UNDO = "Undo successfully";
 	public static final String MESSAGE_DISPLAY = "Display by request";
+	public static final String MESSAGE_SOMEDAY = "Someday";
+	public static final int NILL_YEAR = 0;
+	public static final int NO_TASK = -1;
 	
 	/*
 	 *  @author Boo Tai Yi
