@@ -1,6 +1,11 @@
 package commonClasses;
 
+import java.awt.Color;
+import java.awt.Dimension;
+
 import org.joda.time.DateTime;
+
+import uiView.ColorBox;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -12,6 +17,7 @@ public class Constants {
 	 */
 	
 	public static final String FILENAME = "TaskDo.json";
+	
 	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed"} ;
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
 			"F2 ==> View Details",
@@ -43,7 +49,29 @@ public class Constants {
 	public static final String []COLUMNTITLES = {"ID","Description"," "};
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
 	public static final String HEADER_TAKSLIST = "Tasks List";
+	public static final String HEADER_HELP = "HELP PANEL";
+	
+	public static final Color COLOR_LEFT_PANEL_BG = Color.BLACK;
+	public static final Color COLOR_LEFT_PANEL_TEXT = ColorBox.colorPool[24];
+	public static final Color COLOR_LEFT_PANEL_HEADER = ColorBox.colorPool[24];
+	
+	public static final Color COLOR_DETAIL_PANEL_TEXT = ColorBox.colorPool[24];
+	public static final Color COLOR_DETAIL_PANEL_BG = Color.BLACK;
+	
+	public static final Color COLOR_TABLE_TEXT = ColorBox.colorPool[24];
+	public static final Color COLOR_TABLE_EVEN_ROW = Color.BLACK;
+	public static final Color COLOR_TABLE_ODD_ROW = Color.CYAN;
+	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[105];
+	public static final Color COLOR_TABLE_HEADER_BG = Color.BLACK;
+	public static final Color COLOR_TABLE_HEADER_TEXT = ColorBox.colorPool[24];
+	public static final Color COLOR_TABLE_GRID = Color.CYAN;
+	
+	public static final Color COLOR_JSCROLL_BG = Color.BLACK;
+	
+	public static final Color COLOR_CENTRE_PANEL_BG = Color.BLACK;
 
+	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension(200,350);
+	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension(420,400);
 	/*
 	 *  @author Huang Li
 	 */

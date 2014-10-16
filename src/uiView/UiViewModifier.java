@@ -21,10 +21,11 @@ public class UiViewModifier implements KeyListener,WindowListener{
 
 	private static UIPanelList uiList;
 	private HeaderPanel headerPanel;
-	private HelpPanel helpPanel;
+	private ShorcutPanel helpPanel;
 	private static CommandBoxPanel commandBoxPanel;
 	private static DetailPanel detailPanel; 
 	private static ContentTablePanel contentPanel;
+	private static int rowSelected;
 	
 	public UiViewModifier(){
 		executor = new Executor();
@@ -36,7 +37,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		headerPanel = new HeaderPanel();
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
-		helpPanel = new HelpPanel();
+		helpPanel = new ShorcutPanel();
 		mainFrame.add(helpPanel,BorderLayout.WEST);
 		
 		commandBoxPanel = new CommandBoxPanel();
@@ -172,6 +173,9 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		
 	}
 
+	public static void setRowSelected (int selected){
+		this.rowSelected = selected;
+	}
 	public static void pressedTab(boolean isCommandBox) {
 		if(isCommandBox){
 			contentPanel.requestFocusInWindow();

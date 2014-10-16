@@ -1,6 +1,5 @@
 package uiView;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -17,6 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import taskDo.Task;
 import commonClasses.Constants;
@@ -26,13 +27,33 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 	private ArrayList<Task> taskList; 
 	private JTable contentTable;
 	private JScrollPane jsp;
+	private int rowSelected;
 	
 	public ContentTablePanel(){
 		setPreferredSize(new Dimension(500,400));
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
-		setBackground(Color.BLACK);
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		
+	}
+
+
+	private void addListActionListener() {
+		contentTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent select) {
+				rowSelected = contentTable.getSelectedRow();
+				UiViewModifier.setRowSelected(rowSelected);
+			}
+			
+		});
+		
+	}
+	
+	public int getSelectedTableRow(){
+		return rowSelected;
 	}
 
 
@@ -50,19 +71,20 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 			setContentTableProperties();
 			setJScrollPanePropCentrePane();
 			add(jsp);	
+			addListActionListener();
 		}
+		
 	}
 	
 	
 
 	private void setContentTableProperties() {
-		contentTable.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB,0),"");
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		contentTable.getTableHeader().setReorderingAllowed(false);
-		contentTable.getTableHeader().setForeground(ColorBox.colorPool[24]);
+		contentTable.getTableHeader().setForeground(Constants.COLOR_TABLE_HEADER_TEXT);
 		contentTable.getTableHeader().setResizingAllowed(false);
-		contentTable.getTableHeader().setBackground(Color.black);
-		contentTable.setGridColor(Color.CYAN);
+		contentTable.getTableHeader().setBackground(Constants.COLOR_TABLE_HEADER_BG);
+		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
 		contentTable.setRowHeight(40);
 		contentTable.setRowSelectionAllowed(true);
 		contentTable.setColumnSelectionAllowed(false);
@@ -150,8 +172,8 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,Constants.HEADER_TAKSLIST, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]);
 		jsp.setBorder(jScrollTitledBorder);
 		jsp.setPreferredSize(new Dimension(450,380));
-		jsp.setBackground(Color.BLACK);
-		jsp.getViewport().setBackground(Color.BLACK);
+		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
+		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
 	}
 
 	@Override
@@ -159,7 +181,7 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
-		setBackground(Color.BLACK);
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		UiViewModifier.update();
 		
 	}

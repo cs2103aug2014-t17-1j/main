@@ -17,12 +17,12 @@ public class DetailPanel extends JPanel implements Observer{
 	public DetailPanel(){
 		String []helpCommands = Constants.HELPCOMMANDS;
 		setLayout(new GridLayout(helpCommands.length,1));
-		setPreferredSize(new Dimension(420,400));
-		setBorder(BorderFactory.createTitledBorder(null,"HELP PANEL", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]));
-		setBackground(Color.BLACK);
+		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		setBorder(BorderFactory.createTitledBorder(null,Constants.HEADER_HELP, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
+		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 		for(int i = 0 ; i < helpCommands.length; i++){
 			JLabel lbl_helpCommand = new JLabel(helpCommands[i]);
-			lbl_helpCommand.setForeground(ColorBox.colorPool[24]);
+			lbl_helpCommand.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
 			add(lbl_helpCommand);
 			
 		}
