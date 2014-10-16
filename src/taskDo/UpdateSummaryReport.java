@@ -12,6 +12,7 @@ public class UpdateSummaryReport {
 	
 	public static void update(CommandType commandType, ParsedResult parsedResult){
 		Search search = new Search();
+		assert parsedResult.getTaskDetails().getDueDate() != null;
 		search.searchDueDate(parsedResult.getTaskDetails().getDueDate());
 		
 		updateHeader(parsedResult);
@@ -45,6 +46,9 @@ public class UpdateSummaryReport {
 			SummaryReport.setHeader(StringConstants.MESSAGE_SOMEDAY);
 		} else {
 			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+			
+			assert parsedResult.getTaskDetails().getDueDate() != null;
+			
 			String dateDisplay = dateFormat.print(parsedResult.getTaskDetails().getDueDate().toLocalDate());
 			
 			SummaryReport.setHeader(dateDisplay);
@@ -52,6 +56,7 @@ public class UpdateSummaryReport {
 	}
 
 	private static boolean isSomeday(ParsedResult parsedResult) {
+		assert parsedResult.getTaskDetails().getDueDate() != null;
 		return parsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == StringConstants.NILL_YEAR;
 	}
 }

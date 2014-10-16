@@ -12,11 +12,16 @@ public class Executor {
 	}
 
 	public void execute(ParsedResult parsedResult) {
+		assert parsedResult != null;
+		
 		CommandFactory commandFactory = new CommandFactory();
 		CommandType commandType = parsedResult.getCommandType();
 		CommandAction commandAction = null;
 		
 		commandAction = commandFactory.getCommandAction(commandType);
+		
+		assert commandAction != null;
+		
 		commandAction.execute(parsedResult);
 		
 //		StorageList.getInstance().save();

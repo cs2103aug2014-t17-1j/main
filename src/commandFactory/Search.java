@@ -48,7 +48,7 @@ public class Search {
 //	}
 
 	public void searchById(int id){
-		
+		assert !StorageList.getInstance().getTaskList().isEmpty();
 		for(Task task: StorageList.getInstance().getTaskList()){
 			if(id == task.getId()){
 				taskIndex = StorageList.getInstance().getTaskList().indexOf(task);
