@@ -6,10 +6,9 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import taskDo.StringConstants;
-import taskDo.SummaryReport;
-
 import com.joestelmach.natty.DateGroup;
+import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 public class CommonInterpreterMethods {
 
@@ -42,9 +41,9 @@ public class CommonInterpreterMethods {
 		DateTimeFormatter df;
 		DateTime date;
 		List<DateGroup> group;
-		for (int i = 0; i < StringConstants.DATE_FORMAT_ITERATIONS; i++) {
+		for (int i = 0; i < Constants.DATE_FORMAT_ITERATIONS; i++) {
 			try {
-				df = DateTimeFormat.forPattern(StringConstants.dateFormats[i]);
+				df = DateTimeFormat.forPattern(Constants.dateFormats[i]);
 				date = df.parseDateTime(commandParam);
 				group = parser.parse(date.toString());
 				DateTime dates = new DateTime(group.get(0).getDates().get(0));
