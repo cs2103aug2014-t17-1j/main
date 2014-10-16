@@ -2,10 +2,9 @@ package Parser;
 
 import java.security.InvalidParameterException;
 
-import taskDo.StringConstants;
-import taskDo.SummaryReport;
-
 import commandFactory.CommandType;
+import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 public class Parser {
 
@@ -39,7 +38,7 @@ public class Parser {
 			processOptionalCommand(remainingInput);
 			
 			if(result.getTaskDetails().getDueDate() == null) {
-				result.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
+				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
 			}
 			return result;
 		}
@@ -105,7 +104,7 @@ public class Parser {
 		int indexEndOfParam = remainingInput.indexOf(']');
 
 		if(indexStartOfParam == -1 || indexEndOfParam == -1) {
-			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_PARAM_FORMATTING);
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_PARAM_FORMATTING);
 			throw new InvalidParameterException();
 			//return remainingInput;
 		}

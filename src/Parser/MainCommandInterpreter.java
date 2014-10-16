@@ -6,10 +6,11 @@ import org.joda.time.DateTime;
 
 import taskDo.CategoryList;
 import taskDo.SearchType;
-import taskDo.StringConstants;
-import taskDo.SummaryReport;
 import taskDo.Task;
+
 import commandFactory.CommandType;
+import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 public class MainCommandInterpreter extends CommandInterpreter {
 
@@ -54,7 +55,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 		default:
 			SummaryReport
-					.setFeedBackMsg(StringConstants.MESSAGE_INVALID_COMMAND);
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
 			throw new InvalidParameterException();
 		}
 	}
@@ -130,7 +131,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			result.getTaskDetails().setCompleted(true);
 		} else {
 			SummaryReport
-					.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();
 		}
 	}
@@ -141,13 +142,13 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			task.setCategory(commandParam);
 			result.setSearchMode(SearchType.CATEGORY);
 		} else if (CommonInterpreterMethods.noDeadLine(commandParam)) {
-			task.setDueDate(StringConstants.SOMEDAY);
+			task.setDueDate(Constants.SOMEDAY);
 			task.setStartDate(null);
 		} else {
 			DateTime date = CommonInterpreterMethods.getDate(commandParam);
 			if (date == null) {
 				SummaryReport
-						.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DISPLAY_SELECTION);
+						.setFeedBackMsg(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
@@ -164,7 +165,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			result.setTask(SummaryReport.getDisplayList().get(selection));
 		} else {
 			SummaryReport
-					.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();
 		}
 	}
@@ -175,7 +176,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 					Integer.valueOf(commandParam) - 1));
 		} else {
 			SummaryReport
-					.setFeedBackMsg(StringConstants.MESSAGE_INVALID_SELECTION);
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();
 		}
 	}

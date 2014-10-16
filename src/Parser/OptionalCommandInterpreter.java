@@ -4,9 +4,10 @@ import java.security.InvalidParameterException;
 
 import org.joda.time.DateTime;
 
-import taskDo.StringConstants;
-import taskDo.SummaryReport;
 import taskDo.Task;
+
+import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 public class OptionalCommandInterpreter extends CommandInterpreter {
 
@@ -52,7 +53,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 
 		default:
 			SummaryReport
-					.setFeedBackMsg(StringConstants.MESSAGE_INVALID_OPTIONAL_COMMAND);
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
 			throw new InvalidParameterException();
 		}
 	}
@@ -125,7 +126,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			task.setImportant(false);
 		} else {
 			SummaryReport
-					.setFeedBackMsg(StringConstants.MESSAGE_INVALID_IMPORTANCE_PARAM);
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM);
 			throw new InvalidParameterException();
 		}
 	}
@@ -134,7 +135,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		DateTime date;
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if (date == null) {
-			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
 		} else {
 			task.setDueDate(date);
@@ -145,7 +146,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		DateTime date;
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if (date == null) {
-			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
 		} else {
 			task.setStartDate(date);
@@ -155,13 +156,13 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 	private void updateDueCase(String commandParam, Task task) {
 		DateTime date;
 		if (CommonInterpreterMethods.noDeadLine(commandParam)) {
-			task.setDueDate(StringConstants.SOMEDAY);
+			task.setDueDate(Constants.SOMEDAY);
 			task.setStartDate(null);
 		} else {
 			date = CommonInterpreterMethods.getDate(commandParam);
 			if (date == null) {
 				SummaryReport
-						.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
+						.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
