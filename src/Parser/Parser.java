@@ -66,7 +66,7 @@ public class Parser {
 		String commandWord;
 		String commandParam;
 
-		for(int i=4; i<remainingInput.length;i+=2) {
+		for(int i=2; i<remainingInput.length;i++) {
 			commandWord = getCommandWord(remainingInput[i]);
 
 			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
