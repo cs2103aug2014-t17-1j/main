@@ -8,8 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import taskDo.Task;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import taskDo.Task;
 import commonClasses.Constants;
 
 public class DetailPanel extends JPanel implements Observer{
@@ -29,10 +31,23 @@ public class DetailPanel extends JPanel implements Observer{
 		
 	}
 	public DetailPanel(Task task){
+		System.out.println("DETAIL PANEL FOR TASK");
 		setLayout(new GridLayout(4,1));
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
 		setBorder(BorderFactory.createTitledBorder(null,Constants.HEADER_DETAIL, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
+		JLabel label = new JLabel(task.getDescription());
+		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
+		add(label);
+		DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+		String dueDate = dateFormat.print(task.getDueDate().toLocalDate());
+		label = new JLabel("Due On " +dueDate);
+		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
+		add(label);
+		assert task.getCategory() != null;
+		label = new JLabel(task.getCategory());
+		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
+		add(label);
 		
 		
 	}

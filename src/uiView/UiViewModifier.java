@@ -7,6 +7,8 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 
+import commonClasses.SummaryReport;
+
 import taskDo.Executor;
 import Parser.ParsedResult;
 import Parser.Parser;
@@ -20,13 +22,13 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 
 	private static Executor executor; 
 
-	private static UIPanelList uiList;
+	private UIPanelList uiList;
 	private HeaderPanel headerPanel;
 	private ShorcutPanel helpPanel;
-	private static CommandBoxPanel commandBoxPanel;
-	private static DetailPanel detailPanel; 
-	private static ContentTablePanel contentPanel;
-	private static int rowSelected;
+	private CommandBoxPanel commandBoxPanel;
+	private DetailPanel detailPanel; 
+	private ContentTablePanel contentPanel;
+	private int rowSelected;
 	private Parser parser;
 	private ParsedResult parseResult;
 	
@@ -47,9 +49,9 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		commandBoxPanel = new CommandBoxPanel(this);
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
-		detailPanel = new DetailPanel();
 		
-		contentPanel = new ContentTablePanel();
+		
+		contentPanel = new ContentTablePanel(this);
 		mainFrame.add(contentPanel,BorderLayout.CENTER);
 		
 		uiList.addUI(commandBoxPanel);
@@ -60,7 +62,7 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 	    setJFrameProperties();
 	}
 	
-	public static void updateAllPanels(){
+	public void updateAllPanels(){
 		uiList.notifyUIs();
 	}
 	
@@ -83,6 +85,75 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		mainFrame.pack();
 		mainFrame.addWindowListener(this);
 		mainFrame.addKeyListener(this);
+	}
+
+	
+	public void pressedF1(){
+		if(isDetailPanelExisting()){
+			mainFrame.remove(detailPanel);
+		} else{
+			createDetailPanel(HotKeyType.F1);
+		}
+		updateAllPanels();
+	}
+	
+	public void pressedF3(){
+		
+	}
+	
+	public void pressedF2(){
+		if(rowSelected != -1){
+			if(isDetailPanelExisting()){
+				mainFrame.remove(detailPanel);
+			} else{
+				createDetailPanel(HotKeyType.F2);
+			}
+			updateAllPanels();
+		}
+	}
+	
+	private void createDetailPanel(HotKeyType hotkey) {
+		switch(hotkey){
+			case F1:
+				detailPanel = new DetailPanel();
+				break;
+			case F2:
+				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+				break;
+			default:
+				break;
+				
+		}
+		mainFrame.add(detailPanel,BorderLayout.EAST);	
+	}
+
+	private boolean isDetailPanelExisting(){
+		if(detailPanel != null){
+			if(detailPanel.isDisplayable()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void update() {
+		// TODO Auto-generated method stub
+		mainFrame.pack();
+		mainFrame.revalidate();
+		mainFrame.repaint();
+		
+	}
+
+	public void setRowSelected (int selected){
+		rowSelected = selected;
+	}
+	
+	public void pressedTab(boolean isCommandBox) {
+		if(isCommandBox){
+			contentPanel.requestFocusInWindow();
+		} else{
+			commandBoxPanel.setFocusToCommandBox();
+		}		
 	}
 	
 
@@ -134,35 +205,6 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		
 	}
 	
-	public static void pressedF1(){
-		if(isDetailPanelExisting()){
-			mainFrame.remove(detailPanel);
-		} else{
-			createdetailPanel();
-		}
-		updateAllPanels();
-	}
-	
-	public static void pressedF3(){
-		
-	}
-	
-	public static void pressedF2(){
-		
-	}
-	
-	private static void createdetailPanel() {
-		mainFrame.add(detailPanel,BorderLayout.EAST);	
-	}
-
-	private static boolean isDetailPanelExisting(){
-		if(detailPanel != null){
-			if(detailPanel.isDisplayable()){
-				return true;
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
@@ -175,24 +217,6 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		// TODO Auto-generated method stub
 	}
 
-	public static void update() {
-		// TODO Auto-generated method stub
-		mainFrame.pack();
-		mainFrame.revalidate();
-		mainFrame.repaint();
-		
-	}
-
-	public static void setRowSelected (int selected){
-		rowSelected = selected;
-	}
 	
-	public static void pressedTab(boolean isCommandBox) {
-		if(isCommandBox){
-			contentPanel.requestFocusInWindow();
-		} else{
-			commandBoxPanel.setFocusToCommandBox();
-		}		
-	}
 
 }
