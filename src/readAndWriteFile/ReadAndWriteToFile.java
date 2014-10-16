@@ -21,21 +21,21 @@ import taskDo.Task;
  */
 
 public class ReadAndWriteToFile {
-	private String jSonText;
+	private String jsonText;
 
 	public String getjSonText() {
-		return jSonText;
+		return jsonText;
 	}
 
 	public void setjSonText(String jSonText) {
-		this.jSonText = jSonText;
+		this.jsonText = jSonText;
 	} 
 	
 	public boolean writeToFile(){
 		FileWriter file = null; 
 		try {
 			file = new FileWriter(Constants.FILENAME);
-			file.write(jSonText);
+			file.write(jsonText);
 			file.flush();
 			file.close();
 			return true;

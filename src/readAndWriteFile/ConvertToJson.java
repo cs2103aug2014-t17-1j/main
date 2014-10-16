@@ -11,7 +11,7 @@ import taskDo.Task;
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class ConvertToJSonObject {
+public class ConvertToJson {
 	private ArrayList<Task> taskList;
 
 	public ArrayList<Task> getTaskList() {
