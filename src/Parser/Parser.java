@@ -106,7 +106,7 @@ public class Parser {
 		return splittedCommand[0];
 	}
 
-	private static String getParam(String remainingInput)
+/*	private static String getParam(String remainingInput)
 			throws InvalidParameterException {
 		int indexStartOfParam = remainingInput.indexOf('[');
 		int indexEndOfParam = remainingInput.indexOf(']');
@@ -122,6 +122,6 @@ public class Parser {
 				indexEndOfParam);
 
 		return remainingInput.trim();
-	}
+	} */
 
 }
