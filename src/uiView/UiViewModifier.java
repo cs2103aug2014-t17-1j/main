@@ -14,7 +14,7 @@ import Parser.Parser;
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class UiViewModifier implements KeyListener,WindowListener{
+public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 
 	private static JFrame mainFrame;
 
@@ -44,7 +44,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		helpPanel = new ShorcutPanel();
 		mainFrame.add(helpPanel,BorderLayout.WEST);
 		
-		commandBoxPanel = new CommandBoxPanel();
+		commandBoxPanel = new CommandBoxPanel(this);
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
 		detailPanel = new DetailPanel();
@@ -64,14 +64,13 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		uiList.notifyUIs();
 	}
 	
-	private void passToParser(String command){
+	public void passToParser(String command){
 		if(command!=null){
 			parseResult = parser.parseString(command);
 			if(parseResult.getValidationResult()){
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
 			}
-				
 			updateAllPanels();
 		}
 	}
