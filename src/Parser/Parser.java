@@ -10,12 +10,12 @@ import commandFactory.CommandType;
 public class Parser {
 
 	private ParsedResult result;
-	private MainCommandHandler mainHandler;
-	private OptionalCommandHandler optionHandler;
+	private MainCommandInterpreter mainHandler;
+	private OptionalCommandInterpreter optionHandler;
 
 	public Parser() {
-		mainHandler = new MainCommandHandler();
-		optionHandler = new OptionalCommandHandler();
+		mainHandler = new MainCommandInterpreter();
+		optionHandler = new OptionalCommandInterpreter();
 	}
 
 	public ParsedResult parseString(String input) { 
