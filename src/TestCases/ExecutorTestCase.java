@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import taskDo.Executor;
-import taskDo.StorageList;
+import commonClasses.StorageList;
 import taskDo.Task;
 import commandFactory.CommandType;
 import Parser.ParsedResult;

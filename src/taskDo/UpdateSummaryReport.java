@@ -22,33 +22,14 @@ public class UpdateSummaryReport {
 		
 		switch(commandType){
 		case ADD:
-<<<<<<< HEAD
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_ADD);	
-			break;
-		case DELETE:
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_DELETE);
-		case EDIT:
-			updateFeedbackMsg(StringConstants.MESSAGE_SUCCESS_EDIT);
-		case DISPLAY:
-			updateFeedbackMsg(StringConstants.MESSAGE_DISPLAY);
-=======
-			updateHeader();
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_ADD);	
-			updateDisplayTaskList(search);
 			break;
 		case DELETE:
-			updateHeader();
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_DELETE);	
-			updateDisplayTaskList(search);
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_DELETE);
 		case EDIT:
-			updateHeader();
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_EDIT);	
-			updateDisplayTaskList(search);
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_EDIT);
 		case DISPLAY:
-			updateHeader();
-			updateFeedbackMsg(Constants.MESSAGE_DISPLAY);	
-			updateDisplayTaskList(search);
->>>>>>> 25d04164930ae234af8d9c664a639510378e21ca
+			updateFeedbackMsg(Constants.MESSAGE_DISPLAY);
 		default:
 			break;
 		}
@@ -62,15 +43,9 @@ public class UpdateSummaryReport {
 		SummaryReport.setFeedBackMsg(feedbackMsg);
 	}
 
-<<<<<<< HEAD
 	private static void updateHeader(ParsedResult parsedResult) {
 		if(isSomeday(parsedResult)) {
-			SummaryReport.setHeader(StringConstants.MESSAGE_SOMEDAY);
-=======
-	private static void updateHeader() {
-		if(isSomeday()) {
 			SummaryReport.setHeader(Constants.MESSAGE_SOMEDAY);
->>>>>>> 25d04164930ae234af8d9c664a639510378e21ca
 		} else {
 			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
 			
@@ -82,14 +57,9 @@ public class UpdateSummaryReport {
 		}
 	}
 
-<<<<<<< HEAD
 	private static boolean isSomeday(ParsedResult parsedResult) {
 		assert parsedResult.getTaskDetails().getDueDate() != null;
-		return parsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == StringConstants.NILL_YEAR;
-=======
-	private static boolean isSomeday() {
-		return ParsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR;
->>>>>>> 25d04164930ae234af8d9c664a639510378e21ca
+		return parsedResult.getTaskDetails().getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR;
 	}
 }
 
