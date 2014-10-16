@@ -8,6 +8,7 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 import taskDo.Executor;
+import Parser.ParsedResult;
 import Parser.Parser;
 
 /*
@@ -26,8 +27,11 @@ public class UiViewModifier implements KeyListener,WindowListener{
 	private static DetailPanel detailPanel; 
 	private static ContentTablePanel contentPanel;
 	private static int rowSelected;
+	private Parser parser;
+	private ParsedResult parseResult;
 	
 	public UiViewModifier(){
+		parser = new Parser();
 		executor = new Executor();
 		mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
@@ -60,15 +64,18 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		uiList.notifyUIs();
 	}
 	
-	public static void passToParser(String command){
+	private void passToParser(String command){
 		if(command!=null){
-			if(Parser.parseString(command)){
+			parseResult = parser.parseString(command);
+			if(parseResult.getValidationResult()){
 				System.out.println("Parse String reached here");
-				executor.execute();
+				executor.execute(parseResult);
 			}
+				
 			updateAllPanels();
 		}
 	}
+	
 
 	private void setJFrameProperties() {
 		mainFrame.setTitle("Task.Do"); 
