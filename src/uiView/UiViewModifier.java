@@ -59,7 +59,7 @@ public class UiViewModifier implements KeyListener,WindowListener{
 		uiList.notifyUIs();
 	}
 	
-	public static void parseToParser(String command){
+	public static void passToParser(String command){
 		if(command!=null){
 			if(Parser.parseString(command)){
 				System.out.println("Parse String reached here");

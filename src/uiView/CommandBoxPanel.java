@@ -23,8 +23,8 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 		setLayout(new BorderLayout());
 		initFeedBackMsg();
 		initCommandBox();
-		add(feedBackMsg,BorderLayout.NORTH);
-	    add(commandBox,BorderLayout.SOUTH);
+		add(feedBackMsg,BorderLayout.SOUTH);
+	    add(commandBox,BorderLayout.NORTH);
 	    setBackground(Color.BLACK);
 	    
 	}
@@ -53,7 +53,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 				// TODO Auto-generated method stub
 				
 				 command= commandBox.getText();
-				 UiViewModifier.parseToParser(command);
+				 UiViewModifier.passToParser(command);
 				 commandBox.setText("");
 				 System.out.println(command);
 			}
