@@ -15,8 +15,6 @@ import taskDo.Task;
 import com.joestelmach.natty.DateGroup;
 
 import commandFactory.CommandType;
-import commonClasses.Constants;
-import commonClasses.SummaryReport;
 
 public class Parser {
 
@@ -51,13 +49,8 @@ public class Parser {
 			while (remainingInput.isEmpty() == false) {
 				remainingInput = identifyOptionalCommandAndUpdate(remainingInput, result);
 			}
-<<<<<<< HEAD:src/taskDo/Parser.java
-			if(ParsedResult.getTaskDetails().getDueDate() == null) {
-				ParsedResult.getTaskDetails().setDueDate(Constants.SOMEDAY);
-=======
 			if(result.getTaskDetails().getDueDate() == null) {
 				result.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
->>>>>>> 159447362887a1ed928e035af8f94e0322bef7c0:src/Parser/Parser.java
 			}
 			return result;
 		}
@@ -109,13 +102,13 @@ public class Parser {
 		switch (command) {
 		case DUE:
 			if(noDeadLine(commandParam)) {
-				task.setDueDate(Constants.SOMEDAY);
+				task.setDueDate(StringConstants.SOMEDAY);
 				task.setStartDate(null);
 				break;
 			}
 			date = getDate(commandParam);
 			if (date == null) {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
@@ -126,7 +119,7 @@ public class Parser {
 		case FROM:
 			date = getDate(commandParam);
 			if (date == null) {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			} else {
 				task.setStartDate(date);
@@ -136,7 +129,7 @@ public class Parser {
 		case TO:
 			date = getDate(commandParam);
 			if (date == null) {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			} else {
 				task.setDueDate(date);
@@ -159,7 +152,7 @@ public class Parser {
 				task.setImportant(false);
 			}
 			else {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM);
+				SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_IMPORTANCE_PARAM);
 				throw new InvalidParameterException();
 			}
 			break;
@@ -174,9 +167,9 @@ public class Parser {
 		DateTimeFormatter df;
 		DateTime date;
 		List<DateGroup> group;
-		for (int i = 0; i < Constants.DATE_FORMAT_ITERATIONS; i++) {
+		for (int i = 0; i < StringConstants.DATE_FORMAT_ITERATIONS; i++) {
 			try {
-				df = DateTimeFormat.forPattern(Constants.dateFormats[i]);
+				df = DateTimeFormat.forPattern(StringConstants.dateFormats[i]);
 				date = df.parseDateTime(commandParam);
 				group = parser.parse(date.toString());
 				DateTime dates = new DateTime(group.get(0).getDates().get(0));
@@ -263,102 +256,12 @@ public class Parser {
 			return OptionalCommand.TASK;
 
 		default:
-			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
+			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_OPTIONAL_COMMAND);
 			throw new InvalidParameterException();
 		}
 
 	}
 
-<<<<<<< HEAD:src/taskDo/Parser.java
-	private static void updateParsedResult(CommandType command,
-			String commandParam) throws InvalidParameterException {
-		ParsedResult.setCommandType(command);
-		Task task = ParsedResult.getTaskDetails();
-		switch (command) {
-
-		case ADD:
-			task.setDescription(commandParam);
-			break;
-
-		case DELETE:
-			if(isValidSelection(commandParam)) {
-				ParsedResult.setTask(SummaryReport.getDisplayList().get(Integer.valueOf(commandParam)-1));
-
-			}
-			else {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-				throw new InvalidParameterException();
-			}
-			break;
-
-		case EDIT:
-			if(isValidSelection(commandParam)) {
-				int selection = Integer.valueOf(commandParam) - 1; //adjust to get the correct index in list
-				ParsedResult.setTask(SummaryReport.getDisplayList().get(selection));
-			}
-			else {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-				throw new InvalidParameterException();
-			}
-			break;
-
-		case DISPLAY:
-			if (isCategory(commandParam)) {
-				task.setCategory(commandParam);
-				ParsedResult.setSearchMode(SearchType.CATEGORY);
-			} else {
-				if(noDeadLine(commandParam)) {
-					task.setDueDate(Constants.SOMEDAY);
-					task.setStartDate(null);
-					break;
-				}
-				DateTime date = getDate(commandParam);
-				if(date == null) {
-					SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
-					throw new InvalidParameterException();
-				}
-				else {
-					task.setDueDate(date);
-					ParsedResult.setSearchMode(SearchType.DATE);
-				}
-			}
-			break;
-		case UNDO:
-			// do nothing
-			break;
-
-		default:
-			// do nothing
-
-		}
-	}
-
-	private static boolean isValidSelection(String commandParam) {
-		int selection;
-		try {
-			selection = Integer.valueOf(commandParam);
-		}
-		catch (Exception e) {
-			return false;
-		}
-
-		if(selection >= 1 && selection <= SummaryReport.getDisplayList().size()) {
-			return true;
-		}
-		return false;
-	}
-
-	private static boolean isCategory(String commandParam) {
-		// Check from a list of categories
-		return false;
-	}
-
-	private static void resetParsedResult() {
-		ParsedResult.clear();
-	}
-
-=======
->>>>>>> 159447362887a1ed928e035af8f94e0322bef7c0:src/Parser/Parser.java
 	private static String removeParam(String remainingInput) {
 		int indexEndOfParam = remainingInput.indexOf(']');
 
@@ -375,68 +278,13 @@ public class Parser {
 		return splittedCommand[0];
 	}
 
-<<<<<<< HEAD:src/taskDo/Parser.java
-	private static CommandType identifyCommand(String command) throws InvalidParameterException {
-
-		switch (command) {
-		case "add":
-			return CommandType.ADD;
-
-		case "display":
-			return CommandType.DISPLAY;
-
-		case "delete":
-			return CommandType.DELETE;
-
-		case "edit":
-			return CommandType.EDIT;
-
-		case "undo":
-			return CommandType.UNDO;
-
-		case "search":
-			return CommandType.SEARCH;
-
-			// not sure if I need init and save to be here
-		default:
-			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
-			throw new InvalidParameterException();
-		}
-	}
-
-	private static String removeCommandWord(String input,
-			CommandType commandWord) {
-		switch (commandWord) {
-		case ADD:
-			return input.substring(4); // 4 is length of word "add "
-
-		case DISPLAY:
-			return input.substring(8); // 8 is length of word "display "
-
-		case DELETE:
-			return input.substring(7); // 7 is length of word "delete "
-
-		case SEARCH:
-			return input.substring(7); // 7 is length of word "search "
-
-		case EDIT:
-			return input.substring(5);
-
-		default:
-			return "";
-
-		}
-
-	}
-=======
->>>>>>> 159447362887a1ed928e035af8f94e0322bef7c0:src/Parser/Parser.java
 
 	private static String getParam(String remainingInput) throws InvalidParameterException {
 		int indexStartOfParam = remainingInput.indexOf('[');
 		int indexEndOfParam = remainingInput.indexOf(']');
 
 		if(indexStartOfParam == -1 || indexEndOfParam == -1) {
-			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_PARAM_FORMATTING);
+			SummaryReport.setFeedBackMsg(StringConstants.MESSAGE_INVALID_PARAM_FORMATTING);
 			throw new InvalidParameterException();
 			//return remainingInput;
 		}
