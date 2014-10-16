@@ -15,11 +15,12 @@ public class CommandActionDelete implements CommandAction{
 
 		search.searchById(parsedResult.getTaskDetails().getId());
 		if(search.getTaskIndex() != Constants.NO_TASK){
-
 			StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
-			
-			History.getCommandHistory().push(CommandType.DELETE);
-			History.getTaskHistory().add(search.getTask());
 		}
+	}
+
+	@Override
+	public void undo() {
+		StorageList.getInstance().getTaskList().add(History.getTaskHistory().pop());
 	}
 }

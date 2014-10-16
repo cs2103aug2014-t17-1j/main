@@ -14,7 +14,7 @@ public class UpdateSummaryReport {
 	
 	public static void update(CommandType commandType, ParsedResult parsedResult){
 		Search search = new Search();
-		assert parsedResult.getTaskDetails().getDueDate() != null;
+		assert parsedResult.getTaskDetails().getDueDate() == null;
 		search.searchDueDate(parsedResult.getTaskDetails().getDueDate());
 		
 		updateHeader(parsedResult);
