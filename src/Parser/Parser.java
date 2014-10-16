@@ -1,4 +1,4 @@
-package taskDo;
+package Parser;
 
 import java.security.InvalidParameterException;
 import java.util.List;
@@ -6,6 +6,11 @@ import java.util.List;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import taskDo.SearchType;
+import taskDo.StringConstants;
+import taskDo.SummaryReport;
+import taskDo.Task;
 
 import com.joestelmach.natty.DateGroup;
 
@@ -18,38 +23,47 @@ public class Parser {
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TASK
 	}
-
-	public static void parserInit() {
-
+	
+	private ParsedResult result;
+	private MainCommandHandler mainHandler;
+	public Parser() {
+		mainHandler = new MainCommandHandler();
 	}
 
-	public static boolean parseString(String input) { 
-		resetParsedResult();
+	public ParsedResult parseString(String input) { 
+		result = new ParsedResult();
 
 		//Processing first command and getting command param
 		try {
 			String commandWord = getCommandWord(input);
-			CommandType command = identifyCommand(commandWord.toLowerCase());
-			if(commandDoesNotRequireParam(command)) {
-				return true;
+			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
+			if(commandDoesNotRequireParam(mainHandler.getCommand())) {
+				result.setCommandType(mainHandler.getCommand());
+				return result;
 			}
-			String remainingInput = removeCommandWord(input, command);
+			String remainingInput = mainHandler.removeCommandWord(input);
 			String commandParam = getParam(remainingInput);
 
 			remainingInput = removeParam(remainingInput);
-			updateParsedResult(command, commandParam);
+			result = mainHandler.updateResults(result,commandParam);
 
 			//Processing optional commands
 			while (remainingInput.isEmpty() == false) {
-				remainingInput = identifyOptionalCommandAndUpdate(remainingInput);
+				remainingInput = identifyOptionalCommandAndUpdate(remainingInput, result);
 			}
+<<<<<<< HEAD:src/taskDo/Parser.java
 			if(ParsedResult.getTaskDetails().getDueDate() == null) {
 				ParsedResult.getTaskDetails().setDueDate(Constants.SOMEDAY);
+=======
+			if(result.getTaskDetails().getDueDate() == null) {
+				result.getTaskDetails().setDueDate(StringConstants.SOMEDAY);
+>>>>>>> 159447362887a1ed928e035af8f94e0322bef7c0:src/Parser/Parser.java
 			}
-			return true;
+			return result;
 		}
 		catch (Exception e) {
-			return false;
+			result.setValidationResult(false);
+			return result;
 		}
 
 
@@ -72,7 +86,7 @@ public class Parser {
 		return false;
 	}
 
-	private static String identifyOptionalCommandAndUpdate(String remainingInput) throws InvalidParameterException {
+	private static String identifyOptionalCommandAndUpdate(String remainingInput, ParsedResult result) throws InvalidParameterException {
 		String commandWord = getCommandWord(remainingInput);
 
 		OptionalCommand command = identifyOptionalCommand(commandWord
@@ -81,16 +95,16 @@ public class Parser {
 		remainingInput = removeOptionalCommand(remainingInput, command);
 		String commandParam = getParam(remainingInput);
 
-		optionsUpdateParsedResult(command, commandParam);
+		optionsUpdateParsedResult(command, commandParam, result);
 
 		remainingInput = removeParam(remainingInput);
 		return remainingInput;
 	}
 
 	private static void optionsUpdateParsedResult(OptionalCommand command,
-			String commandParam) throws InvalidParameterException {
+			String commandParam, ParsedResult result) throws InvalidParameterException {
 
-		Task task = ParsedResult.getTaskDetails();
+		Task task = result.getTaskDetails();
 		DateTime date = null;
 		switch (command) {
 		case DUE:
@@ -152,14 +166,6 @@ public class Parser {
 
 		default:// do nothing
 		}
-	}
-
-	private static boolean noDeadLine(String commandParam) {
-		if(commandParam.toUpperCase().equals("SOMEDAY")) {
-			return true;
-		}
-		
-		return false;
 	}
 
 	private static DateTime getDate(String commandParam) {
@@ -263,6 +269,7 @@ public class Parser {
 
 	}
 
+<<<<<<< HEAD:src/taskDo/Parser.java
 	private static void updateParsedResult(CommandType command,
 			String commandParam) throws InvalidParameterException {
 		ParsedResult.setCommandType(command);
@@ -350,6 +357,8 @@ public class Parser {
 		ParsedResult.clear();
 	}
 
+=======
+>>>>>>> 159447362887a1ed928e035af8f94e0322bef7c0:src/Parser/Parser.java
 	private static String removeParam(String remainingInput) {
 		int indexEndOfParam = remainingInput.indexOf(']');
 
@@ -366,6 +375,7 @@ public class Parser {
 		return splittedCommand[0];
 	}
 
+<<<<<<< HEAD:src/taskDo/Parser.java
 	private static CommandType identifyCommand(String command) throws InvalidParameterException {
 
 		switch (command) {
@@ -418,6 +428,8 @@ public class Parser {
 		}
 
 	}
+=======
+>>>>>>> 159447362887a1ed928e035af8f94e0322bef7c0:src/Parser/Parser.java
 
 	private static String getParam(String remainingInput) throws InvalidParameterException {
 		int indexStartOfParam = remainingInput.indexOf('[');
@@ -433,5 +445,13 @@ public class Parser {
 				indexEndOfParam);
 
 		return remainingInput.trim();
+	}
+	
+	private static boolean noDeadLine(String commandParam) {
+		if(commandParam.toUpperCase().equals("SOMEDAY")) {
+			return true;
+		}
+		
+		return false;
 	}
 }
