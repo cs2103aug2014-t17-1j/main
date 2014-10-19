@@ -52,7 +52,8 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 		case "complete":
 			currentCommand = CommandType.COMPLETE;
-
+			break;
+			
 		default:
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
@@ -104,7 +105,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			break;
 
 		case DISPLAY:
-			updateDisplayCase(result, commandParam, task);
+			updateDisplayCase(result, commandParam);
 			break;
 
 		case UNDO:
@@ -126,8 +127,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
 			int selection = Integer.valueOf(commandParam) - 1; // adjust to get
 			// correct index
-
-			result.setTask(SummaryReport.getDisplayList().get(selection));
+			copyTaskParamToParsedResult(result, selection);
 			result.getTaskDetails().setCompleted(true);
 		} else {
 			SummaryReport
@@ -135,9 +135,24 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			throw new InvalidParameterException();
 		}
 	}
+	private void copyTaskParamToParsedResult(ParsedResult result, int selection) {
+		Task selectedTask = new Task();
+		
+		selectedTask = SummaryReport.getDisplayList().get(selection);
+		
+		result.getTaskDetails().setId(selectedTask.getId());
+		result.getTaskDetails().setDescription(selectedTask.getDescription());
+		result.getTaskDetails().setCategory(selectedTask.getCategory());
+		result.getTaskDetails().setStartDate(selectedTask.getStartDate());
+		result.getTaskDetails().setDueDate(selectedTask.getDueDate());
+		result.getTaskDetails().setCompleted(selectedTask.isCompleted());
+		result.getTaskDetails().setImportant(selectedTask.isImportant());
+	
+	}
 
-	private void updateDisplayCase(ParsedResult result, String commandParam,
-			Task task) {
+	private void updateDisplayCase(ParsedResult result, String commandParam) {
+		Task task = result.getTaskDetails();
+		
 		if (CategoryList.isExistingCategory(commandParam)) {
 			task.setCategory(commandParam);
 			result.setSearchMode(SearchType.CATEGORY);
@@ -162,7 +177,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			int selection = Integer.valueOf(commandParam) - 1; // adjust to get
 			// the correct
 			// index in list
-			result.setTask(SummaryReport.getDisplayList().get(selection));
+			copyTaskParamToParsedResult(result, selection);
 		} else {
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
@@ -172,8 +187,8 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 	private void updateForDeleteCase(ParsedResult result, String commandParam) {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
-			result.setTask(SummaryReport.getDisplayList().get(
-					Integer.valueOf(commandParam) - 1));
+			int selection = Integer.valueOf(commandParam) - 1;
+			copyTaskParamToParsedResult(result, selection);
 		} else {
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);

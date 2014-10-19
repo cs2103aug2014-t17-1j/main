@@ -1,8 +1,5 @@
 package Parser;
 
-import java.security.InvalidParameterException;
-
-
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -26,7 +23,7 @@ public class Parser {
 			String[] seperatedInput = input.split("-");
 			if(seperatedInput.length < 2) {
 				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND + 
-						" Check that you have put '-' in front of command word.");
+						" Check that you have put '-' in front of command word."); //Change this to constant later
 			}
 			String commandWord = getCommandWord(seperatedInput[1]);
 			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
