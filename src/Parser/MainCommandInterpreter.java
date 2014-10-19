@@ -147,6 +147,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		result.getTaskDetails().setDueDate(selectedTask.getDueDate());
 		result.getTaskDetails().setCompleted(selectedTask.isCompleted());
 		result.getTaskDetails().setImportant(selectedTask.isImportant());
+		result.getTaskDetails().setTaskType(selectedTask.getTaskType());
 	
 	}
 
