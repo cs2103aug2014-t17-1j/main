@@ -1,13 +1,11 @@
 package taskDo;
-import java.util.Date;
-
 import org.joda.time.DateTime;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class Task implements Comparable<Task>{
-	//test
+	
 	private final int INCREMENT = 1;
 	private static int lastTaskId = 0;
 	private int id;
@@ -17,7 +15,8 @@ public class Task implements Comparable<Task>{
 	private DateTime dueDate;
 	private DateTime startDate;
 	private boolean completed;
-
+	private TaskType taskType;
+	
 	public Task( String category, String description,
 			boolean important, DateTime dueDate, DateTime startDate,
 			boolean completed) {
@@ -36,6 +35,7 @@ public class Task implements Comparable<Task>{
 		lastTaskId++;
 		this.id = lastTaskId+INCREMENT;
 		this.description = "";
+		this.taskType = TaskType.TODO;
 	}
 	
 	public Task(String description){
@@ -81,6 +81,10 @@ public class Task implements Comparable<Task>{
 	public boolean isImportant() {
 		return important;
 	}
+	
+	public TaskType getTaskType() {
+		return this.taskType;
+	}
 
 	public void setImportant(boolean important) {
 		this.important = important;
@@ -108,6 +112,10 @@ public class Task implements Comparable<Task>{
 
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
+	}
+	
+	public void setTaskType(TaskType taskType) {
+		this.taskType = taskType;
 	}
 
 	public String toString() {

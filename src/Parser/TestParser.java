@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import commandFactory.CommandType;
+import commonClasses.Constants;
 
 public class TestParser {
 
@@ -58,6 +59,31 @@ public class TestParser {
 		Assert.assertEquals("Test impt", result.getTaskDetails().getDescription());
 		Assert.assertEquals(true, result.getTaskDetails().isImportant());
 
+	}
+	
+	public void testDisplay() {
+		Parser testingParser = new Parser();
+		ParsedResult result = new ParsedResult();
+		
+		//no deadline
+		result = testingParser.parseString("-display TODO");
+		Assert.assertEquals(true, result.getValidationResult());
+		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
+		Assert.assertEquals(Constants.SOMEDAY, result.getTaskDetails().getDueDate());
+		
+		//with deadline
+		result = testingParser.parseString("-display 20/08/1991");
+		Assert.assertEquals(true, result.getValidationResult());
+		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
+		Assert.assertEquals("20/08/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
+		
+		//range of dates
+		result = testingParser.parseString("-display 20/08/1991 -to 10 sep 1991");
+		Assert.assertEquals(true, result.getValidationResult());
+		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
+		Assert.assertEquals("20/08/1991", result.getTaskDetails().getStartDate().toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals("10/09/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
+		
 	}
 
 }
