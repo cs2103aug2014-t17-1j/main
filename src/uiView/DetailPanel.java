@@ -32,33 +32,55 @@ public class DetailPanel extends JPanel implements Observer{
 		
 	}
 	public DetailPanel(Task task){
+		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
+		String taskDetail[] = changetoArr(task);
 		String dueDate = "";
 		System.out.println("DETAIL PANEL FOR TASK");
-		setLayout(new GridLayout(4,1));
+		setLayout(new GridLayout(5,1));
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
 		setBorder(BorderFactory.createTitledBorder(null,Constants.HEADER_DETAIL, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
-		JLabel label = new JLabel(task.getDescription());
-		label.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
-		add(label);
-		if(task.getDueDate().equals(Constants.SOMEDAY)){
-			dueDate = "someday";
-		} else{
-			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
-			dueDate = dateFormat.print(task.getDueDate().toLocalDate());
+		
+		for(int i = 0 ; i < taskAttribute.length; i++){
+			JLabel label = new JLabel();
+			label.setText("<html>"+taskAttribute[i]+ "   "+ taskDetail[i]+"</html>");
+			label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
+			add(label);
+			label.setBorder(BorderFactory.createLineBorder(Color.white));
+				
+			}
 		}
 		
-		label = new JLabel("Due On " +dueDate);
-		label.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
-		add(label);
+		
+	
+	
+	public String [] changetoArr(Task task){
+		String arr[] = new String[5];
+		assert task.getDescription() != null;
+		arr[0] = task.getDescription();
 		assert task.getCategory() != null;
-		label = new JLabel(task.getCategory());
-		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
-		add(label);
+		arr[1] = task.getCategory();
+		if(task.getCategory() == null){
+			arr[1] = "-";
+		}
+		if(task.getDueDate().equals(Constants.SOMEDAY)){
+			arr[2] = Constants.STRING_SOMEDAY;
+		} else{
+			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+			arr[2] = dateFormat.print(task.getDueDate().toLocalDate());
+		}
+		if(task.isImportant()){
+			arr[3] = Constants.STRING_YES;
+		} else{
+			arr[3] = Constants.STRING_NO;
+		}
+		if(task.isCompleted()){
+			arr[4] = Constants.STRING_YES;
+		} else{
+			arr[4] = Constants.STRING_NO;
+		}
 		
-		
+		return arr;
 	}
 	public boolean isExisting(){
 		if(isDisplayable()){

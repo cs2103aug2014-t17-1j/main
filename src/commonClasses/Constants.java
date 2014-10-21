@@ -46,6 +46,12 @@ public class Constants {
 			"Example: edit [index] task [new description]"
 			
 	};
+	public static final String[] TASK_ATTRIBUTE = {"<b><i>Description</i></b>","<b><i>Category</i></b>","<b><i>Due on</i></b>"
+		, "<b><i>Important</b></i>","<b><i>Completed</b></i>"};
+	public static final String STRING_YES = "Yes";
+	public static final String STRING_NO = "No";
+	public static final String STRING_SOMEDAY = "someday";
+	
 	public static final String []COLUMNTITLES = {"ID","Description"," "};
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
 	public static final String HEADER_TAKSLIST = "Tasks List";
