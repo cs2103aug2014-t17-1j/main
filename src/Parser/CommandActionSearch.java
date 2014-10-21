@@ -15,12 +15,12 @@ public class CommandActionSearch implements CommandAction{
 		//search by keyword function can refactor into search class
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		ArrayList<Task> searchResult = new ArrayList<Task>();
-		for(int i=0;i<taskList.size();i++){
+		/*for(int i=0;i<taskList.size();i++){
 			if(taskList.get(i).getDescription().contains(searchInput)){
 				searchResult.add(taskList.get(i));
 			}
-		}
-		if(searchResult.isEmpty()) { //!st level search fail
+		} */
+	//	if(searchResult.isEmpty()) { //!st level search fail
 			String[] splittedInput = searchInput.split(" ");
 			for(int i=0;i<splittedInput.length;i++) {
 				for(int j=0;j<taskList.size();j++){
@@ -29,10 +29,10 @@ public class CommandActionSearch implements CommandAction{
 					}
 				}
 			}
-		}
+//		}
 		
 		if(searchResult.isEmpty()) { //2nd level search fail
-			String[] splittedInput = searchInput.split(" ");
+			//String[] splittedInput = searchInput.split(" ");
 			WagnerFischerSearch wfSearch = new WagnerFischerSearch();
 			for(int i=0;i<splittedInput.length;i++) {
 				for(int j=0;j<taskList.size();j++){
