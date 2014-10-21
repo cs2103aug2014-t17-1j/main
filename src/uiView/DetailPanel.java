@@ -1,5 +1,6 @@
 package uiView;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -31,17 +32,25 @@ public class DetailPanel extends JPanel implements Observer{
 		
 	}
 	public DetailPanel(Task task){
+		String dueDate = "";
 		System.out.println("DETAIL PANEL FOR TASK");
 		setLayout(new GridLayout(4,1));
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
 		setBorder(BorderFactory.createTitledBorder(null,Constants.HEADER_DETAIL, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 		JLabel label = new JLabel(task.getDescription());
+		label.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
 		add(label);
-		DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
-		String dueDate = dateFormat.print(task.getDueDate().toLocalDate());
+		if(task.getDueDate().equals(Constants.SOMEDAY)){
+			dueDate = "someday";
+		} else{
+			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+			dueDate = dateFormat.print(task.getDueDate().toLocalDate());
+		}
+		
 		label = new JLabel("Due On " +dueDate);
+		label.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 		label.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
 		add(label);
 		assert task.getCategory() != null;

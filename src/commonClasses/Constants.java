@@ -61,7 +61,7 @@ public class Constants {
 	
 	public static final Color COLOR_TABLE_TEXT = ColorBox.colorPool[24];
 	public static final Color COLOR_TABLE_EVEN_ROW = Color.BLACK;
-	public static final Color COLOR_TABLE_ODD_ROW = Color.CYAN;
+	public static final Color COLOR_TABLE_ODD_ROW = Color.WHITE;
 	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[105];
 	public static final Color COLOR_TABLE_HEADER_BG = Color.BLACK;
 	public static final Color COLOR_TABLE_HEADER_TEXT = ColorBox.colorPool[24];

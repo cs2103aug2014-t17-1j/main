@@ -160,12 +160,16 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 	}
 	
 	public void updateDetailPanel(){
-		
-		detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
-		mainFrame.add(detailPanel,BorderLayout.EAST);
-		updateAllPanels();
-		setFocus();
-		updateFrame();
+		if(rowSelected != -1){
+			System.out.println(rowSelected);
+			if(isDetailPanelExisting()){
+				mainFrame.remove(detailPanel);
+			}
+			detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+			mainFrame.add(detailPanel,BorderLayout.EAST);
+			detailPanel.revalidate();
+			updateFrame();
+		}
 	}
 
 	private boolean isDetailPanelExisting(){
