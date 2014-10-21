@@ -34,7 +34,6 @@ public class DetailPanel extends JPanel implements Observer{
 	public DetailPanel(Task task){
 		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
 		String taskDetail[] = changetoArr(task);
-		String dueDate = "";
 		System.out.println("DETAIL PANEL FOR TASK");
 		setLayout(new GridLayout(5,1));
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
@@ -50,10 +49,6 @@ public class DetailPanel extends JPanel implements Observer{
 				
 			}
 		}
-		
-		
-	
-	
 	public String [] changetoArr(Task task){
 		String arr[] = new String[5];
 		assert task.getDescription() != null;

@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
@@ -18,6 +17,9 @@ import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.Task;
 import commonClasses.Constants;
@@ -165,11 +167,18 @@ public class ContentTablePanel extends JPanel implements Observer{
 	}
 	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
 		String tableContent[][] = new String [taskList.size()][3];
+		String dueDate ="";
 		System.out.println("CHANGE TO TWOD ARRAY "+taskList.size());
 		for (int i = 0; i < taskList.size(); i++){
 			tableContent[i][0] = (i+1)+"";
 			tableContent[i][1] = taskList.get(i).getDescription();
-			tableContent[i][2] = " ";
+			if(taskList.get(i).getDueDate().equals(Constants.SOMEDAY)){
+				 dueDate = Constants.STRING_SOMEDAY;
+			} else{
+				DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+				dueDate= dateFormat.print(taskList.get(i).getDueDate().toLocalDate());
+			}
+			tableContent[i][2] = dueDate;
  		}
 		return tableContent;
 	}

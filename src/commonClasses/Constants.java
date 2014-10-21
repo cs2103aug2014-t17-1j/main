@@ -52,7 +52,7 @@ public class Constants {
 	public static final String STRING_NO = "No";
 	public static final String STRING_SOMEDAY = "someday";
 	
-	public static final String []COLUMNTITLES = {"ID","Description"," "};
+	public static final String []COLUMNTITLES = {"ID","Description","Due On"};
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
 	public static final String HEADER_TAKSLIST = "Tasks List";
 	public static final String HEADER_HELP = "HELP PANEL";
