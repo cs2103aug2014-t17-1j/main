@@ -58,7 +58,15 @@ public class TestParser {
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
 		Assert.assertEquals("Test impt", result.getTaskDetails().getDescription());
 		Assert.assertEquals(true, result.getTaskDetails().isImportant());
-
+		
+		//add task with deadline and notes
+		result = testingParser.parseString("-add Test Add due -due 20/08/1991 -note Bring laptop for this");
+		Assert.assertEquals(true, result.getValidationResult());
+		Assert.assertEquals(CommandType.ADD, result.getCommandType());
+		Assert.assertEquals("Test Add due", result.getTaskDetails().getDescription());
+		Assert.assertEquals("20/08/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals("Bring laptop for this", result.getTaskDetails().getTaskNote());
+		
 	}
 	
 	public void testDisplay() {
