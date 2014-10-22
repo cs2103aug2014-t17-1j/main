@@ -43,7 +43,7 @@ public class StorageList {
 	
 	public void loadFile(){
 		mainTaskList = readWrite.readTaskFromFile();
-	
+		mainCategoryList = readWrite.readCategoryFromFile();
 	}
 	
 	public void saveToFile(){
