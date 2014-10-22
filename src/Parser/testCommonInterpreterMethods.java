@@ -22,19 +22,19 @@ public class testCommonInterpreterMethods {
 		//List size of 4. Selection available on GUI will be 1 to 4. 
 		SummaryReport.setDisplayList(testingList);
 		
-		//Out of range. Must be at least 1(boundary case)
+		//Lower boundary case value
 		boolean result = CommonInterpreterMethods.isValidSelection("0");
 		Assert.assertEquals(false, result);
 		
-		//within range. testing 1(boundary case)
+		//Lower boundary case value
 		result = CommonInterpreterMethods.isValidSelection("1");
 		Assert.assertEquals(true, result);
 		
-		//within range. testing 4(boundary case)
+		//Upper boundary case value
 		result = CommonInterpreterMethods.isValidSelection("4");
 		Assert.assertEquals(true, result);
 		
-		//out of range. testing 5(boundary case)
+		//Upper boundary case value
 		result = CommonInterpreterMethods.isValidSelection("5");
 		Assert.assertEquals(false, result);
 	}
