@@ -13,7 +13,7 @@ import commonClasses.SummaryReport;
 public class OptionalCommandInterpreter extends CommandInterpreter {
 
 	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, TASK
+		DUE, FROM, TO, CATEGORY, IMPT, TASK, NOTE
 	}
 
 	// Members
@@ -51,7 +51,11 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		case "task":
 			currentCommand = OptionalCommand.TASK;
 			break;
-
+			
+		case "note":
+			currentCommand = OptionalCommand.NOTE;
+			break;
+			
 		default:
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
@@ -78,6 +82,9 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			return remainingInput.substring(9);
 
 		case TASK:
+			return remainingInput.substring(5);
+			
+		case NOTE:
 			return remainingInput.substring(5);
 
 		default:
@@ -113,6 +120,9 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		case IMPT:
 			updateImportantCase(commandParam, task);
 			break;
+			
+		case NOTE:
+			task.setTaskNote(commandParam);
 
 		default:// do nothing
 		}
