@@ -4,8 +4,10 @@ import java.security.InvalidParameterException;
 
 import org.joda.time.DateTime;
 
+import taskDo.SearchType;
 import taskDo.Task;
 import taskDo.TaskType;
+
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -151,6 +153,11 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		}
 		if(result.getCommandType() == CommandType.DISPLAY) {
 			task.setStartDate(task.getDueDate());
+			if(task.getStartDate().isBefore(result.getTaskDetails().getDueDate())) {
+				SummaryReport.setFeedBackMsg("End date cannot be earlier than start date");
+				throw new InvalidParameterException();
+			}
+			result.setSearchMode(SearchType.RANGEOFDATES);
 		} else if(result.getTaskDetails().getStartDate() == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
 			throw new InvalidParameterException();
