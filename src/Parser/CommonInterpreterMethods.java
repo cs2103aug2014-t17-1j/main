@@ -1,6 +1,8 @@
 package Parser;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -62,6 +64,9 @@ public class CommonInterpreterMethods {
 
 			}
 		}
+		if(containsDigits(commandParam)) {
+			return null;
+		}
 		group = parser.parse(commandParam);
 		if (group.isEmpty()) {
 			return null; // Not a valid date
@@ -77,5 +82,16 @@ public class CommonInterpreterMethods {
 		}
 
 		return dates;
+	}
+
+	private static boolean containsDigits(String commandParam) {
+		Pattern pattern = Pattern.compile("\\d+");
+		Matcher matcher = pattern.matcher(commandParam);
+		
+		while (matcher.find()) {
+			return true;
+		}
+		
+		return false;
 	}
 }

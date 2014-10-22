@@ -13,7 +13,7 @@ import commonClasses.SummaryReport;
 public class OptionalCommandInterpreter extends CommandInterpreter {
 
 	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, TASK
+		DUE, FROM, TO, CATEGORY, IMPT, TASK, NOTE
 	}
 
 	// Members
@@ -51,7 +51,11 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		case "task":
 			currentCommand = OptionalCommand.TASK;
 			break;
-
+			
+		case "note":
+			currentCommand = OptionalCommand.NOTE;
+			break;
+			
 		default:
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
@@ -78,6 +82,9 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			return remainingInput.substring(9);
 
 		case TASK:
+			return remainingInput.substring(5);
+			
+		case NOTE:
 			return remainingInput.substring(5);
 
 		default:
@@ -113,6 +120,9 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		case IMPT:
 			updateImportantCase(commandParam, task);
 			break;
+			
+		case NOTE:
+			task.setTaskNote(commandParam);
 
 		default:// do nothing
 		}
@@ -120,10 +130,10 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		return result;
 	}
 
-	private void updateImportantCase(String commandParam, Task task) {
-		if (commandParam.equals("Y")) {
+	private void updateImportantCase(String commandParam, Task task) throws InvalidParameterException {
+		if (commandParam.equals(Constants.IMPT_YES)) {
 			task.setImportant(true);
-		} else if (commandParam.equals("N")) {
+		} else if (commandParam.equals(Constants.IMPT_NO)) {
 			task.setImportant(false);
 		} else {
 			SummaryReport
@@ -132,33 +142,39 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		}
 	}
 
-	private void updateToCase(ParsedResult result, String commandParam, Task task) {
+	private void updateToCase(ParsedResult result, String commandParam, Task task) throws InvalidParameterException {
 		DateTime date;
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
-		} else {
-			if(result.getCommandType() == CommandType.DISPLAY) {
-				task.setStartDate(task.getDueDate());
-			} //This is when user wants to display task within a range of dates
-			task.setDueDate(date);
 		}
+		if(result.getCommandType() == CommandType.DISPLAY) {
+			task.setStartDate(task.getDueDate());
+		} else if(result.getTaskDetails().getStartDate() == null) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
+			throw new InvalidParameterException();
+		}
+		task.setDueDate(date);
+		
 	}
 
-	private void updateFromCase(String commandParam, Task task) {
+	private void updateFromCase(String commandParam, Task task) throws InvalidParameterException {
 		DateTime date;
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
-		} else {
+		}
+		if(task.getTaskType() == TaskType.DEADLINE) { //Means previously already used due optional command
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
+			throw new InvalidParameterException();
+		}
 			task.setStartDate(date);
 			task.setTaskType(TaskType.TIMED);
-		}
 	}
 
-	private void updateDueCase(String commandParam, Task task) {
+	private void updateDueCase(String commandParam, Task task) throws InvalidParameterException  {
 		DateTime date;
 		if (CommonInterpreterMethods.noDeadLine(commandParam)) {
 			task.setDueDate(Constants.SOMEDAY);
@@ -169,11 +185,14 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
-			} else {
+			}
+			if(task.getTaskType() == TaskType.TIMED) { //Means previously used from to command
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
+				throw new InvalidParameterException();
+			}
 				task.setDueDate(date);
 				task.setStartDate(null);
 				task.setTaskType(TaskType.DEADLINE);
-			}
 		}
 	}
 

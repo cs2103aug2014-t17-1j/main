@@ -11,6 +11,7 @@ public class Task implements Comparable<Task>{
 	private int id;
 	private String category;
 	private String description;
+	private String taskNote;
 	private boolean important;
 	private DateTime dueDate;
 	private DateTime startDate;
@@ -81,10 +82,6 @@ public class Task implements Comparable<Task>{
 	public boolean isImportant() {
 		return important;
 	}
-	
-	public TaskType getTaskType() {
-		return this.taskType;
-	}
 
 	public void setImportant(boolean important) {
 		this.important = important;
@@ -114,10 +111,21 @@ public class Task implements Comparable<Task>{
 		this.completed = completed;
 	}
 	
+	public TaskType getTaskType() {
+		return this.taskType;
+	}
+	
 	public void setTaskType(TaskType taskType) {
 		this.taskType = taskType;
 	}
 
+	public String getTaskNote() {
+		return this.taskNote;
+	}
+	
+	public void setTaskNote(String taskNote) {
+		this.taskNote = taskNote;
+	}
 	public String toString() {
 		 return "ID" + this.id + "[Catogory: "+ this.getCategory()+ " Task:"
 		 +this.getDescription();

@@ -1,7 +1,9 @@
 package uiView;
 
 import java.util.ArrayList;
-
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class UIPanelList {
 	private ArrayList<Observer> uiList;
 	

@@ -12,15 +12,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import commonClasses.SummaryReport;
-
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	private int typeCount;
 	private JTextField commandBox;
 	private String command;
 	private JLabel feedBackMsg;
 	private UiParent parent;
+	private CommandStack commandStack;
 	
 	public CommandBoxPanel(UiParent parent){
+		commandStack = new CommandStack();
 		this.parent = parent;
 		setLayout(new BorderLayout());
 		initFeedBackMsg();
@@ -56,6 +60,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 				
 				 command= commandBox.getText();
 				 parent.passToParser(command);
+				 commandStack.insertCommand(command);
 				 commandBox.setText("");
 				 System.out.println(command);
 			}
@@ -88,6 +93,13 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 
 		if(arg0.getKeyCode()==KeyEvent.VK_F2){
 			parent.pressedF2();
+		}
+		
+		if(arg0.getKeyCode() == KeyEvent.VK_DOWN){
+			commandBox.setText(commandStack.retrieveCommandFromBackwardStack());
+		}
+		if(arg0.getKeyCode() == KeyEvent.VK_UP){
+			commandBox.setText(commandStack.retrieveCommandFromForwardStack());
 		}
 		
 	}

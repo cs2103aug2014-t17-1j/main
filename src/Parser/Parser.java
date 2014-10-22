@@ -21,17 +21,14 @@ public class Parser {
 		// Processing first command and getting command param
 		try {
 			String[] seperatedInput = input.split("-");
-			if(seperatedInput.length < 2) {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND + 
-						" Check that you have put '-' in front of command word."); //Change this to constant later
-			}
-			String commandWord = getCommandWord(seperatedInput[1]);
+			
+			String commandWord = getCommandWord(seperatedInput[0]);
 			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
 			if (commandDoesNotRequireParam(mainHandler.getCommand())) {
 				result.setCommandType(mainHandler.getCommand());
 				return result;
 			}
-			String remainingInput = mainHandler.removeCommandWord(seperatedInput[1]);
+			String remainingInput = mainHandler.removeCommandWord(seperatedInput[0]);
 			//String commandParam = getParam(remainingInput);
 
 			//remainingInput = removeParam(remainingInput);
@@ -64,7 +61,7 @@ public class Parser {
 	private void processOptionalCommand(String[] remainingInput) {
 		String commandWord;
 
-		for(int i=2; i<remainingInput.length;i++) {
+		for(int i=1; i<remainingInput.length;i++) {
 			commandWord = getCommandWord(remainingInput[i]);
 
 			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
