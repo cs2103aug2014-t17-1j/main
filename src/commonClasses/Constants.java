@@ -94,16 +94,25 @@ public class Constants {
 	 */
 
 	// Parser
-	public static String[] dateFormats = { "dd/MM/yyyy", "yyyy/MM/dd", "dd-MM-yyyy", "yyyy-MM-dd" };
-	public static final int DATE_FORMAT_ITERATIONS = 4;
-	public static final String MESSAGE_INVALID_COMMAND = "INVALID COMMAND!";
-	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "INVALID OPTIONAL COMMAND!";
-	public static final String MESSAGE_INVALID_DATE = "DATE NOT RECOGNIZED!";
-	public static final String MESSAGE_INVALID_DISPLAY_SELECTION = "EITHER CATEGORY DOES NOT EXIST OR DATE NOT RECOGNIZED!";
-	public static final String MESSAGE_INVALID_SELECTION = "INVALID SELECTION!";
-	public static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "IMPORTANCE LEVEL NOT RECOGNIZED!";
-	public static final String MESSAGE_INVALID_PARAM_FORMATTING = "MISSING [] BRACKETS FOR COMMAND PARAMETER";
-
+	public static String[] dateFormats = { "dd/MM/yyyy", "yyyy/MM/dd", "ddMMyyyy", "yyyyMMdd", "dd MMM", "dd MMM yyyy" };
+	public static final int DATE_FORMAT_ITERATIONS = 6;
+	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
+	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
+	public static final String MESSAGE_INVALID_DATE = "Date not recognized";
+	public static final String MESSAGE_INVALID_DISPLAY_SELECTION = "Either Category does not exist or date not recognized";
+	public static final String MESSAGE_INVALID_SELECTION = "Invalid selection";
+	public static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "Importance level not recognized";
+	public static final String MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO = "Cannot use 'due' and 'from to' combination in one command";
+	public static final String MESSAGE_MISSING_START_DATE_FOR_TASK = "Missing start date for task";
+	public static final String IMPT_NO = "N";
+	public static final String IMPT_YES = "Y";
+	
 	public static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
+
+	
+
+	
+
+	
 	
 }
