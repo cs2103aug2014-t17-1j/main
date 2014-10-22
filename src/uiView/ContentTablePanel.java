@@ -24,7 +24,9 @@ import org.joda.time.format.DateTimeFormatter;
 import taskDo.Task;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
-
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class ContentTablePanel extends JPanel implements Observer{
 	private ArrayList<Task> taskList; 
 	private JTable contentTable;

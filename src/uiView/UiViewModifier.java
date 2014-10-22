@@ -273,6 +273,5 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		// TODO Auto-generated method stub
 	}
 
-	
 
 }
