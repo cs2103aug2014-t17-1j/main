@@ -1,10 +1,14 @@
 package Parser;
 
+import java.security.InvalidParameterException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
+import taskDo.TaskType;
 import commandFactory.CommandType;
 import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 public class TestParser {
 
@@ -13,59 +17,89 @@ public class TestParser {
 		Parser testingParser = new Parser();
 		ParsedResult result = new ParsedResult();
 
-		// No Deadline
-		result = testingParser.parseString("-add Test Add no deadline");
+		// No Deadline, category, impt, note
+		result = testingParser.parseString("-add homework -category testing -impt N -note extra points");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("Test Add no deadline", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
+		Assert.assertEquals("testing", result.getTaskDetails().getCategory());
+		Assert.assertEquals(false,result.getTaskDetails().isImportant());
+		Assert.assertEquals("extra points",result.getTaskDetails().getTaskNote());
+		Assert.assertEquals(TaskType.TODO, result.getTaskDetails().getTaskType());
 
 		// With Deadline
-		result = testingParser.parseString("-add Test Add due -due 20/08/1991");
+		result = testingParser.parseString("-add homework -due 20/08/1991");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("Test Add due", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
-
-		// With Deadline and category
-		result = testingParser.parseString("-add Test add due and category -due 20th august 1991 -category testing");
+		Assert.assertEquals(TaskType.DEADLINE, result.getTaskDetails().getTaskType());
+		
+		// With Deadline, category, impt, note
+		result = testingParser.parseString("-add homework -due 20 aug 1991 -category testing -impt Y -note extra points");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("Test add due and category", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("testing", result.getTaskDetails().getCategory());
-
+		Assert.assertEquals(true,result.getTaskDetails().isImportant());
+		Assert.assertEquals("extra points",result.getTaskDetails().getTaskNote());
+		Assert.assertEquals(TaskType.DEADLINE, result.getTaskDetails().getTaskType());
+		
 		// From startDate to end date
-		result = testingParser.parseString("-add Test fromto -from 20th august 1991 -to 10th september 1991");
+		result = testingParser.parseString("-add homework -from 20 aug 1991 -to 10 sep 1991");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("Test fromto", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getStartDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("10/09/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
-
-		// From startDate to end date with category and importance level
-		result = testingParser	.parseString("-add Test fromto -from 20 aug 1991 -to 10 sep 1991 -category Sample -impt Y");
+		Assert.assertEquals(TaskType.TIMED, result.getTaskDetails().getTaskType());
+		
+		// From startDate to end date, category, impt, note
+		result = testingParser	.parseString("-add homework -from 20 aug 1991 -to 10 sep 1991 -category Sample -impt Y -note extra points");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("Test fromto", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getStartDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("10/09/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("Sample", result.getTaskDetails().getCategory());
 		Assert.assertEquals(true, result.getTaskDetails().isImportant());
-
-		// Importance level
-		result = testingParser.parseString("-add Test impt -impt Y");
-		Assert.assertEquals(true, result.getValidationResult());
-		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("Test impt", result.getTaskDetails().getDescription());
-		Assert.assertEquals(true, result.getTaskDetails().isImportant());
+		Assert.assertEquals("extra points",result.getTaskDetails().getTaskNote());
+		Assert.assertEquals(TaskType.TIMED, result.getTaskDetails().getTaskType());
 		
-		//add task with deadline and notes
-		result = testingParser.parseString("-add Test Add due -due 20/08/1991 -note Bring laptop for this");
-		Assert.assertEquals(true, result.getValidationResult());
-		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("Test Add due", result.getTaskDetails().getDescription());
-		Assert.assertEquals("20/08/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
-		Assert.assertEquals("Bring laptop for this", result.getTaskDetails().getTaskNote());
+		// due date, start date, end date, category,impt, note (Expected error)
+		result = testingParser	.parseString("-add homework -due today -from 20 aug 1991 -to 10 sep 1991 -category Sample -impt Y -note extra points");
+		Assert.assertEquals(false, result.getValidationResult());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO, SummaryReport.getFeedBackMsg());
+		
+		result = testingParser	.parseString("-add homework -from 20 aug 1991 -to 10 sep 1991 -due today -category Sample -impt Y -note extra points");
+		Assert.assertEquals(false, result.getValidationResult());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO, SummaryReport.getFeedBackMsg());
+		
+		//Using 'to' command without 'from' command(expected error)
+		result = testingParser	.parseString("-add homework -to 10 sep 1991 -category Sample -impt Y -note extra points");
+		Assert.assertEquals(false, result.getValidationResult());
+		Assert.assertEquals(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK, SummaryReport.getFeedBackMsg());
+		
+		// With Deadline, category, impt, note (Put in invalid date, error expected)
+		result = testingParser.parseString("-add homework -due 20th aug 1991 -category testing -impt Y -note extra points");
+		Assert.assertEquals(false, result.getValidationResult());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_DATE, SummaryReport.getFeedBackMsg());
+		
+		// start date,end date, category, impt, note (Put in invalid start date, error expected)
+		result = testingParser.parseString("-add homework -from 20th aug 1991 -to 10 sep 2014 -category testing -impt Y -note extra points");
+		Assert.assertEquals(false, result.getValidationResult());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_DATE, SummaryReport.getFeedBackMsg());
+	
+		// start date,end date, category, impt, note (Put in invalid end date, error expected)
+		result = testingParser.parseString("-add homework -from 20 aug 1991 -to 10th sep 2014 -category testing -impt Y -note extra points");
+		Assert.assertEquals(false, result.getValidationResult());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_DATE, SummaryReport.getFeedBackMsg());
+		
+		//start date, end date, category, impt, note (Put in invalid impt level, error expected)
+		result = testingParser.parseString("-add homework -from 20 aug 1991 -to 10 sep 2014 -category testing -impt anything  -note extra points");
+		Assert.assertEquals(false, result.getValidationResult());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM, SummaryReport.getFeedBackMsg());
 		
 	}
 	
