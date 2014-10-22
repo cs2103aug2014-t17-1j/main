@@ -13,8 +13,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import taskDo.Category;
 import taskDo.Task;
-
 import commonClasses.Constants;
 
 /*
@@ -32,10 +32,15 @@ public class ReadAndWriteToFile {
 		this.jsonText = jSonText;
 	} 
 	
-	public boolean writeToFile(){
+	public boolean writeToFile(boolean isTaskList){
 		FileWriter file = null; 
 		try {
-			file = new FileWriter(Constants.FILENAME);
+			if(isTaskList){
+				file = new FileWriter(Constants.FILENAME_TASKLIST);
+			}else{
+				file = new FileWriter(Constants.FILE_NAME_CATEGORYLIST);
+			}
+			
 			file.write(jsonText);
 			file.flush();
 			file.close();
@@ -46,18 +51,18 @@ public class ReadAndWriteToFile {
 		return false;
 	}
 	
-	public ArrayList<Task> readFromFile(){
+	public ArrayList<Task> readTaskFromFile(){
 		ArrayList<Task> taskList = new ArrayList<Task>();
-		File f = new File(Constants.FILENAME);
+		File f = new File(Constants.FILENAME_TASKLIST);
 		if(f.exists()){
 			if(f.length()!=0){
 				JSONParser parser = new JSONParser();
 				
 				try{
-					JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME));
+					JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME_TASKLIST));
 					for(Object obj : jsonObjectArr){
 						JSONObject jsonObject = (JSONObject) obj;
-						Task task = extractTaskField(jsonObject);
+						Task task = extractTaskFieldFromTask(jsonObject);
 						taskList.add(task);
 					}
 				}catch(FileNotFoundException e){
@@ -67,15 +72,45 @@ public class ReadAndWriteToFile {
 				}catch(ParseException e){
 					e.printStackTrace();
 				}
-			}
-			
+			}	
 		}
-		
-		
 		return taskList;
 	}
+	
+	public ArrayList<Category> readCategoryFromFile(){
+		ArrayList<Category> categoryList = new ArrayList<Category>();
+		File f = new File(Constants.FILE_NAME_CATEGORYLIST);
+		if(f.exists()){
+			if(f.length()!=0){
+				JSONParser parser = new JSONParser();
+				try{
+					JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILE_NAME_CATEGORYLIST));
+					for(Object obj : jsonObjectArr){
+						JSONObject jsonObject = (JSONObject) obj;
+						Category category = extratTaskFieldFromCategory(jsonObject);
+						categoryList.add(category);
+					}
+				}catch(FileNotFoundException e){
+					e.printStackTrace();
+				}catch(IOException e){
+					e.printStackTrace();
+				}catch(ParseException e){
+					e.printStackTrace();
+				}
+			}
+		}
+		return categoryList;
+	}
 
-	private Task extractTaskField(JSONObject jsonObject) {
+	private Category extratTaskFieldFromCategory(JSONObject jsonObject) {
+		Category category = new Category((String) jsonObject.get(Constants.CATEGORYKEYS[0]));
+		int count = Integer.parseInt((String) jsonObject.get((Constants.CATEGORYKEYS[1])));
+		category.setCount(count);
+		
+		return category;
+	}
+
+	private Task extractTaskFieldFromTask(JSONObject jsonObject) {
 		Task task = new Task();
 		task.setCategory((String) jsonObject.get(Constants.TASKKEYS[0]));
 		task.setDescription((String) jsonObject.get(Constants.TASKKEYS[1]));
