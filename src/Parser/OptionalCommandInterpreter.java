@@ -6,7 +6,6 @@ import org.joda.time.DateTime;
 
 import taskDo.Task;
 import taskDo.TaskType;
-
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -132,9 +131,9 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 	}
 
 	private void updateImportantCase(String commandParam, Task task) throws InvalidParameterException {
-		if (commandParam.equals("Y")) {
+		if (commandParam.equals(Constants.IMPT_YES)) {
 			task.setImportant(true);
-		} else if (commandParam.equals("N")) {
+		} else if (commandParam.equals(Constants.IMPT_NO)) {
 			task.setImportant(false);
 		} else {
 			SummaryReport
@@ -149,12 +148,15 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
-		} else {
-			if(result.getCommandType() == CommandType.DISPLAY) {
-				task.setStartDate(task.getDueDate());
-			} //This is when user wants to display task within a range of dates
-			task.setDueDate(date);
 		}
+		if(result.getCommandType() == CommandType.DISPLAY) {
+			task.setStartDate(task.getDueDate());
+		} else if(result.getTaskDetails().getStartDate() == null) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
+			throw new InvalidParameterException();
+		}
+		task.setDueDate(date);
+		
 	}
 
 	private void updateFromCase(String commandParam, Task task) throws InvalidParameterException {
@@ -165,7 +167,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			throw new InvalidParameterException();
 		}
 		if(task.getTaskType() == TaskType.DEADLINE) { //Means previously already used due optional command
-			SummaryReport.setFeedBackMsg("Cannot use 'due' and 'from to' combination in one command");
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
 			throw new InvalidParameterException();
 		}
 			task.setStartDate(date);
@@ -185,7 +187,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 				throw new InvalidParameterException();
 			}
 			if(task.getTaskType() == TaskType.TIMED) { //Means previously used from to command
-				SummaryReport.setFeedBackMsg("Cannot use 'due' and 'from to' combination in one command");
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
 				throw new InvalidParameterException();
 			}
 				task.setDueDate(date);
