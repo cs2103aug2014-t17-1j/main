@@ -14,7 +14,9 @@ import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.Task;
 import commonClasses.Constants;
-
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class DetailPanel extends JPanel implements Observer{
 	
 	public DetailPanel(){

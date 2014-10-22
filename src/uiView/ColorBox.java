@@ -1,7 +1,9 @@
 package uiView;
 
 import java.awt.Color;
-
+/*
+ * @author Paing Zin Oo(Jack)
+ */
 public class ColorBox {
 	
 	
