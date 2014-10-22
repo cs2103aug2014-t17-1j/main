@@ -90,10 +90,6 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 			System.out.println("you have entered F1");
 				parent.pressedF1();
 		}
-
-		if(arg0.getKeyCode()==KeyEvent.VK_F2){
-			parent.pressedF2();
-		}
 		
 		if(arg0.getKeyCode() == KeyEvent.VK_DOWN){
 			commandBox.setText(commandStack.retrieveCommandFromBackwardStack());
