@@ -24,26 +24,38 @@ public class Constants {
 			"F3 ==> View Category List"
 			
 	};
-	public static final String [] HELPCOMMANDS = {"<html><h3><u><i><b>Main Commands</b></i></u></h3></html>",
-			"add [task]",
-			"edit [index]",
-			"delete [index]",
-			"display [date]",
+	public static final String [] HELPCOMMANDS = {"Command words are recognised by '-' sign",
+		"<html><h3><u><i><b>Main Commands Group 1 </b></i></u></h3></html>",
+			"(A1) -add task",
+			"(A2) -edit id",
+			"",
+			"<html><h3><u><i>Main Commands Group 2</i></h3></u></html>",
+			"(B1) -delete id",
+			"(B2) -display date/category",
+			"(B3) -undo",
+			"(B4) -complete id",
 			"",
 			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
-			"<html><i>(Addtional commands that works with main commands)</i></html>",
-			"category [name]",
-			"due [duedate]",
-			"from [startdate] to [duedate]",
-			"impt [Y/N]",
+			"Addtional commands that works with main commands group 1",
+			"(C1) -category name",
+			"(C2) -due duedate",
+			"(C3) -from startdate -to duedate(You can only use either (C3) or (C4))",
+			"(C4) -important Y/N",
+			"(C5) -note extra notes related to the task",
 			"",
-			"Example: add [Homework1] due [5th oct]",
+			"Example:",
+			"-add Homework1 -due 5th oct -category School -important Y",
+			"-add Homework2 -from 20 aug -to 10 sep",
 			"",
 			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
-			"<html><i>(Addtional commands thats only works with specific main commands)</i></html>",
-			"For Edit: task [taskdescription]",
+			"Addtional commands thats only works with specific main commands",
+			"For Edit: -task taskdescription",
+			"Example: -edit id task -new description",
 			"",
-			"Example: edit [index] task [new description]"
+			"<html><h3><u><i>Advanced Display Command</i></h3></u></html>",
+			"-display date -to date",
+			"Example: -display 23 mar -to 10 apr"
+			
 			
 	};
 	public static final String[] TASK_ATTRIBUTE = {"<b><i>Description</i></b>","<b><i>Category</i></b>","<b><i>Due on</i></b>"
