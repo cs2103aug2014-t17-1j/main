@@ -124,15 +124,10 @@ public class Constants {
 	public static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "Importance level not recognized";
 	public static final String MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO = "Cannot use 'due' and 'from to' combination in one command";
 	public static final String MESSAGE_MISSING_START_DATE_FOR_TASK = "Missing start date for task";
+	public static final String MESSAGE_END_DATE_EARLIER_THAN_START_DATE = "End date cannot be earlier than start date";
 	public static final String IMPT_NO = "N";
 	public static final String IMPT_YES = "Y";
 	
 	public static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
-
-	
-
-	
-
-	
 	
 }
