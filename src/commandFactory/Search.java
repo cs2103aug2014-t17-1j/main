@@ -11,7 +11,6 @@ import taskDo.Task;
 
 public class Search {
 	int taskIndex;
-	Task task;
 	ArrayList<Task> returnList;
 	SearchType searchType;
 	
@@ -26,10 +25,6 @@ public class Search {
 	
 	public ArrayList<Task> getReturnList() {
 		return returnList;
-	}
-	
-	public Task getTask() {
-		return task;
 	}
 	
 //	public void identifySearchTyep (){
@@ -52,10 +47,9 @@ public class Search {
 
 	public void searchById(int id){
 		assert !StorageList.getInstance().getTaskList().isEmpty();
-		for(Task task: StorageList.getInstance().getTaskList()){
-			if(id == task.getId()){
-				taskIndex = StorageList.getInstance().getTaskList().indexOf(task);
-				this.task = task;	// for delete, need further change
+		for(Task taskIterator: StorageList.getInstance().getTaskList()){
+			if(id == taskIterator.getId()){
+				taskIndex = StorageList.getInstance().getTaskList().indexOf(taskIterator);
 				break;
 			}
 		}
