@@ -4,6 +4,7 @@ import java.security.InvalidParameterException;
 
 import org.joda.time.DateTime;
 
+import taskDo.SearchType;
 import taskDo.Task;
 import taskDo.TaskType;
 import commandFactory.CommandType;
@@ -106,7 +107,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			break;
 
 		case TO:
-			updateToCase(result, commandParam, task);
+			updateToCase(result, commandParam);
 			break;
 
 		case CATEGORY:
@@ -142,15 +143,21 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		}
 	}
 
-	private void updateToCase(ParsedResult result, String commandParam, Task task) throws InvalidParameterException {
+	private void updateToCase(ParsedResult result, String commandParam) throws InvalidParameterException {
 		DateTime date;
 		date = CommonInterpreterMethods.getDate(commandParam);
+		Task task = result.getTaskDetails();
 		if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
 		}
 		if(result.getCommandType() == CommandType.DISPLAY) {
 			task.setStartDate(task.getDueDate());
+			if(task.getStartDate().isAfter(date)) {
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_END_DATE_EARLIER_THAN_START_DATE);
+				throw new InvalidParameterException();
+			}
+			result.setSearchMode(SearchType.RANGEOFDATES);
 		} else if(result.getTaskDetails().getStartDate() == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
 			throw new InvalidParameterException();
