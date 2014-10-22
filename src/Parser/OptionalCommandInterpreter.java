@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import taskDo.Task;
 import taskDo.TaskType;
+
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -130,7 +131,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		return result;
 	}
 
-	private void updateImportantCase(String commandParam, Task task) {
+	private void updateImportantCase(String commandParam, Task task) throws InvalidParameterException {
 		if (commandParam.equals("Y")) {
 			task.setImportant(true);
 		} else if (commandParam.equals("N")) {
@@ -142,7 +143,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		}
 	}
 
-	private void updateToCase(ParsedResult result, String commandParam, Task task) {
+	private void updateToCase(ParsedResult result, String commandParam, Task task) throws InvalidParameterException {
 		DateTime date;
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if (date == null) {
@@ -156,19 +157,22 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		}
 	}
 
-	private void updateFromCase(String commandParam, Task task) {
+	private void updateFromCase(String commandParam, Task task) throws InvalidParameterException {
 		DateTime date;
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
-		} else {
+		}
+		if(task.getTaskType() == TaskType.DEADLINE) { //Means previously already used due optional command
+			SummaryReport.setFeedBackMsg("Cannot use 'due' and 'from to' combination in one command");
+			throw new InvalidParameterException();
+		}
 			task.setStartDate(date);
 			task.setTaskType(TaskType.TIMED);
-		}
 	}
 
-	private void updateDueCase(String commandParam, Task task) {
+	private void updateDueCase(String commandParam, Task task) throws InvalidParameterException  {
 		DateTime date;
 		if (CommonInterpreterMethods.noDeadLine(commandParam)) {
 			task.setDueDate(Constants.SOMEDAY);
@@ -179,11 +183,14 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
-			} else {
+			}
+			if(task.getTaskType() == TaskType.TIMED) { //Means previously used from to command
+				SummaryReport.setFeedBackMsg("Cannot use 'due' and 'from to' combination in one command");
+				throw new InvalidParameterException();
+			}
 				task.setDueDate(date);
 				task.setStartDate(null);
 				task.setTaskType(TaskType.DEADLINE);
-			}
 		}
 	}
 
