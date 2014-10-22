@@ -20,7 +20,7 @@ public class Constants {
 	
 	public static final String EMPTY_STRING = "";
 	
-	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed"} ;
+	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed","note"} ;
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
 			"F2 ==> View Details",
 			"F3 ==> View Category List"

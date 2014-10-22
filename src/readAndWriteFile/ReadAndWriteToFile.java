@@ -82,6 +82,7 @@ public class ReadAndWriteToFile {
 		task.setImportant((boolean) jsonObject.get(Constants.TASKKEYS[2]));
 		task.setCompleted((boolean) jsonObject.get(Constants.TASKKEYS[5]));
 		String str_dueDate = (String) jsonObject.get(Constants.TASKKEYS[3]);
+		task.setTaskNote((String) jsonObject.get(Constants.TASKKEYS[6]));
 		if(str_dueDate.isEmpty()){
 			task.setDueDate(null);
 		}else{
