@@ -2,6 +2,10 @@ package taskDo;
 
 import java.util.ArrayList;
 
+import Parser.ParsedResult;
+
+import commandFactory.CommandType;
+
 public class CategoryList {
 
 	//Members
@@ -37,6 +41,34 @@ public class CategoryList {
 	}
 
 	//Extra methods
+	public static void updateCategoryList(CommandType command, String categoryName) {
+
+		switch(command) {
+			
+			case ADD:
+				if(CategoryList.isExistingCategory(categoryName)) {
+					CategoryList.addCountToCategory(categoryName);
+				} else {
+					CategoryList.addCategory(categoryName);
+				}
+				break;
+				
+			case DELETE:
+				if(categoryName != null && CategoryList.isExistingCategory(categoryName)) {
+					CategoryList.minusCountToCategory(categoryName);
+				}
+				break;
+				
+			case UNDO:
+				
+			case COMPLETE:
+				if(categoryName != null && CategoryList.isExistingCategory(categoryName)) {
+					CategoryList.minusCountToCategory(categoryName);
+				}
+				break;
+		}
+	}
+	
 	public static boolean isExistingCategory(String name) {
 		/*for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
