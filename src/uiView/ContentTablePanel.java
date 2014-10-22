@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
@@ -19,11 +18,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import taskDo.Task;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-public class ContentTablePanel extends JPanel implements Observer,KeyListener{
+public class ContentTablePanel extends JPanel implements Observer{
 	private ArrayList<Task> taskList; 
 	private JTable contentTable;
 	private JScrollPane jsp;
@@ -48,6 +50,7 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 			public void valueChanged(ListSelectionEvent select) {
 				rowSelected = contentTable.getSelectedRow();
 				parent.setRowSelected(rowSelected);
+				parent.updateDetailPanel();
 			}
 			
 		});
@@ -129,20 +132,7 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		});
 	}
 	
-	private void downKeyPressedAction() {
-		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_DOWN,0), "Changed");
-		contentTable.getActionMap().put("Changed", new AbstractAction() {
 
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				System.out.println("DOWN KEY IS PRESSED");
-				parent.updateDetailPanel();
-				
-			}
-			
-		});
-	}
-	
 	private void f1KeyPressedAction() {
 		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F1,0), "Event");
 		contentTable.getActionMap().put("Event", new AbstractAction() {
@@ -177,11 +167,18 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 	}
 	private String[][] changeToTwoDArray(ArrayList<Task> taskList){
 		String tableContent[][] = new String [taskList.size()][3];
+		String dueDate ="";
 		System.out.println("CHANGE TO TWOD ARRAY "+taskList.size());
 		for (int i = 0; i < taskList.size(); i++){
 			tableContent[i][0] = (i+1)+"";
 			tableContent[i][1] = taskList.get(i).getDescription();
-			tableContent[i][2] = " ";
+			if(taskList.get(i).getDueDate().equals(Constants.SOMEDAY)){
+				 dueDate = Constants.STRING_SOMEDAY;
+			} else{
+				DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
+				dueDate= dateFormat.print(taskList.get(i).getDueDate().toLocalDate());
+			}
+			tableContent[i][2] = dueDate;
  		}
 		return tableContent;
 	}
@@ -222,26 +219,6 @@ public class ContentTablePanel extends JPanel implements Observer,KeyListener{
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		parent.updateFrame();
-		
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 }

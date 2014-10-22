@@ -46,7 +46,13 @@ public class Constants {
 			"Example: edit [index] task [new description]"
 			
 	};
-	public static final String []COLUMNTITLES = {"ID","Description"," "};
+	public static final String[] TASK_ATTRIBUTE = {"<b><i>Description</i></b>","<b><i>Category</i></b>","<b><i>Due on</i></b>"
+		, "<b><i>Important</b></i>","<b><i>Completed</b></i>"};
+	public static final String STRING_YES = "Yes";
+	public static final String STRING_NO = "No";
+	public static final String STRING_SOMEDAY = "someday";
+	
+	public static final String []COLUMNTITLES = {"ID","Description","Due On"};
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
 	public static final String HEADER_TAKSLIST = "Tasks List";
 	public static final String HEADER_HELP = "HELP PANEL";
@@ -61,7 +67,7 @@ public class Constants {
 	
 	public static final Color COLOR_TABLE_TEXT = ColorBox.colorPool[24];
 	public static final Color COLOR_TABLE_EVEN_ROW = Color.BLACK;
-	public static final Color COLOR_TABLE_ODD_ROW = Color.CYAN;
+	public static final Color COLOR_TABLE_ODD_ROW = Color.WHITE;
 	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[105];
 	public static final Color COLOR_TABLE_HEADER_BG = Color.BLACK;
 	public static final Color COLOR_TABLE_HEADER_TEXT = ColorBox.colorPool[24];
