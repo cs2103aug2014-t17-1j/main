@@ -21,7 +21,7 @@ public class Constants {
 	
 	public static final String EMPTY_STRING = "";
 	
-	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed","note"} ;
+	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed","note","taskType"} ;
 	public static final String CATEGORYKEYS[] = {"name","count"};
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
 			"F2 ==> View Details",

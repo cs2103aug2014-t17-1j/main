@@ -64,6 +64,8 @@ public class ConvertToJson {
 			}
 			taskJSonObj.put(Constants.TASKKEYS[5], task.isCompleted());
 			taskJSonObj.put(Constants.TASKKEYS[6], task.getTaskNote());
+			assert(task.getTaskType()!=null);
+			taskJSonObj.put(Constants.TASKKEYS[7], task.getTaskType());
 			tasks.add(taskJSonObj);
 			
 			
