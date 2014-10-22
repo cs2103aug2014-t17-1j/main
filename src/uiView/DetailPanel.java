@@ -37,7 +37,7 @@ public class DetailPanel extends JPanel implements Observer{
 		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
 		String taskDetail[] = changetoArr(task);
 		System.out.println("DETAIL PANEL FOR TASK");
-		setLayout(new GridLayout(5,1));
+		setLayout(new GridLayout(6,1));
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
 		setBorder(BorderFactory.createTitledBorder(null,Constants.HEADER_DETAIL, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
@@ -52,13 +52,13 @@ public class DetailPanel extends JPanel implements Observer{
 			}
 		}
 	public String [] changetoArr(Task task){
-		String arr[] = new String[5];
+		String arr[] = new String[6];
 		assert task.getDescription() != null;
 		arr[0] = task.getDescription();
 		assert task.getCategory() != null;
 		arr[1] = task.getCategory();
 		if(task.getCategory() == null){
-			arr[1] = "-";
+			arr[1] = Constants.STRING_DASH;
 		}
 		if(task.getDueDate().equals(Constants.SOMEDAY)){
 			arr[2] = Constants.STRING_SOMEDAY;
@@ -75,6 +75,12 @@ public class DetailPanel extends JPanel implements Observer{
 			arr[4] = Constants.STRING_YES;
 		} else{
 			arr[4] = Constants.STRING_NO;
+		}
+		assert(task.getTaskNote()!=null);
+		if(task.getTaskNote()==null){
+			arr[5] = Constants.STRING_DASH;
+		} else{
+			arr[5] = task.getTaskNote();
 		}
 		
 		return arr;

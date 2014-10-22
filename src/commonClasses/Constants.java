@@ -19,8 +19,8 @@ public class Constants {
 	public static final String FILENAME_TASKLIST = "TaskDo.json";
 	public static final String FILE_NAME_CATEGORYLIST = "Category.json";
 	
-	public static final String EMPTY_STRING = "";
-	
+	public static final String STRING_EMPTY = "";
+	public static final String STRING_DASH = "-";
 	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed","note","taskType"} ;
 	public static final String CATEGORYKEYS[] = {"name","count"};
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
@@ -64,7 +64,7 @@ public class Constants {
 			
 	};
 	public static final String[] TASK_ATTRIBUTE = {"<b><i>Description</i></b>","<b><i>Category</i></b>","<b><i>Due on</i></b>"
-		, "<b><i>Important</b></i>","<b><i>Completed</b></i>"};
+		, "<b><i>Important</b></i>","<b><i>Completed</b></i>","<b><i>Note</b></i>"};
 	public static final String STRING_YES = "Yes";
 	public static final String STRING_NO = "No";
 	public static final String STRING_SOMEDAY = "someday";
