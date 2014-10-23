@@ -29,9 +29,7 @@ public class Parser {
 				return result;
 			}
 			String remainingInput = mainHandler.removeCommandWord(seperatedInput[0]);
-			//String commandParam = getParam(remainingInput);
 
-			//remainingInput = removeParam(remainingInput);
 			result = mainHandler.updateResults(result, remainingInput.trim());
 
 			// Processing optional commands
@@ -41,21 +39,10 @@ public class Parser {
 				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
 
 			}
-			return result;
 		} catch (Exception e) {
 			result.setValidationResult(false);
-			return result;
 		}
-
-		/*
-		 * System.out.println(commandWord);
-		 * 
-		 * System.out.println(commandWord); System.out.println(commandParam);
-		 * System.out.println(ParsedResult.getTaskDetails().getDueDate()
-		 * .toLocalDate().toString("dd/MM/yyyy"));
-		 * System.out.println(ParsedResult.getTaskDetails().getDueDate()
-		 * .toLocalTime().toString("HH:mm"));
-		 */
+		return result;
 	}
 
 	private void processOptionalCommand(String[] remainingInput) {
@@ -67,12 +54,9 @@ public class Parser {
 			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
 
 			remainingInput[i] = optionHandler.removeCommandWord(remainingInput[i]);
-			//commandParam = getParam(remainingInput[i]);
-
 
 			result = optionHandler.updateResults(result, remainingInput[i].trim());
 
-			//remainingInput = removeParam(remainingInput);
 		}
 	}
 
@@ -85,38 +69,10 @@ public class Parser {
 
 	}
 
-	private static String removeParam(String remainingInput) {
-		int indexEndOfParam = remainingInput.indexOf(']');
-
-		// Adjust index to take substring after ']'
-		indexEndOfParam++;
-		remainingInput = remainingInput.substring(indexEndOfParam);
-
-		return remainingInput.trim();
-	}
-
 	private static String getCommandWord(String input) {
 		String[] splittedCommand = input.split(" ");
 
 		return splittedCommand[0];
 	}
-
-/*	private static String getParam(String remainingInput)
-			throws InvalidParameterException {
-		int indexStartOfParam = remainingInput.indexOf('[');
-		int indexEndOfParam = remainingInput.indexOf(']');
-
-		if (indexStartOfParam == -1 || indexEndOfParam == -1) {
-			SummaryReport
-					.setFeedBackMsg(Constants.MESSAGE_INVALID_PARAM_FORMATTING);
-			throw new InvalidParameterException();
-			// return remainingInput;
-		}
-		indexStartOfParam++; // adjust to get first letter of param
-		remainingInput = remainingInput.substring(indexStartOfParam,
-				indexEndOfParam);
-
-		return remainingInput.trim();
-	} */
 
 }
