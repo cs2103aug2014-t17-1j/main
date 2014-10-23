@@ -189,7 +189,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 		for (int i = 0; i < taskList.size(); i++){
 			tableContent[i][0] = (i+1)+"";
 			tableContent[i][1] = taskList.get(i).getDescription();
-			if(taskList.get(i).getDueDate().equals(Constants.SOMEDAY)){
+			if(taskList.get(i).getDueDate().toLocalDate().getYear()==Constants.NILL_YEAR){
 				 dueDate = Constants.STRING_SOMEDAY;
 			} else{
 				DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");

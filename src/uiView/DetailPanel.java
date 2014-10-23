@@ -122,7 +122,7 @@ public class DetailPanel extends JPanel implements Observer{
 		if(task.getCategory() == null){
 			arr[1] = Constants.STRING_NA;
 		}
-		if(task.getDueDate().equals(Constants.SOMEDAY)){
+		if(task.getDueDate().getYear()==Constants.NILL_YEAR){
 			arr[2] = Constants.STRING_SOMEDAY;
 		} else{
 			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");

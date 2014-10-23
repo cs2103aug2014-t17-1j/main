@@ -84,7 +84,7 @@ public class Constants {
 	public static final Color COLOR_DETAIL_PANEL_TEXT = Color.BLACK;
 	public static final Color COLOR_DETAIL_PANEL_BG = ColorBox.colorPool[0];
 	
-	public static final Color COLOR_TABLE_TEXT = Color.WHITE;
+	public static final Color COLOR_TABLE_TEXT = Color.BLACK;
 	public static final Color COLOR_TABLE_EVEN_ROW = ColorBox.colorPool[2];
 	public static final Color COLOR_TABLE_ODD_ROW = ColorBox.colorPool[3];
 	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[105];
