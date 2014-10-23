@@ -1,10 +1,9 @@
-package Parser;
+package commandFactory;
 
 import java.util.ArrayList;
 
+import Parser.ParsedResult;
 import taskDo.Task;
-
-import commandFactory.CommandAction;
 import commonClasses.StorageList;
 
 public class CommandActionSearch implements CommandAction{
@@ -12,15 +11,9 @@ public class CommandActionSearch implements CommandAction{
 	public void execute(ParsedResult parsedResult) {
 		String searchInput = parsedResult.getTaskDetails().getTitle();
 		
-		//search by keyword function can refactor into search class
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		ArrayList<Task> searchResult = new ArrayList<Task>();
-		/*for(int i=0;i<taskList.size();i++){
-			if(taskList.get(i).getDescription().contains(searchInput)){
-				searchResult.add(taskList.get(i));
-			}
-		} */
-	//	if(searchResult.isEmpty()) { //!st level search fail
+
 			String[] splittedInput = searchInput.split(" ");
 			for(int i=0;i<splittedInput.length;i++) {
 				for(int j=0;j<taskList.size();j++){
@@ -29,10 +22,8 @@ public class CommandActionSearch implements CommandAction{
 					}
 				}
 			}
-//		}
 		
 		if(searchResult.isEmpty()) { //2nd level search fail
-			//String[] splittedInput = searchInput.split(" ");
 			WagnerFischerSearch wfSearch = new WagnerFischerSearch();
 			for(int i=0;i<splittedInput.length;i++) {
 				for(int j=0;j<taskList.size();j++){

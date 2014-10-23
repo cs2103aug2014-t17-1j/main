@@ -1,4 +1,4 @@
-package Parser;
+package commandFactory;
 
 public class WagnerFischerSearch {
 	

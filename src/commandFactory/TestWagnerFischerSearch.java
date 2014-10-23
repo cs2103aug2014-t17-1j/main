@@ -1,4 +1,4 @@
-package Parser;
+package commandFactory;
 
 import org.junit.Assert;
 import org.junit.Test;

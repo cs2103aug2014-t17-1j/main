@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import taskDo.CategoryList;
 import taskDo.SearchType;
 import taskDo.Task;
-
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -115,12 +114,20 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		case COMPLETE:
 			updateCompleteCase(result, commandParam);
 			break;
+			
+		case SEARCH:
+			updateSearchCase(result, commandParam);
 
 		default:
 			// do nothing
 
 		}
 		return result;
+	}
+
+	private void updateSearchCase(ParsedResult result, String commandParam) {
+		result.getTaskDetails().setTitle(commandParam);
+		result.setSearchMode(SearchType.KEYWORD);
 	}
 
 	private void updateCompleteCase(ParsedResult result, String commandParam) {
