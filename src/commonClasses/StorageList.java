@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import readAndWriteFile.ConvertToJson;
 import readAndWriteFile.ReadAndWriteToFile;
+import taskDo.Category;
 import taskDo.Task;
 
 /*
@@ -12,9 +13,9 @@ import taskDo.Task;
 public class StorageList {
 	private static StorageList storageList;
 	private ArrayList<Task> mainTaskList;
+	private ArrayList<Category> mainCategoryList;
 	private ReadAndWriteToFile readWrite;
 	private ConvertToJson convertTojson;
-	private String jsonText;
 	
 	private StorageList(){
 		 mainTaskList = new ArrayList<Task>();
@@ -39,14 +40,26 @@ public class StorageList {
 	}
 	
 	public void loadFile(){
-		mainTaskList = readWrite.readFromFile();
+		mainTaskList = readWrite.readTasksFromFile();
+		mainCategoryList = readWrite.readCategoriesFromFile();
 	}
 	
 	public void saveToFile(){
 		System.out.println("SIZE IS "+mainTaskList.size());
+		saveTasksToFile();
+		saveCategoriesToFile();
+	}
+
+	private void saveCategoriesToFile() {
+		convertTojson.setCategoryList(mainCategoryList);
+		readWrite.setjSonText(convertTojson.changeToJSonObj(false));
+		readWrite.writeToFile(false);
+	}
+
+	private void saveTasksToFile() {
 		convertTojson.setTaskList(mainTaskList);
-		readWrite.setjSonText(convertTojson.changeToJSonObj());
-		readWrite.writeToFile();
+		readWrite.setjSonText(convertTojson.changeToJSonObj(true));
+		readWrite.writeToFile(true);
 	}
 	
 	

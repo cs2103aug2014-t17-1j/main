@@ -16,29 +16,33 @@ public class Constants {
 	 *  @author Paing Zin Oo(Jack)
 	 */
 	
-	public static final String FILENAME = "TaskDo.json";
+	public static final String FILENAME_TASKDO = "TaskDo.json";
+	public static final String FILENAME_CATEGORY = "Category.json";
 	
-	public static final String EMPTY_STRING = "";
+	public static final String STRING_STRING = "";
+	public static final String STRING_NA = "NA";
 	
-	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed"} ;
+	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed","taskType","taskNote"} ;
+	public static final String CATEGORYKEYS[] = {"name","count"};
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
 			"F2 ==> View Details",
 			"F3 ==> View Category List"
 			
 	};
-	public static final String [] HELPCOMMANDS = {"Command words are recognised by '-' sign",
+	public static final String [] HELPCOMMANDS = {
 		"<html><h3><u><i><b>Main Commands Group 1 </b></i></u></h3></html>",
-			"(A1) -add task",
-			"(A2) -edit id",
+			"(A1) add task",
+			"(A2) edit id",
 			"",
 			"<html><h3><u><i>Main Commands Group 2</i></h3></u></html>",
-			"(B1) -delete id",
-			"(B2) -display date/category",
-			"(B3) -undo",
-			"(B4) -complete id",
+			"(B1) delete id",
+			"(B2) display date/category",
+			"(B3) undo",
+			"(B4) complete id",
 			"",
 			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
 			"Addtional commands that works with main commands group 1",
+			"Note: Optional Command words are recognised by '-",
 			"(C1) -category name",
 			"(C2) -due duedate",
 			"(C3) -from startdate -to duedate(You can only use either (C3) or (C4))",
@@ -46,22 +50,22 @@ public class Constants {
 			"(C5) -note extra notes related to the task",
 			"",
 			"Example:",
-			"-add Homework1 -due 5th oct -category School -important Y",
-			"-add Homework2 -from 20 aug -to 10 sep",
+			"add Homework1 -due 5th oct -category School -important Y",
+			"add Homework2 -from 20 aug -to 10 sep",
 			"",
 			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
 			"Addtional commands thats only works with specific main commands",
-			"For Edit: -task taskdescription",
-			"Example: -edit id task -new description",
+			"For Edit: -task task description",
+			"Example: edit id task -new description",
 			"",
 			"<html><h3><u><i>Advanced Display Command</i></h3></u></html>",
-			"-display date -to date",
-			"Example: -display 23 mar -to 10 apr"
+			"display date -to date",
+			"Example: display 23 mar -to 10 apr"
 			
 			
 	};
 	public static final String[] TASK_ATTRIBUTE = {"<b><i>Description</i></b>","<b><i>Category</i></b>","<b><i>Due on</i></b>"
-		, "<b><i>Important</b></i>","<b><i>Completed</b></i>"};
+		, "<b><i>Important</b></i>","<b><i>Completed</b></i>","<b><i>Note</b></i>"};
 	public static final String STRING_YES = "Yes";
 	public static final String STRING_NO = "No";
 	public static final String STRING_SOMEDAY = "someday";
