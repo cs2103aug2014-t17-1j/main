@@ -12,9 +12,7 @@ public class Executor {
 		StorageList.getInstance().loadFile();
 	}
 
-	public void execute(ParsedResult parsedResult) {
-		assert parsedResult != null;
-
+	public void execute(ParsedResult parsedResult) {		
 		CommandFactory commandFactory = new CommandFactory();
 		CommandType commandType = parsedResult.getCommandType();
 
@@ -22,7 +20,10 @@ public class Executor {
 			CommandAction commandAction = History.getCommandActionHistory().pop();
 			Task lastTask = History.getTaskHistory().pop();
 			commandAction.undo(lastTask);
-			UpdateSummaryReport.update(commandType, lastTask.getDueDate());
+			parsedResult.setTask(lastTask);
+
+			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
+			UpdateSummaryReport.update(parsedResult);
 			
 		} else {
 			CommandAction commandAction = commandFactory.getCommandAction(commandType);			
@@ -30,7 +31,8 @@ public class Executor {
 			if(!commandType.equals(CommandType.DISPLAY)){
 				History.getCommandActionHistory().push(commandAction);
 			}
-			UpdateSummaryReport.update(commandType, parsedResult.getTaskDetails().getDueDate());
+			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
+			UpdateSummaryReport.update(parsedResult);
 		}
 		StorageList.getInstance().saveToFile();
 	}
