@@ -16,12 +16,14 @@ public class Constants {
 	 *  @author Paing Zin Oo(Jack)
 	 */
 	
-	public static final String FILENAME = "TaskDo.json";
+	public static final String FILENAME_TASKDO = "TaskDo.json";
+	public static final String FILENAME_CATEGORY = "Category.json";
 	
 	public static final String STRING_STRING = "";
 	public static final String STRING_NA = "NA";
 	
 	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed","taskType","taskNote"} ;
+	public static final String CATEGORYKEYS[] = {"name","count"};
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
 			"F2 ==> View Details",
 			"F3 ==> View Category List"
