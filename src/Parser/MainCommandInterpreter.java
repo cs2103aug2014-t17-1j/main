@@ -160,6 +160,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		} else if (CommonInterpreterMethods.noDeadLine(commandParam)) {
 			task.setDueDate(Constants.SOMEDAY);
 			task.setStartDate(null);
+			result.setSearchMode(SearchType.DATE);
 		} else {
 			DateTime date = CommonInterpreterMethods.getDate(commandParam);
 			if (date == null) {
