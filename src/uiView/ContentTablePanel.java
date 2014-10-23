@@ -100,6 +100,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 		tabKeyPressedAction();
 		f2KeyPressedAction();
 		f1KeyPressedAction();
+		f3KeyPressedAction();
 	
 		contentTable.addFocusListener(new FocusListener(){
 
@@ -128,6 +129,20 @@ public class ContentTablePanel extends JPanel implements Observer{
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("TAB PRESSED IN TABLE");
 				parent.pressedTab(false);
+				
+			}
+			
+		});
+	}
+	
+	private void f3KeyPressedAction() {
+		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F3,0), "F3");
+		contentTable.getActionMap().put("F3", new AbstractAction() {
+
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				System.out.println("F3 Presed IN TABLE");
+				parent.pressedF3();
 				
 			}
 			
