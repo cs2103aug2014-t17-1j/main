@@ -52,13 +52,13 @@ public class DetailPanel extends JPanel implements Observer{
 			}
 		}
 	public String [] changetoArr(Task task){
-		String arr[] = new String[5];
+		String arr[] = new String[6];
 		assert task.getDescription() != null;
 		arr[0] = task.getDescription();
 		assert task.getCategory() != null;
 		arr[1] = task.getCategory();
 		if(task.getCategory() == null){
-			arr[1] = "-";
+			arr[1] = Constants.STRING_NA;
 		}
 		if(task.getDueDate().equals(Constants.SOMEDAY)){
 			arr[2] = Constants.STRING_SOMEDAY;
@@ -75,6 +75,12 @@ public class DetailPanel extends JPanel implements Observer{
 			arr[4] = Constants.STRING_YES;
 		} else{
 			arr[4] = Constants.STRING_NO;
+		}
+		assert(task.getTaskNote()!=null);
+		if(task.getTaskNote()==null){
+			arr[5] = Constants.STRING_NA;
+		}else{
+			arr[5] = task.getTaskNote();
 		}
 		
 		return arr;
