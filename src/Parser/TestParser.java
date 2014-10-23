@@ -108,7 +108,7 @@ public class TestParser {
 		ParsedResult result = new ParsedResult();
 		
 		//no deadline
-		result = testingParser.parseString("display TODO");
+		result = testingParser.parseString("display todo");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
 		Assert.assertEquals(Constants.SOMEDAY, result.getTaskDetails().getDueDate());

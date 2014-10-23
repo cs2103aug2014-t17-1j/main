@@ -58,6 +58,9 @@ public class CategoryList {
 	}
 	
 	public static boolean isExistingCategory(String name) {
+		if(CategoryList.getCategoryList().isEmpty()) {
+			return false;
+		}
 		for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
 				return true;
