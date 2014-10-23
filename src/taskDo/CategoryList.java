@@ -59,11 +59,11 @@ public class CategoryList {
 	}
 	
 	public static boolean isExistingCategory(String name) {
-		/*for(int i=0; i<categoryList.size(); i++) {
+		for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
 				return true;
 			}
-		} */
+		} 
 		return false;
 	}
 	
