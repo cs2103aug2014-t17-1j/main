@@ -115,8 +115,8 @@ public class DetailPanel extends JPanel implements Observer{
 	}
 	public String [] changetoArr(Task task){
 		String arr[] = new String[6];
-		assert task.getDescription() != null;
-		arr[0] = task.getDescription();
+		assert task.getTitle() != null;
+		arr[0] = task.getTitle();
 		assert task.getCategory() != null;
 		arr[1] = task.getCategory();
 		if(task.getCategory() == null){
@@ -138,11 +138,11 @@ public class DetailPanel extends JPanel implements Observer{
 		} else{
 			arr[4] = Constants.STRING_NO;
 		}
-		assert(task.getTaskNote()!=null);
-		if(task.getTaskNote()==null){
+		assert(task.getNote()!=null);
+		if(task.getNote()==null){
 			arr[5] = Constants.STRING_NA;
 		}else{
-			arr[5] = task.getTaskNote();
+			arr[5] = task.getNote();
 		}
 		
 		return arr;

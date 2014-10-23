@@ -120,10 +120,10 @@ public class ReadAndWriteToFile {
 	private Task extractTaskFields(JSONObject jsonObject) {
 		Task task = new Task();
 		task.setCategory((String) jsonObject.get(Constants.TASKKEYS[0]));
-		task.setDescription((String) jsonObject.get(Constants.TASKKEYS[1]));
+		task.setTitle((String) jsonObject.get(Constants.TASKKEYS[1]));
 		task.setImportant((boolean) jsonObject.get(Constants.TASKKEYS[2]));
 		task.setCompleted((boolean) jsonObject.get(Constants.TASKKEYS[5]));
-		task.setTaskNote((String) jsonObject.get(Constants.TASKKEYS[7]));
+		task.setNote((String) jsonObject.get(Constants.TASKKEYS[7]));
 		task.setTaskType(TaskType.valueOf((String)jsonObject.get(Constants.TASKKEYS[6])));
 		String str_dueDate = (String) jsonObject.get(Constants.TASKKEYS[3]);
 		if(str_dueDate.isEmpty()){

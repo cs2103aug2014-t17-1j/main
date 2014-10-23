@@ -20,17 +20,17 @@ public class TestParser {
 		result = testingParser.parseString("add homework -category testing -impt N -note extra points");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
 		Assert.assertEquals("testing", result.getTaskDetails().getCategory());
 		Assert.assertEquals(false,result.getTaskDetails().isImportant());
-		Assert.assertEquals("extra points",result.getTaskDetails().getTaskNote());
+		Assert.assertEquals("extra points",result.getTaskDetails().getNote());
 		Assert.assertEquals(TaskType.TODO, result.getTaskDetails().getTaskType());
 
 		// With Deadline
 		result = testingParser.parseString("add homework -due 20/08/1991");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals(TaskType.DEADLINE, result.getTaskDetails().getTaskType());
 		
@@ -38,18 +38,18 @@ public class TestParser {
 		result = testingParser.parseString("add homework -due 20 aug 1991 -category testing -impt Y -note extra points");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("testing", result.getTaskDetails().getCategory());
 		Assert.assertEquals(true,result.getTaskDetails().isImportant());
-		Assert.assertEquals("extra points",result.getTaskDetails().getTaskNote());
+		Assert.assertEquals("extra points",result.getTaskDetails().getNote());
 		Assert.assertEquals(TaskType.DEADLINE, result.getTaskDetails().getTaskType());
 		
 		// From startDate to end date
 		result = testingParser.parseString("add homework -from 20 aug 1991 -to 10 sep 1991");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getStartDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("10/09/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals(TaskType.TIMED, result.getTaskDetails().getTaskType());
@@ -58,12 +58,12 @@ public class TestParser {
 		result = testingParser	.parseString("add homework -from 20 aug 1991 -to 10 sep 1991 -category Sample -impt Y -note extra points");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.ADD, result.getCommandType());
-		Assert.assertEquals("homework", result.getTaskDetails().getDescription());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
 		Assert.assertEquals("20/08/1991", result.getTaskDetails().getStartDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("10/09/1991", result.getTaskDetails().getDueDate().toLocalDate().toString("dd/MM/yyyy"));
 		Assert.assertEquals("Sample", result.getTaskDetails().getCategory());
 		Assert.assertEquals(true, result.getTaskDetails().isImportant());
-		Assert.assertEquals("extra points",result.getTaskDetails().getTaskNote());
+		Assert.assertEquals("extra points",result.getTaskDetails().getNote());
 		Assert.assertEquals(TaskType.TIMED, result.getTaskDetails().getTaskType());
 		
 		// due date, start date, end date, category,impt, note (Expected error)

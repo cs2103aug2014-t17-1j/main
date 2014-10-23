@@ -93,7 +93,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		switch (currentCommand) {
 
 		case ADD:
-			task.setDescription(commandParam);
+			task.setTitle(commandParam);
 			break;
 
 		case DELETE: 
@@ -141,7 +141,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		selectedTask = SummaryReport.getDisplayList().get(selection);
 		
 		result.getTaskDetails().setId(selectedTask.getId());
-		result.getTaskDetails().setDescription(selectedTask.getDescription());
+		result.getTaskDetails().setTitle(selectedTask.getTitle());
 		result.getTaskDetails().setCategory(selectedTask.getCategory());
 		result.getTaskDetails().setStartDate(selectedTask.getStartDate());
 		result.getTaskDetails().setDueDate(selectedTask.getDueDate());

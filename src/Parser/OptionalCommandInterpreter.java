@@ -115,7 +115,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			break;
 
 		case TASK:
-			task.setDescription(commandParam);
+			task.setTitle(commandParam);
 			break;
 
 		case IMPT:
@@ -123,7 +123,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			break;
 			
 		case NOTE:
-			task.setTaskNote(commandParam);
+			task.setNote(commandParam);
 
 		default:// do nothing
 		}

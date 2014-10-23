@@ -10,7 +10,7 @@ import commonClasses.StorageList;
 public class CommandActionSearch implements CommandAction{
 
 	public void execute(ParsedResult parsedResult) {
-		String searchInput = parsedResult.getTaskDetails().getDescription();
+		String searchInput = parsedResult.getTaskDetails().getTitle();
 		
 		//search by keyword function can refactor into search class
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
@@ -24,7 +24,7 @@ public class CommandActionSearch implements CommandAction{
 			String[] splittedInput = searchInput.split(" ");
 			for(int i=0;i<splittedInput.length;i++) {
 				for(int j=0;j<taskList.size();j++){
-					if(taskList.get(j).getDescription().contains(splittedInput[i])){
+					if(taskList.get(j).getTitle().contains(splittedInput[i])){
 						searchResult.add(taskList.get(j));
 					}
 				}
@@ -36,8 +36,8 @@ public class CommandActionSearch implements CommandAction{
 			WagnerFischerSearch wfSearch = new WagnerFischerSearch();
 			for(int i=0;i<splittedInput.length;i++) {
 				for(int j=0;j<taskList.size();j++){
-					for(int k=0;k<taskList.get(j).getDescription().length();k++) {
-						String[] splittedDescription = taskList.get(j).getDescription().split(" ");
+					for(int k=0;k<taskList.get(j).getTitle().length();k++) {
+						String[] splittedDescription = taskList.get(j).getTitle().split(" ");
 						int editDist = wfSearch.getEditDistance(splittedDescription[k], splittedInput[i]);
 						if(editDist <= 2) {
 							searchResult.add(taskList.get(j));

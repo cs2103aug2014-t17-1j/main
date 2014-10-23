@@ -188,7 +188,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 		System.out.println("CHANGE TO TWOD ARRAY "+taskList.size());
 		for (int i = 0; i < taskList.size(); i++){
 			tableContent[i][0] = (i+1)+"";
-			tableContent[i][1] = taskList.get(i).getDescription();
+			tableContent[i][1] = taskList.get(i).getTitle();
 			if(taskList.get(i).getDueDate().toLocalDate().getYear()==Constants.NILL_YEAR){
 				 dueDate = Constants.STRING_SOMEDAY;
 			} else{

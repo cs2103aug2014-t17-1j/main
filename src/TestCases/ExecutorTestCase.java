@@ -31,7 +31,7 @@ public class ExecutorTestCase {
 
 	private void testDeleteEmptyList() {
 		Task testTask = new Task();
-		testTask.setDescription("");
+		testTask.setTitle("");
 		testTask.setDueDate(dueDate);
 		testTask.setId(0);
 		
@@ -45,7 +45,7 @@ public class ExecutorTestCase {
 	private void testAddSomedayTask1() {
 		Task testTask = new Task();
 		
-		testTask.setDescription("someday task");
+		testTask.setTitle("someday task");
 		dueDate = Constants.SOMEDAY;
 		testTask.setDueDate(dueDate);
 		testTask.setId(0);
@@ -63,7 +63,7 @@ public class ExecutorTestCase {
 	private void testAddTodayTask1() {
 		Task testTask = new Task();
 		
-		testTask.setDescription("today task");
+		testTask.setTitle("today task");
 		testTask.setDueDate(dueDate);
 		testTask.setId(1);
 	
@@ -79,7 +79,7 @@ public class ExecutorTestCase {
 	
 	private void testDeleteTask1() {
 		Task testTask = new Task();
-		testTask.setDescription("");
+		testTask.setTitle("");
 		testTask.setDueDate(dueDate);
 		testTask.setId(0);
 		

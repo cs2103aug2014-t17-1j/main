@@ -10,13 +10,13 @@ public class Task implements Comparable<Task>{
 	private static int lastTaskId = 0;
 	private int id;
 	private String category;
-	private String description;
-	private String taskNote;
+	private String title;
+	private String note;
 	private boolean important;
 	private DateTime dueDate;
 	private DateTime startDate;
 	private boolean completed;
-	private TaskType taskType;
+	private TaskType type;
 	
 	public Task( String category, String description,
 			boolean important, DateTime dueDate, DateTime startDate,
@@ -25,7 +25,7 @@ public class Task implements Comparable<Task>{
 		lastTaskId++;
 		this.id = lastTaskId+INCREMENT;
 		this.category = category;
-		this.description = description;
+		this.title = description;
 		this.important = important;
 		this.dueDate = dueDate;
 		this.startDate = startDate;
@@ -35,12 +35,12 @@ public class Task implements Comparable<Task>{
 	public Task(){
 		lastTaskId++;
 		this.id = lastTaskId+INCREMENT;
-		this.description = "";
-		this.taskType = TaskType.TODO;
+		this.title = "";
+		this.type = TaskType.TODO;
 	}
 	
 	public Task(String description){
-		this.description = description;
+		this.title = description;
 		
 	}
 	
@@ -71,12 +71,12 @@ public class Task implements Comparable<Task>{
 		this.category = category;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public boolean isImportant() {
@@ -112,26 +112,23 @@ public class Task implements Comparable<Task>{
 	}
 	
 	public TaskType getTaskType() {
-		return this.taskType;
+		return this.type;
 	}
 	
 	public void setTaskType(TaskType taskType) {
-		this.taskType = taskType;
+		this.type = taskType;
 	}
 
-	public String getTaskNote() {
-		return this.taskNote;
+	public String getNote() {
+		return this.note;
 	}
 	
-	public void setTaskNote(String taskNote) {
-		this.taskNote = taskNote;
+	public void setNote(String taskNote) {
+		this.note = taskNote;
 	}
 	public String toString() {
 		 return "ID" + this.id + "[Catogory: "+ this.getCategory()+ " Task:"
-		 +this.getDescription();
-//		 + " Priority: "+this.getPriority()+
-//		 "dueDate "+ this.getDeadLine().get(Calendar.DAY_OF_MONTH)+
-//		 "Status: "+this.getStatus()+"]";
+		 +this.getTitle();
 	}
 
 	@Override

@@ -62,7 +62,7 @@ public class ConvertToJson {
 			Task task = taskList.get(i);
 			JSONObject taskJSonObj = new JSONObject();
 			taskJSonObj.put(Constants.TASKKEYS[0], task.getCategory());
-			taskJSonObj.put(Constants.TASKKEYS[1], task.getDescription());
+			taskJSonObj.put(Constants.TASKKEYS[1], task.getTitle());
 			taskJSonObj.put(Constants.TASKKEYS[2], task.isImportant());
 			if(task.getDueDate() == null){
 				taskJSonObj.put(Constants.TASKKEYS[3], "");
@@ -77,7 +77,7 @@ public class ConvertToJson {
 			}
 			taskJSonObj.put(Constants.TASKKEYS[5], task.isCompleted());
 			taskJSonObj.put(Constants.TASKKEYS[6], task.getTaskType()+"");
-			taskJSonObj.put(Constants.TASKKEYS[7], task.getTaskNote());
+			taskJSonObj.put(Constants.TASKKEYS[7], task.getNote());
 			tasks.add(taskJSonObj);
 			
 			
