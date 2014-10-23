@@ -21,7 +21,7 @@ public class CommandStack {
 	}
 	
 	public String retrieveCommandFromForwardStack(){
-		String command = Constants.EMPTY_STRING;
+		String command = Constants.STRING_STRING;
 		if(forwardStack.isEmpty()){
 				return command;
 		} else{
@@ -32,7 +32,7 @@ public class CommandStack {
 	}
 	
 	public String retrieveCommandFromBackwardStack(){
-		String command = Constants.EMPTY_STRING;
+		String command = Constants.STRING_STRING;
 		if(backwardStack.isEmpty()){
 			return command;
 		}else{
