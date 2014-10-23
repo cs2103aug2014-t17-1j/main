@@ -1,9 +1,11 @@
 package taskDo;
 
-import org.joda.time.DateTime;
+import java.util.ArrayList;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import Parser.ParsedResult;
 import commandFactory.CommandType;
 import commandFactory.Search;
 import commonClasses.Constants;
@@ -11,34 +13,47 @@ import commonClasses.SummaryReport;
 
 public class UpdateSummaryReport {
 
-	
-	public static void update(CommandType commandType, DateTime dueDate){
+
+	public static void update(ParsedResult parsedResult){
 		Search search = new Search();
-		search.searchDueDate(dueDate);
-		
-		updateHeader(dueDate);
-		updateDisplayTaskList(search);
-		determineFeedbackMsg(commandType);
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		System.out.println("parsedResult commandType ==> "+parsedResult.getSearchMode());
+		if(parsedResult.getCommandType().equals(CommandType.DISPLAY)){
+			switch(parsedResult.getSearchMode()){
+			case DATE: 
+				displayList = search.searchByDate(parsedResult);
+				break;
+			case RANGEOFDATES:
+				displayList = search.searchByRangeOfDates(parsedResult);
+				break;
+			default:
+				break;
+			}
+		}else {
+			displayList = search.searchByDate(parsedResult);
+		}
+
+		updateHeader(parsedResult.getTaskDetails());
+		updateDisplayTaskList(displayList);
+		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 
-	private static void updateHeader(DateTime dueDate) {
-		if(isSomeday(dueDate)) {
+	private static void updateHeader(Task task) {
+		if(isSomeday(task)) {
 			SummaryReport.setHeader(Constants.MESSAGE_SOMEDAY);
 		} else {
-			assert dueDate != null;
 			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
-			String dateDisplay = dateFormat.print(dueDate.toLocalDate());
+			String dateDisplay = dateFormat.print(task.getDueDate().toLocalDate());
 			SummaryReport.setHeader(dateDisplay);
 		}
 	}
 
-	private static boolean isSomeday(DateTime dueDate) {
-		assert dueDate != null;
-		return dueDate.toLocalDate().getYear() == Constants.NILL_YEAR;
+	private static boolean isSomeday(Task refTask) {
+		return refTask.getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR;
 	}
 
-	private static void updateDisplayTaskList(Search search) {
-		SummaryReport.setDisplayList(search.getReturnList());
+	private static void updateDisplayTaskList(ArrayList<Task> displayList) {
+		SummaryReport.setDisplayList(displayList);
 	}
 
 	private static void determineFeedbackMsg(CommandType commandType) {
@@ -57,6 +72,7 @@ public class UpdateSummaryReport {
 			break;
 		case UNDO:
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_UNDO);
+			break;
 		default:
 			break;
 		}

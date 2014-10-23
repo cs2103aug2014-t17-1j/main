@@ -39,10 +39,9 @@ public class CategoryList {
 	}
 
 	//Extra methods
-	public static void updateCategoryList() {
+	public static void updateCategoryList(ArrayList<Task> updatedTask) {
 		
 		categoryList.clear();
-		ArrayList<Task> updatedTask = StorageList.getInstance().getTaskList();
 		
 		for(int i=0;i<updatedTask.size();i++) {
 			String categoryName = updatedTask.get(i).getCategory();

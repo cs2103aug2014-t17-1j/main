@@ -1,14 +1,15 @@
 package commandFactory;
 
-import commonClasses.StorageList;
 import commonClasses.Constants;
-import Parser.ParsedResult;
+import commonClasses.StorageList;
 import taskDo.History;
 import taskDo.Task;
+import Parser.ParsedResult;
 
-public class CommandActionEdit implements CommandAction {	
+public class CommandActionComplete implements CommandAction{
+
 	@Override
-	public void execute(ParsedResult parsedResult){
+	public void execute(ParsedResult parsedResult) {
 		Search targetTask = new Search();
 		targetTask.searchById(parsedResult.getTaskDetails().getId());
 		if(targetTask.getTaskIndex() != Constants.NO_TASK){

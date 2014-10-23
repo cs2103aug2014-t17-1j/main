@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.junit.Test;
 
 import taskDo.Executor;
+import commonClasses.Constants;
 import commonClasses.StorageList;
 import taskDo.Task;
 import commandFactory.CommandType;
@@ -23,9 +24,9 @@ public class ExecutorTestCase {
 	@Test
 	public void test() {
 		testDeleteEmptyList();
-		testAddTask1();
-		testAddTask2();
-		testDeleteTask1();
+		testAddSomedayTask1();
+		testAddTodayTask1();
+//		testDeleteTask1();
 	}
 
 	private void testDeleteEmptyList() {
@@ -41,10 +42,11 @@ public class ExecutorTestCase {
 		
 		assertEquals(StorageList.getInstance().getTaskList(), testArrayList);
 	}
-	private void testAddTask1() {
+	private void testAddSomedayTask1() {
 		Task testTask = new Task();
 		
-		testTask.setDescription("test task 1");
+		testTask.setDescription("someday task");
+		dueDate = Constants.SOMEDAY;
 		testTask.setDueDate(dueDate);
 		testTask.setId(0);
 	
@@ -58,10 +60,10 @@ public class ExecutorTestCase {
 		assertEquals(StorageList.getInstance().getTaskList(), testArrayList);
 	}
 
-	private void testAddTask2() {
+	private void testAddTodayTask1() {
 		Task testTask = new Task();
 		
-		testTask.setDescription("test task 2");
+		testTask.setDescription("today task");
 		testTask.setDueDate(dueDate);
 		testTask.setId(1);
 	

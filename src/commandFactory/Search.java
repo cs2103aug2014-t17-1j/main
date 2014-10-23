@@ -2,71 +2,76 @@ package commandFactory;
 
 import java.util.ArrayList;
 
-import org.joda.time.DateTime;
-
+import Parser.ParsedResult;
 import commonClasses.StorageList;
-
 import taskDo.SearchType;
 import taskDo.Task;
+import taskDo.TaskType;
 
 public class Search {
 	int taskIndex;
-	Task task;
 	ArrayList<Task> returnList;
 	SearchType searchType;
-	
+
 	public Search(){
 		taskIndex = -1;
 		returnList = new ArrayList<Task>();
 	}
-	
+
 	public int getTaskIndex() {
 		return taskIndex;
 	}
-	
-	public ArrayList<Task> getReturnList() {
-		return returnList;
-	}
-	
-	public Task getTask() {
-		return task;
-	}
-	
-//	public void identifySearchTyep (){
-//		switch(searchType){
-//		case ID:
-//			searchById(null);	// ID referring to taskID not ScreenID
-//			break;
-//		case KEYWORD:
-////			searchByKeyword();
-//			break;
-//		case CATEGORY:
-////			searchByCategory();
-//			break;
-//		case DATE:
-//			searchDueDate(null);
-//			break;
-//		default: break;
-//		}
-//	}
 
 	public void searchById(int id){
 		assert !StorageList.getInstance().getTaskList().isEmpty();
-		for(Task task: StorageList.getInstance().getTaskList()){
-			if(id == task.getId()){
-				taskIndex = StorageList.getInstance().getTaskList().indexOf(task);
-				this.task = task;	// for delete, need further change
+		for(Task taskIterator: StorageList.getInstance().getTaskList()){
+			if(id == taskIterator.getId()){
+				taskIndex = StorageList.getInstance().getTaskList().indexOf(taskIterator);
 				break;
 			}
 		}
 	}
-	
-	public void searchDueDate(DateTime dueDate) {
+
+	public ArrayList<Task> searchByDate(ParsedResult parsedResult) {
+		Task sourceTask = parsedResult.getTaskDetails();
 		
-		for(Task task: StorageList.getInstance().getTaskList()){
-			if(task.getDueDate().toLocalDate().equals(dueDate.toLocalDate())){
-				returnList.add(task);
+		for(Task targetTask: StorageList.getInstance().getTaskList()){
+			if(isSameDueDate(sourceTask, targetTask)){
+				returnList.add(targetTask);
 			}
 		}
+		return returnList;
+	}
+
+	private boolean isSameDueDate(Task sourceTask, Task targetTask) {
+		return targetTask.getDueDate().toLocalDate().equals(sourceTask.getDueDate().toLocalDate());
+	}
+
+	public ArrayList<Task> searchByRangeOfDates(ParsedResult parsedResult){
+		Task sourceTask = parsedResult.getTaskDetails();
+		for(Task targetTask: StorageList.getInstance().getTaskList()){
+			if(targetTask.getTaskType().equals(TaskType.DEADLINE)){
+				if(isDeadlineTaskWithinRange(sourceTask, targetTask)){
+					returnList.add(targetTask);
+				}
+			}else if(targetTask.getTaskType().equals(TaskType.TIMED)){
+				if(isTimedTaskWithinRange(sourceTask, targetTask)){
+					returnList.add(targetTask);
+				}
+			}
+		}
+		return returnList;
+	}
+
+	private boolean isTimedTaskWithinRange(Task sourceTask, Task targetTask) {
+		boolean isNotBefore = !targetTask.getDueDate().toLocalDate().isBefore(sourceTask.getStartDate().toLocalDate());
+		boolean isNotAfter = !targetTask.getStartDate().toLocalDate().isAfter(sourceTask.getDueDate().toLocalDate());
+		return isNotBefore && isNotAfter;
+	}
+
+	private boolean isDeadlineTaskWithinRange(Task sourceTask, Task targetTask) {
+		boolean isNotBefore = !targetTask.getDueDate().toLocalDate().isBefore(sourceTask.getStartDate().toLocalDate());
+		boolean isNotAfter = !targetTask.getDueDate().toLocalDate().isAfter(sourceTask.getDueDate().toLocalDate());
+		return isNotBefore && isNotAfter;
 	}
 }
