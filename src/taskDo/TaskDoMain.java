@@ -34,9 +34,7 @@ public class TaskDoMain {
 
 		//Testing for JSON OBJ
 		
-//		ArrayList<Task> taskList = new ArrayList<Task>();
-//		Task t1 = new Task("CS 2103");
-//		Task t2 = new Task ("CS 1111");
+//		
 //		Task t3 = new Task ("jsfkdlfjk");
 //		t1.setDueDate(new DateTime(0,1,1,0,0));	
 //		taskList.add(t3);
