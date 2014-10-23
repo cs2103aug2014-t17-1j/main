@@ -44,7 +44,7 @@ public class StorageList {
 	public void loadFile(){
 		mainTaskList = readWrite.readTasksFromFile();
 		CategoryList.getCategoryList();
-		CategoryList.updateCategoryList();
+		CategoryList.updateCategoryList(mainTaskList);
 		//mainCategoryList = readWrite.readCategoriesFromFile();
 	}
 	
