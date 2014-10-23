@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import commonClasses.Constants;
 import commonClasses.SummaryReport;
 /*
  * @author Paing Zin Oo(Jack)
@@ -31,14 +32,14 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 		initCommandBox();
 		add(feedBackMsg,BorderLayout.SOUTH);
 	    add(commandBox,BorderLayout.NORTH);
-	    setBackground(Color.BLACK);
+	    setBackground(Constants.COLOR_COMMAND_PANEL_BG);
 	    
 	}
 
 	private void initFeedBackMsg() {
 		feedBackMsg = new JLabel("",JLabel.LEFT);
 		feedBackMsg.validate();
-		feedBackMsg.setForeground(ColorBox.colorPool[24]);
+		feedBackMsg.setForeground(Constants.COLOR_COMMAND_PANEL_TEXT);
 	}
 	
 	public void setFocusToCommandBox(){

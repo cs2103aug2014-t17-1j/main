@@ -216,7 +216,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 	
 	private void setJScrollPanePropCentrePane() {
 		jsp = new JScrollPane(contentTable);
-		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,Constants.HEADER_TAKSLIST, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), ColorBox.colorPool[24]);
+		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,Constants.HEADER_TAKSLIST, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_TABLE_HEADER_TEXT);
 		jsp.setBorder(jScrollTitledBorder);
 		jsp.setPreferredSize(new Dimension(450,380));
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
