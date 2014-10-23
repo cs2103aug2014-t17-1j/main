@@ -84,8 +84,10 @@ public class DetailPanel extends JPanel implements Observer{
 		setUpLayout(categoryNames,Constants.HEADER_CATEGORIES,2);
 		for(int i =0 ; i< categoryNames.length; i++){
 			JLabel lblCategoryName = new JLabel(categoryNames[i]);
+			lblCategoryName.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
 			add(lblCategoryName);
 			JLabel lblCategoryCount = new JLabel(categoryCounts[i]);
+			lblCategoryCount.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
 			add(lblCategoryCount);
 		}
 	}

@@ -77,24 +77,30 @@ public class Constants {
 	public static final String HEADER_DETAIL = "DETAILS";
 	public static final String HEADER_CATEGORIES = "CATEGORIES";
 	
-	public static final Color COLOR_LEFT_PANEL_BG = Color.BLACK;
-	public static final Color COLOR_LEFT_PANEL_TEXT = ColorBox.colorPool[24];
-	public static final Color COLOR_LEFT_PANEL_HEADER = ColorBox.colorPool[24];
+	public static final Color COLOR_LEFT_PANEL_BG = ColorBox.colorPool[0];
+	public static final Color COLOR_LEFT_PANEL_TEXT = ColorBox.colorPool[1];
+	public static final Color COLOR_LEFT_PANEL_HEADER = Color.BLACK;
 	
-	public static final Color COLOR_DETAIL_PANEL_TEXT = ColorBox.colorPool[24];
-	public static final Color COLOR_DETAIL_PANEL_BG = Color.BLACK;
+	public static final Color COLOR_DETAIL_PANEL_TEXT = Color.BLACK;
+	public static final Color COLOR_DETAIL_PANEL_BG = Color.WHITE;
 	
-	public static final Color COLOR_TABLE_TEXT = ColorBox.colorPool[24];
-	public static final Color COLOR_TABLE_EVEN_ROW = Color.BLACK;
-	public static final Color COLOR_TABLE_ODD_ROW = Color.WHITE;
+	public static final Color COLOR_TABLE_TEXT = Color.WHITE;
+	public static final Color COLOR_TABLE_EVEN_ROW = Color.GRAY;
+	public static final Color COLOR_TABLE_ODD_ROW = Color.lightGray;
 	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[105];
-	public static final Color COLOR_TABLE_HEADER_BG = Color.BLACK;
-	public static final Color COLOR_TABLE_HEADER_TEXT = ColorBox.colorPool[24];
+	public static final Color COLOR_TABLE_HEADER_BG = Color.WHITE;
+	public static final Color COLOR_TABLE_HEADER_TEXT = Color.BLACK;
 	public static final Color COLOR_TABLE_GRID = Color.CYAN;
 	
-	public static final Color COLOR_JSCROLL_BG = Color.BLACK;
+	public static final Color COLOR_JSCROLL_BG = Color.WHITE;
 	
-	public static final Color COLOR_CENTRE_PANEL_BG = Color.BLACK;
+	public static final Color COLOR_CENTRE_PANEL_BG = Color.WHITE;
+	
+	public static final Color COLOR_COMMAND_PANEL_BG = Color.WHITE;
+	public static final Color COLOR_COMMAND_PANEL_TEXT = Color.BLACK;
+	
+	public static final Color COLOR_HEADER_PANEL_BG = Color.WHITE;
+	public static final Color COLOR_HEADER_PANEL_TEXT = Color.BLACK;
 
 	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension(200,350);
 	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension(420,400);
