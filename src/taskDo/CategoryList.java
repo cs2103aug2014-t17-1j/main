@@ -2,9 +2,7 @@ package taskDo;
 
 import java.util.ArrayList;
 
-import Parser.ParsedResult;
-
-import commandFactory.CommandType;
+import commonClasses.StorageList;
 
 public class CategoryList {
 
@@ -41,40 +39,31 @@ public class CategoryList {
 	}
 
 	//Extra methods
-	public static void updateCategoryList(CommandType command, String categoryName) {
-
-		switch(command) {
-			
-			case ADD:
-				if(CategoryList.isExistingCategory(categoryName)) {
-					CategoryList.addCountToCategory(categoryName);
+	public static void updateCategoryList() {
+		
+		categoryList.clear();
+		ArrayList<Task> updatedTask = StorageList.getInstance().getTaskList();
+		
+		for(int i=0;i<updatedTask.size();i++) {
+			String categoryName = updatedTask.get(i).getCategory();
+			if(categoryName != null) {
+				if(isExistingCategory(categoryName.toLowerCase())) {
+					addCountToCategory(categoryName.toLowerCase());
 				} else {
-					CategoryList.addCategory(categoryName);
+					addCategory(categoryName.toLowerCase());
 				}
-				break;
 				
-			case DELETE:
-				if(categoryName != null && CategoryList.isExistingCategory(categoryName)) {
-					CategoryList.minusCountToCategory(categoryName);
-				}
-				break;
-				
-			case UNDO:
-				
-			case COMPLETE:
-				if(categoryName != null && CategoryList.isExistingCategory(categoryName)) {
-					CategoryList.minusCountToCategory(categoryName);
-				}
-				break;
+			}
 		}
+ 		
 	}
 	
 	public static boolean isExistingCategory(String name) {
-		/*for(int i=0; i<categoryList.size(); i++) {
+		for(int i=0; i<categoryList.size(); i++) {
 			if(categoryList.get(i).getName().toLowerCase().equals(name.toLowerCase())) {
 				return true;
 			}
-		} */
+		} 
 		return false;
 	}
 	
