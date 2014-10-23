@@ -20,7 +20,7 @@ import commonClasses.SummaryReport;
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class UiViewModifier implements KeyListener,WindowListener,UiParent{
+public class UiViewModifier implements WindowListener,UiParent{
 
 	private JFrame mainFrame;
 
@@ -35,6 +35,7 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 	private int rowSelected;
 	private Parser parser;
 	private ParsedResult parseResult;
+	
 	
 	public UiViewModifier(){
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
@@ -111,7 +112,6 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		mainFrame.setResizable(false);
 		mainFrame.pack();
 		mainFrame.addWindowListener(this);
-		mainFrame.addKeyListener(this);
 	}
 
 	
@@ -141,16 +141,24 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 	}
 	
 	public void pressedF3(){
-		
+		if(isDetailPanelExisting()){
+			mainFrame.remove(detailPanel);
+		} else {
+			createDetailPanel(HotKeyType.F3);
+		}
+		updateAllPanels();
 	}
 	
 	private void createDetailPanel(HotKeyType hotkey) {
 		switch(hotkey){
 			case F1:
-				detailPanel = new DetailPanel();
+				detailPanel = new DetailPanel(HotKeyType.F1);
 				break;
 			case F2:
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+				break;
+			case F3:
+				detailPanel = new DetailPanel(HotKeyType.F3);
 				break;
 			default:
 				break;
@@ -256,22 +264,6 @@ public class UiViewModifier implements KeyListener,WindowListener,UiParent{
 		
 	}
 
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		
-	}
-	
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-	}
 
 
 }
