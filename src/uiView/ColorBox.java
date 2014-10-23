@@ -7,10 +7,10 @@ import java.awt.Color;
 public class ColorBox {
 	
 	
-	public static Color[] colorPool = { new Color(0xcc, 0xfe, 0xfd),  //  greenwish blue 
-		new Color(0x00, 0xd, 0x33),
-      new Color(0x56, 0xae, 0x57),  //  dark pastel green   
-      new Color(0xb2, 0x99, 0x6e),  //  dust    
+	public static Color[] colorPool = { new Color(0xf5, 0xfa, 0xfa),  //  greenwish blue 
+		new Color(0x6D, 0x92, 0x9b),
+      new Color(0xb7, 0xaf, 0xa3),  //  brown  
+      new Color(0xe8, 0xd0, 0xa9),  //  orange   
       new Color(0xa8, 0xff, 0x04),  //  electric lime   
       new Color(0x69, 0xd8, 0x4f),  //  fresh green   
       new Color(0x89, 0x45, 0x85),  //  light eggplant    

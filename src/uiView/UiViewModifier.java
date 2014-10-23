@@ -147,6 +147,7 @@ public class UiViewModifier implements WindowListener,UiParent{
 			createDetailPanel(HotKeyType.F3);
 		}
 		updateAllPanels();
+		updateFrame();
 	}
 	
 	private void createDetailPanel(HotKeyType hotkey) {
