@@ -9,6 +9,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.joestelmach.natty.DateGroup;
+
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -49,9 +50,13 @@ public class CommonInterpreterMethods {
 				date = df.parseDateTime(commandParam);
 				group = parser.parse(date.toString());
 				DateTime dates = new DateTime(group.get(0).getDates().get(0));
-
+				
+				if(dates.getYear() == 2000) {
+					dates = dates.withYear(new DateTime().getYear());
+				}
 				DateTime currentTime = new DateTime();
-
+				if(dates.toLocalDate().isBefore(currentTime.toLocalDate()));
+				
 				if (dates.hourOfDay().toString()
 						.equals(currentTime.hourOfDay().toString())) {
 					dates = dates.withHourOfDay(23);
@@ -65,7 +70,9 @@ public class CommonInterpreterMethods {
 			}
 		}
 		if(containsDigits(commandParam)) {
-			return null;
+			if(!checkRelativeDateFormat(commandParam)) {
+				return null;
+			}
 		}
 		group = parser.parse(commandParam);
 		if (group.isEmpty()) {
@@ -84,11 +91,23 @@ public class CommonInterpreterMethods {
 		return dates;
 	}
 
+	private static boolean checkRelativeDateFormat(String commandParam) {
+		Pattern pattern = Pattern.compile("^\\w+ \\d\\d:\\d\\d$");
+		Matcher matcher = pattern.matcher(commandParam);
+		
+		if(matcher.find()) {
+			return true;
+		}
+		
+		return false;
+		
+	}
+
 	private static boolean containsDigits(String commandParam) {
 		Pattern pattern = Pattern.compile("\\d+");
 		Matcher matcher = pattern.matcher(commandParam);
 		
-		while (matcher.find()) {
+		if (matcher.find()) {
 			return true;
 		}
 		
