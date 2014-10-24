@@ -13,6 +13,8 @@ public class CommandFactory {
 			return new CommandActionDisplay();
 		case EDIT:
 			return new CommandActionEdit();
+		case COMPLETE:
+			return new CommandActionComplete();
 		case SEARCH:
 			return new CommandActionSearch();
 		default:
