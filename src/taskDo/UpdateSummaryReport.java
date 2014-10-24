@@ -29,9 +29,9 @@ public class UpdateSummaryReport {
 			default:
 				break;
 			}
-		}else {
-			displayList = search.searchByDate(parsedResult);
-		}
+		}else	 if(parsedResult.getCommandType().equals(CommandType.SEARCH)){
+			displayList = search.searchByKeyword(parsedResult);
+		}else{displayList = search.searchByDate(parsedResult);}
 
 		updateHeader(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);

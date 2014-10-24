@@ -74,4 +74,36 @@ public class Search {
 		boolean isNotAfter = !targetTask.getDueDate().toLocalDate().isAfter(sourceTask.getDueDate().toLocalDate());
 		return isNotBefore && isNotAfter;
 	}
+	
+	public ArrayList<Task> searchByKeyword(ParsedResult parsedResult){
+		String searchInput = parsedResult.getTaskDetails().getTitle();
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		String[] splittedInput = searchInput.split(" ");
+		for(int i=0;i<splittedInput.length;i++) {
+			for(int j=0;j<taskList.size();j++){
+				if(taskList.get(j).getTitle().contains(splittedInput[i])){
+					returnList.add(taskList.get(j));
+				}
+			}
+		}
+
+		if(returnList.isEmpty()) { //2nd level search fail
+			WagnerFischerSearch wfSearch = new WagnerFischerSearch();
+			for(int i=0;i<splittedInput.length;i++) {
+				for(int j=0;j<taskList.size();j++){
+					for(int k=0;k<taskList.get(j).getTitle().length();k++) {
+						String[] splittedDescription = taskList.get(j).getTitle().split(" ");
+						int editDist = wfSearch.getEditDistance(splittedDescription[k], splittedInput[i]);
+						if(editDist <= 2) {
+							returnList.add(taskList.get(j));
+							break;
+						}
+					}
+				}
+			}
+		}
+		return returnList;
+	}
+
 }
+
