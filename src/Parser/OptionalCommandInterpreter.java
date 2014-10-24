@@ -132,9 +132,9 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 	}
 
 	private void updateImportantCase(String commandParam, Task task) throws InvalidParameterException {
-		if (commandParam.equals(Constants.IMPT_YES)) {
+		if (commandParam.toUpperCase().equals(Constants.IMPT_YES)) {
 			task.setImportant(true);
-		} else if (commandParam.equals(Constants.IMPT_NO)) {
+		} else if (commandParam.toUpperCase().equals(Constants.IMPT_NO)) {
 			task.setImportant(false);
 		} else {
 			SummaryReport

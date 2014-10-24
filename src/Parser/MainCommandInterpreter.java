@@ -160,7 +160,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 	private void updateDisplayCase(ParsedResult result, String commandParam) {
 		Task task = result.getTaskDetails();
-		
+		//discuss with huang li. Set searchType ALL,COMPLETED??
 		if (CategoryList.isExistingCategory(commandParam)) {
 			task.setCategory(commandParam);
 			result.setSearchMode(SearchType.CATEGORY);
