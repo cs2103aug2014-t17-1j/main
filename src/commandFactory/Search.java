@@ -34,6 +34,8 @@ public class Search {
 
 	public ArrayList<Task> searchForDisplay(ParsedResult parsedResult) {
 		switch(parsedResult.getSearchMode()){
+		case ALL:
+			return StorageList.getInstance().getTaskList();
 		case DATE: 
 			return searchByDate(parsedResult);
 		case RANGEOFDATES:
