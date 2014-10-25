@@ -14,8 +14,8 @@ import org.json.JSONTokener;
 
 import taskDo.Task;
 import taskDo.TaskType;
-
 import commonClasses.Constants;
+import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -81,7 +81,7 @@ public class ReadAndWriteToFile {
 						taskList.add(task);
 					} 
 				} catch(Exception e) {
-					
+					SummaryReport.setFeedBackMsg(Constants.MESSAGE_LOAD_ERROR);
 				}
 			}	
 		}
