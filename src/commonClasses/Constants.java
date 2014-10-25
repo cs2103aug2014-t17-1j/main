@@ -119,8 +119,12 @@ public class Constants {
 	public static final String MESSAGE_SUCCESS_EDIT = "Edited successfully";
 	public static final String MESSAGE_SUCCESS_ADD = "Added successfully";
 	public static final String MESSAGE_SUCCESS_COMPLETED = "Task marked as completed";
+	public static final String MESSAGE_SUCCESS_SEARCH = "Possible results listed";
+	public static final String MESSAGE_FAIL_SEARCH = "No task is matched";
 	public static final String MESSAGE_SUCCESS_UNDO = "Undo successfully";
-	public static final String MESSAGE_FAIL_UNDO = "There is no command for undo";
+	public static final String MESSAGE_SUCCESS_REDO = "Redo successfully";
+	public static final String MESSAGE_FAIL_UNDO = "There is no more command for undo";
+	public static final String MESSAGE_FAIL_REDO = "There is no more command for Redo";
 	public static final String MESSAGE_DISPLAY = "Display by request";
 	public static final String MESSAGE_SOMEDAY = "Someday";
 	public static final int NILL_YEAR = 0;

@@ -8,7 +8,7 @@ public class CommandActionSearch implements CommandAction{
 
 	public void execute(ParsedResult parsedResult) {
 		Search search = new Search();
-		UpdateSummaryReport.updateForDisplay(parsedResult, search.searchByKeyword(parsedResult));
+		UpdateSummaryReport.updateForSearch(parsedResult, search.searchByKeyword(parsedResult));
 	}
 
 	public void undo(Task lastTask) {

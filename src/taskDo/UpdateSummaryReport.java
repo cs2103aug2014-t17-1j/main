@@ -18,13 +18,24 @@ public class UpdateSummaryReport {
 		Search search = new Search();
 		updateHeader(parsedResult.getTaskDetails());
 		updateDisplayTaskList(search.searchByDate(parsedResult));
+		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
 	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
 		updateHeader(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
+	}
+	
+	public static void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
+		updateHeader(parsedResult.getTaskDetails());
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+		if(displayList.isEmpty()){
+			updateFeedbackMsg(Constants.MESSAGE_FAIL_SEARCH);
+		}else{updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);}
 	}
 
 	private static void updateHeader(Task task) {
@@ -62,8 +73,14 @@ public class UpdateSummaryReport {
 		case UNDO:
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_UNDO);
 			break;
+		case REDO:
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_REDO);
+			break;
 		case COMPLETED:
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_COMPLETED);
+			break;
+		case SEARCH:
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);
 			break;
 		default:
 			break;
