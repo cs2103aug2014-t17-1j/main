@@ -37,7 +37,9 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	}
 
 	private void initFeedBackMsg() {
-		feedBackMsg = new JLabel("",JLabel.LEFT);
+		assert feedBackMsg !=null;
+		String feedBack = SummaryReport.getFeedBackMsg();
+		feedBackMsg = new JLabel(feedBack,JLabel.LEFT);
 		feedBackMsg.validate();
 		feedBackMsg.setForeground(Constants.COLOR_COMMAND_PANEL_TEXT);
 	}
