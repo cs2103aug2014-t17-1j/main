@@ -127,7 +127,7 @@ public class Constants {
 	 */
 
 	// Parser
-	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy", "ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MM", "dd MMM yyyy HH:mm", "dd MMM yyyy" };
+	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy", "ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MMM", "dd MMM yyyy HH:mm", "dd MMM yyyy" };
 	public static final int DATE_FORMAT_ITERATIONS = 8;
 	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
 	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
