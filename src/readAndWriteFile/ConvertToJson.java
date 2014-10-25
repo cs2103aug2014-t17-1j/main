@@ -1,16 +1,16 @@
 package readAndWriteFile;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import taskDo.Category;
 import taskDo.Task;
 
 import commonClasses.Constants;
+
 /*
  * @author Paing Zin Oo(Jack)
  */
@@ -21,70 +21,75 @@ public class ConvertToJson {
 	public ArrayList<Task> getTaskList() {
 		return taskList;
 	}
-	
-	public void setCategoryList(ArrayList<Category> categoryList){
+
+	public void setCategoryList(ArrayList<Category> categoryList) {
 		this.categoryList = categoryList;
 	}
-	
+
 	public void setTaskList(ArrayList<Task> taskList) {
 		this.taskList = taskList;
 	}
-	
-	
-	public String changeToJSonObj(boolean isTask){
-		String result ="";
-		if(isTask){
+
+	public String changeToJsonObj(boolean isTask) {
+		String result = "";
+		try {
 			result = extractTaskFields();
-		} else{
-			result = extractCategoryFields();
+		} catch (Exception e) {
+
 		}
 
 		return result;
 	}
-	
-	@SuppressWarnings("unchecked")
-	private String extractCategoryFields() {
-		JSONArray categories = new JSONArray();
-		for (int i = 0 ; i < categoryList.size(); i++){
-			Category category = categoryList.get(i);
-			JSONObject categoryJSonObj = new JSONObject();
-			categoryJSonObj.put(Constants.CATEGORYKEYS[0], category.getName());
-			categoryJSonObj.put(Constants.CATEGORYKEYS[1], category.getCount());
-			categories.add(categoryJSonObj);
-			
-			
+
+	/*
+	 * private String extractCategoryFields() { JSONArray categories = new
+	 * JSONArray(); for (int i = 0 ; i < categoryList.size(); i++){ Category
+	 * category = categoryList.get(i); JSONObject categoryJSonObj = new
+	 * JSONObject(); // categoryJSonObj.put(Constants.CATEGORYKEYS[0],
+	 * category.getName()); // categoryJSonObj.put(Constants.CATEGORYKEYS[1],
+	 * category.getCount()); categories.put(categoryJSonObj);
+	 * 
+	 * 
+	 * } return categories.toString(); }
+	 */
+
+	private String extractTaskFields() throws JSONException {
+		JSONArray tasks = new JSONArray();
+		for (int i = 0; i < taskList.size(); i++) {
+			Task task = taskList.get(i);
+			JSONObject taskJsonObj = new JSONObject();
+			taskJsonObj.put(Constants.TASKKEYS[0], task.getTitle());
+			if (task.getCategory() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[1], "");
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[1], task.getCategory());
+			}
+			taskJsonObj.put(Constants.TASKKEYS[2], task.isImportant());
+			if (task.getStartDate() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[3], "");
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[3], task.getStartDate()
+						.toString());
+			}
+			if (task.getDueDate() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[4], "");
+
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[4], task.getDueDate()
+						.toString());
+			}
+			taskJsonObj.put(Constants.TASKKEYS[5], task.isCompleted());
+			taskJsonObj.put(Constants.TASKKEYS[6], task.getTaskType() + "");
+			if (task.getNote() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[7], "");
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[7], task.getNote());
+			}
+
+			tasks.put(taskJsonObj);
+
 		}
-		return categories.toString();
+		return tasks.toString(Constants.JSON_IDENTATION);
 	}
 
-	@SuppressWarnings("unchecked")
-	private String extractTaskFields() {
-		JSONArray tasks = new JSONArray();
-		for (int i = 0 ; i < taskList.size(); i++){
-			Task task = taskList.get(i);
-			JSONObject taskJSonObj = new JSONObject();
-			taskJSonObj.put(Constants.TASKKEYS[0], task.getCategory());
-			taskJSonObj.put(Constants.TASKKEYS[1], task.getTitle());
-			taskJSonObj.put(Constants.TASKKEYS[2], task.isImportant());
-			if(task.getDueDate() == null){
-				taskJSonObj.put(Constants.TASKKEYS[3], "");
-				
-			}else{
-				taskJSonObj.put(Constants.TASKKEYS[3], task.getDueDate().toString());
-			}
-			if(task.getStartDate() == null){
-				taskJSonObj.put(Constants.TASKKEYS[4], "");
-			}else{
-				taskJSonObj.put(Constants.TASKKEYS[4], task.getStartDate().toString());
-			}
-			taskJSonObj.put(Constants.TASKKEYS[5], task.isCompleted());
-			taskJSonObj.put(Constants.TASKKEYS[6], task.getTaskType()+"");
-			taskJSonObj.put(Constants.TASKKEYS[7], task.getNote());
-			tasks.add(taskJSonObj);
-			
-			
-		}		
-		return tasks.toJSONString();
-	}
-	
 }

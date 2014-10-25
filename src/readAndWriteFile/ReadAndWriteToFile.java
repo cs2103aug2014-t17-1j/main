@@ -1,17 +1,16 @@
 package readAndWriteFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.joda.time.DateTime;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import taskDo.Task;
 import taskDo.TaskType;
@@ -53,7 +52,7 @@ public class ReadAndWriteToFile {
 		File f = new File(Constants.FILENAME_TASKDO);
 		if(f.exists()){
 			if(f.length()!=0){
-				JSONParser parser = new JSONParser();
+		/*		JSONParser parser = new JSONParser();
 				try{
 					JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME_TASKDO));
 					for(Object obj : jsonObjectArr){
@@ -67,14 +66,27 @@ public class ReadAndWriteToFile {
 					e.printStackTrace();
 				}catch(ParseException e){
 					e.printStackTrace();
+				} */
+				try {	
+					JSONTokener tokener = new JSONTokener(new FileReader(Constants.FILENAME_TASKDO));
+					JSONArray jsonArray = new JSONArray(tokener);
+					Task task;
+					for(int i=0;i<jsonArray.length();i++) {
+						JSONObject jsonObject = (JSONObject)jsonArray.getJSONObject(i);
+						try {
+							task = extractTaskFields(jsonObject);
+						} catch (Exception e) {
+							continue;
+						}
+						taskList.add(task);
+					} 
+				} catch(Exception e) {
+					
 				}
-			}
-			
+			}	
 		}
-		
-		
 		return taskList;
-	}
+}
 
 //	public ArrayList<Category> readCategoriesFromFile(){
 //		ArrayList<Category> categoryList = new ArrayList<Category>();
@@ -111,28 +123,29 @@ public class ReadAndWriteToFile {
 //		return null;
 //	}
 
-	private Task extractTaskFields(JSONObject jsonObject) {
+	private Task extractTaskFields(JSONObject jsonObject) throws JSONException {
 		Task task = new Task();
-		task.setCategory((String) jsonObject.get(Constants.TASKKEYS[0]));
-		task.setTitle((String) jsonObject.get(Constants.TASKKEYS[1]));
+		task.setTitle((String) jsonObject.get(Constants.TASKKEYS[0]));
+		task.setCategory((String) jsonObject.get(Constants.TASKKEYS[1]));
 		task.setImportant((boolean) jsonObject.get(Constants.TASKKEYS[2]));
-		task.setCompleted((boolean) jsonObject.get(Constants.TASKKEYS[5]));
-		task.setNote((String) jsonObject.get(Constants.TASKKEYS[7]));
-		task.setTaskType(TaskType.valueOf((String)jsonObject.get(Constants.TASKKEYS[6])));
-		String str_dueDate = (String) jsonObject.get(Constants.TASKKEYS[3]);
-		if(str_dueDate.isEmpty()){
-			task.setDueDate(null);
-		}else{
-			DateTime dueDate = DateTime.parse(str_dueDate);
-			task.setDueDate(dueDate);
-		}
-		String str_startDate = (String) jsonObject.get(Constants.TASKKEYS[4]);
+		String str_startDate = (String) jsonObject.get(Constants.TASKKEYS[3]);
 		if(str_startDate.isEmpty()){
 			task.setStartDate(null);
 		}else{
 			DateTime startDate = DateTime.parse(str_startDate);
 			task.setStartDate(startDate);
 		}
+		String str_dueDate = (String) jsonObject.get(Constants.TASKKEYS[4]);
+		if(str_dueDate.isEmpty()){
+			task.setDueDate(null);
+		}else{
+			DateTime dueDate = DateTime.parse(str_dueDate);
+			task.setDueDate(dueDate);
+		}
+		task.setCompleted((boolean) jsonObject.get(Constants.TASKKEYS[5]));
+		task.setTaskType(TaskType.valueOf((String)jsonObject.get(Constants.TASKKEYS[6])));
+		task.setNote((String) jsonObject.get(Constants.TASKKEYS[7]));
+		
 		return task;
 	}
 }

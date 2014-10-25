@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import readAndWriteFile.ConvertToJson;
 import readAndWriteFile.ReadAndWriteToFile;
-import taskDo.Category;
 import taskDo.CategoryList;
 import taskDo.Task;
 
@@ -62,7 +61,7 @@ public class StorageList {
 
 	private void saveTasksToFile() {
 		convertTojson.setTaskList(mainTaskList);
-		readWrite.setjSonText(convertTojson.changeToJSonObj(true));
+		readWrite.setjSonText(convertTojson.changeToJsonObj(true));
 		readWrite.writeToFile(true);
 	}
 	

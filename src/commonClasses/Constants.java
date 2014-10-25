@@ -22,7 +22,8 @@ public class Constants {
 	public static final String STRING_STRING = "";
 	public static final String STRING_NA = "NA";
 	
-	public static final String TASKKEYS[] = {"category","description","important","dueDate","startDate","completed","taskType","taskNote"} ;
+	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
+	public static final int JSON_IDENTATION = 3;
 	public static final String CATEGORYKEYS[] = {"name","count"};
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
 			"F2 ==> View Details",
@@ -144,5 +145,6 @@ public class Constants {
 	public static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
 	public static final String DISPLAY_COMPLETED = "completed";
 	public static final String DISPLAY_ALL = "all";
+	
 	
 }
