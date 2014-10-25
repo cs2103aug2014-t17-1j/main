@@ -24,6 +24,7 @@ public class Constants {
 	
 	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
 	public static final int JSON_IDENTATION = 3;
+	public static final String MESSAGE_LOAD_ERROR = "Loading Error! Please check that file format is correct!";
 	public static final String CATEGORYKEYS[] = {"name","count"};
 	public static final String [] SHORTCUTS = { "F1 ==> Help",
 			"F2 ==> View Details",
@@ -146,6 +147,7 @@ public class Constants {
 	public static final String DISPLAY_COMPLETED = "completed";
 	public static final String DISPLAY_ALL = "all";
 	public static final String MESSAGE_MISSING_PARAM = "Please insert parameters";
+	
 	
 	
 }
