@@ -14,9 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -87,6 +89,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 	
 
 	private void setContentTableProperties() {
+		contentTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		contentTable.getTableHeader().setReorderingAllowed(false);
 		contentTable.getTableHeader().setForeground(Constants.COLOR_TABLE_HEADER_TEXT);
@@ -125,28 +128,22 @@ public class ContentTablePanel extends JPanel implements Observer{
 	private void tabKeyPressedAction() {
 		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_TAB,0), "Changed Focus");
 		contentTable.getActionMap().put("Changed Focus", new AbstractAction() {
-
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("TAB PRESSED IN TABLE");
-				parent.pressedTab(false);
-				
-			}
-			
+				parent.pressedTab(false);	
+			}			
 		});
 	}
 	
 	private void f3KeyPressedAction() {
 		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F3,0), "F3");
 		contentTable.getActionMap().put("F3", new AbstractAction() {
-
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("F3 Presed IN TABLE");
-				parent.pressedF3();
-				
-			}
-			
+				parent.pressedF3();	
+			}			
 		});
 	}
 	
@@ -154,7 +151,6 @@ public class ContentTablePanel extends JPanel implements Observer{
 	private void f1KeyPressedAction() {
 		contentTable.getInputMap().put(KeyStroke.getKeyStroke(KeyEvent.VK_F1,0), "Event");
 		contentTable.getActionMap().put("Event", new AbstractAction() {
-
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				parent.pressedF1();
@@ -225,7 +221,6 @@ public class ContentTablePanel extends JPanel implements Observer{
 	}
 	
 	public void highlightRow(){
-		
 		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
 		contentTable.requestFocusInWindow();
 	}
