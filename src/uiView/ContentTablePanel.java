@@ -18,12 +18,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.tree.TreeSelectionModel;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.Task;
+
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 /*
@@ -39,7 +39,8 @@ public class ContentTablePanel extends JPanel implements Observer{
 	
 	public ContentTablePanel(UiParent parent){
 		this.parent = parent; 
-		setPreferredSize(new Dimension(500,400));
+		//setPreferredSize(new Dimension(500,400));
+		setPreferredSize(Constants.DIMENION_TABLE);
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
@@ -89,39 +90,55 @@ public class ContentTablePanel extends JPanel implements Observer{
 	
 
 	private void setContentTableProperties() {
-		contentTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		setTableHeaderProperties();
+		setRowAndColumnSelectionMode();
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		contentTable.getTableHeader().setReorderingAllowed(false);
-		contentTable.getTableHeader().setForeground(Constants.COLOR_TABLE_HEADER_TEXT);
-		contentTable.getTableHeader().setResizingAllowed(false);
-		contentTable.getTableHeader().setBackground(Constants.COLOR_TABLE_HEADER_BG);
-		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
-		contentTable.setRowHeight(40);
-		contentTable.setRowSelectionAllowed(true);
-		contentTable.setColumnSelectionAllowed(false);
 		contentTable.requestFocus();
 		contentTable.setFocusable(true);
-		tabKeyPressedAction();
-		f2KeyPressedAction();
-		f1KeyPressedAction();
-		f3KeyPressedAction();
-	
-		contentTable.addFocusListener(new FocusListener(){
+		setKeysPressed();
+		addFocusListener();
+	}
 
+
+	private void addFocusListener() {
+		contentTable.addFocusListener(new FocusListener(){
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				//contentTable.setRowSelectionInterval(0, 0);
 				contentTable.changeSelection(0, 0, false, false);
 			}
-
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				contentTable.clearSelection();
-			}
-			
+			}	
 		});
+	}
+
+
+	private void setKeysPressed() {
+		tabKeyPressedAction();
+		f2KeyPressedAction();
+		f1KeyPressedAction();
+		f3KeyPressedAction();
+	}
+
+
+	private void setRowAndColumnSelectionMode() {
+		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
+		contentTable.setRowHeight(Constants.TABLE_HEIGHT);
+		contentTable.setRowSelectionAllowed(true);
+		contentTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		contentTable.setColumnSelectionAllowed(false);
+	}
+
+
+	private void setTableHeaderProperties() {
+		contentTable.getTableHeader().setReorderingAllowed(false);
+		contentTable.getTableHeader().setForeground(Constants.COLOR_TABLE_HEADER_TEXT);
+		contentTable.getTableHeader().setResizingAllowed(false);
+		contentTable.getTableHeader().setBackground(Constants.COLOR_TABLE_HEADER_BG);
 	}
 
 
@@ -215,7 +232,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 		jsp = new JScrollPane(contentTable);
 		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(null,Constants.HEADER_TAKSLIST, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_TABLE_HEADER_TEXT);
 		jsp.setBorder(jScrollTitledBorder);
-		jsp.setPreferredSize(new Dimension(450,380));
+		jsp.setPreferredSize(Constants.DIMESION_JSCROLL_PANEL);
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
 		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
 	}
