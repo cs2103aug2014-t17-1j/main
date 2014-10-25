@@ -115,6 +115,7 @@ public class Constants {
 	public static final String MESSAGE_SUCCESS_EDIT = "Edited successfully";
 	public static final String MESSAGE_SUCCESS_ADD = "Added successfully";
 	public static final String MESSAGE_SUCCESS_UNDO = "Undo successfully";
+	public static final String MESSAGE_FAIL_UNDO = "There is no command for undo";
 	public static final String MESSAGE_DISPLAY = "Display by request";
 	public static final String MESSAGE_SOMEDAY = "Someday";
 	public static final int NILL_YEAR = 0;
