@@ -65,6 +65,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 	}
 
 	public String removeCommandWord(String remainingInput) {
+	try {
 		switch (currentCommand) {
 
 		case DUE:
@@ -91,6 +92,10 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		default:
 			return "";
 		}
+	} catch (Exception e) {
+		SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
+		throw new InvalidParameterException();
+	}
 	}
 
 	public ParsedResult updateResults(ParsedResult result, String commandParam)
