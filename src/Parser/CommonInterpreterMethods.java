@@ -31,7 +31,7 @@ public class CommonInterpreterMethods {
 	}
 
 	static boolean noDeadLine(String commandParam) {
-		if (commandParam.toUpperCase().equals("TODO")) {
+		if (commandParam.toUpperCase().equals("SOMEDAY")) {
 			return true;
 		}
 

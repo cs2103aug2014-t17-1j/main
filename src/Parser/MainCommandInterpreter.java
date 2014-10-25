@@ -160,7 +160,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 	private void updateDisplayCase(ParsedResult result, String commandParam) {
 		Task task = result.getTaskDetails();
-		//discuss with huang li. Set searchType ALL,COMPLETED??
+
 		if (CategoryList.isExistingCategory(commandParam)) {
 			task.setCategory(commandParam);
 			result.setSearchMode(SearchType.CATEGORY);
@@ -168,6 +168,10 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			task.setDueDate(Constants.SOMEDAY);
 			task.setStartDate(null);
 			result.setSearchMode(SearchType.DATE);
+		} else if(commandParam.toLowerCase().equals(Constants.DISPLAY_ALL)) {
+			result.setSearchMode(SearchType.ALL);
+		} else if(commandParam.toLowerCase().equals(Constants.DISPLAY_COMPLETED)) {
+			result.setSearchMode(SearchType.COMPLETED);
 		} else {
 			DateTime date = CommonInterpreterMethods.getDate(commandParam);
 			if (date == null) {

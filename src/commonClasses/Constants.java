@@ -142,5 +142,7 @@ public class Constants {
 	public static final String IMPT_YES = "Y";
 	
 	public static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
+	public static final String DISPLAY_COMPLETED = "completed";
+	public static final String DISPLAY_ALL = "all";
 	
 }
