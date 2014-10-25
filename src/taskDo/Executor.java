@@ -32,7 +32,6 @@ public class Executor {
 				History.getCommandActionHistory().push(commandAction);
 			}
 			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
-			UpdateSummaryReport.update(parsedResult);
 		}
 		StorageList.getInstance().saveToFile();
 	}

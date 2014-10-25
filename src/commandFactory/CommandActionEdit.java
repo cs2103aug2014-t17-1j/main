@@ -5,6 +5,7 @@ import commonClasses.Constants;
 import Parser.ParsedResult;
 import taskDo.History;
 import taskDo.Task;
+import taskDo.UpdateSummaryReport;
 
 public class CommandActionEdit implements CommandAction {	
 	@Override
@@ -17,6 +18,8 @@ public class CommandActionEdit implements CommandAction {
 			StorageList.getInstance().getTaskList().remove(index);
 			StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		}
+		
+		UpdateSummaryReport.update(parsedResult);
 	}
 
 	@Override

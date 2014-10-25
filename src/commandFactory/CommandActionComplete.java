@@ -4,6 +4,7 @@ import commonClasses.Constants;
 import commonClasses.StorageList;
 import taskDo.History;
 import taskDo.Task;
+import taskDo.UpdateSummaryReport;
 import Parser.ParsedResult;
 
 public class CommandActionComplete implements CommandAction{
@@ -18,6 +19,8 @@ public class CommandActionComplete implements CommandAction{
 			StorageList.getInstance().getTaskList().remove(index);
 			StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		}
+		
+		UpdateSummaryReport.update(parsedResult);
 	}
 
 	@Override

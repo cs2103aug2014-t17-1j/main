@@ -4,12 +4,15 @@ import commonClasses.StorageList;
 import Parser.ParsedResult;
 import taskDo.History;
 import taskDo.Task;
+import taskDo.UpdateSummaryReport;
 
 public class CommandActionAdd implements CommandAction{
 	@Override
 	public void execute(ParsedResult parsedResult){
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getTaskHistory().push(parsedResult.getTaskDetails());
+		
+		UpdateSummaryReport.update(parsedResult);
 	}
 
 	@Override

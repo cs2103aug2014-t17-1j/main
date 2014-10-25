@@ -16,23 +16,12 @@ public class UpdateSummaryReport {
 
 	public static void update(ParsedResult parsedResult){
 		Search search = new Search();
-		ArrayList<Task> displayList = new ArrayList<Task>();
-		System.out.println("parsedResult commandType ==> "+parsedResult.getSearchMode());
-		if(parsedResult.getCommandType().equals(CommandType.DISPLAY)){
-			switch(parsedResult.getSearchMode()){
-			case DATE: 
-				displayList = search.searchByDate(parsedResult);
-				break;
-			case RANGEOFDATES:
-				displayList = search.searchByRangeOfDates(parsedResult);
-				break;
-			default:
-				break;
-			}
-		}else	 if(parsedResult.getCommandType().equals(CommandType.SEARCH)){
-			displayList = search.searchByKeyword(parsedResult);
-		}else{displayList = search.searchByDate(parsedResult);}
-
+		updateHeader(parsedResult.getTaskDetails());
+		updateDisplayTaskList(search.searchByDate(parsedResult));
+		determineFeedbackMsg(parsedResult.getCommandType());
+	}
+	
+	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
 		updateHeader(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		determineFeedbackMsg(parsedResult.getCommandType());

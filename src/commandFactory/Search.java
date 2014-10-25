@@ -32,6 +32,17 @@ public class Search {
 		}
 	}
 
+	public ArrayList<Task> searchForDisplay(ParsedResult parsedResult) {
+		switch(parsedResult.getSearchMode()){
+		case DATE: 
+			return searchByDate(parsedResult);
+		case RANGEOFDATES:
+			return searchByRangeOfDates(parsedResult);
+		default:
+			return null;
+		}
+	}
+	
 	public ArrayList<Task> searchByDate(ParsedResult parsedResult) {
 		Task sourceTask = parsedResult.getTaskDetails();
 		

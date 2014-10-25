@@ -5,6 +5,7 @@ import commonClasses.Constants;
 import Parser.ParsedResult;
 import taskDo.History;
 import taskDo.Task;
+import taskDo.UpdateSummaryReport;
 
 public class CommandActionDelete implements CommandAction{	
 	@Override
@@ -16,6 +17,8 @@ public class CommandActionDelete implements CommandAction{
 			StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
 			History.getTaskHistory().push(parsedResult.getTaskDetails());
 		}
+		
+		UpdateSummaryReport.update(parsedResult);
 	}
 
 	@Override
