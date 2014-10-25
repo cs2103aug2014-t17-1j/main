@@ -18,18 +18,21 @@ public class UpdateSummaryReport {
 		Search search = new Search();
 		updateHeader(parsedResult.getTaskDetails());
 		updateDisplayTaskList(search.searchByDate(parsedResult));
+		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
 	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
 		updateHeader(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
 	public static void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
 		updateHeader(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
 		if(displayList.isEmpty()){
 			updateFeedbackMsg(Constants.MESSAGE_FAIL_SEARCH);
 		}else{updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);}
