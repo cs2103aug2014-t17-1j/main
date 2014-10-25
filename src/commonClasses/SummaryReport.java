@@ -12,6 +12,7 @@ public class SummaryReport{
 	private static String feedBackMsg;
 	private static String header;
 	private static ArrayList<Task> displayList;
+	private static ArrayList<Integer> imptRowIndexList=new ArrayList<Integer>();
 
 	
 	public static String getFeedBackMsg() {
@@ -39,6 +40,20 @@ public class SummaryReport{
 	
 	public static void sortByDueDate(){
 		Collections.sort(displayList);
+	}
+	
+	
+	public static ArrayList<Integer> getImptRowIndexList() {
+		extractImptRowIndex();
+		return imptRowIndexList;
+	}
+
+	public static void extractImptRowIndex(){
+		for(int i=0 ; i < displayList.size(); i++){
+			if(displayList.get(i).isImportant()){
+				imptRowIndexList.add(i);
+			}
+		}
 	}
 	
 }

@@ -34,6 +34,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 	private int rowSelected;
 	private UiParent parent;
 	
+	
 	public ContentTablePanel(UiParent parent){
 		this.parent = parent; 
 		setPreferredSize(new Dimension(500,400));
@@ -228,6 +229,7 @@ public class ContentTablePanel extends JPanel implements Observer{
 		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
 		contentTable.requestFocusInWindow();
 	}
+	
 
 	@Override
 	public void update() {
