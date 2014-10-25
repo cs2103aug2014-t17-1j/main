@@ -18,11 +18,7 @@ public class Search {
 		returnList = new ArrayList<Task>();
 	}
 
-	public int getTaskIndex() {
-		return taskIndex;
-	}
-
-	public void searchById(int id){
+	public int searchById(int id){
 		assert !StorageList.getInstance().getTaskList().isEmpty();
 		for(Task taskIterator: StorageList.getInstance().getTaskList()){
 			if(id == taskIterator.getId()){
@@ -30,6 +26,7 @@ public class Search {
 				break;
 			}
 		}
+		return taskIndex;
 	}
 
 	public ArrayList<Task> searchForDisplay(ParsedResult parsedResult) {

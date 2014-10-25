@@ -11,11 +11,10 @@ public class CommandActionEdit implements CommandAction {
 	@Override
 	public void execute(ParsedResult parsedResult){
 		Search targetTask = new Search();
-		targetTask.searchById(parsedResult.getTaskDetails().getId());
-		if(targetTask.getTaskIndex() != Constants.NO_TASK){
-			int index = targetTask.getTaskIndex();			
-			History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(index));
-			StorageList.getInstance().getTaskList().remove(index);
+		int taskIndex = targetTask.searchById(parsedResult.getTaskDetails().getId());
+		if(taskIndex != Constants.NO_TASK){		
+			History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
+			StorageList.getInstance().getTaskList().remove(taskIndex);
 			StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		}
 		
@@ -25,8 +24,8 @@ public class CommandActionEdit implements CommandAction {
 	@Override
 	public void undo(Task lastTask) {
 		Search targetTask = new Search();
-		targetTask.searchById(lastTask.getId());
-		StorageList.getInstance().getTaskList().remove(targetTask.getTaskIndex());
+		int taskIndex = targetTask.searchById(lastTask.getId());
+		StorageList.getInstance().getTaskList().remove(taskIndex);
 		StorageList.getInstance().getTaskList().add(lastTask);
 	}
 }

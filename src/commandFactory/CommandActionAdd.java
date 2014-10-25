@@ -18,7 +18,7 @@ public class CommandActionAdd implements CommandAction{
 	@Override
 	public void undo(Task lastTask) {
 		Search search = new Search();
-		search.searchById(lastTask.getId());
-		StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
+		int taskIndex = search.searchById(lastTask.getId());
+		StorageList.getInstance().getTaskList().remove(taskIndex);
 	}
 }
