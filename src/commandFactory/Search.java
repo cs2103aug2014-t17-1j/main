@@ -40,6 +40,8 @@ public class Search {
 			return searchByDate(parsedResult);
 		case RANGEOFDATES:
 			return searchByRangeOfDates(parsedResult);
+		case COMPLETED:
+			return searchByCompleted(parsedResult);
 		default:
 			return null;
 		}
@@ -118,5 +120,13 @@ public class Search {
 		return returnList;
 	}
 
+	public ArrayList<Task> searchByCompleted(ParsedResult parsedResult){
+		for(Task task: StorageList.getInstance().getTaskList()){
+			if(task.isCompleted()){
+				returnList.add(task);
+			}
+		}
+		return returnList;
+	}
 }
 
