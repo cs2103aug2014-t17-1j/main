@@ -26,7 +26,6 @@ public class Executor {
 		}else{
 			executeCommand(parsedResult, commandFactory, commandType);
 		}
-		StorageList.getInstance().saveToFile();
 	}
 
 	private void executeUndo(ParsedResult parsedResult) {
@@ -63,8 +62,9 @@ public class Executor {
 			CommandFactory commandFactory, CommandType commandType) {
 		CommandAction commandAction = commandFactory.getCommandAction(commandType);			
 		commandAction.execute(parsedResult);
-		if(!commandType.equals(CommandType.DISPLAY)){
+		if(!commandType.equals(CommandType.DISPLAY)&&!commandType.equals(CommandType.SEARCH)){
 			History.getUndoActionHistory().push(commandAction);
+			StorageList.getInstance().saveToFile();
 		}
 		CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 	}
