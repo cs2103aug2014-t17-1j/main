@@ -50,7 +50,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			break;
 
 		case "complete":
-			currentCommand = CommandType.COMPLETE;
+			currentCommand = CommandType.COMPLETED;
 			break;
 			
 		default:
@@ -77,7 +77,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		case EDIT:
 			return input.substring(5);
 
-		case COMPLETE:
+		case COMPLETED:
 			return input.substring(9);
 
 		default:
@@ -111,7 +111,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			// do nothing
 			break;
 
-		case COMPLETE:
+		case COMPLETED:
 			updateCompleteCase(result, commandParam);
 			break;
 			

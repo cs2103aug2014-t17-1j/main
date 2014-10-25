@@ -15,7 +15,7 @@ public class CommandActionDelete implements CommandAction{
 		search.searchById(parsedResult.getTaskDetails().getId());
 		if(search.getTaskIndex() != Constants.NO_TASK){
 			StorageList.getInstance().getTaskList().remove(search.getTaskIndex());
-			History.getTaskHistory().push(parsedResult.getTaskDetails());
+			History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		}
 		
 		UpdateSummaryReport.update(parsedResult);

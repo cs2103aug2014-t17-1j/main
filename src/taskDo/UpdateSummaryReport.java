@@ -62,6 +62,9 @@ public class UpdateSummaryReport {
 		case UNDO:
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_UNDO);
 			break;
+		case COMPLETED:
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_COMPLETED);
+			break;
 		default:
 			break;
 		}

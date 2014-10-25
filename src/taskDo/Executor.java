@@ -19,24 +19,53 @@ public class Executor {
 		CommandType commandType = parsedResult.getCommandType();
 
 		if (commandType.equals(CommandType.UNDO)) {
-			if(!History.getCommandActionHistory().empty()){
-				CommandAction commandAction = History.getCommandActionHistory().pop();
-				Task lastTask = History.getTaskHistory().pop();
-				commandAction.undo(lastTask);
-				parsedResult.setTask(lastTask);
+			executeUndo(parsedResult);
 
-				CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
-				UpdateSummaryReport.update(parsedResult);
-			}else{SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);}
-
-		} else {
-			CommandAction commandAction = commandFactory.getCommandAction(commandType);			
-			commandAction.execute(parsedResult);
-			if(!commandType.equals(CommandType.DISPLAY)){
-				History.getCommandActionHistory().push(commandAction);
-			}
-			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
+		}else	if(commandType.equals(CommandType.REDO)){
+			executeRedo(parsedResult);
+		}else{
+			executeCommand(parsedResult, commandFactory, commandType);
 		}
 		StorageList.getInstance().saveToFile();
+	}
+
+	private void executeUndo(ParsedResult parsedResult) {
+		if(!History.getUndoActionHistory().empty()){
+			CommandAction commandAction = History.getUndoActionHistory().pop();
+			Task lastTask = History.getUndoTaskHistory().pop();
+
+			History.getRedoActionHistory().push(commandAction);
+			History.getRedoTaskHistory().push(lastTask);
+
+			commandAction.undo(lastTask);
+			parsedResult.setTask(lastTask);
+
+			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
+			UpdateSummaryReport.update(parsedResult);
+		}else{SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);}
+	}
+
+	private void executeRedo(ParsedResult parsedResult) {
+		if(!History.getRedoActionHistory().empty()){
+			CommandAction commandAction = History.getRedoActionHistory().pop();
+			Task lastTask = History.getRedoTaskHistory().pop();
+			
+			parsedResult.setTask(lastTask);
+			commandAction.execute(parsedResult);
+			
+
+			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
+			UpdateSummaryReport.update(parsedResult);
+		}
+	}
+
+	private void executeCommand(ParsedResult parsedResult,
+			CommandFactory commandFactory, CommandType commandType) {
+		CommandAction commandAction = commandFactory.getCommandAction(commandType);			
+		commandAction.execute(parsedResult);
+		if(!commandType.equals(CommandType.DISPLAY)){
+			History.getUndoActionHistory().push(commandAction);
+		}
+		CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 	}
 }
