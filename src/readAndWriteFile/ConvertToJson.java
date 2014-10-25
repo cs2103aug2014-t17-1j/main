@@ -1,5 +1,7 @@
 package readAndWriteFile;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
@@ -81,8 +83,8 @@ public class ConvertToJson {
 			tasks.add(taskJSonObj);
 			
 			
-		}
-		return tasks.toString();
+		}		
+		return tasks.toJSONString();
 	}
 	
 }

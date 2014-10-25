@@ -1,11 +1,12 @@
 package uiView;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -13,14 +14,13 @@ import javax.swing.JTextField;
 import taskDo.Executor;
 import Parser.ParsedResult;
 import Parser.Parser;
-
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class UiViewModifier implements WindowListener,UiParent{
+public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 
 	private JFrame mainFrame;
 
@@ -38,10 +38,14 @@ public class UiViewModifier implements WindowListener,UiParent{
 	
 	
 	public UiViewModifier(){
+		mainFrame = this;
+		setIconImage(new ImageIcon("tick.png").getImage());
+
+		
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
-		mainFrame = new JFrame();
+		//mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
 		
 
@@ -66,10 +70,6 @@ public class UiViewModifier implements WindowListener,UiParent{
 
 		
 	    setJFrameProperties();
-	    System.out.println(mainFrame.getFocusOwner());
-	    if(mainFrame.getFocusOwner() instanceof JTextField ){
-	    	System.out.println("Text Field ");
-	    }
 	}
 	
 	public void updateAllPanels(){
@@ -107,6 +107,7 @@ public class UiViewModifier implements WindowListener,UiParent{
 	
 
 	private void setJFrameProperties() {
+		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/tick.png"));
 		mainFrame.setTitle("Task.Do"); 
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
