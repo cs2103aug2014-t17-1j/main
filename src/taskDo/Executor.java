@@ -55,7 +55,7 @@ public class Executor {
 
 			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 			UpdateSummaryReport.update(parsedResult);
-		}
+		}else{SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);}
 	}
 
 	private void executeCommand(ParsedResult parsedResult,

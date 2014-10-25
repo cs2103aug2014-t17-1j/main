@@ -26,6 +26,14 @@ public class UpdateSummaryReport {
 		updateDisplayTaskList(displayList);
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
+	
+	public static void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
+		updateHeader(parsedResult.getTaskDetails());
+		updateDisplayTaskList(displayList);
+		if(displayList.isEmpty()){
+			updateFeedbackMsg(Constants.MESSAGE_FAIL_SEARCH);
+		}else{updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);}
+	}
 
 	private static void updateHeader(Task task) {
 		if(isSomeday(task)) {
@@ -62,8 +70,14 @@ public class UpdateSummaryReport {
 		case UNDO:
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_UNDO);
 			break;
+		case REDO:
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_REDO);
+			break;
 		case COMPLETED:
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_COMPLETED);
+			break;
+		case SEARCH:
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);
 			break;
 		default:
 			break;
