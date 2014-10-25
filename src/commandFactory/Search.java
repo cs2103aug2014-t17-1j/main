@@ -32,7 +32,7 @@ public class Search {
 	public ArrayList<Task> searchForDisplay(ParsedResult parsedResult) {
 		switch(parsedResult.getSearchMode()){
 		case ALL:
-			return StorageList.getInstance().getTaskList();
+			return searchByAll();
 		case DATE: 
 			return searchByDate(parsedResult);
 		case RANGEOFDATES:
@@ -43,12 +43,21 @@ public class Search {
 			return null;
 		}
 	}
-	
+
+	private ArrayList<Task> searchByAll() {
+		for(Task task: StorageList.getInstance().getTaskList()){
+			if(isNotCompleted(task)){
+				returnList.add(task);
+			}
+		}
+		return returnList;
+	}
+
 	public ArrayList<Task> searchByDate(ParsedResult parsedResult) {
 		Task sourceTask = parsedResult.getTaskDetails();
-		
+
 		for(Task targetTask: StorageList.getInstance().getTaskList()){
-			if(isSameDueDate(sourceTask, targetTask)){
+			if(isSameDueDate(sourceTask, targetTask)&& isNotCompleted(targetTask)){
 				returnList.add(targetTask);
 			}
 		}
@@ -62,13 +71,15 @@ public class Search {
 	public ArrayList<Task> searchByRangeOfDates(ParsedResult parsedResult){
 		Task sourceTask = parsedResult.getTaskDetails();
 		for(Task targetTask: StorageList.getInstance().getTaskList()){
-			if(targetTask.getTaskType().equals(TaskType.DEADLINE)){
-				if(isDeadlineTaskWithinRange(sourceTask, targetTask)){
-					returnList.add(targetTask);
-				}
-			}else if(targetTask.getTaskType().equals(TaskType.TIMED)){
-				if(isTimedTaskWithinRange(sourceTask, targetTask)){
-					returnList.add(targetTask);
+			if(isNotCompleted(targetTask)){
+				if(targetTask.getTaskType().equals(TaskType.DEADLINE)){
+					if(isDeadlineTaskWithinRange(sourceTask, targetTask)){
+						returnList.add(targetTask);
+					}
+				}else if(targetTask.getTaskType().equals(TaskType.TIMED)){
+					if(isTimedTaskWithinRange(sourceTask, targetTask)){
+						returnList.add(targetTask);
+					}
 				}
 			}
 		}
@@ -86,15 +97,17 @@ public class Search {
 		boolean isNotAfter = !targetTask.getDueDate().toLocalDate().isAfter(sourceTask.getDueDate().toLocalDate());
 		return isNotBefore && isNotAfter;
 	}
-	
+
 	public ArrayList<Task> searchByKeyword(ParsedResult parsedResult){
 		String searchInput = parsedResult.getTaskDetails().getTitle();
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		String[] splittedInput = searchInput.split(" ");
 		for(int i=0;i<splittedInput.length;i++) {
 			for(int j=0;j<taskList.size();j++){
-				if(taskList.get(j).getTitle().contains(splittedInput[i])){
-					returnList.add(taskList.get(j));
+				if(isNotCompleted(taskList.get(j))){
+					if(taskList.get(j).getTitle().contains(splittedInput[i])){
+						returnList.add(taskList.get(j));
+					}
 				}
 			}
 		}
@@ -103,12 +116,14 @@ public class Search {
 			WagnerFischerSearch wfSearch = new WagnerFischerSearch();
 			for(int i=0;i<splittedInput.length;i++) {
 				for(int j=0;j<taskList.size();j++){
-					for(int k=0;k<taskList.get(j).getTitle().length();k++) {
-						String[] splittedDescription = taskList.get(j).getTitle().split(" ");
-						int editDist = wfSearch.getEditDistance(splittedDescription[k], splittedInput[i]);
-						if(editDist <= 2) {
-							returnList.add(taskList.get(j));
-							break;
+					if(isNotCompleted(taskList.get(j))){
+						for(int k=0;k<taskList.get(j).getTitle().length();k++) {
+							String[] splittedDescription = taskList.get(j).getTitle().split(" ");
+							int editDist = wfSearch.getEditDistance(splittedDescription[k], splittedInput[i]);
+							if(editDist <= 2) {
+								returnList.add(taskList.get(j));
+								break;
+							}
 						}
 					}
 				}
@@ -124,6 +139,10 @@ public class Search {
 			}
 		}
 		return returnList;
+	}
+
+	private boolean isNotCompleted(Task targetTask) {
+		return !targetTask.isCompleted();
 	}
 }
 
