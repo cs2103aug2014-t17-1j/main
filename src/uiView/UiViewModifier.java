@@ -1,7 +1,11 @@
 package uiView;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -9,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import taskDo.Executor;
 import Parser.ParsedResult;
@@ -36,9 +41,13 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	private Parser parser;
 	private ParsedResult parseResult;
 	
+	int x =0;
+	int y =0;
 	
 	public UiViewModifier(){
 		mainFrame = this;
+		mainFrame.setUndecorated(true);
+		handleDrag(mainFrame);
 		setIconImage(new ImageIcon("tick.png").getImage());
 
 		System.out.println("SCREEN SIZE "+Constants.SCREEN_SIZE.height+"  WID"+Constants.SCREEN_SIZE.width);
@@ -53,13 +62,12 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		headerPanel = new HeaderPanel();
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
-		helpPanel = new ShorcutPanel();
-		mainFrame.add(helpPanel,BorderLayout.WEST);
+		//helpPanel = new ShorcutPanel();
+		//mainFrame.add(helpPanel,BorderLayout.WEST);
 		
 		commandBoxPanel = new CommandBoxPanel(this);
+		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
-		
-		
 		
 		contentPanel = new ContentTablePanel(this);
 		mainFrame.add(contentPanel,BorderLayout.CENTER);
@@ -113,6 +121,10 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame.setResizable(false);
 		mainFrame.pack();
 		mainFrame.addWindowListener(this);
+		
+		//Center Screen
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		mainFrame.setLocation(dim.width /2 - mainFrame.getSize().width / 2, dim.height / 2 - mainFrame.getSize().height / 2);
 	}
 
 	
@@ -265,6 +277,24 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		// TODO Auto-generated method stub
 		
 	}
+	
+    public void handleDrag(final JFrame frame) {
+        frame.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                x = me.getX();
+                y = me.getY();
+            }
+        });
+        frame.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent me) {
+                me.translatePoint(me.getComponent().getLocation().x - x, me
+                        .getComponent().getLocation().y - y);
+                frame.setLocation(me.getX(), me.getY());
+            }
+        });
+    }
 
 
 
