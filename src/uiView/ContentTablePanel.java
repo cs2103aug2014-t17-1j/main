@@ -1,7 +1,7 @@
 package uiView;
 
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,11 +17,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.Task;
+
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -33,10 +35,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private ArrayList<Task> taskList;
 	private JTable contentTable;
-	//private JScrollPane jsp;
+	// private JScrollPane jsp;
 	private int rowSelected;
 	private UiParent parent;
-	
+
 	private SoftShadowJPanel parentJsp;
 
 	public ContentTablePanel(UiParent parent) {
@@ -137,6 +139,16 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.getTableHeader().setResizingAllowed(false);
 		contentTable.getTableHeader().setBackground(
 				Constants.COLOR_TABLE_HEADER_BG);
+
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(ColorBox.colorPool[957]);
+		headerRenderer.setForeground(Color.WHITE);
+		headerRenderer.setFont(new Font("Serif", Font.BOLD, 15));
+
+		for (int i = 0; i < contentTable.getModel().getColumnCount(); i++) {
+			contentTable.getColumnModel().getColumn(i)
+					.setHeaderRenderer(headerRenderer);
+		}
 	}
 
 	private void tabKeyPressedAction() {
@@ -237,11 +249,11 @@ public class ContentTablePanel extends JPanel implements Observer {
 	private void setJScrollPanePropCentrePane() {
 		parentJsp = new SoftShadowJPanel();
 		JScrollPane jsp = new JScrollPane(contentTable);
-//		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
-//				null, Constants.HEADER_TAKSLIST,
-//				TitledBorder.DEFAULT_JUSTIFICATION,
-//				TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
-//				Constants.COLOR_TABLE_HEADER_TEXT);
+		// TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
+		// null, Constants.HEADER_TAKSLIST,
+		// TitledBorder.DEFAULT_JUSTIFICATION,
+		// TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
+		// Constants.COLOR_TABLE_HEADER_TEXT);
 		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
 		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);

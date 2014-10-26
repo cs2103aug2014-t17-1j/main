@@ -957,12 +957,13 @@ public class ColorBox {
       new Color(0x03, 0x43, 0xdf),  //  blue    
       new Color(0x15, 0xb0, 0x1a),  //  green   
       new Color(0x7e, 0x1e, 0x9c),  //  purple
-      new Color(0x03, 0xa9, 0xf4), // Google Light Blue #03a9f4
-      new Color(0xfa, 0xfa, 0xfa), // Google Grey #fafafa
-      new Color(0x02, 0x77, 0xbd), // Google Blue Grey #0277bd
-      new Color(0xee, 0xee, 0xee), //Google Grey #eeeeee
+      new Color(0x03, 0xa9, 0xf4), 	// Google Light Blue #03a9f4
+      new Color(0xfa, 0xfa, 0xfa), 	// Google Grey #fafafa
+      new Color(0x02, 0x77, 0xbd), 	// Google Blue Grey #0277bd
+      new Color(0xee, 0xee, 0xee), 	//Google Grey #eeeeee
       new Color(0xfa, 0xfa, 0xfa),  //Google Grey #fafafa
-	  new Color(0x45, 0x5a, 0x64), //Google Blue Grey #455a64 
-	  new Color(0xb0, 0x12, 0x0a), //Google Red #b0120a
+	  new Color(0x45, 0x5a, 0x64), 	//Google Blue Grey #455a64 
+	  new Color(0xb0, 0x12, 0x0a), 	//Google Red #b0120a4
+	  new Color(0x26, 0x32, 0x38), 	// Google Blue Grey #263238
 };
 }
