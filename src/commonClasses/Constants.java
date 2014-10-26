@@ -2,6 +2,7 @@ package commonClasses;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import org.joda.time.DateTime;
 
@@ -15,6 +16,11 @@ public class Constants {
 	/*
 	 *  @author Paing Zin Oo(Jack)
 	 */
+	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+	public static final Dimension DIMENION_TABLE = new Dimension((int)(SCREEN_SIZE.width * 0.36 ), (int)(SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.146),(int)(SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.3),(int)(SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.3),(int)(SCREEN_SIZE.height * 0.49));
 	
 	public static final String FILENAME_TASKDO = "TaskDo.json";
 	public static final String FILENAME_CATEGORY = "Category.json";
@@ -106,10 +112,10 @@ public class Constants {
 	public static final Color COLOR_HEADER_PANEL_BG = ColorBox.colorPool[0];
 	public static final Color COLOR_HEADER_PANEL_TEXT = Color.BLACK;
 
-	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension(200,350);
-	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension(420,400);
+	
 	
 	public static final int DEFAULT_ROW_SELECTED = -1;
+	public static final int TABLE_HEIGHT = 40;
 	/*
 	 *  @author Huang Li
 	 */

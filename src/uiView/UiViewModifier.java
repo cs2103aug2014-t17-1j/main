@@ -1,7 +1,6 @@
 package uiView;
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -14,6 +13,7 @@ import javax.swing.JTextField;
 import taskDo.Executor;
 import Parser.ParsedResult;
 import Parser.Parser;
+
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -41,7 +41,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame = this;
 		setIconImage(new ImageIcon("tick.png").getImage());
 
-		
+		System.out.println("SCREEN SIZE "+Constants.SCREEN_SIZE.height+"  WID"+Constants.SCREEN_SIZE.width);
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
