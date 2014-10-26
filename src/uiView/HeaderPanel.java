@@ -1,5 +1,7 @@
 package uiView;
 
+import java.awt.Font;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -9,17 +11,20 @@ import commonClasses.SummaryReport;
  * @author Paing Zin Oo(Jack)
  */
 public class HeaderPanel extends JPanel implements Observer{
-	JLabel lbl_header;
+	JLabel lblHeader;
+	private static final int FONT_SIZE = 24;
+	
 	public HeaderPanel(){
-		lbl_header = new JLabel();
-		lbl_header.setForeground(Constants.COLOR_HEADER_PANEL_TEXT);
-		lbl_header.setText(SummaryReport.getHeader());
-		add(lbl_header);
+		lblHeader = new JLabel();
+		lblHeader.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE));
+		lblHeader.setForeground(Constants.COLOR_HEADER_PANEL_TEXT);
+		lblHeader.setText(SummaryReport.getHeader());
+		add(lblHeader);
 		setBackground(Constants.COLOR_HEADER_PANEL_BG);
 	
 	}
 	
 	public void update(){
-		lbl_header.setText(SummaryReport.getHeader());	
+		lblHeader.setText(SummaryReport.getHeader());	
 	}
 }

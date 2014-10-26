@@ -104,13 +104,13 @@ public class Constants {
 	
 	public static final Color COLOR_JSCROLL_BG =ColorBox.colorPool[0];
 	
-	public static final Color COLOR_CENTRE_PANEL_BG = ColorBox.colorPool[0];
+	public static final Color COLOR_CENTRE_PANEL_BG = ColorBox.colorPool[951];
 	
-	public static final Color COLOR_COMMAND_PANEL_BG = ColorBox.colorPool[0];
+	public static final Color COLOR_COMMAND_PANEL_BG = ColorBox.colorPool[950];
 	public static final Color COLOR_COMMAND_PANEL_TEXT = Color.BLACK;
 	
-	public static final Color COLOR_HEADER_PANEL_BG = ColorBox.colorPool[0];
-	public static final Color COLOR_HEADER_PANEL_TEXT = Color.BLACK;
+	public static final Color COLOR_HEADER_PANEL_BG = ColorBox.colorPool[950];
+	public static final Color COLOR_HEADER_PANEL_TEXT = ColorBox.colorPool[832];
 
 	
 	
