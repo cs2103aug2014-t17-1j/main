@@ -15,5 +15,6 @@ public interface UiParent {
 	public void pressedTab(boolean isCommandBox);
 	public void setRowSelected(int rowSelected);
 	public JFrame getMainFrame();
+	public void removeDetailPanel();
 
 }

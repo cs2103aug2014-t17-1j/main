@@ -194,9 +194,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				contentTable.clearSelection();
 				parent.pressedF2();
-				contentTable.setRowSelectionInterval(rowSelected, rowSelected);
-
+				//contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+				parent.removeDetailPanel();
 			}
 
 		});
