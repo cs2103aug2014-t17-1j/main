@@ -34,12 +34,14 @@ public class CustomTableRender extends DefaultTableCellRenderer{
 			   if(row == i){
 				   System.out.println("IMPT is "+i);
 				   rendererComp.setBackground(Constants.COLOR_TABLE_IMPT_ROW);
+				   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_IMPT);
 			   }
 		   }
 		   
 		   //Set background while isSelected
 		   if(isSelected){
 			   rendererComp.setBackground(Constants.COLOR_TABLE_ROW_HIGHLIGHT);
+			   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_HIGHLIGHT);
 		   }
 		  
 		   setBorder(noFocusBorder);
