@@ -20,7 +20,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	private int typeCount;
 	private JTextField commandBox;
 	private String command;
-	private JLabel feedBackMsg;
+	private JLabel feedbackMsg;
 	private UiParent parent;
 	private CommandStack commandStack;
 	
@@ -28,20 +28,20 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 		commandStack = new CommandStack();
 		this.parent = parent;
 		setLayout(new BorderLayout());
-		initFeedBackMsg();
+		initFeedbackMsg();
 		initCommandBox();
-		add(feedBackMsg,BorderLayout.SOUTH);
+		add(feedbackMsg,BorderLayout.SOUTH);
 	    add(commandBox,BorderLayout.NORTH);
 	    setBackground(Constants.COLOR_COMMAND_PANEL_BG);
 	    
 	}
 
-	private void initFeedBackMsg() {
-		assert feedBackMsg !=null;
+	private void initFeedbackMsg() {
+		assert feedbackMsg !=null;
 		String feedBack = SummaryReport.getFeedBackMsg();
-		feedBackMsg = new JLabel(feedBack,JLabel.LEFT);
-		feedBackMsg.validate();
-		feedBackMsg.setForeground(Constants.COLOR_COMMAND_PANEL_TEXT);
+		feedbackMsg = new JLabel(feedBack,JLabel.LEFT);
+		feedbackMsg.validate();
+		feedbackMsg.setForeground(Constants.COLOR_COMMAND_PANEL_TEXT);
 	}
 	
 	public void setFocusToCommandBox(){
@@ -125,9 +125,9 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 		String text_feedBack = SummaryReport.getFeedBackMsg();
 		// TODO Auto-generated method stub
 		if(text_feedBack == null){
-			feedBackMsg.setText("");
+			feedbackMsg.setText("");
 		} else{
-			feedBackMsg.setText(SummaryReport.getFeedBackMsg());
+			feedbackMsg.setText(SummaryReport.getFeedBackMsg());
 		}
 		
 	}
