@@ -52,6 +52,10 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		case "complete":
 			currentCommand = CommandType.COMPLETED;
 			break;
+			
+		case "redo":
+			currentCommand = CommandType.REDO;
+			break;
 
 		default:
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
