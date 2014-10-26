@@ -272,6 +272,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		System.out.println("CONTENT TABLE UPDATE");
+		repaint();
+		revalidate();
 		parent.updateFrame();
 
 	}

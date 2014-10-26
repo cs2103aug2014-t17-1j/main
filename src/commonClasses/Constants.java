@@ -32,9 +32,9 @@ public class Constants {
 	public static final String STRING_F1_HELP = "F1 Help";
 	public static final String STRING_F2_DETAILS = "F2 Details";
 	public static final String STRING_F3_CATEGORIES = "F3 Categories";
-	
+	public static final String CATEGORY_COLUMN_TITLE[] = {"Name","Count"};
 	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
-	public static final int JSON_IDENTATION = 3;
+	
 	public static final String MESSAGE_LOAD_ERROR = "Loading Error! Please check that file format is correct!";
 	public static final String CATEGORYKEYS[] = {"name","count"};
 
@@ -122,6 +122,7 @@ public class Constants {
 	
 	public static final int DEFAULT_ROW_SELECTED = -1;
 	public static final int TABLE_HEIGHT = 40;
+	public static final int JSON_IDENTATION = 3;
 	/*
 	 *  @author Huang Li
 	 */

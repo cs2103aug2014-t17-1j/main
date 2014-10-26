@@ -16,6 +16,7 @@ import org.joda.time.format.DateTimeFormatter;
 import taskDo.Category;
 import taskDo.CategoryList;
 import taskDo.Task;
+
 import commonClasses.Constants;
 /*
  * @author Paing Zin Oo(Jack)
@@ -76,42 +77,19 @@ public class DetailPanel extends JPanel implements Observer{
 	
 	public void createCategoryListPanel(){
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
-		System.out.println("categoryLis"+categoryList.get(0).getName());
-		System.out.println("CATEGORY LIST SIZZE "+categoryList.size());
-		//extra 1 slot for title
-		String []categoryNames = new String[categoryList.size()+1];
-		String []categoryCounts = new String[categoryList.size()+1];
-		extractNameFromList(categoryList, categoryNames);
-		extractCountFromList(categoryList, categoryCounts);
-		setUpLayout(categoryNames,Constants.HEADER_CATEGORIES,2);
-		System.out.println(categoryNames[0]);
-		for(int i =0 ; i< categoryNames.length; i++){
-			
-			JLabel lblCategoryName = new JLabel(categoryNames[i]);
-			lblCategoryName.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
-			System.out.println(categoryNames[i]+"");
+		String columnTitle[] = Constants.CATEGORY_COLUMN_TITLE;
+		String dataArr[][] = changeto2DArr(categoryList);
 		
-			add(lblCategoryName);
-			JLabel lblCategoryCount = new JLabel(categoryCounts[i]);
-			lblCategoryCount.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
-			add(lblCategoryCount);
-		}
 	}
-	private void extractCountFromList(ArrayList<Category> categoryList,
-			String[] categoryCounts) {
-		categoryCounts[0] ="Count";
-		for(int i =1; i < categoryCounts.length; i++){
-			System.out.println("COUNT IS"+categoryList.get(i-1).getCount()+"");
-			categoryCounts[i] = categoryList.get(i-1).getCount()+"";
+	
+	
+	public String[][] changeto2DArr(ArrayList<Category> categoryList){
+		String [][] result = new String[categoryList.size()][2];
+		for(int i = 0 ; i < categoryList.size(); i++){
+			result[i][0] = categoryList.get(i).getName();
+			result[i][1] = categoryList.get(i).getCount()+Constants.STRING_STRING;
 		}
-	}
-	private void extractNameFromList(ArrayList<Category> categoryList,
-			String[] categoryNames) {
-		categoryNames[0] = "Category";
-		for(int i =1 ; i < categoryNames.length; i++){
-			System.out.println("NAME IS "+categoryList.get(i-1).getName());
-			categoryNames[i] = categoryList.get(i-1).getName();
-		}
+		return result;
 	}
 	public String [] changetoArr(Task task){
 		String arr[] = new String[6];

@@ -12,7 +12,7 @@ import commonClasses.SummaryReport;
  * @author Paing Zin Oo(Jack)
  */
 public class CustomTableRender extends DefaultTableCellRenderer{
-	public static ArrayList<Integer> imptRowIndexList = SummaryReport.getImptRowIndexList();
+	public ArrayList<Integer> imptRowIndexList = new ArrayList<Integer>();
 	public Component getTableCellRendererComponent(JTable table, Object value,
 		    boolean isSelected, boolean hasFocus, int row, int column) {
 
@@ -23,7 +23,7 @@ public class CustomTableRender extends DefaultTableCellRenderer{
 		   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT);
 
 		   //Set background color
-		   
+		   imptRowIndexList = SummaryReport.getImptRowIndexList();
 		   if(row %2 == 0){
 			   rendererComp.setBackground(Constants.COLOR_TABLE_EVEN_ROW);
 		   } else{

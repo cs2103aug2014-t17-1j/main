@@ -49,7 +49,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame = this;
 		mainFrame.setUndecorated(true);
 		handleDrag(mainFrame);
-		setIconImage(new ImageIcon("tick.png").getImage());
+	
 
 		System.out.println("SCREEN SIZE "+Constants.SCREEN_SIZE.height+"  WID"+Constants.SCREEN_SIZE.width);
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
@@ -86,6 +86,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	}
 	
 	public void updateAllPanels(){
+		System.out.println("UPDATE");
 		uiList.notifyUIs();
 	}
 	
@@ -113,6 +114,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			if(parseResult.getValidationResult()){
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
+				updateAllPanels();
 			}
 			updateAllPanels();
 		}
@@ -120,8 +122,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	
 
 	private void setJFrameProperties() {
-		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/tick.png"));
-		mainFrame.setTitle("Task.Do"); 
+		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/Task.Do Icon.png"));
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
 		mainFrame.pack();
@@ -140,6 +141,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			createDetailPanel(HotKeyType.F1);
 		}
 		updateAllPanels();
+		updateFrame();
 	}
 	
 
