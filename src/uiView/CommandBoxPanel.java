@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -51,6 +52,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	
 	private void initCommandBox() {
 		commandBox = new JTextField();
+		commandBox.setBorder(new EmptyBorder(10,10,10,10));
 		if(typeCount == 0 ){
 			setIntroTextInCommandBox();
 		}
