@@ -1,9 +1,7 @@
 package uiView;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -17,8 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -26,7 +23,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.Task;
-
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -34,12 +30,14 @@ import commonClasses.SummaryReport;
  * @author Paing Zin Oo(Jack)
  */
 public class ContentTablePanel extends JPanel implements Observer {
-	private static final int PIXELS = 5;
+
 	private ArrayList<Task> taskList;
 	private JTable contentTable;
-	private JScrollPane jsp;
+	//private JScrollPane jsp;
 	private int rowSelected;
 	private UiParent parent;
+	
+	private SoftShadowJPanel parentJsp;
 
 	public ContentTablePanel(UiParent parent) {
 		this.parent = parent;
@@ -49,13 +47,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
-
-		Border border = BorderFactory.createEmptyBorder(PIXELS, PIXELS, PIXELS,
-				PIXELS);
-		this.setBorder(BorderFactory.createCompoundBorder(this.getBorder(),
-				border));
-		this.setLayout(new BorderLayout());
-
 	}
 
 	private void addListActionListener() {
@@ -90,7 +81,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 			setContentTableColumnWidth(contentTable);
 			setContentTableProperties();
 			setJScrollPanePropCentrePane();
-			add(jsp);
+			add(parentJsp);
 			addListActionListener();
 		}
 
@@ -244,16 +235,19 @@ public class ContentTablePanel extends JPanel implements Observer {
 	}
 
 	private void setJScrollPanePropCentrePane() {
-		jsp = new JScrollPane(contentTable);
-		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
-				null, Constants.HEADER_TAKSLIST,
-				TitledBorder.DEFAULT_JUSTIFICATION,
-				TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
-				Constants.COLOR_TABLE_HEADER_TEXT);
-		jsp.setBorder(jScrollTitledBorder);
-		jsp.setPreferredSize(Constants.DIMESION_JSCROLL_PANEL);
+		parentJsp = new SoftShadowJPanel();
+		JScrollPane jsp = new JScrollPane(contentTable);
+//		TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
+//				null, Constants.HEADER_TAKSLIST,
+//				TitledBorder.DEFAULT_JUSTIFICATION,
+//				TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
+//				Constants.COLOR_TABLE_HEADER_TEXT);
+		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
 		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
+
+		parentJsp.setPreferredSize(Constants.DIMESION_JSCROLL_PANEL);
+		parentJsp.add(jsp);
 	}
 
 	public void highlightRow() {
@@ -269,17 +263,5 @@ public class ContentTablePanel extends JPanel implements Observer {
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		parent.updateFrame();
 
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		int shade = 0;
-		int topOpacity = 80;
-		for (int i = 0; i < PIXELS; i++) {
-			g.setColor(new Color(shade, shade, shade,
-					((topOpacity / PIXELS) * i)));
-			g.drawRect(i, i, this.getWidth() - ((i * 2) + 1), this.getHeight()
-					- ((i * 2) + 1));
-		}
 	}
 }

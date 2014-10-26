@@ -2,6 +2,7 @@ package uiView;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,6 +12,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -18,7 +20,6 @@ import javax.swing.border.EmptyBorder;
 import taskDo.Executor;
 import Parser.ParsedResult;
 import Parser.Parser;
-
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -59,7 +60,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		
 
 		uiList = new UIPanelList();
-		headerPanel = new HeaderPanel();
+		headerPanel = new HeaderPanel(new GridBagLayout());
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
 		//helpPanel = new ShorcutPanel();
@@ -69,8 +70,13 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
+		
 		contentPanel = new ContentTablePanel(this);
-		mainFrame.add(contentPanel,BorderLayout.CENTER);
+		JPanel parentContentPanel = new JPanel();
+		parentContentPanel.add(contentPanel);
+		parentContentPanel.setBorder(new EmptyBorder(15,25,15,25));
+		parentContentPanel.setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
 		
 		uiList.addUI(commandBoxPanel);
 		uiList.addUI(headerPanel);
