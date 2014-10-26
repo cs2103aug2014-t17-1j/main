@@ -60,7 +60,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		
 
 		uiList = new UIPanelList();
-		headerPanel = new HeaderPanel(new GridBagLayout());
+		headerPanel = new HeaderPanel(new GridBagLayout(),this);
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
 		//helpPanel = new ShorcutPanel();
@@ -79,7 +79,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
 		
 		uiList.addUI(commandBoxPanel);
-		uiList.addUI(headerPanel);
 		uiList.addUI(contentPanel);
 
 		
@@ -301,6 +300,12 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
             }
         });
     }
+
+	public JFrame getMainFrame() {
+		return mainFrame;
+	}
+    
+    
 
 
 

@@ -1,4 +1,7 @@
 package uiView;
+
+import javax.swing.JFrame;
+
 /*
  * @author Paing Zin Oo(Jack)
  */
@@ -11,5 +14,6 @@ public interface UiParent {
 	public void updateDetailPanel();
 	public void pressedTab(boolean isCommandBox);
 	public void setRowSelected(int rowSelected);
+	public JFrame getMainFrame();
 
 }

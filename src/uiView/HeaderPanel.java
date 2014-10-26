@@ -3,9 +3,12 @@ package uiView;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,14 +21,15 @@ import commonClasses.SummaryReport;
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class HeaderPanel extends JPanel implements Observer {
+public class HeaderPanel extends JPanel{
 	JLabel lblHeader;
 	JButton btnHelp, btnCategory;
 	private static final int FONT_SIZE = 24;
+	UiParent uiParent;
 
-	public HeaderPanel(LayoutManager layout) {
+	public HeaderPanel(LayoutManager layout,UiParent uiParent) {
 		super(layout);
-
+		this.uiParent = uiParent;
 		createHeaderLbl();
 
 		setBackground(Constants.COLOR_HEADER_PANEL_BG);
@@ -56,6 +60,15 @@ public class HeaderPanel extends JPanel implements Observer {
 		btnCategory.setPreferredSize(new Dimension(120, 20));
 		btnCategory.setForeground(Color.WHITE);
 		btnCategory.setFocusable(false);
+		btnCategory.addActionListener( new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				uiParent.pressedF3();
+				
+			}
+			
+		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.WEST;
 		c.weightx = 0.0;
@@ -72,6 +85,15 @@ public class HeaderPanel extends JPanel implements Observer {
 		btnDetails.setPreferredSize(new Dimension(90, 20));
 		btnDetails.setForeground(Color.WHITE);
 		btnDetails.setFocusable(false);
+		btnDetails.addActionListener( new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				uiParent.pressedF2();
+				
+			}
+			
+		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.WEST;
 		c.weightx = 0.0;
@@ -88,6 +110,15 @@ public class HeaderPanel extends JPanel implements Observer {
 		btnHelp.setPreferredSize(new Dimension(80, 20));
 		btnHelp.setForeground(Color.WHITE);
 		btnHelp.setFocusable(false);
+		btnHelp.addActionListener( new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				uiParent.pressedF1();
+				
+			}
+			
+		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.WEST;
 		c.weightx = 0.0;
@@ -129,6 +160,15 @@ public class HeaderPanel extends JPanel implements Observer {
 		btnMin.setBorderPainted(false);
 		btnMin.setPreferredSize(new Dimension(20, 20));
 		btnMin.setFocusable(false);
+		btnMin.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				uiParent.getMainFrame().setState(Frame.ICONIFIED);
+				
+			}
+			
+		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.EAST;
 		c.weightx = 0.0;
@@ -146,6 +186,15 @@ public class HeaderPanel extends JPanel implements Observer {
 		btnClose.setBorderPainted(false);
 		btnClose.setPreferredSize(new Dimension(20, 20));
 		btnClose.setFocusable(false);
+		btnClose.addActionListener( new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+				
+			}
+			
+		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.EAST;
 		c.weightx = 0.0;
@@ -154,7 +203,8 @@ public class HeaderPanel extends JPanel implements Observer {
 		add(btnClose, c);
 	}
 
-	public void update() {
 
-	}
+
+
+
 }

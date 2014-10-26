@@ -42,7 +42,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	public ContentTablePanel(UiParent parent) {
 		this.parent = parent;
-		// setPreferredSize(new Dimension(500,400));
 		setPreferredSize(Constants.DIMENION_TABLE);
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
