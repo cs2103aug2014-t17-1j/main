@@ -26,20 +26,18 @@ public class Constants {
 	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.36),(int)(SCREEN_SIZE.height * 0.49));
 	
 	public static final String FILENAME_TASKDO = "TaskDo.json";
-	public static final String FILENAME_CATEGORY = "Category.json";
 	
 	public static final String STRING_STRING = "";
 	public static final String STRING_NA = "NA";
+	public static final String STRING_F1_HELP = "F1 Help";
+	public static final String STRING_F2_DETAILS = "F2 Details";
+	public static final String STRING_F3_CATEGORIES = "F3 Categories";
 	
 	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
 	public static final int JSON_IDENTATION = 3;
 	public static final String MESSAGE_LOAD_ERROR = "Loading Error! Please check that file format is correct!";
 	public static final String CATEGORYKEYS[] = {"name","count"};
-	public static final String [] SHORTCUTS = { "F1 ==> Help",
-			"F2 ==> View Details",
-			"F3 ==> View Category List"
-			
-	};
+
 	public static final String [] HELPCOMMANDS = {
 		"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",
 			"<html><font color='red'>add</font> *insert task title*</html>",
