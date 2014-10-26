@@ -2,9 +2,6 @@ package taskDo;
 
 import java.util.ArrayList;
 
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
 import Parser.ParsedResult;
 import commandFactory.CommandType;
 import commandFactory.Search;
@@ -16,40 +13,26 @@ public class UpdateSummaryReport {
 
 	public static void update(ParsedResult parsedResult){
 		Search search = new Search();
-		updateHeader(parsedResult.getTaskDetails());
+
 		updateDisplayTaskList(search.searchByDate(parsedResult));
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
 	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
-		updateHeader(parsedResult.getTaskDetails());
+
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
 	public static void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
-		updateHeader(parsedResult.getTaskDetails());
+
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		if(displayList.isEmpty()){
 			updateFeedbackMsg(Constants.MESSAGE_FAIL_SEARCH);
 		}else{updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);}
-	}
-
-	private static void updateHeader(Task task) {
-		if(isSomeday(task)) {
-			SummaryReport.setHeader(Constants.MESSAGE_SOMEDAY);
-		} else {
-			DateTimeFormatter dateFormat = DateTimeFormat.forPattern("dd-MM-yyyy");
-			String dateDisplay = dateFormat.print(task.getDueDate().toLocalDate());
-			SummaryReport.setHeader(dateDisplay);
-		}
-	}
-
-	private static boolean isSomeday(Task refTask) {
-		return refTask.getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR;
 	}
 
 	private static void updateDisplayTaskList(ArrayList<Task> displayList) {
