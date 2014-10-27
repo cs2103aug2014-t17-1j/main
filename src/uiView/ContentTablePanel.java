@@ -18,7 +18,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -43,7 +42,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	public ContentTablePanel(UiParent parent) {
 		this.parent = parent;
-		// setPreferredSize(new Dimension(500,400));
 		setPreferredSize(Constants.DIMENION_TABLE);
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
@@ -196,9 +194,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				contentTable.clearSelection();
 				parent.pressedF2();
-				contentTable.setRowSelectionInterval(rowSelected, rowSelected);
-
+				//contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+				parent.removeDetailPanel();
 			}
 
 		});
@@ -273,6 +272,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		System.out.println("CONTENT TABLE UPDATE");
+		repaint();
+		revalidate();
 		parent.updateFrame();
 
 	}

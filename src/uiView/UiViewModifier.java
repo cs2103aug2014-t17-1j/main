@@ -49,7 +49,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame = this;
 		mainFrame.setUndecorated(true);
 		handleDrag(mainFrame);
-		setIconImage(new ImageIcon("tick.png").getImage());
+	
 
 		System.out.println("SCREEN SIZE "+Constants.SCREEN_SIZE.height+"  WID"+Constants.SCREEN_SIZE.width);
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
@@ -60,7 +60,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		
 
 		uiList = new UIPanelList();
-		headerPanel = new HeaderPanel(new GridBagLayout());
+		headerPanel = new HeaderPanel(new GridBagLayout(),this);
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
 		//helpPanel = new ShorcutPanel();
@@ -79,7 +79,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
 		
 		uiList.addUI(commandBoxPanel);
-		uiList.addUI(headerPanel);
 		uiList.addUI(contentPanel);
 
 		
@@ -87,6 +86,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	}
 	
 	public void updateAllPanels(){
+		System.out.println("UPDATE");
 		uiList.notifyUIs();
 	}
 	
@@ -114,6 +114,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			if(parseResult.getValidationResult()){
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
+				updateAllPanels();
 			}
 			updateAllPanels();
 		}
@@ -121,8 +122,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	
 
 	private void setJFrameProperties() {
-		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/tick.png"));
-		mainFrame.setTitle("Task.Do"); 
+		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/Task.Do Icon.png"));
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
 		mainFrame.pack();
@@ -141,6 +141,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			createDetailPanel(HotKeyType.F1);
 		}
 		updateAllPanels();
+		updateFrame();
 	}
 	
 
@@ -301,6 +302,22 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
             }
         });
     }
+    
+    public void removeDetailPanel(){
+    	mainFrame.remove(detailPanel);
+    	setFocusToCommandBox();
+    	updateFrame();
+    }
+    
+    public void setFocusToCommandBox(){
+    	commandBoxPanel.setFocusToCommandBox();
+    }
+
+	public JFrame getMainFrame() {
+		return mainFrame;
+	}
+    
+    
 
 
 

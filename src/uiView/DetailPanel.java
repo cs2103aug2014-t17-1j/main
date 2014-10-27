@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.joda.time.format.DateTimeFormat;
@@ -16,6 +19,7 @@ import org.joda.time.format.DateTimeFormatter;
 import taskDo.Category;
 import taskDo.CategoryList;
 import taskDo.Task;
+
 import commonClasses.Constants;
 /*
  * @author Paing Zin Oo(Jack)
@@ -76,42 +80,61 @@ public class DetailPanel extends JPanel implements Observer{
 	
 	public void createCategoryListPanel(){
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
-		System.out.println("categoryLis"+categoryList.get(0).getName());
-		System.out.println("CATEGORY LIST SIZZE "+categoryList.size());
-		//extra 1 slot for title
-		String []categoryNames = new String[categoryList.size()+1];
-		String []categoryCounts = new String[categoryList.size()+1];
-		extractNameFromList(categoryList, categoryNames);
-		extractCountFromList(categoryList, categoryCounts);
-		setUpLayout(categoryNames,Constants.HEADER_CATEGORIES,2);
-		System.out.println(categoryNames[0]);
-		for(int i =0 ; i< categoryNames.length; i++){
-			
-			JLabel lblCategoryName = new JLabel(categoryNames[i]);
-			lblCategoryName.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
-			System.out.println(categoryNames[i]+"");
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		String[] columnTitle = {"aaa","fjkldddddddddddddddddsjelkfrgg"};
+		String dataArr[][] = changetoTwoDArr(categoryList);
+		JTable categoryListTable = new JTable(dataArr,Constants.CATEGORYKEYS){
+			public boolean isCellEditable(int row, int column){
+				return false;
+			};
+		};
+		setContentTableColumnWidth(categoryListTable);
+		setTableCellProperties(categoryListTable,categoryList);
+		add(setJScrollPanePropCentrePane(categoryListTable));
 		
-			add(lblCategoryName);
-			JLabel lblCategoryCount = new JLabel(categoryCounts[i]);
-			lblCategoryCount.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
-			add(lblCategoryCount);
-		}
 	}
-	private void extractCountFromList(ArrayList<Category> categoryList,
-			String[] categoryCounts) {
-		categoryCounts[0] ="Count";
-		for(int i =1; i < categoryCounts.length; i++){
-			System.out.println("COUNT IS"+categoryList.get(i-1).getCount()+"");
-			categoryCounts[i] = categoryList.get(i-1).getCount()+"";
-		}
+	
+	private void setContentTableColumnWidth(JTable contentTable) {
+		contentTable.getColumnModel().getColumn(0).setMaxWidth(300);
+		contentTable.getColumnModel().getColumn(1).setMaxWidth(100);
+		
 	}
-	private void extractNameFromList(ArrayList<Category> categoryList,
-			String[] categoryNames) {
-		categoryNames[0] = "Category";
-		for(int i =1 ; i < categoryNames.length; i++){
-			System.out.println("NAME IS "+categoryList.get(i-1).getName());
-			categoryNames[i] = categoryList.get(i-1).getName();
+	
+	private SoftShadowJPanel setJScrollPanePropCentrePane(JTable categoryListTable) {
+		SoftShadowJPanel parentJsp = new SoftShadowJPanel();
+		JScrollPane jsp = new JScrollPane(categoryListTable);
+		// TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
+		// null, Constants.HEADER_TAKSLIST,
+		// TitledBorder.DEFAULT_JUSTIFICATION,
+		// TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
+		// Constants.COLOR_TABLE_HEADER_TEXT);
+		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
+		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
+
+		parentJsp.setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		parentJsp.add(jsp);
+		return parentJsp;
+	}
+	
+	private void setTableCellProperties(JTable contentTable,ArrayList<Category> categoryList) {
+		for (int i = 0; i < categoryList.size(); i++) {
+			contentTable.getColumnModel().getColumn(0)
+					.setCellRenderer(new CategoryCustomTableRender());
+			contentTable.getColumnModel().getColumn(1)
+					.setCellRenderer(new CategoryCustomTableRender());
+	}
+	}
+	
+	public String[][] changetoTwoDArr(ArrayList<Category> categoryList){
+		String [][] result = new String[categoryList.size()][2];
+		for(int i = 0 ; i < categoryList.size(); i++){
+			System.out.println("COUNT"+categoryList.get(i).getCount());
+			result[i][0] = categoryList.get(i).getName();
+			result[i][1] = categoryList.get(i).getCount()+Constants.STRING_STRING;
 		}
+		return result;
 	}
 	public String [] changetoArr(Task task){
 		String arr[] = new String[6];

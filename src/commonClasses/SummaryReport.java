@@ -12,7 +12,7 @@ public class SummaryReport{
 	private static String feedBackMsg;
 	private static String header;
 	private static ArrayList<Task> displayList;
-	private static ArrayList<Integer> imptRowIndexList=new ArrayList<Integer>();
+	private static ArrayList<Integer> imptRowIndexList;
 
 	
 	public static String getFeedBackMsg() {
@@ -49,8 +49,10 @@ public class SummaryReport{
 	}
 
 	public static void extractImptRowIndex(){
+		imptRowIndexList = new ArrayList<Integer>();
 		for(int i=0 ; i < displayList.size(); i++){
 			if(displayList.get(i).isImportant()){
+				System.out.println("IMPT IN SUMMARY IS "+i);
 				imptRowIndexList.add(i);
 			}
 		}
