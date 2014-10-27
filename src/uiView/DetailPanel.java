@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.joda.time.format.DateTimeFormat;
@@ -77,15 +80,57 @@ public class DetailPanel extends JPanel implements Observer{
 	
 	public void createCategoryListPanel(){
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
-		String columnTitle[] = Constants.CATEGORY_COLUMN_TITLE;
-		String dataArr[][] = changeto2DArr(categoryList);
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		String[] columnTitle = {"aaa","fjkldddddddddddddddddsjelkfrgg"};
+		String dataArr[][] = changetoTwoDArr(categoryList);
+		JTable categoryListTable = new JTable(dataArr,Constants.CATEGORYKEYS){
+			public boolean isCellEditable(int row, int column){
+				return false;
+			};
+		};
+		setContentTableColumnWidth(categoryListTable);
+		setTableCellProperties(categoryListTable,categoryList);
+		add(setJScrollPanePropCentrePane(categoryListTable));
 		
 	}
 	
+	private void setContentTableColumnWidth(JTable contentTable) {
+		contentTable.getColumnModel().getColumn(0).setMaxWidth(300);
+		contentTable.getColumnModel().getColumn(1).setMaxWidth(100);
+		
+	}
 	
-	public String[][] changeto2DArr(ArrayList<Category> categoryList){
+	private SoftShadowJPanel setJScrollPanePropCentrePane(JTable categoryListTable) {
+		SoftShadowJPanel parentJsp = new SoftShadowJPanel();
+		JScrollPane jsp = new JScrollPane(categoryListTable);
+		// TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
+		// null, Constants.HEADER_TAKSLIST,
+		// TitledBorder.DEFAULT_JUSTIFICATION,
+		// TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
+		// Constants.COLOR_TABLE_HEADER_TEXT);
+		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
+		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
+
+		parentJsp.setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		parentJsp.add(jsp);
+		return parentJsp;
+	}
+	
+	private void setTableCellProperties(JTable contentTable,ArrayList<Category> categoryList) {
+		for (int i = 0; i < categoryList.size(); i++) {
+			contentTable.getColumnModel().getColumn(0)
+					.setCellRenderer(new CategoryCustomTableRender());
+			contentTable.getColumnModel().getColumn(1)
+					.setCellRenderer(new CategoryCustomTableRender());
+	}
+	}
+	
+	public String[][] changetoTwoDArr(ArrayList<Category> categoryList){
 		String [][] result = new String[categoryList.size()][2];
 		for(int i = 0 ; i < categoryList.size(); i++){
+			System.out.println("COUNT"+categoryList.get(i).getCount());
 			result[i][0] = categoryList.get(i).getName();
 			result[i][1] = categoryList.get(i).getCount()+Constants.STRING_STRING;
 		}
