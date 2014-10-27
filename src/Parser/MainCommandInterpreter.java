@@ -209,7 +209,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 	private void updateForDeleteCase(ParsedResult result, String commandParam) {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
 			int selection = Integer.valueOf(commandParam) - 1;
-			copyTaskParamToParsedResult(result, selection);
+			result.setTask(SummaryReport.getDisplayList().get(selection));
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();
