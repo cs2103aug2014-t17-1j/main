@@ -37,6 +37,7 @@ public class Task implements Comparable<Task>{
 		this.id = lastTaskId+INCREMENT;
 		this.title = "";
 		this.type = TaskType.TODO;
+		this.category = "Others";
 	}
 	
 	public Task(String description){
