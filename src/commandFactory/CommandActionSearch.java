@@ -1,7 +1,6 @@
 package commandFactory;
 
 import Parser.ParsedResult;
-import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
 public class CommandActionSearch implements CommandAction{
@@ -11,7 +10,7 @@ public class CommandActionSearch implements CommandAction{
 		UpdateSummaryReport.updateForSearch(parsedResult, search.searchByKeyword(parsedResult));
 	}
 
-	public void undo(Task lastTask) {
+	public void undo(ParsedResult lastTask) {
 
 	}
 }

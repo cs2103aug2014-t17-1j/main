@@ -27,6 +27,13 @@ public class UpdateSummaryReport {
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
+	public static void updateForDelete(ParsedResult parsedResult){
+		ArrayList<Task> displayList = SummaryReport.getDisplayList();
+		displayList.remove(parsedResult.getTaskDetails());
+		updateDisplayTaskList(displayList);
+		determineFeedbackMsg(parsedResult.getCommandType());
+	}
+	
 	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
 
 		updateDisplayTaskList(displayList);

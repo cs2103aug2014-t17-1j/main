@@ -34,8 +34,9 @@ public class Executor {
 
 			History.getRedoActionHistory().push(commandAction);
 
-			commandAction.undo(lastTask);
 			parsedResult.setTask(lastTask);
+			commandAction.undo(parsedResult);
+
 
 			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 			UpdateSummaryReport.update(parsedResult);
@@ -52,10 +53,8 @@ public class Executor {
 
 			parsedResult.setTask(lastTask);
 			commandAction.execute(parsedResult);
-
-
+			
 			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
-			UpdateSummaryReport.update(parsedResult);
 		}else{
 			History.getRedoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);

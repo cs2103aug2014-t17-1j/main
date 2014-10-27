@@ -1,7 +1,6 @@
 package commandFactory;
 
 import Parser.ParsedResult;
-import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
 public class CommandActionDisplay implements CommandAction{	
@@ -12,5 +11,5 @@ public class CommandActionDisplay implements CommandAction{
 	}
 
 	@Override
-	public void undo(Task lastTask) {}
+	public void undo(ParsedResult lastTask) {}
 }

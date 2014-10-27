@@ -3,7 +3,6 @@ package commandFactory;
 import commonClasses.StorageList;
 import Parser.ParsedResult;
 import taskDo.History;
-import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
 public class CommandActionAdd implements CommandAction{
@@ -16,10 +15,8 @@ public class CommandActionAdd implements CommandAction{
 	}
 
 	@Override
-	public void undo(Task lastTask) {
-//		Search search = new Search();
-//		int taskIndex = search.searchById(lastTask.getId());
-		History.getRedoTaskHistory().push(lastTask);
-		StorageList.getInstance().getTaskList().remove(lastTask);
+	public void undo(ParsedResult parsedResult) {
+		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
+		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 	}
 }

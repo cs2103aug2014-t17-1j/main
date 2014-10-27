@@ -4,7 +4,6 @@ import taskDo.UpdateSummaryReport;
 import commonClasses.StorageList;
 import Parser.ParsedResult;
 import taskDo.History;
-import taskDo.Task;
 
 
 public class CommandActionDelete implements CommandAction{	
@@ -13,12 +12,12 @@ public class CommandActionDelete implements CommandAction{
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		
-		UpdateSummaryReport.update(parsedResult);
+		UpdateSummaryReport.updateForDelete(parsedResult);
 	}
 
 	@Override
-	public void undo(Task lastTask) {
-		StorageList.getInstance().getTaskList().add(lastTask);
-		History.getRedoTaskHistory().push(lastTask);
+	public void undo(ParsedResult parsedResult) {
+		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
+		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 	}
 }
