@@ -14,8 +14,7 @@ public class CommandActionEdit implements CommandAction {
 		int taskIndex = targetTask.searchById(parsedResult.getTaskDetails().getId());
 		if(taskIndex != Constants.NO_TASK){		
 			History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
-			StorageList.getInstance().getTaskList().remove(taskIndex);
-			StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
+			StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
 		}
 		
 		UpdateSummaryReport.update(parsedResult);
@@ -25,7 +24,6 @@ public class CommandActionEdit implements CommandAction {
 	public void undo(Task lastTask) {
 		Search targetTask = new Search();
 		int taskIndex = targetTask.searchById(lastTask.getId());
-		StorageList.getInstance().getTaskList().remove(taskIndex);
-		StorageList.getInstance().getTaskList().add(lastTask);
+		StorageList.getInstance().getTaskList().set(taskIndex, lastTask);
 	}
 }
