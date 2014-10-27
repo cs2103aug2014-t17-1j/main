@@ -24,6 +24,7 @@ public class CommandActionEdit implements CommandAction {
 	public void undo(Task lastTask) {
 		Search targetTask = new Search();
 		int taskIndex = targetTask.searchById(lastTask.getId());
+		History.getRedoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
 		StorageList.getInstance().getTaskList().set(taskIndex, lastTask);
 	}
 }

@@ -20,7 +20,6 @@ public class Executor {
 
 		if (commandType.equals(CommandType.UNDO)) {
 			executeUndo(parsedResult);
-
 		}else	if(commandType.equals(CommandType.REDO)){
 			executeRedo(parsedResult);
 		}else{
@@ -34,28 +33,33 @@ public class Executor {
 			Task lastTask = History.getUndoTaskHistory().pop();
 
 			History.getRedoActionHistory().push(commandAction);
-			History.getRedoTaskHistory().push(lastTask);
 
 			commandAction.undo(lastTask);
 			parsedResult.setTask(lastTask);
 
 			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 			UpdateSummaryReport.update(parsedResult);
-		}else{SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);}
+		}else{
+			History.getUndoTaskHistory().clear();
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);
+		}
 	}
 
 	private void executeRedo(ParsedResult parsedResult) {
 		if(!History.getRedoActionHistory().empty()){
 			CommandAction commandAction = History.getRedoActionHistory().pop();
 			Task lastTask = History.getRedoTaskHistory().pop();
-			
+
 			parsedResult.setTask(lastTask);
 			commandAction.execute(parsedResult);
-			
+
 
 			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 			UpdateSummaryReport.update(parsedResult);
-		}else{SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);}
+		}else{
+			History.getRedoTaskHistory().clear();
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);
+		}
 	}
 
 	private void executeCommand(ParsedResult parsedResult,
