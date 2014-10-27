@@ -2,6 +2,8 @@ package commandFactory;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+
 import Parser.ParsedResult;
 import commonClasses.StorageList;
 import taskDo.SearchType;
@@ -38,7 +40,7 @@ public class Search {
 		case RANGEOFDATES:
 			return searchByRangeOfDates(parsedResult);
 		case COMPLETED:
-			return searchByCompleted(parsedResult);
+			return searchByCompleted();
 		default:
 			return null;
 		}
@@ -132,7 +134,7 @@ public class Search {
 		return returnList;
 	}
 
-	public ArrayList<Task> searchByCompleted(ParsedResult parsedResult){
+	public ArrayList<Task> searchByCompleted(){
 		for(Task task: StorageList.getInstance().getTaskList()){
 			if(task.isCompleted()){
 				returnList.add(task);
@@ -143,6 +145,19 @@ public class Search {
 
 	private boolean isNotCompleted(Task targetTask) {
 		return !targetTask.isCompleted();
+	}
+
+	public ArrayList<Task> searchOverdueAndTodayTasks(){
+		DateTime today = new DateTime();
+		for(Task task: StorageList.getInstance().getTaskList()){
+			if(isNotCompleted(task) && isNotAfterToday(today, task))
+				returnList.add(task);
+		}
+		return returnList;
+	}
+
+	private boolean isNotAfterToday(DateTime today, Task task) {
+		return !task.getStartDate().toLocalDate().isAfter(today.toLocalDate());
 	}
 }
 

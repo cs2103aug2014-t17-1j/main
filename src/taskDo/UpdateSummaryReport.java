@@ -10,7 +10,15 @@ import commonClasses.SummaryReport;
 
 public class UpdateSummaryReport {
 
-
+	public static void init(){
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		Search search = new Search();
+		// check overdue
+		displayList = search.searchOverdueAndTodayTasks();
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+	}
+	
 	public static void update(ParsedResult parsedResult){
 		Search search = new Search();
 
