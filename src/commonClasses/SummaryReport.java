@@ -10,8 +10,7 @@ import uiView.Observer;
  */
 public class SummaryReport{
 	private static String feedBackMsg;
-	private static String header;
-	private static ArrayList<Task> displayList;
+	private static ArrayList<Task> displayList = new ArrayList<Task>();
 	private static ArrayList<Integer> imptRowIndexList;
 
 	
@@ -20,12 +19,6 @@ public class SummaryReport{
 	}
 	public static void setFeedBackMsg(String feedBackMsg) {
 		SummaryReport.feedBackMsg = feedBackMsg;
-	}
-	public static String getHeader() {
-		return header;
-	}
-	public static void setHeader(String header) {
-		SummaryReport.header = header;
 	}
 	public static ArrayList<Task> getDisplayList() {
 		return displayList;
