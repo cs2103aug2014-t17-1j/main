@@ -30,7 +30,7 @@ public class Search {
 		}
 		return taskIndex;
 	}
-
+	
 	public ArrayList<Task> searchForDisplay(ParsedResult parsedResult) {
 		switch(parsedResult.getSearchMode()){
 		case ALL:
