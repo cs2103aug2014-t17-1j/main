@@ -20,6 +20,6 @@ public class CommandActionDelete implements CommandAction{
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		
-		UpdateSummaryReport.updateForDelete(parsedResult);
+		UpdateSummaryReport.update(parsedResult);
 	}
 }
