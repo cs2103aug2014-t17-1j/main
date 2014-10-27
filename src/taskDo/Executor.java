@@ -39,7 +39,6 @@ public class Executor {
 
 
 			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
-			UpdateSummaryReport.update(parsedResult);
 		}else{
 			History.getUndoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);

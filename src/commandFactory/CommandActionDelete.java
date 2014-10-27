@@ -19,5 +19,7 @@ public class CommandActionDelete implements CommandAction{
 	public void undo(ParsedResult parsedResult) {
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
+		
+		UpdateSummaryReport.updateForDelete(parsedResult);
 	}
 }

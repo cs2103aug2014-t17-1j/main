@@ -10,7 +10,7 @@ public class CommandActionSearch implements CommandAction{
 		UpdateSummaryReport.updateForSearch(parsedResult, search.searchByKeyword(parsedResult));
 	}
 
-	public void undo(ParsedResult lastTask) {
+	public void undo(ParsedResult parsedResult) {
 
 	}
 }

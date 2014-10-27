@@ -18,5 +18,6 @@ public class CommandActionAdd implements CommandAction{
 	public void undo(ParsedResult parsedResult) {
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
+		UpdateSummaryReport.update(parsedResult);
 	}
 }

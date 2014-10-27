@@ -11,5 +11,5 @@ public class CommandActionDisplay implements CommandAction{
 	}
 
 	@Override
-	public void undo(ParsedResult lastTask) {}
+	public void undo(ParsedResult parsedResult) {}
 }

@@ -27,5 +27,7 @@ public class CommandActionEdit implements CommandAction {
 		int taskIndex = targetTask.searchById(lastTask.getId());
 		History.getRedoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
 		StorageList.getInstance().getTaskList().set(taskIndex, lastTask);
+		
+		UpdateSummaryReport.update(parsedResult);
 	}
 }
