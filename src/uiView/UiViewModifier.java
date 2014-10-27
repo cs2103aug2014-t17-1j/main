@@ -72,7 +72,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
-		//UpdateSummaryReport.init();
+		UpdateSummaryReport.init();
 		contentPanel = new ContentTablePanel(this);
 		JPanel parentContentPanel = new JPanel();
 		parentContentPanel.add(contentPanel);
