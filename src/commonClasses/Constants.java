@@ -141,7 +141,6 @@ public class Constants {
 	public static final String MESSAGE_DISPLAY = "Display by request";
 	public static final String MESSAGE_SOMEDAY = "Someday";
 	public static final int NILL_YEAR = 0;
-	public static final int NO_TASK = -1;
 	
 	/*
 	 *  @author Boo Tai Yi

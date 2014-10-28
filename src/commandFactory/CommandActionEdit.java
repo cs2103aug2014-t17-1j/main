@@ -1,7 +1,6 @@
 package commandFactory;
 
 import commonClasses.StorageList;
-import commonClasses.Constants;
 import Parser.ParsedResult;
 import taskDo.History;
 import taskDo.Task;
@@ -11,12 +10,10 @@ public class CommandActionEdit implements CommandAction {
 	@Override
 	public void execute(ParsedResult parsedResult){
 		Search targetTask = new Search();
-		int taskIndex = targetTask.searchById(parsedResult.getTaskDetails().getId());
-		if(taskIndex != Constants.NO_TASK){		
-			History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
-			StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
-		}
-		
+		int taskIndex = targetTask.searchById(parsedResult.getTaskDetails().getId());	
+		History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
+		StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
+
 		UpdateSummaryReport.update(parsedResult);
 	}
 
@@ -27,7 +24,7 @@ public class CommandActionEdit implements CommandAction {
 		int taskIndex = targetTask.searchById(lastTask.getId());
 		History.getRedoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
 		StorageList.getInstance().getTaskList().set(taskIndex, lastTask);
-		
+
 		UpdateSummaryReport.update(parsedResult);
 	}
 }

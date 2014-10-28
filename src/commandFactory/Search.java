@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 
 import Parser.ParsedResult;
+import commonClasses.Constants;
 import commonClasses.StorageList;
 import taskDo.SearchType;
 import taskDo.Task;
@@ -163,10 +164,14 @@ public class Search {
 
 	public ArrayList<Task> searchOverdueAndTodayTasks(){
 		for(Task task: StorageList.getInstance().getTaskList()){
-			if(isNotCompleted(task) && isNotAfterToday(task))
+			if(isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday(task))
 				returnList.add(task);
 		}
 		return returnList;
+	}
+
+	private boolean isNotSomeday(Task task) {
+		return task.getDueDate().toLocalDate().getYear()!= Constants.NILL_YEAR;
 	}
 
 	private boolean isNotAfterToday(Task task) {
