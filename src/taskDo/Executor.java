@@ -25,6 +25,7 @@ public class Executor {
 		}else{
 			executeCommand(parsedResult, commandFactory, commandType);
 		}
+		CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 	}
 
 	private void executeUndo(ParsedResult parsedResult) {
@@ -68,6 +69,5 @@ public class Executor {
 			History.getUndoActionHistory().push(commandAction);
 			StorageList.getInstance().saveToFile();
 		}
-		CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 	}
 }
