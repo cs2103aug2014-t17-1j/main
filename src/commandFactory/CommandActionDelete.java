@@ -12,7 +12,7 @@ public class CommandActionDelete implements CommandAction{
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		
-		UpdateSummaryReport.updateForDelete(parsedResult);
+		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult);
 	}
 
 	@Override
@@ -20,6 +20,6 @@ public class CommandActionDelete implements CommandAction{
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		
-		UpdateSummaryReport.update(parsedResult);
+		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult);
 	}
 }

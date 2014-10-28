@@ -26,10 +26,19 @@ public class UpdateSummaryReport {
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
-	public static void updateForDelete(ParsedResult parsedResult){
+	public static void updateForDeleteAndComplete(ParsedResult parsedResult){
 		ArrayList<Task> displayList = SummaryReport.getDisplayList();
 		displayList.remove(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+		determineFeedbackMsg(parsedResult.getCommandType());
+	}
+	
+	public static void updateForUndoDeleteAndComplete(ParsedResult parsedResult){
+		ArrayList<Task> displayList = SummaryReport.getDisplayList();
+		displayList.add(parsedResult.getTaskDetails());
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
