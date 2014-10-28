@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import Parser.ParsedResult;
 import commonClasses.StorageList;
+import taskDo.CategoryList;
 import taskDo.SearchType;
 import taskDo.Task;
 import taskDo.TaskType;
@@ -41,9 +42,20 @@ public class Search {
 			return searchByRangeOfDates(parsedResult);
 		case COMPLETED:
 			return searchByCompleted();
+		case CATEGORY:
+			return searchByCategory(parsedResult);
 		default:
 			return null;
 		}
+	}
+
+	private ArrayList<Task> searchByCategory(ParsedResult parsedResult) {
+		for(Task task: StorageList.getInstance().getTaskList()){
+			if(task.getCategory().toLowerCase().equals(parsedResult.getTaskDetails().getCategory().toLowerCase())){
+				returnList.add(task);
+			}
+		}
+		return returnList;
 	}
 
 	private ArrayList<Task> searchByAll() {
