@@ -10,7 +10,6 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -18,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import taskDo.Executor;
+import taskDo.UpdateSummaryReport;
 import Parser.ParsedResult;
 import Parser.Parser;
 import commonClasses.Constants;
@@ -42,10 +42,12 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	private Parser parser;
 	private ParsedResult parseResult;
 	
+	
 	int x =0;
 	int y =0;
 	
 	public UiViewModifier(){
+		
 		mainFrame = this;
 		mainFrame.setUndecorated(true);
 		handleDrag(mainFrame);
@@ -70,7 +72,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
-		
+		UpdateSummaryReport.init();
 		contentPanel = new ContentTablePanel(this);
 		JPanel parentContentPanel = new JPanel();
 		parentContentPanel.add(contentPanel);

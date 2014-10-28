@@ -131,7 +131,7 @@ public class HeaderPanel extends JPanel{
 		lblHeader = new JLabel();
 		lblHeader.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE));
 		lblHeader.setForeground(Constants.COLOR_HEADER_PANEL_TEXT);
-		lblHeader.setText(SummaryReport.getHeader());
+		//lblHeader.setText(SummaryReport.getHeader());
 		lblHeader.setText(Constants.PRODUCT_TASKDO);
 		lblHeader.setHorizontalAlignment(JLabel.CENTER);
 	}

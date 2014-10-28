@@ -19,13 +19,11 @@ import org.joda.time.format.DateTimeFormatter;
 import taskDo.Category;
 import taskDo.CategoryList;
 import taskDo.Task;
-
 import commonClasses.Constants;
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class DetailPanel extends JPanel implements Observer{
-	
 	public DetailPanel(HotKeyType hotkey){
 		switch(hotkey){
 			case F1:
@@ -94,6 +92,8 @@ public class DetailPanel extends JPanel implements Observer{
 		add(setJScrollPanePropCentrePane(categoryListTable));
 		
 	}
+	
+	
 	
 	private void setContentTableColumnWidth(JTable contentTable) {
 		contentTable.getColumnModel().getColumn(0).setMaxWidth(300);
