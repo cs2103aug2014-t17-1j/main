@@ -165,6 +165,10 @@ public class Constants {
 	public static final String DISPLAY_COMPLETED = "completed";
 	public static final String DISPLAY_ALL = "all";
 	public static final String MESSAGE_MISSING_PARAM = "Please insert parameters";
+
+	public static final String MESSAGE_MISSING_SIGN_FROMTO_COMMAND = "Please make sure '-' sign is used for 'to' command";
+
+	public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed!";
 	
 	
 	

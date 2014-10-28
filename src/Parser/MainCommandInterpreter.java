@@ -143,6 +143,10 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			int selection = Integer.valueOf(commandParam) - 1; // adjust to get
 			// correct index
 			result.setTask(SummaryReport.getDisplayList().get(selection));
+			if(result.getTaskDetails().isCompleted()) {
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
+				throw new InvalidParameterException();
+			}
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();

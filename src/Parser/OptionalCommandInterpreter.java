@@ -176,7 +176,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		Task task = result.getTaskDetails();
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if(commandParam.contains(" to ")) {
-			SummaryReport.setFeedBackMsg("Please make sure '-' sign is used for 'to' command");
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_SIGN_FROMTO_COMMAND);
 			throw new InvalidParameterException();
 		} else if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
