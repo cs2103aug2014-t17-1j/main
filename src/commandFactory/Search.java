@@ -6,7 +6,6 @@ import org.joda.time.DateTime;
 
 import Parser.ParsedResult;
 import commonClasses.StorageList;
-import taskDo.CategoryList;
 import taskDo.SearchType;
 import taskDo.Task;
 import taskDo.TaskType;
@@ -44,6 +43,9 @@ public class Search {
 			return searchByCompleted();
 		case CATEGORY:
 			return searchByCategory(parsedResult);
+		case KEYWORD:
+			return searchByKeyword(parsedResult);
+			
 		default:
 			return null;
 		}
