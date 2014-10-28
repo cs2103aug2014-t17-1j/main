@@ -104,11 +104,11 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 
 		switch (currentCommand) {
 		case DUE:
-			updateDueCase(commandParam, task);
+			updateDueCase(result, commandParam);
 			break;
 
 		case FROM:
-			updateFromCase(commandParam, task);
+			updateFromCase(result, commandParam);
 			break;
 
 		case TO:
@@ -171,14 +171,18 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		
 	}
 
-	private void updateFromCase(String commandParam, Task task) throws InvalidParameterException {
+	private void updateFromCase(ParsedResult result, String commandParam) throws InvalidParameterException {
 		DateTime date;
+		Task task = result.getTaskDetails();
 		date = CommonInterpreterMethods.getDate(commandParam);
-		if (date == null) {
+		if(commandParam.contains(" to ")) {
+			SummaryReport.setFeedBackMsg("Please make sure '-' sign is used for 'to' command");
+			throw new InvalidParameterException();
+		} else if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException();
 		}
-		if(task.getTaskType() == TaskType.DEADLINE) { //Means previously already used due optional command
+		if(task.getTaskType() == TaskType.DEADLINE && result.getCommandType() != CommandType.EDIT) { //Means previously already used due optional command
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
 			throw new InvalidParameterException();
 		}
@@ -186,8 +190,9 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			task.setTaskType(TaskType.TIMED);
 	}
 
-	private void updateDueCase(String commandParam, Task task) throws InvalidParameterException  {
+	private void updateDueCase(ParsedResult result, String commandParam) throws InvalidParameterException  {
 		DateTime date;
+		Task task = result.getTaskDetails();
 		if (CommonInterpreterMethods.noDeadLine(commandParam)) {
 			task.setDueDate(Constants.SOMEDAY);
 			task.setStartDate(null);
@@ -198,7 +203,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 						.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException();
 			}
-			if(task.getTaskType() == TaskType.TIMED) { //Means previously used from to command
+			if(task.getTaskType() == TaskType.TIMED && result.getCommandType() != CommandType.EDIT) { //Means previously used from to command
 				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
 				throw new InvalidParameterException();
 			}
