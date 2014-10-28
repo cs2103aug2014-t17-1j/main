@@ -25,7 +25,9 @@ public class Executor {
 		}else{
 			executeCommand(parsedResult, commandFactory, commandType);
 		}
+		
 		CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
+		StorageList.getInstance().saveToFile();	
 	}
 
 	private void executeUndo(ParsedResult parsedResult) {
@@ -37,9 +39,6 @@ public class Executor {
 
 			parsedResult.setTask(lastTask);
 			commandAction.undo(parsedResult);
-
-
-			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 		}else{
 			History.getUndoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);
@@ -53,8 +52,6 @@ public class Executor {
 
 			parsedResult.setTask(lastTask);
 			commandAction.execute(parsedResult);
-			
-			CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
 		}else{
 			History.getRedoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);
@@ -67,7 +64,6 @@ public class Executor {
 		commandAction.execute(parsedResult);
 		if(!commandType.equals(CommandType.DISPLAY)&&!commandType.equals(CommandType.SEARCH)){
 			History.getUndoActionHistory().push(commandAction);
-			StorageList.getInstance().saveToFile();
 		}
 	}
 }
