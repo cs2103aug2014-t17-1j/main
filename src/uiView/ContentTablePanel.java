@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -81,32 +82,46 @@ public class ContentTablePanel extends JPanel implements Observer {
 	public int getSelectedTableRow() {
 		return rowSelected;
 	}
-	
-	public void disableFocus(){
-		contentTable.setFocusable(false);
-	}
-	public void enableFocus(){
-		contentTable.setFocusable(true);
-	}
+
 	private void setContentIntoTable() {
 		if (taskList.size() != 0) {
-			String[] columnTitle = Constants.COLUMNTITLES;
-			contentTable = new JTable(changeToTwoDArray(taskList), columnTitle) {
-				public boolean isCellEditable(int row, int column) {
-					return false;
-				};
-
-			};
-			setTableCellProperties(contentTable);
-			setContentTableColumnWidth(contentTable);
-			setContentTableProperties();
-			setJScrollPanePropCentrePane();
-			addListActionListener();
-			add(parentJsp);
+			createTableWithContent();
 			
 		
 		}
+		else{
+			createEmptyTable();
+		}
 
+	}
+
+	private void createTableWithContent() {
+		String[] columnTitle = Constants.COLUMNTITLES;
+		contentTable = new JTable(changeToTwoDArray(taskList), columnTitle) {
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			};
+
+		};
+		setTableCellProperties(contentTable);
+		setContentTableColumnWidth(contentTable);
+		setContentTableProperties();
+		setJScrollPanePropCentrePane();
+		addListActionListener();
+		add(parentJsp);
+	}
+
+	private void createEmptyTable() {
+		String[] columnTitle = Constants.COLUMNTITLES;
+		DefaultTableModel model = new DefaultTableModel(0,columnTitle.length);
+		model.setColumnIdentifiers(columnTitle);
+		contentTable = new JTable(model);
+		setTableCellProperties(contentTable);
+		setContentTableColumnWidth(contentTable);
+		setContentTableProperties();
+		setJScrollPanePropCentrePane();
+		contentTable.setFocusable(false);
+		add(parentJsp);
 	}
 
 	private void setContentTableProperties() {
@@ -140,7 +155,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		tabKeyPressedAction();
 		f2KeyPressedAction();
 		f1KeyPressedAction();
-		//f3KeyPressedAction();
 	}
 
 	public void releaseFocus(){
