@@ -119,7 +119,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			if(parseResult.getValidationResult()){
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
-				updateAllPanels();
 			}
 			updateAllPanels();
 		}
@@ -144,6 +143,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			mainFrame.remove(detailPanel);
 		} else{
 			createDetailPanel(HotKeyType.F1);
+			
 		}
 		updateAllPanels();
 		updateFrame();
@@ -157,6 +157,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 				mainFrame.remove(detailPanel);
 			} else{
 				createDetailPanel(HotKeyType.F2);
+				
 			}
 			updateAllPanels();
 			setFocus();
@@ -170,21 +171,23 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			mainFrame.remove(detailPanel);
 		} else {
 			createDetailPanel(HotKeyType.F2);
+			uiList.addUI(detailPanel);
 		}
 		updateAllPanels();
+		detailPanel.setFocustoTable();
 		updateFrame();
 	}
 	
 	private void createDetailPanel(HotKeyType hotkey) {
 		switch(hotkey){
 			case F1:
-				detailPanel = new DetailPanel(HotKeyType.F1);
+				detailPanel = new DetailPanel(HotKeyType.F1,this);
 				break;
 			case F3:
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
 				break;
 			case F2:
-				detailPanel = new DetailPanel(HotKeyType.F2);
+				detailPanel = new DetailPanel(HotKeyType.F2,this);
 				break;
 			default:
 				break;

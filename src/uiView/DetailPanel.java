@@ -3,17 +3,23 @@ package uiView;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -26,13 +32,15 @@ import commonClasses.Constants;
  * @author Paing Zin Oo(Jack)
  */
 public class DetailPanel extends JPanel implements Observer{
-	public DetailPanel(HotKeyType hotkey){
+	private UiParent parent;
+	private JTable categoryListTable;
+	public DetailPanel(HotKeyType hotkey,UiParent parent){
 		switch(hotkey){
 			case F1:
 				createHelpPanel();
 				break;
 			case F2:
-				createCategoryListPanel();
+				createCategoryListPanel(parent);
 				break;
 			default:
 				break;
@@ -79,25 +87,116 @@ public class DetailPanel extends JPanel implements Observer{
 		
 	}
 	
-	public void createCategoryListPanel(){
+	public void createCategoryListPanel(UiParent uiparent){
+		parent = uiparent;
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
+		
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		setBorder(new EmptyBorder(15,25,15,25));
+		if(categoryList.size() != 0 ){
+			createTableWithContent(categoryList);
+		} else{
+			createEmptyTable();
+		}
+		setTableProperties(categoryList);
+		
+	}
+	private void createEmptyTable() {
+		DefaultTableModel model = new DefaultTableModel(0,Constants.CATEGORYKEYS.length);
+		model.setColumnIdentifiers(Constants.CATEGORYKEYS);
+		categoryListTable = new JTable(model);
+		categoryListTable.setFocusable(false);
+	}
+	private void createTableWithContent(ArrayList<Category> categoryList) {
 		String dataArr[][] = changetoTwoDArr(categoryList);
-		JTable categoryListTable = new JTable(dataArr,Constants.CATEGORYKEYS){
+		categoryListTable = new JTable(dataArr,Constants.CATEGORYKEYS){
 			public boolean isCellEditable(int row, int column){
 				return false;
 			};
 		};
-		setContentTableColumnWidth(categoryListTable);
-		setTableCellProperties(categoryListTable,categoryList);
-		categoryListTable.getTableHeader().setReorderingAllowed(false);
 		categoryListTable.setFocusable(true);
 		categoryListTable.requestFocus();
 		addFocusListener(categoryListTable);
-		
+	}
+	private void setTableProperties(ArrayList<Category> categoryList) {
+		setContentTableColumnWidth(categoryListTable);
+		setTableCellProperties(categoryListTable,categoryList);
+		setTableHeaderProperties(categoryListTable);
+		categoryListTable.setGridColor(Constants.COLOR_TABLE_GRID);
+		setKeysPressed(categoryListTable);
 		add(setJScrollPanePropCentrePane(categoryListTable));
-		
+	}
+	
+	
+	public void removeAllComponentsFromPanel(){
+		removeAll();
+	}
+	public void setFocustoTable(){
+		categoryListTable.requestFocus();
+	}
+	private void setKeysPressed(JTable categoryListTable) {
+		tabKeyPressedAction(categoryListTable);
+		f2KeyPressedAction(categoryListTable);
+		f1KeyPressedAction(categoryListTable);
+	}
+	
+	private void tabKeyPressedAction(JTable categoryListTable) {
+		categoryListTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "Changed Focus");
+		categoryListTable.getActionMap().put("Changed Focus", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				System.out.println("TAB PRESSED IN TABLE");
+				parent.pressedTab(false);
+			}
+		});
+	}
+	
+	private void f2KeyPressedAction(JTable categoryListTable) {
+		categoryListTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F3");
+		categoryListTable.getActionMap().put("F3", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				System.out.println("F3 Presed IN TABLE");
+				parent.removeDetailPanel();
+				//parent.pressedF3();
+			}
+		});
+	}
+	
+	private void f1KeyPressedAction(JTable categoryListTable) {
+		categoryListTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "Event");
+		categoryListTable.getActionMap().put("Event", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent actionEvent) {
+				
+				parent.pressedF1();
+
+			}
+
+		});
+	}
+	
+	private void setTableHeaderProperties(JTable categoryListTable) {
+		categoryListTable.getTableHeader().setReorderingAllowed(false);
+		categoryListTable.getTableHeader().setForeground(
+				Constants.COLOR_TABLE_HEADER_TEXT);
+		categoryListTable.getTableHeader().setResizingAllowed(false);
+		categoryListTable.getTableHeader().setBackground(
+				Constants.COLOR_TABLE_HEADER_BG);
+
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(ColorBox.colorPool[957]);
+		headerRenderer.setForeground(Color.WHITE);
+		headerRenderer.setFont(new Font("Serif", Font.BOLD, 15));
+
+		for (int i = 0; i < categoryListTable.getModel().getColumnCount(); i++) {
+			categoryListTable.getColumnModel().getColumn(i)
+					.setHeaderRenderer(headerRenderer);
+		}
 	}
 	
 	private void addFocusListener(final JTable categoryListTable) {
@@ -202,6 +301,15 @@ public class DetailPanel extends JPanel implements Observer{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		if(categoryListTable!=null){
+			removeAll();
+			createCategoryListPanel(parent);
+			System.out.println("REFRESH IN CATEGORY");
+			repaint();
+			revalidate();
+			parent.updateFrame();
+		}
+		
 		
 	}
 	
