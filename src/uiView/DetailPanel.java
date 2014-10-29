@@ -112,6 +112,10 @@ public class DetailPanel extends JPanel implements Observer{
 		
 	}
 	
+	
+	public void removeAllComponentsFromPanel(){
+		removeAll();
+	}
 	public void setFocustoTable(){
 		categoryListTable.requestFocus();
 	}
@@ -281,6 +285,15 @@ public class DetailPanel extends JPanel implements Observer{
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		if(categoryListTable!=null){
+			removeAll();
+			createCategoryListPanel(parent);
+			System.out.println("REFRESH IN CATEGORY");
+			repaint();
+			revalidate();
+			parent.updateFrame();
+		}
+		
 		
 	}
 	

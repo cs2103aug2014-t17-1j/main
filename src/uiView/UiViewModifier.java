@@ -119,7 +119,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			if(parseResult.getValidationResult()){
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
-				updateAllPanels();
 			}
 			updateAllPanels();
 		}
@@ -144,6 +143,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			mainFrame.remove(detailPanel);
 		} else{
 			createDetailPanel(HotKeyType.F1);
+			
 		}
 		updateAllPanels();
 		updateFrame();
@@ -157,6 +157,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 				mainFrame.remove(detailPanel);
 			} else{
 				createDetailPanel(HotKeyType.F2);
+				
 			}
 			updateAllPanels();
 			setFocus();
@@ -171,6 +172,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		} else {
 			createDetailPanel(HotKeyType.F2);
 			detailPanel.setFocustoTable();
+			uiList.addUI(detailPanel);
 		}
 		updateAllPanels();
 		
