@@ -50,6 +50,8 @@ public class Executor {
 			CommandAction commandAction = History.getRedoActionHistory().pop();
 			Task lastTask = History.getRedoTaskHistory().pop();
 
+			History.getUndoActionHistory().push(commandAction);
+			
 			parsedResult.setTask(lastTask);
 			commandAction.execute(parsedResult);
 		}else{
