@@ -36,8 +36,8 @@ public class HeaderPanel extends JPanel{
 		GridBagConstraints c = new GridBagConstraints();
 
 		createHelpBtn(c);
-		createDetailsBtn(c);
-//		createCategoriesBtn(c);
+///		createDetailsBtn(c);
+		createCategoriesBtn(c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.CENTER;
@@ -77,7 +77,7 @@ public class HeaderPanel extends JPanel{
 //		add(btnCategory, c);
 //	}
 
-	private void createDetailsBtn(GridBagConstraints c) {
+	private void createCategoriesBtn(GridBagConstraints c) {
 		JButton btnDetails = new JButton(Constants.STRING_F3_CATEGORIES);
 		btnDetails.setOpaque(false);
 		btnDetails.setContentAreaFilled(false);
@@ -89,7 +89,7 @@ public class HeaderPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				uiParent.pressedF2();
+				uiParent.pressedF3();
 				
 			}
 			

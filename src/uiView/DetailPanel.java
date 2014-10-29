@@ -3,6 +3,8 @@ package uiView;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -29,7 +31,7 @@ public class DetailPanel extends JPanel implements Observer{
 			case F1:
 				createHelpPanel();
 				break;
-			case F3:
+			case F2:
 				createCategoryListPanel();
 				break;
 			default:
@@ -74,13 +76,13 @@ public class DetailPanel extends JPanel implements Observer{
 			label.setBorder(BorderFactory.createLineBorder(Color.white));
 				
 			}
+		
 	}
 	
 	public void createCategoryListPanel(){
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
-		String[] columnTitle = {"aaa","fjkldddddddddddddddddsjelkfrgg"};
 		String dataArr[][] = changetoTwoDArr(categoryList);
 		JTable categoryListTable = new JTable(dataArr,Constants.CATEGORYKEYS){
 			public boolean isCellEditable(int row, int column){
@@ -89,11 +91,31 @@ public class DetailPanel extends JPanel implements Observer{
 		};
 		setContentTableColumnWidth(categoryListTable);
 		setTableCellProperties(categoryListTable,categoryList);
+		categoryListTable.getTableHeader().setReorderingAllowed(false);
+		categoryListTable.setFocusable(true);
+		categoryListTable.requestFocus();
+		addFocusListener(categoryListTable);
+		
 		add(setJScrollPanePropCentrePane(categoryListTable));
 		
 	}
 	
-	
+	private void addFocusListener(final JTable categoryListTable) {
+		categoryListTable.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				// TODO Auto-generated method stub
+				// contentTable.setRowSelectionInterval(0, 0);
+				categoryListTable.changeSelection(0, 0, false, false);
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				// TODO Auto-generated method stub
+				categoryListTable.clearSelection();
+			}
+		});
+	}
 	
 	private void setContentTableColumnWidth(JTable contentTable) {
 		contentTable.getColumnModel().getColumn(0).setMaxWidth(300);

@@ -31,7 +31,7 @@ public class Constants {
 	public static final String STRING_NA = "NA";
 	public static final String STRING_F1_HELP = "F1 Help";
 	public static final String STRING_F2_DETAILS = "F2 Details";
-	public static final String STRING_F3_CATEGORIES = "F3 Categories";
+	public static final String STRING_F3_CATEGORIES = "F2 Categories";
 	public static final String CATEGORY_COLUMN_TITLE[] = {"Name","Count"};
 	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
 	

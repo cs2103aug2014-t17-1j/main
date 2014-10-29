@@ -45,7 +45,6 @@ public class SummaryReport{
 		imptRowIndexList = new ArrayList<Integer>();
 		for(int i=0 ; i < displayList.size(); i++){
 			if(displayList.get(i).isImportant()){
-				System.out.println("IMPT IN SUMMARY IS "+i);
 				imptRowIndexList.add(i);
 			}
 		}

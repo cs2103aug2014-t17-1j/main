@@ -96,7 +96,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 				parent.pressedF1();
 		}
 		
-		if(arg0.getKeyCode() == KeyEvent.VK_F3){
+		if(arg0.getKeyCode() == KeyEvent.VK_F2){
 			System.out.println("you have entered F3");
 			parent.pressedF3();
 		}

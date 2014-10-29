@@ -32,7 +32,6 @@ public class CustomTableRender extends DefaultTableCellRenderer{
 	
 		   for(Integer i: imptRowIndexList){
 			   if(row == i){
-				   System.out.println("IMPT is "+i);
 				   rendererComp.setBackground(Constants.COLOR_TABLE_IMPT_ROW);
 				   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_IMPT);
 			   }

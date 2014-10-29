@@ -37,6 +37,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 	// private JScrollPane jsp;
 	private int rowSelected;
 	private UiParent parent;
+	private boolean firstTime = true;;
 
 	private SoftShadowJPanel parentJsp;
 
@@ -46,11 +47,19 @@ public class ContentTablePanel extends JPanel implements Observer {
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
-		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG
+				);
 		System.out.println("SUMMARY REPORT LIST"+SummaryReport.getDisplayList().size());
+		
 	}
+	
+	public void clearSelection(){
+		contentTable.clearSelection();
+	}
+	
 
-	private void addListActionListener() {
+
+	public void addListActionListener() {
 		contentTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
 
@@ -59,6 +68,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 						rowSelected = contentTable.getSelectedRow();
 						parent.setRowSelected(rowSelected);
 						parent.updateDetailPanel();
+						if(firstTime){
+							parent.removeDetailPanel();
+							firstTime =false;
+						}
 					}
 
 				});
@@ -68,7 +81,13 @@ public class ContentTablePanel extends JPanel implements Observer {
 	public int getSelectedTableRow() {
 		return rowSelected;
 	}
-
+	
+	public void disableFocus(){
+		contentTable.setFocusable(false);
+	}
+	public void enableFocus(){
+		contentTable.setFocusable(true);
+	}
 	private void setContentIntoTable() {
 		if (taskList.size() != 0) {
 			String[] columnTitle = Constants.COLUMNTITLES;
@@ -82,8 +101,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 			setContentTableColumnWidth(contentTable);
 			setContentTableProperties();
 			setJScrollPanePropCentrePane();
-			add(parentJsp);
 			addListActionListener();
+			add(parentJsp);
+			
+		
 		}
 
 	}
@@ -92,8 +113,8 @@ public class ContentTablePanel extends JPanel implements Observer {
 		setTableHeaderProperties();
 		setRowAndColumnSelectionMode();
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		contentTable.requestFocus();
-		contentTable.setFocusable(true);
+//		contentTable.requestFocus();
+//		contentTable.setFocusable(false);
 		setKeysPressed();
 		addFocusListener();
 	}
@@ -119,9 +140,12 @@ public class ContentTablePanel extends JPanel implements Observer {
 		tabKeyPressedAction();
 		f2KeyPressedAction();
 		f1KeyPressedAction();
-		f3KeyPressedAction();
+		//f3KeyPressedAction();
 	}
 
+	public void releaseFocus(){
+		requestFocus(false);
+	}
 	private void setRowAndColumnSelectionMode() {
 		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
 		contentTable.setRowHeight(Constants.TABLE_HEIGHT);
@@ -162,13 +186,14 @@ public class ContentTablePanel extends JPanel implements Observer {
 		});
 	}
 
-	private void f3KeyPressedAction() {
+	private void f2KeyPressedAction() {
 		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0), "F3");
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F3");
 		contentTable.getActionMap().put("F3", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("F3 Presed IN TABLE");
+				parent.removeDetailPanel();
 				parent.pressedF3();
 			}
 		});
@@ -180,6 +205,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.getActionMap().put("Event", new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
+				
 				parent.pressedF1();
 
 			}
@@ -187,9 +213,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 		});
 	}
 
-	private void f2KeyPressedAction() {
+	private void f3KeyPressedAction() {
 		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "e");
+				KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0), "e");
 		System.out.println("F2 KEy is pressed");
 		contentTable.getActionMap().put("e", new AbstractAction() {
 
@@ -269,11 +295,13 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	@Override
 	public void update() {
+		System.out.println("UPDATE  IN CONTENT TABLE");
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
-		System.out.println("CONTENT TABLE UPDATE");
+//		contentTable.requestFocus();
+		contentTable.setFocusable(true);
 		repaint();
 		revalidate();
 		parent.updateFrame();

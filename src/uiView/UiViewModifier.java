@@ -68,10 +68,10 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		//helpPanel = new ShorcutPanel();
 		//mainFrame.add(helpPanel,BorderLayout.WEST);
 		
+		
 		commandBoxPanel = new CommandBoxPanel(this);
 		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
-		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
-		
+		commandBoxPanel.setFocusToCommandBox();
 		UpdateSummaryReport.init();
 		contentPanel = new ContentTablePanel(this);
 		JPanel parentContentPanel = new JPanel();
@@ -80,11 +80,14 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		parentContentPanel.setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
 		
-		uiList.addUI(commandBoxPanel);
-		uiList.addUI(contentPanel);
-
 		
-	    setJFrameProperties();
+		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
+		
+		uiList.addUI(contentPanel);
+		uiList.addUI(commandBoxPanel);
+		setJFrameProperties();
+		updateFrame();
+		
 	}
 	
 	public void updateAllPanels(){
@@ -166,7 +169,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		if(isDetailPanelExisting()){
 			mainFrame.remove(detailPanel);
 		} else {
-			createDetailPanel(HotKeyType.F3);
+			createDetailPanel(HotKeyType.F2);
 		}
 		updateAllPanels();
 		updateFrame();
@@ -177,11 +180,11 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			case F1:
 				detailPanel = new DetailPanel(HotKeyType.F1);
 				break;
-			case F2:
+			case F3:
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
 				break;
-			case F3:
-				detailPanel = new DetailPanel(HotKeyType.F3);
+			case F2:
+				detailPanel = new DetailPanel(HotKeyType.F2);
 				break;
 			default:
 				break;
