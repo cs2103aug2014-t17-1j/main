@@ -13,7 +13,9 @@ public class History {
 	private static Stack<CommandAction> redoActionHistory = new Stack<CommandAction>();
 	private static Stack<Task> redoTaskHistory = new Stack<Task>();
 	
-	private static Stack<ArrayList<Task>> displayHistory = new Stack<ArrayList<Task>>();
+	private static Stack<ArrayList<Task>> undoDisplayHistory = new Stack<ArrayList<Task>>();
+
+	private static Stack<ArrayList<Task>> redoDisplayHistory = new Stack<ArrayList<Task>>();
 	
 	private History() {}
 
@@ -33,7 +35,11 @@ public class History {
 		return redoTaskHistory;
 	}
 
-	public static Stack<ArrayList<Task>> getDisplayHistory() {
-		return displayHistory;
+	public static Stack<ArrayList<Task>> getUndoDisplayHistory() {
+		return undoDisplayHistory;
+	}
+
+	public static Stack<ArrayList<Task>> getRedoDisplayHistory() {
+		return redoDisplayHistory;
 	}
 }

@@ -14,18 +14,27 @@ public class CommandActionDelete implements CommandAction{
 	@Override
 	public void execute(ParsedResult parsedResult){
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
-		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
-		History.getDisplayHistory().push(SummaryReport.getDisplayList());
 		
-		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult);
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		if(parsedResult.getCommandType().equals(CommandType.REDO)){
+			displayList = History.getRedoDisplayHistory().pop();
+		}
+		else{
+			displayList = SummaryReport.getDisplayList();
+		}
+		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
+		History.getUndoDisplayHistory().push(displayList);
+		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult, displayList);
 	}
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
-		
-		ArrayList<Task> displayList = History.getDisplayHistory().pop();
+
+		ArrayList<Task> displayList = History.getUndoDisplayHistory().pop();
 		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult, displayList);
+		displayList = SummaryReport.getDisplayList();
+		History.getRedoDisplayHistory().push(displayList);
 	}
 }

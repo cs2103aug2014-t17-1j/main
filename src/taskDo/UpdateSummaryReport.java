@@ -26,8 +26,7 @@ public class UpdateSummaryReport {
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
-	public static void updateForDeleteAndComplete(ParsedResult parsedResult){
-		ArrayList<Task> displayList = SummaryReport.getDisplayList();
+	public static void updateForDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.remove(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
