@@ -37,7 +37,7 @@ public class HeaderPanel extends JPanel{
 
 		createHelpBtn(c);
 		createDetailsBtn(c);
-		createCategoriesBtn(c);
+//		createCategoriesBtn(c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.CENTER;
@@ -52,37 +52,37 @@ public class HeaderPanel extends JPanel{
 		
 	}
 
-	private void createCategoriesBtn(GridBagConstraints c) {
-		btnCategory = new JButton(Constants.STRING_F3_CATEGORIES);
-		btnCategory.setOpaque(false);
-		btnCategory.setContentAreaFilled(false);
-		btnCategory.setBorderPainted(false);
-		btnCategory.setPreferredSize(new Dimension(120, 20));
-		btnCategory.setForeground(Color.WHITE);
-		btnCategory.setFocusable(false);
-		btnCategory.addActionListener( new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				uiParent.pressedF3();
-				
-			}
-			
-		});
-		c.fill = GridBagConstraints.NONE;
-		c.anchor = GridBagConstraints.WEST;
-		c.weightx = 0.0;
-		c.gridx = 2;
-		c.gridy = 0;
-		add(btnCategory, c);
-	}
+//	private void createCategoriesBtn(GridBagConstraints c) {
+//		btnCategory = new JButton(Constants.STRING_F3_CATEGORIES);
+//		btnCategory.setOpaque(false);
+//		btnCategory.setContentAreaFilled(false);
+//		btnCategory.setBorderPainted(false);
+//		btnCategory.setPreferredSize(new Dimension(120, 20));
+//		btnCategory.setForeground(Color.WHITE);
+//		btnCategory.setFocusable(false);
+//		btnCategory.addActionListener( new ActionListener(){
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				uiParent.pressedF3();
+//				
+//			}
+//			
+//		});
+//		c.fill = GridBagConstraints.NONE;
+//		c.anchor = GridBagConstraints.WEST;
+//		c.weightx = 0.0;
+//		c.gridx = 2;
+//		c.gridy = 0;
+//		add(btnCategory, c);
+//	}
 
 	private void createDetailsBtn(GridBagConstraints c) {
-		JButton btnDetails = new JButton(Constants.STRING_F2_DETAILS);
+		JButton btnDetails = new JButton(Constants.STRING_F3_CATEGORIES);
 		btnDetails.setOpaque(false);
 		btnDetails.setContentAreaFilled(false);
 		btnDetails.setBorderPainted(false);
-		btnDetails.setPreferredSize(new Dimension(90, 20));
+		btnDetails.setPreferredSize(new Dimension(120, 20));
 		btnDetails.setForeground(Color.WHITE);
 		btnDetails.setFocusable(false);
 		btnDetails.addActionListener( new ActionListener(){
@@ -136,12 +136,12 @@ public class HeaderPanel extends JPanel{
 		lblHeader.setHorizontalAlignment(JLabel.CENTER);
 	}
 
-	private void createDummyBtn(GridBagConstraints c) {
+	private void createDummyBtn(GridBagConstraints c) { //To center Task.Do label
 		JButton btnDummy = new JButton();
 		btnDummy.setOpaque(false);
 		btnDummy.setContentAreaFilled(false);
 		btnDummy.setBorderPainted(false);
-		btnDummy.setPreferredSize(new Dimension(250, 20));
+		btnDummy.setPreferredSize(new Dimension(160, 20));
 		btnDummy.setFocusable(false);
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.EAST;
