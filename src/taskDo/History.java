@@ -1,5 +1,6 @@
 package taskDo;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 import commandFactory.CommandAction;
@@ -11,6 +12,8 @@ public class History {
 	
 	private static Stack<CommandAction> redoActionHistory = new Stack<CommandAction>();
 	private static Stack<Task> redoTaskHistory = new Stack<Task>();
+	
+	private static Stack<ArrayList<Task>> displayHistory = new Stack<ArrayList<Task>>();
 	
 	private History() {}
 
@@ -28,5 +31,9 @@ public class History {
 
 	public static Stack<Task> getRedoTaskHistory() {
 		return redoTaskHistory;
+	}
+
+	public static Stack<ArrayList<Task>> getDisplayHistory() {
+		return displayHistory;
 	}
 }

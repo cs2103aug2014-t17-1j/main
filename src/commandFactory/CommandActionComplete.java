@@ -1,6 +1,9 @@
 package commandFactory;
 
+import java.util.ArrayList;
+
 import commonClasses.StorageList;
+import commonClasses.SummaryReport;
 import taskDo.History;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
@@ -14,6 +17,7 @@ public class CommandActionComplete implements CommandAction{
 		int taskIndex = targetTask.searchById(parsedResult.getTaskDetails().getId());
 
 		History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
+		History.getDisplayHistory().push(SummaryReport.getDisplayList());
 		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult);
 		
 		parsedResult.getTaskDetails().setCompleted(true);
@@ -29,7 +33,8 @@ public class CommandActionComplete implements CommandAction{
 		int taskIndex = targetTask.searchById(lastTask.getId());
 		History.getRedoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
 		StorageList.getInstance().getTaskList().set(taskIndex, lastTask);
-
-		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult);
+		
+		ArrayList<Task> displayList = History.getDisplayHistory().pop();
+		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult, displayList);
 	}
 }

@@ -34,8 +34,7 @@ public class UpdateSummaryReport {
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
 	
-	public static void updateForUndoDeleteAndComplete(ParsedResult parsedResult){
-		ArrayList<Task> displayList = SummaryReport.getDisplayList();
+	public static void updateForUndoDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.add(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
