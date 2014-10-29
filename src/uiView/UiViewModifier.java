@@ -170,21 +170,23 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			mainFrame.remove(detailPanel);
 		} else {
 			createDetailPanel(HotKeyType.F2);
+			detailPanel.setFocustoTable();
 		}
 		updateAllPanels();
+		
 		updateFrame();
 	}
 	
 	private void createDetailPanel(HotKeyType hotkey) {
 		switch(hotkey){
 			case F1:
-				detailPanel = new DetailPanel(HotKeyType.F1);
+				detailPanel = new DetailPanel(HotKeyType.F1,this);
 				break;
 			case F3:
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
 				break;
 			case F2:
-				detailPanel = new DetailPanel(HotKeyType.F2);
+				detailPanel = new DetailPanel(HotKeyType.F2,this);
 				break;
 			default:
 				break;

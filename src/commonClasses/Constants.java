@@ -22,7 +22,7 @@ public class Constants {
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension DIMENION_TABLE = new Dimension((int)(SCREEN_SIZE.width * 0.36 ), (int)(SCREEN_SIZE.height * 0.5));
 	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.146),(int)(SCREEN_SIZE.height * 0.5));
-	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.3),(int)(SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.25),(int)(SCREEN_SIZE.height * 0.5));
 	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.36),(int)(SCREEN_SIZE.height * 0.49));
 	
 	public static final String FILENAME_TASKDO = "TaskDo.json";
@@ -36,7 +36,7 @@ public class Constants {
 	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
 	
 	public static final String MESSAGE_LOAD_ERROR = "Loading Error! Please check that file format is correct!";
-	public static final String CATEGORYKEYS[] = {"name","count"};
+	public static final String CATEGORYKEYS[] = {"Name","Count"};
 
 	public static final String [] HELPCOMMANDS = {
 		"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",
