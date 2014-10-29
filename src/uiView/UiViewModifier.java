@@ -171,11 +171,10 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			mainFrame.remove(detailPanel);
 		} else {
 			createDetailPanel(HotKeyType.F2);
-			detailPanel.setFocustoTable();
 			uiList.addUI(detailPanel);
 		}
 		updateAllPanels();
-		
+		detailPanel.setFocustoTable();
 		updateFrame();
 	}
 	
