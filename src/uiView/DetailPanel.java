@@ -19,6 +19,7 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -89,27 +90,42 @@ public class DetailPanel extends JPanel implements Observer{
 	public void createCategoryListPanel(UiParent uiparent){
 		parent = uiparent;
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
+		
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
 		setBorder(new EmptyBorder(15,25,15,25));
+		if(categoryList.size() != 0 ){
+			createTableWithContent(categoryList);
+		} else{
+			createEmptyTable();
+		}
+		setTableProperties(categoryList);
+		
+	}
+	private void createEmptyTable() {
+		DefaultTableModel model = new DefaultTableModel(0,Constants.CATEGORYKEYS.length);
+		model.setColumnIdentifiers(Constants.CATEGORYKEYS);
+		categoryListTable = new JTable(model);
+		categoryListTable.setFocusable(false);
+	}
+	private void createTableWithContent(ArrayList<Category> categoryList) {
 		String dataArr[][] = changetoTwoDArr(categoryList);
 		categoryListTable = new JTable(dataArr,Constants.CATEGORYKEYS){
 			public boolean isCellEditable(int row, int column){
 				return false;
 			};
 		};
+		categoryListTable.setFocusable(true);
+		categoryListTable.requestFocus();
+		addFocusListener(categoryListTable);
+	}
+	private void setTableProperties(ArrayList<Category> categoryList) {
 		setContentTableColumnWidth(categoryListTable);
 		setTableCellProperties(categoryListTable,categoryList);
 		setTableHeaderProperties(categoryListTable);
-		categoryListTable.setFocusable(true);
-		System.out.println("CATEGORY FOCUSE");
-		categoryListTable.requestFocus();
-		setKeysPressed(categoryListTable);
 		categoryListTable.setGridColor(Constants.COLOR_TABLE_GRID);
-		addFocusListener(categoryListTable);
-		
+		setKeysPressed(categoryListTable);
 		add(setJScrollPanePropCentrePane(categoryListTable));
-		
 	}
 	
 	

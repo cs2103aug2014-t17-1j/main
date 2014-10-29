@@ -86,10 +86,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 	private void setContentIntoTable() {
 		if (taskList.size() != 0) {
 			createTableWithContent();
-			
-		
-		}
-		else{
+		} else{
 			createEmptyTable();
 		}
 
