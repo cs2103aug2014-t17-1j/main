@@ -62,7 +62,7 @@ public class DetailPanel extends JPanel implements Observer{
 	
 	private void setUpLayout(String[] helpCommands,String title,int numOfCol) {
 		setLayout(new GridLayout(helpCommands.length,numOfCol));
-		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		setPreferredSize(Constants.DIMENSION_HELP_PANEL);
 		setBorder(BorderFactory.createTitledBorder(null,title, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 	}
