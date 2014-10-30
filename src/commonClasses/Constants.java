@@ -21,8 +21,10 @@ public class Constants {
 	
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension DIMENION_TABLE = new Dimension((int)(SCREEN_SIZE.width * 0.36 ), (int)(SCREEN_SIZE.height * 0.5));
+//	public static final Dimension DIMENION_TABLE = new Dimension((int)(SCREEN_SIZE.width * 0.36 ), (int)(SCREEN_SIZE.height * 0.5));
 	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.146),(int)(SCREEN_SIZE.height * 0.5));
-	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.25),(int)(SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.3),(int)(SCREEN_SIZE.height * 0.46));
+	public static final Dimension DIMENSION_HELP_PANEL = new Dimension((int) (SCREEN_SIZE.width * 0.29), (int) (SCREEN_SIZE.height * 0.3));
 	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.36),(int)(SCREEN_SIZE.height * 0.49));
 	
 	public static final String FILENAME_TASKDO = "TaskDo.json";
@@ -64,7 +66,7 @@ public class Constants {
 			"add Homework2 -from 20 aug 16:00 -to 10 sep 18:00",
 			"",
 			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
-			"Addtional commands thats only works with specific main commands",
+			"Addtional commands that only works with some main commands",
 			"<html>For <font color='red'>edit</font>: <font color='#1de9b6'>-</font><font color='ff7997'>task</font> *new Title*</html>",
 			"Example: edit 1 -task homework3",
 			"",
