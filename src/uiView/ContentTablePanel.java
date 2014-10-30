@@ -117,6 +117,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 		setContentTableColumnWidth(contentTable);
 		setContentTableProperties();
 		setJScrollPanePropCentrePane();
+		firstTime = false;
 		contentTable.setFocusable(false);
 		add(parentJsp);
 	}
