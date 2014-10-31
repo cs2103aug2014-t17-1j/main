@@ -38,6 +38,7 @@ public class Task implements Comparable<Task>{
 		this.title = "";
 		this.type = TaskType.TODO;
 		this.category = "Others";
+		this.note = "";
 	}
 	
 	public Task(String description){
