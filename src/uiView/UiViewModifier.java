@@ -326,7 +326,10 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
     }
     
     public void removeDetailPanel(){
-    	mainFrame.remove(detailPanel);
+    	if(detailPanel != null){
+    		mainFrame.remove(detailPanel);
+    	}
+    	
     	setFocusToCommandBox();
     	updateFrame();
     }
