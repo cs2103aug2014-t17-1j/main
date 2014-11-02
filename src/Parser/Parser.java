@@ -49,11 +49,11 @@ public class Parser {
 		String commandWord;
 
 		for(int i=1; i<remainingInput.length;i++) {
-			commandWord = getCommandWord(remainingInput[i]);
+			commandWord = getCommandWord(remainingInput[i].trim());
 
 			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
 
-			remainingInput[i] = optionHandler.removeCommandWord(remainingInput[i]);
+			remainingInput[i] = optionHandler.removeCommandWord(remainingInput[i].trim());
 
 			result = optionHandler.updateResults(result, remainingInput[i].trim());
 

@@ -13,12 +13,14 @@ public class ParsedResult {
 	private Task task;
 	private SearchType searchMode;
 	private boolean isValidCommand;
+	private int selectedItem;
 	
 	public ParsedResult() {
 		this.parsedCommand = null;
 		this.task = new Task();
 		this.searchMode = null;
 		this.isValidCommand = true;
+		this.selectedItem = 0;
 	}
 	
 	
@@ -86,5 +88,15 @@ public class ParsedResult {
 	
 	public void setValidationResult(boolean validation) {
 		this.isValidCommand = validation;
+	}
+
+
+	public int getSelectedItem() {
+		return selectedItem;
+	}
+
+
+	public void setSelectedItem(int selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 }
