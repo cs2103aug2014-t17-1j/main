@@ -178,6 +178,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		result.getTaskDetails().setCompleted(selectedTask.isCompleted());
 		result.getTaskDetails().setImportant(selectedTask.isImportant());
 		result.getTaskDetails().setTaskType(selectedTask.getTaskType());
+		result.getTaskDetails().setNote(selectedTask.getNote());
 
 	}
 
