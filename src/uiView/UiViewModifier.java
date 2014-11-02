@@ -127,7 +127,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			updateAllPanels();
 			updateDetailPanel();
 			rowSelected = SummaryReport.getRowIndexHighlight();
-			contentPanel.selectRowHightlight(rowSelected);
+			contentPanel.selectRowHightlight(SummaryReport.getRowIndexHighlight());
 			System.out.println("ROW SELECTED "+rowSelected);
 			updateFrame();
 		}
@@ -216,8 +216,13 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			}
 			if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(SummaryReport.getRowIndexHighlight()));
+			}else{
+				if(rowSelected < SummaryReport.getDisplayList().size()){
+					detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+				}
+				
 			}
-			detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+			
 			mainFrame.add(detailPanel,BorderLayout.EAST);
 			detailPanel.revalidate();
 			updateFrame();
