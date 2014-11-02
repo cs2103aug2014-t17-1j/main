@@ -29,6 +29,7 @@ public class CommandActionEdit implements CommandAction {
 		taskIndex = targetTask.searchById(taskId, displayList);	
 		displayList.set(taskIndex, parsedResult.getTaskDetails());
 		UpdateSummaryReport.updateForEdit(parsedResult, displayList);
+		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		History.getUndoDisplayHistory().push(displayList);
 	}
 
@@ -46,6 +47,7 @@ public class CommandActionEdit implements CommandAction {
 		taskIndex = targetTask.searchById(taskId, displayList);	
 		displayList.set(taskIndex, lastTask);
 		UpdateSummaryReport.updateForEdit(parsedResult, displayList);
+		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		History.getRedoDisplayHistory().push(displayList);
 	}
 }

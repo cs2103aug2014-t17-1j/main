@@ -31,7 +31,7 @@ public class CommandActionComplete implements CommandAction{
 		
 		parsedResult.getTaskDetails().setCompleted(true);
 		StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
-
+		UpdateSummaryReport.unhighlightTask();
 	}
 
 	@Override
@@ -45,6 +45,7 @@ public class CommandActionComplete implements CommandAction{
 		
 		ArrayList<Task> displayList = History.getUndoDisplayHistory().pop();
 		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult, displayList);
+		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		displayList = SummaryReport.getDisplayList();
 		History.getRedoDisplayHistory().push(displayList);
 	}
