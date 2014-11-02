@@ -50,15 +50,17 @@ public class CommonInterpreterMethods {
 				date = df.parseDateTime(commandParam);
 				group = parser.parse(date.toString());
 				DateTime dates = new DateTime(group.get(0).getDates().get(0));
-				
-				if(dates.getYear() == 2000) {
+
+				if (dates.getYear() == 2000) {
 					dates = dates.withYear(new DateTime().getYear());
 				}
 				DateTime currentTime = new DateTime();
-				if(dates.toLocalDate().isBefore(currentTime.toLocalDate()));
-				
-				if (dates.hourOfDay().toString()
-						.equals(currentTime.hourOfDay().toString())) {
+				if (dates.toLocalDate().isBefore(currentTime.toLocalDate()))
+					;
+
+				String parsed = dates.minuteOfDay().getAsText();
+				String current = currentTime.minuteOfDay().getAsText();
+				if (parsed.equals(current)) {
 					dates = dates.withHourOfDay(23);
 					dates = dates.withMinuteOfHour(59); // update the time to
 					// 2359
@@ -69,8 +71,8 @@ public class CommonInterpreterMethods {
 
 			}
 		}
-		if(containsDigits(commandParam)) {
-			if(!checkRelativeDateFormat(commandParam)) {
+		if (containsDigits(commandParam)) {
+			if (!checkRelativeDateFormat(commandParam)) {
 				return null;
 			}
 		}
@@ -81,9 +83,9 @@ public class CommonInterpreterMethods {
 		DateTime dates = new DateTime(group.get(0).getDates().get(0));
 
 		DateTime currentTime = new DateTime();
-
-		if (dates.hourOfDay().toString()
-				.equals(currentTime.hourOfDay().toString())) {
+		String parsed = dates.minuteOfDay().getAsText();
+		String current = currentTime.minuteOfDay().getAsText();
+		if (parsed.equals(current)) {
 			dates = dates.withHourOfDay(23);
 			dates = dates.withMinuteOfHour(59); // update the time to 2359
 		}
@@ -94,23 +96,23 @@ public class CommonInterpreterMethods {
 	private static boolean checkRelativeDateFormat(String commandParam) {
 		Pattern pattern = Pattern.compile("^\\w+ \\d\\d:\\d\\d$");
 		Matcher matcher = pattern.matcher(commandParam);
-		
-		if(matcher.find()) {
+
+		if (matcher.find()) {
 			return true;
 		}
-		
+
 		return false;
-		
+
 	}
 
 	private static boolean containsDigits(String commandParam) {
 		Pattern pattern = Pattern.compile("\\d+");
 		Matcher matcher = pattern.matcher(commandParam);
-		
+
 		if (matcher.find()) {
 			return true;
 		}
-		
+
 		return false;
 	}
 }
