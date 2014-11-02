@@ -1,5 +1,7 @@
 package Parser;
 
+import java.security.InvalidParameterException;
+
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -20,9 +22,15 @@ public class Parser {
 
 		// Processing first command and getting command param
 		try {
-			if(isInteger(input) && CommonInterpreterMethods.isValidSelection(input)) { 
-					result.setSelectedItem(Integer.valueOf(input));
+			if (isInteger(input)) {
+				if (CommonInterpreterMethods.isValidSelection(input)) {
+					SummaryReport.setRowIndexHighlight(Integer.valueOf(input)-1); //get correct index in list
+					result.setIsExecutorApplicable(false);
 					return result;
+				} else {
+					SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
+					throw new InvalidParameterException();
+				}
 			}
 			String[] seperatedInput = input.split("-");
 			String commandWord = getCommandWord(seperatedInput[0].trim());
@@ -31,7 +39,8 @@ public class Parser {
 				result.setCommandType(mainHandler.getCommand());
 				return result;
 			}
-			String remainingInput = mainHandler.removeCommandWord(seperatedInput[0].trim());
+			String remainingInput = mainHandler
+					.removeCommandWord(seperatedInput[0].trim());
 
 			result = mainHandler.updateResults(result, remainingInput.trim());
 
@@ -43,7 +52,7 @@ public class Parser {
 
 			}
 		} catch (Exception e) {
-			result.setValidationResult(false);
+			result.setIsExecutorApplicable(false);
 		}
 		return result;
 	}
@@ -60,14 +69,16 @@ public class Parser {
 	private void processOptionalCommand(String[] remainingInput) {
 		String commandWord;
 
-		for(int i=1; i<remainingInput.length;i++) {
+		for (int i = 1; i < remainingInput.length; i++) {
 			commandWord = getCommandWord(remainingInput[i].trim());
 
 			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
 
-			remainingInput[i] = optionHandler.removeCommandWord(remainingInput[i].trim());
+			remainingInput[i] = optionHandler
+					.removeCommandWord(remainingInput[i].trim());
 
-			result = optionHandler.updateResults(result, remainingInput[i].trim());
+			result = optionHandler.updateResults(result,
+					remainingInput[i].trim());
 
 		}
 	}

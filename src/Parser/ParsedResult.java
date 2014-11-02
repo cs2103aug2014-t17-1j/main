@@ -13,15 +13,13 @@ public class ParsedResult {
 	private CommandType parsedCommand;
 	private Task task;
 	private SearchType searchMode;
-	private boolean isValidCommand;
-	private int selectedItem;
+	private boolean isExecutorApplicable;
 	
 	public ParsedResult() {
 		this.parsedCommand = null;
 		this.task = new Task();
 		this.searchMode = null;
-		this.isValidCommand = true;
-		setSelectedItem(Constants.NOTHING_SELECTED);
+		this.isExecutorApplicable = true;
 	}
 	
 	
@@ -70,8 +68,8 @@ public class ParsedResult {
 		return this.searchMode;
 	}
 	
-	public boolean getValidationResult() {
-		return this.isValidCommand;
+	public boolean getIsExecutorApplicable() {
+		return this.isExecutorApplicable;
 	}
 	
 	//Mutators
@@ -87,17 +85,7 @@ public class ParsedResult {
 		this.task = setTask;
 	}
 	
-	public void setValidationResult(boolean validation) {
-		this.isValidCommand = validation;
-	}
-
-
-	public int getSelectedItem() {
-		return selectedItem;
-	}
-
-
-	public void setSelectedItem(int selectedItem) {
-		this.selectedItem = selectedItem;
+	public void setIsExecutorApplicable(boolean validation) {
+		this.isExecutorApplicable = validation;
 	}
 }

@@ -120,14 +120,14 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	public void passToParser(String command){
 		if(command!=null){
 			parseResult = parser.parseString(command);
-			if(parseResult.getValidationResult()){
+			if(parseResult.getIsExecutorApplicable()){
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
 			}
 			
 			updateAllPanels();
 			updateDetailPanel();
-			contentPanel.selectRowHightlight(10);
+			//contentPanel.selectRowHightlight(10);
 			updateFrame();
 		}
 	}
