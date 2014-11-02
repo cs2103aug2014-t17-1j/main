@@ -6,7 +6,6 @@ import Parser.ParsedResult;
 import commandFactory.CommandType;
 import commandFactory.Search;
 import commonClasses.Constants;
-import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 
 public class UpdateSummaryReport {
@@ -21,12 +20,8 @@ public class UpdateSummaryReport {
 
 	public static void updateByDueDate(ParsedResult parsedResult){
 		Search search = new Search();
-
 		updateDisplayTaskList(search.searchByDate(parsedResult));
 		SummaryReport.sortByDueDate();
-		search = new Search();
-		int highlightTask = search.searchById(parsedResult.getTaskDetails().getId(), SummaryReport.getDisplayList()); 
-		SummaryReport.setRowIndexHighlight(highlightTask);
 		determineFeedbackMsg(parsedResult);
 	}
 
@@ -71,41 +66,44 @@ public class UpdateSummaryReport {
 
 	private static void determineFeedbackMsg(ParsedResult parsedResult) {
 		String feedbackMsg;
-		int taskID = parsedResult.getTaskDetails().getId();
+//		int taskID = searchIndex(parsedResult.getTaskDetails().getId());
 		CommandType commandType = parsedResult.getCommandType();
 		switch(commandType){
 		case ADD:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_ADD, taskID);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_ADD);
 			updateFeedbackMsg(feedbackMsg);	
 			break;
 		case DELETE:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_DELETE, taskID);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_DELETE);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case EDIT:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_EDIT, taskID);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_EDIT);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case DISPLAY:
 			updateFeedbackMsg(Constants.MESSAGE_DISPLAY);
 			break;
 		case UNDO:
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_UNDO);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_UNDO);
+			updateFeedbackMsg(feedbackMsg);
 			break;
 		case REDO:
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_REDO);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_REDO);
+			updateFeedbackMsg(feedbackMsg);
 			break;
 		case COMPLETED:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_COMPLETED, taskID);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_COMPLETED);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case SEARCH:
-			if(SummaryReport.getDisplayList().size()==1){
-				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_SINGLE, taskID);
-			}else{
-				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_MUL, taskID);
-			}
-			updateFeedbackMsg(feedbackMsg);
+//			if(SummaryReport.getDisplayList().size()==1){
+//				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_SINGLE, taskID);
+//			}else{
+//				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_MUL, taskID);
+//			}
+//			updateFeedbackMsg(feedbackMsg);
+			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);
 
 			break;
 		default:
@@ -117,8 +115,18 @@ public class UpdateSummaryReport {
 		SummaryReport.setFeedBackMsg(feedbackMsg);
 	}
 
-	public void highlightTask(Task task){
-
+	private static int searchIndex(int taskID){
+		Search search = new Search();
+		return search.searchById(taskID, SummaryReport.getDisplayList());
+	}
+	
+	public static void highlightTask(int taskID){
+		int highlightTask = searchIndex(taskID); 
+		SummaryReport.setRowIndexHighlight(highlightTask);
+	}
+	
+	public static void unhighlightTask(){
+		SummaryReport.setRowIndexHighlight(-1);
 	}
 }
 

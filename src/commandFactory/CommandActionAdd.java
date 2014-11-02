@@ -12,6 +12,7 @@ public class CommandActionAdd implements CommandAction{
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		
 		UpdateSummaryReport.updateByDueDate(parsedResult);
+		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 	}
 
 	@Override
@@ -19,5 +20,6 @@ public class CommandActionAdd implements CommandAction{
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		UpdateSummaryReport.updateByDueDate(parsedResult);
+		UpdateSummaryReport.unhighlightTask();
 	}
 }

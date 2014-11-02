@@ -131,19 +131,19 @@ public class Constants {
 	 */
 
 	// Command Actions
-	public static final String MESSAGE_SUCCESS_DELETE = "TASK %1$s IS DELETED";
-	public static final String MESSAGE_SUCCESS_EDIT = "TASK %1$s IS EDITED";
-	public static final String MESSAGE_SUCCESS_ADD = "TASK %1$s IS ADDED";
-	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s MARKED AS COMPLETED";
+	public static final String MESSAGE_SUCCESS_DELETE = "DELETED SUCCESSFULLY";
+	public static final String MESSAGE_SUCCESS_EDIT = "EDITED SUCCESSFULLY";
+	public static final String MESSAGE_SUCCESS_ADD = "ADDED SUCCESSFULLY";
+	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK MARKED AS COMPLETED";
 	public static final String MESSAGE_SUCCESS_SEARCH_SINGLE = "POSSIBLE RESULT FOR %1$s IS LISTED";
 	public static final String MESSAGE_SUCCESS_SEARCH_MUL = "POSSIBLE RESULTS FOR %1$s ARE LISTED";
-	public static final String MESSAGE_FAIL_SEARCH = "No task is matched";
-	public static final String MESSAGE_SUCCESS_UNDO = "Undo successfully";
-	public static final String MESSAGE_SUCCESS_REDO = "Redo successfully";
-	public static final String MESSAGE_FAIL_UNDO = "There is no more command for undo";
-	public static final String MESSAGE_FAIL_REDO = "There is no more command for Redo";
-	public static final String MESSAGE_DISPLAY = "Display by request";
-	public static final String MESSAGE_SOMEDAY = "Someday";
+	public static final String MESSAGE_SUCCESS_SEARCH = "POSSIBLE RESULT(S) LISTED";
+	public static final String MESSAGE_FAIL_SEARCH = "NO TASK IS MATCHED";
+	public static final String MESSAGE_SUCCESS_UNDO = "UNDO SUCCESSFULLY";
+	public static final String MESSAGE_SUCCESS_REDO = "REDO SUCCESSFULLY";
+	public static final String MESSAGE_FAIL_UNDO = "NO MORE COMMAND FOR UNDO";
+	public static final String MESSAGE_FAIL_REDO = "NO MORE COMMAND FOR REDO";
+	public static final String MESSAGE_DISPLAY = "DISPLAY BY REQUEST";
 	public static final int NILL_YEAR = 0;
 	
 	/*

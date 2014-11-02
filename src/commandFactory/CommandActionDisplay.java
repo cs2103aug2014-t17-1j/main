@@ -8,6 +8,7 @@ public class CommandActionDisplay implements CommandAction{
 	public void execute(ParsedResult parsedResult){
 		Search search = new Search();
 		UpdateSummaryReport.updateForDisplay(parsedResult, search.searchForDisplay(parsedResult));
+		UpdateSummaryReport.unhighlightTask();
 	}
 
 	@Override
