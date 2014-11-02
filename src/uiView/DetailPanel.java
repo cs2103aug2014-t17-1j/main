@@ -101,7 +101,7 @@ public class DetailPanel extends JPanel implements Observer {
 		label.setBackground(ColorBox.colorPool[957]);
 		label.setForeground(Color.white);
 		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.050)));
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.051)));
 		label.setOpaque(true);
 		c.fill = GridBagConstraints.HORIZONTAL;
 //		c.ipady = (int) (size.height * (0.033));      //make this component tall
@@ -116,7 +116,7 @@ public class DetailPanel extends JPanel implements Observer {
 		label.setForeground(Color.black);
 		label.setFont(new Font("Calibiri",Font.PLAIN,15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.055)));
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.050)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -308,8 +308,10 @@ public class DetailPanel extends JPanel implements Observer {
 	}
 
 	public void setFocustoTable() {
-		if(categoryListTable != null)
-		categoryListTable.requestFocus();
+		if(categoryListTable != null){
+			categoryListTable.requestFocus();
+		}
+		
 	}
 
 	private void setKeysPressed(JTable categoryListTable) {
@@ -395,8 +397,8 @@ public class DetailPanel extends JPanel implements Observer {
 	}
 
 	private void setContentTableColumnWidth(JTable contentTable) {
-		contentTable.getColumnModel().getColumn(0).setMaxWidth(300);
-		contentTable.getColumnModel().getColumn(1).setMaxWidth(100);
+		contentTable.getColumnModel().getColumn(0).setMaxWidth(Constants.MAX_WIDTH_CATEGORY_NAME);
+		contentTable.getColumnModel().getColumn(1).setMaxWidth(Constants.MAX_WIDTH_CATEGORY_COUNT);
 
 	}
 

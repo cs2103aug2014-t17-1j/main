@@ -27,6 +27,10 @@ public class Constants {
 	public static final Dimension DIMENSION_HELP_PANEL = new Dimension((int) (SCREEN_SIZE.width * 0.29), (int) (SCREEN_SIZE.height * 0.3));
 	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.36),(int)(SCREEN_SIZE.height * 0.49));
 	
+	public static final int MAX_WIDTH_CATEGORY_NAME = (int)(SCREEN_SIZE.height *0.5);
+	public static final int MAX_WIDTH_CATEGORY_COUNT = (int)(SCREEN_SIZE.height *0.2);
+	
+	
 	public static final String FILENAME_TASKDO = "TaskDo.json";
 	
 	public static final String STRING_STRING = "";

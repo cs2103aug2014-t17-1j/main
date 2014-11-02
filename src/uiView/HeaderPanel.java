@@ -190,7 +190,7 @@ public class HeaderPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
+				uiParent.setVisible(false);
 				
 			}
 			

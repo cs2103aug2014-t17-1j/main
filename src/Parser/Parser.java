@@ -22,13 +22,13 @@ public class Parser {
 		try {
 			String[] seperatedInput = input.split("-");
 			
-			String commandWord = getCommandWord(seperatedInput[0]);
+			String commandWord = getCommandWord(seperatedInput[0].trim());
 			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
 			if (commandDoesNotRequireParam(mainHandler.getCommand())) {
 				result.setCommandType(mainHandler.getCommand());
 				return result;
 			}
-			String remainingInput = mainHandler.removeCommandWord(seperatedInput[0]);
+			String remainingInput = mainHandler.removeCommandWord(seperatedInput[0].trim());
 
 			result = mainHandler.updateResults(result, remainingInput.trim());
 

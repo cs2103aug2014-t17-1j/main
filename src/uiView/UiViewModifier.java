@@ -18,8 +18,10 @@ import javax.swing.border.EmptyBorder;
 
 import taskDo.Executor;
 import taskDo.UpdateSummaryReport;
+import Parser.NotificationManager;
 import Parser.ParsedResult;
 import Parser.Parser;
+
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -88,6 +90,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		setJFrameProperties();
 		updateFrame();
 		
+		NotificationManager manager = new NotificationManager(this);
+		
 	}
 	
 	public void updateAllPanels(){
@@ -126,6 +130,9 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		}
 	}
 	
+	public void setFrameVisible(boolean isVisible){
+		setVisible(isVisible);
+	}
 
 	private void setJFrameProperties() {
 		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/Task.Do Icon.png"));
@@ -267,7 +274,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		System.exit(0);
 		
 	}
 
