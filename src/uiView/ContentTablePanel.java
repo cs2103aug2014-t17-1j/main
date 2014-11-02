@@ -35,7 +35,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private ArrayList<Task> taskList;
 	private JTable contentTable;
-	// private JScrollPane jsp;
 	private int rowSelected;
 	private UiParent parent;
 	private boolean firstTime = true;;
@@ -121,6 +120,11 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.setFocusable(false);
 		add(parentJsp);
 	}
+	
+	//trying for select row 
+	public void selectRowHightlight(int rowSelected){
+		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+	}
 
 	private void setContentTableProperties() {
 		setTableHeaderProperties();
@@ -136,15 +140,16 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
+				
 				// TODO Auto-generated method stub
 				// contentTable.setRowSelectionInterval(0, 0);
-				contentTable.changeSelection(0, 0, false, false);
+				//contentTable.changeSelection(0, 0, false, false);
 			}
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
-				contentTable.clearSelection();
+				//contentTable.clearSelection();
 			}
 		});
 	}
