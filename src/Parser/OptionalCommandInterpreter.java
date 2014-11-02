@@ -14,7 +14,7 @@ import commonClasses.SummaryReport;
 public class OptionalCommandInterpreter extends CommandInterpreter {
 
 	enum OptionalCommand {
-		DUE, FROM, TO, CATEGORY, IMPT, TASK, NOTE
+		DUE, FROM, TO, CATEGORY, IMPT, TITLE, NOTE
 	}
 
 	// Members
@@ -28,7 +28,6 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			throws InvalidParameterException {
 
 		switch (command) {
-		case "by":
 		case "due":
 			currentCommand = OptionalCommand.DUE;
 			break;
@@ -49,8 +48,8 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			currentCommand = OptionalCommand.IMPT;
 			break;
 
-		case "task":
-			currentCommand = OptionalCommand.TASK;
+		case "title":
+			currentCommand = OptionalCommand.TITLE;
 			break;
 			
 		case "note":
@@ -66,33 +65,32 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 
 	public String removeCommandWord(String remainingInput) {
 	try {
-//		switch (currentCommand) {
-//
-//		case DUE:
-//			return remainingInput.substring(4); // Length of word "due "
-//
-//		case FROM:
-//			return remainingInput.substring(5);
-//
-//		case TO:
-//			return remainingInput.substring(3);
-//
-//		case IMPT:
-//			return remainingInput.substring(5);
-//
-//		case CATEGORY:
-//			return remainingInput.substring(9);
-//
-//		case TASK:
-//			return remainingInput.substring(5);
-//			
-//		case NOTE:
-//			return remainingInput.substring(5);
-//
-//		default:
-//			return "";
-//		}
-		return remainingInput.substring(remainingInput.indexOf(' ')+1);
+		switch (currentCommand) {
+
+		case DUE:
+			return remainingInput.substring(4); // Length of word "due "
+
+		case FROM:
+			return remainingInput.substring(5);
+
+		case TO:
+			return remainingInput.substring(3);
+
+		case IMPT:
+			return remainingInput.substring(5);
+
+		case CATEGORY:
+			return remainingInput.substring(9);
+
+		case TITLE:
+			return remainingInput.substring(6);
+			
+		case NOTE:
+			return remainingInput.substring(5);
+
+		default:
+			return "";
+		}
 	} catch (Exception e) {
 		SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
 		throw new InvalidParameterException();
@@ -120,7 +118,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			task.setCategory(commandParam);
 			break;
 
-		case TASK:
+		case TITLE:
 			task.setTitle(commandParam);
 			break;
 

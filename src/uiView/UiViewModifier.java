@@ -91,7 +91,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		updateFrame();
 		
 		NotificationManager manager = new NotificationManager(this);
-		
+		contentPanel.selectRowHightlight(3);
 	}
 	
 	public void updateAllPanels(){
@@ -124,8 +124,10 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
 			}
+			
 			updateAllPanels();
 			updateDetailPanel();
+			contentPanel.selectRowHightlight(10);
 			updateFrame();
 		}
 	}
@@ -332,8 +334,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	public JFrame getMainFrame() {
 		return mainFrame;
 	}
-    
-    
+
 
 
 
