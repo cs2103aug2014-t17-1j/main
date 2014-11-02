@@ -174,5 +174,18 @@ public class Search {
 	private boolean isNotSomeday(Task task) {
 		return task.getDueDate().toLocalDate().getYear()!= Constants.NILL_YEAR;
 	}
+
+	public ArrayList<Task> searchByOverdueAndToday() {
+		for(Task task: StorageList.getInstance().getTaskList()){
+			if(isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday(task))
+				returnList.add(task);
+		}
+		return returnList;
+	}
+
+	private boolean isNotAfterToday(Task task) {
+		DateTime today = new DateTime();
+		return !task.getDueDate().toLocalDate().isAfter(today.toLocalDate());
+	}
 }
 
