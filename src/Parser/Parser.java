@@ -20,8 +20,11 @@ public class Parser {
 
 		// Processing first command and getting command param
 		try {
+			if(isInteger(input) && CommonInterpreterMethods.isValidSelection(input)) { 
+					result.setSelectedItem(Integer.valueOf(input));
+					return result;
+			}
 			String[] seperatedInput = input.split("-");
-			
 			String commandWord = getCommandWord(seperatedInput[0].trim());
 			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
 			if (commandDoesNotRequireParam(mainHandler.getCommand())) {
@@ -43,6 +46,15 @@ public class Parser {
 			result.setValidationResult(false);
 		}
 		return result;
+	}
+
+	private boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input, 10);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	private void processOptionalCommand(String[] remainingInput) {

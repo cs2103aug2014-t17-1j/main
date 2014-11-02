@@ -175,6 +175,8 @@ public class Constants {
 	public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed!";
 
 	public static final String DISPLAY_OVERDUE = "overdue";
+
+	public static final int NOTHING_SELECTED = -1;
 	
 	
 	

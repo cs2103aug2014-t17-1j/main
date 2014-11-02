@@ -99,7 +99,6 @@ public class TestParser {
 		result = testingParser.parseString("add homework -from 20 aug 1991 -to 10 sep 2014 -category testing -impt anything  -note extra points");
 		Assert.assertEquals(false, result.getValidationResult());
 		Assert.assertEquals(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM, SummaryReport.getFeedBackMsg());
-		
 	}
 	
 	@Test
@@ -108,7 +107,7 @@ public class TestParser {
 		ParsedResult result = new ParsedResult();
 		
 		//no deadline
-		result = testingParser.parseString("display todo");
+		result = testingParser.parseString("display someday");
 		Assert.assertEquals(true, result.getValidationResult());
 		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
 		Assert.assertEquals(Constants.SOMEDAY, result.getTaskDetails().getDueDate());
