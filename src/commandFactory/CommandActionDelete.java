@@ -13,6 +13,7 @@ import taskDo.History;
 public class CommandActionDelete implements CommandAction{	
 	@Override
 	public void execute(ParsedResult parsedResult){
+		UpdateSummaryReport.unhighlightTask();
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		
 		ArrayList<Task> displayList = new ArrayList<Task>();
@@ -25,7 +26,6 @@ public class CommandActionDelete implements CommandAction{
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		History.getUndoDisplayHistory().push(displayList);
 		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult, displayList);
-		UpdateSummaryReport.unhighlightTask();
 	}
 
 	@Override

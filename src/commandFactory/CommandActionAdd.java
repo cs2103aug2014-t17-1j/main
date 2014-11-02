@@ -17,9 +17,9 @@ public class CommandActionAdd implements CommandAction{
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
+		UpdateSummaryReport.unhighlightTask();
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		UpdateSummaryReport.updateByDueDate(parsedResult);
-		UpdateSummaryReport.unhighlightTask();
 	}
 }

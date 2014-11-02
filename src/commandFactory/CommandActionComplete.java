@@ -13,6 +13,7 @@ public class CommandActionComplete implements CommandAction{
 
 	@Override
 	public void execute(ParsedResult parsedResult) {
+		UpdateSummaryReport.unhighlightTask();
 		Search targetTask = new Search();
 		int index = parsedResult.getTaskDetails().getId();
 		int taskIndex = targetTask.searchById(index, StorageList.getInstance().getTaskList());
@@ -31,7 +32,6 @@ public class CommandActionComplete implements CommandAction{
 		
 		parsedResult.getTaskDetails().setCompleted(true);
 		StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
-		UpdateSummaryReport.unhighlightTask();
 	}
 
 	@Override
