@@ -45,7 +45,8 @@ public class Search {
 			return searchByCategory(parsedResult);
 		case KEYWORD:
 			return searchByKeyword(parsedResult);
-			
+		case OVERDUE:
+			return searchByOverdue();			
 		default:
 			return null;
 		}
@@ -161,9 +162,10 @@ public class Search {
 		return !targetTask.isCompleted();
 	}
 
-	public ArrayList<Task> searchOverdueAndTodayTasks(){
+	public ArrayList<Task> searchByOverdue(){
+		DateTime today = new DateTime();
 		for(Task task: StorageList.getInstance().getTaskList()){
-			if(isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday(task))
+			if(isNotSomeday(task) && isNotCompleted(task) && task.getDueDate().isBefore(today))
 				returnList.add(task);
 		}
 		return returnList;
@@ -171,11 +173,6 @@ public class Search {
 
 	private boolean isNotSomeday(Task task) {
 		return task.getDueDate().toLocalDate().getYear()!= Constants.NILL_YEAR;
-	}
-
-	private boolean isNotAfterToday(Task task) {
-		DateTime today = new DateTime();
-		return !task.getDueDate().toLocalDate().isAfter(today.toLocalDate());
 	}
 }
 

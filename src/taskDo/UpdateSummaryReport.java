@@ -14,7 +14,7 @@ public class UpdateSummaryReport {
 	public static void init(){
 		ArrayList<Task> displayList = new ArrayList<Task>();
 		Search search = new Search();
-		displayList = search.searchOverdueAndTodayTasks();
+		displayList = search.searchByOverdue();
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 	}
