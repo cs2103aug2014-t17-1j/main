@@ -24,33 +24,36 @@ public class UpdateSummaryReport {
 
 		updateDisplayTaskList(search.searchByDate(parsedResult));
 		SummaryReport.sortByDueDate();
-		determineFeedbackMsg(parsedResult.getCommandType());
+		search = new Search();
+		int highlightTask = search.searchById(parsedResult.getTaskDetails().getId(), SummaryReport.getDisplayList()); 
+		SummaryReport.setRowIndexHighlight(highlightTask);
+		determineFeedbackMsg(parsedResult);
 	}
 
 	public static void updateForEdit(ParsedResult parsedResult, ArrayList<Task> displayList){
 		updateDisplayTaskList(displayList);
-		determineFeedbackMsg(parsedResult.getCommandType());
+		determineFeedbackMsg(parsedResult);
 	}
 
 	public static void updateForDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.remove(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
-		determineFeedbackMsg(parsedResult.getCommandType());
+		determineFeedbackMsg(parsedResult);
 	}
 
 	public static void updateForUndoDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.add(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
-		determineFeedbackMsg(parsedResult.getCommandType());
+		determineFeedbackMsg(parsedResult);
 	}
 
 	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
 
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
-		determineFeedbackMsg(parsedResult.getCommandType());
+		determineFeedbackMsg(parsedResult);
 	}
 
 	public static void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
@@ -59,23 +62,29 @@ public class UpdateSummaryReport {
 		SummaryReport.sortByDueDate();
 		if(displayList.isEmpty()){
 			updateFeedbackMsg(Constants.MESSAGE_FAIL_SEARCH);
-		}else{updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);}
+		}else{determineFeedbackMsg(parsedResult);}
 	}
 
 	private static void updateDisplayTaskList(ArrayList<Task> displayList) {
 		SummaryReport.setDisplayList(displayList);
 	}
 
-	private static void determineFeedbackMsg(CommandType commandType) {
+	private static void determineFeedbackMsg(ParsedResult parsedResult) {
+		String feedbackMsg;
+		int taskID = parsedResult.getTaskDetails().getId();
+		CommandType commandType = parsedResult.getCommandType();
 		switch(commandType){
 		case ADD:
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_ADD);	
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_ADD, taskID);
+			updateFeedbackMsg(feedbackMsg);	
 			break;
 		case DELETE:
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_DELETE);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_DELETE, taskID);
+			updateFeedbackMsg(feedbackMsg);
 			break;
 		case EDIT:
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_EDIT);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_EDIT, taskID);
+			updateFeedbackMsg(feedbackMsg);
 			break;
 		case DISPLAY:
 			updateFeedbackMsg(Constants.MESSAGE_DISPLAY);
@@ -87,10 +96,17 @@ public class UpdateSummaryReport {
 			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_REDO);
 			break;
 		case COMPLETED:
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_COMPLETED);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_COMPLETED, taskID);
+			updateFeedbackMsg(feedbackMsg);
 			break;
 		case SEARCH:
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);
+			if(SummaryReport.getDisplayList().size()==1){
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_SINGLE, taskID);
+			}else{
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_MUL, taskID);
+			}
+			updateFeedbackMsg(feedbackMsg);
+
 			break;
 		default:
 			break;
@@ -99,6 +115,10 @@ public class UpdateSummaryReport {
 
 	private static void updateFeedbackMsg(String feedbackMsg) {
 		SummaryReport.setFeedBackMsg(feedbackMsg);
+	}
+
+	public void highlightTask(Task task){
+
 	}
 }
 

@@ -131,11 +131,12 @@ public class Constants {
 	 */
 
 	// Command Actions
-	public static final String MESSAGE_SUCCESS_DELETE = "Deleted successfully";
-	public static final String MESSAGE_SUCCESS_EDIT = "Edited successfully";
-	public static final String MESSAGE_SUCCESS_ADD = "Added successfully";
-	public static final String MESSAGE_SUCCESS_COMPLETED = "Task marked as completed";
-	public static final String MESSAGE_SUCCESS_SEARCH = "Possible results listed";
+	public static final String MESSAGE_SUCCESS_DELETE = "TASK %1$s IS DELETED";
+	public static final String MESSAGE_SUCCESS_EDIT = "TASK %1$s IS EDITED";
+	public static final String MESSAGE_SUCCESS_ADD = "TASK %1$s IS ADDED";
+	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s MARKED AS COMPLETED";
+	public static final String MESSAGE_SUCCESS_SEARCH_SINGLE = "POSSIBLE RESULT FOR %1$s IS LISTED";
+	public static final String MESSAGE_SUCCESS_SEARCH_MUL = "POSSIBLE RESULTS FOR %1$s ARE LISTED";
 	public static final String MESSAGE_FAIL_SEARCH = "No task is matched";
 	public static final String MESSAGE_SUCCESS_UNDO = "Undo successfully";
 	public static final String MESSAGE_SUCCESS_REDO = "Redo successfully";
