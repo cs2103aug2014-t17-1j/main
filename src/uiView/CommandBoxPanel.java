@@ -2,6 +2,7 @@ package uiView;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -125,6 +126,8 @@ public class CommandBoxPanel extends JPanel implements KeyListener,Observer{
 	@Override
 	public void update() {
 		String text_feedBack = SummaryReport.getFeedBackMsg();
+		 feedbackMsg.setFont(new Font("Calibri",Font.BOLD,20));
+		 feedbackMsg.setForeground(new Color(0xe9,0x1e,0x63)); //Google pink e91e63
 		// TODO Auto-generated method stub
 		if(text_feedBack == null){
 			feedbackMsg.setText("");
