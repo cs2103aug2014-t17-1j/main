@@ -91,7 +91,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		updateFrame();
 		
 		NotificationManager manager = new NotificationManager(this);
-		contentPanel.selectRowHightlight(3);
 	}
 	
 	public void updateAllPanels(){
@@ -127,7 +126,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			
 			updateAllPanels();
 			updateDetailPanel();
-			//contentPanel.selectRowHightlight(10);
+			rowSelected = SummaryReport.getRowIndexHighlight();
+			contentPanel.selectRowHightlight(rowSelected);
 			updateFrame();
 		}
 	}
