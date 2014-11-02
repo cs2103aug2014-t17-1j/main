@@ -123,7 +123,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 	
 	//trying for select row 
 	public void selectRowHightlight(int rowSelected){
-		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+		if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED)
+			contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+		//contentTable.scrollRectToVisible(new Rect);
 	}
 
 	private void setContentTableProperties() {
