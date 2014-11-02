@@ -308,8 +308,10 @@ public class DetailPanel extends JPanel implements Observer {
 	}
 
 	public void setFocustoTable() {
-		if(categoryListTable != null)
-		categoryListTable.requestFocus();
+		if(categoryListTable != null){
+			categoryListTable.requestFocus();
+		}
+		
 	}
 
 	private void setKeysPressed(JTable categoryListTable) {
@@ -395,8 +397,8 @@ public class DetailPanel extends JPanel implements Observer {
 	}
 
 	private void setContentTableColumnWidth(JTable contentTable) {
-		contentTable.getColumnModel().getColumn(0).setMaxWidth(300);
-		contentTable.getColumnModel().getColumn(1).setMaxWidth(100);
+		contentTable.getColumnModel().getColumn(0).setMaxWidth(Constants.MAX_WIDTH_CATEGORY_NAME);
+		contentTable.getColumnModel().getColumn(1).setMaxWidth(Constants.MAX_WIDTH_CATEGORY_COUNT);
 
 	}
 
