@@ -117,7 +117,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	}
 	
 	public void passToParser(String command){
-		if(command!=null){
+		if(command!=null && !command.trim().isEmpty()){
 			parseResult = parser.parseString(command);
 			if(parseResult.getIsExecutorApplicable()){
 				System.out.println("Parse String reached here");
