@@ -130,6 +130,9 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		}
 	}
 	
+	public void setFrameVisible(boolean isVisible){
+		setVisible(isVisible);
+	}
 
 	private void setJFrameProperties() {
 		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/Task.Do Icon.png"));

@@ -16,5 +16,6 @@ public interface UiParent {
 	public void setRowSelected(int rowSelected);
 	public JFrame getMainFrame();
 	public void removeDetailPanel();
+	public void setVisible(boolean isVisible);
 
 }
