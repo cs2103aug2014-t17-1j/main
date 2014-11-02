@@ -214,11 +214,10 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			if(isDetailPanelExisting()){
 				mainFrame.remove(detailPanel);
 			}
-			rowSelected = SummaryReport.getRowIndexHighlight();
-			if(rowSelected != Constants.NOTHING_SELECTED){
-				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+			if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
+				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(SummaryReport.getRowIndexHighlight()));
 			}
-			
+			detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
 			mainFrame.add(detailPanel,BorderLayout.EAST);
 			detailPanel.revalidate();
 			updateFrame();
