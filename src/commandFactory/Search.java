@@ -21,11 +21,10 @@ public class Search {
 		returnList = new ArrayList<Task>();
 	}
 
-	public int searchById(int id){
-		assert !StorageList.getInstance().getTaskList().isEmpty();
-		for(Task taskIterator: StorageList.getInstance().getTaskList()){
-			if(id == taskIterator.getId()){
-				taskIndex = StorageList.getInstance().getTaskList().indexOf(taskIterator);
+	public int searchById(int id, ArrayList<Task> taskList){
+		for(Task task: taskList){
+			if(id == task.getId()){
+				taskIndex = taskList.indexOf(task);
 				break;
 			}
 		}

@@ -14,7 +14,8 @@ public class CommandActionComplete implements CommandAction{
 	@Override
 	public void execute(ParsedResult parsedResult) {
 		Search targetTask = new Search();
-		int taskIndex = targetTask.searchById(parsedResult.getTaskDetails().getId());
+		int index = parsedResult.getTaskDetails().getId();
+		int taskIndex = targetTask.searchById(index, StorageList.getInstance().getTaskList());
 
 		History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
 		
@@ -38,7 +39,7 @@ public class CommandActionComplete implements CommandAction{
 		Search targetTask = new Search();
 		parsedResult.getTaskDetails().setCompleted(false);
 		Task lastTask = parsedResult.getTaskDetails();
-		int taskIndex = targetTask.searchById(lastTask.getId());
+		int taskIndex = targetTask.searchById(lastTask.getId(), StorageList.getInstance().getTaskList());
 		History.getRedoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
 		StorageList.getInstance().getTaskList().set(taskIndex, lastTask);
 		

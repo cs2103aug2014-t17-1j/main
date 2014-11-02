@@ -12,8 +12,14 @@ public class SummaryReport{
 	private static String feedBackMsg;
 	private static ArrayList<Task> displayList = new ArrayList<Task>();
 	private static ArrayList<Integer> imptRowIndexList;
-
+	private static int rowIndexHighlight = -1;
 	
+	public static int getRowIndexHighlight() {
+		return rowIndexHighlight;
+	}
+	public static void setRowIndexHighlight(int rowIndexHighlight) {
+		SummaryReport.rowIndexHighlight = rowIndexHighlight;
+	}
 	public static String getFeedBackMsg() {
 		return feedBackMsg;
 	}

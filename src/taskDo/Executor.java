@@ -38,6 +38,7 @@ public class Executor {
 			History.getRedoActionHistory().push(commandAction);
 
 			parsedResult.setTask(lastTask);
+//			parsedResult.setCommandType(CommandType.UNDO);
 			commandAction.undo(parsedResult);
 		}else{
 			History.getUndoTaskHistory().clear();
@@ -49,9 +50,7 @@ public class Executor {
 		if(!History.getRedoActionHistory().empty()){
 			CommandAction commandAction = History.getRedoActionHistory().pop();
 			Task lastTask = History.getRedoTaskHistory().pop();
-
 			History.getUndoActionHistory().push(commandAction);
-			
 			parsedResult.setTask(lastTask);
 			commandAction.execute(parsedResult);
 		}else{

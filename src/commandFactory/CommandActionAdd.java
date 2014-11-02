@@ -11,13 +11,13 @@ public class CommandActionAdd implements CommandAction{
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		
-		UpdateSummaryReport.update(parsedResult);
+		UpdateSummaryReport.updateByDueDate(parsedResult);
 	}
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
-		UpdateSummaryReport.update(parsedResult);
+		UpdateSummaryReport.updateByDueDate(parsedResult);
 	}
 }

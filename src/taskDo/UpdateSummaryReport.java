@@ -6,6 +6,7 @@ import Parser.ParsedResult;
 import commandFactory.CommandType;
 import commandFactory.Search;
 import commonClasses.Constants;
+import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 
 public class UpdateSummaryReport {
@@ -17,36 +18,41 @@ public class UpdateSummaryReport {
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 	}
-	
-	public static void update(ParsedResult parsedResult){
+
+	public static void updateByDueDate(ParsedResult parsedResult){
 		Search search = new Search();
 
 		updateDisplayTaskList(search.searchByDate(parsedResult));
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
-	
+
+	public static void updateForEdit(ParsedResult parsedResult, ArrayList<Task> displayList){
+		updateDisplayTaskList(displayList);
+		determineFeedbackMsg(parsedResult.getCommandType());
+	}
+
 	public static void updateForDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.remove(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
-	
+
 	public static void updateForUndoDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.add(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
-	
+
 	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
 
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult.getCommandType());
 	}
-	
+
 	public static void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
 
 		updateDisplayTaskList(displayList);
