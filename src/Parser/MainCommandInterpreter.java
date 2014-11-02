@@ -217,7 +217,6 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			// the correct
 			// index in list
 			copyTaskParamToParsedResult(result, selection);
-			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();
