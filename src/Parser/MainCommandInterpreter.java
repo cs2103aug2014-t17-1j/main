@@ -27,17 +27,25 @@ public class MainCommandInterpreter extends CommandInterpreter {
 	public void identifyAndSetCommand(String command)
 			throws InvalidParameterException {
 		switch (command) {
+		case "new":
+		case "create":
 		case "add":
 			currentCommand = CommandType.ADD;
 			break;
 
+		case "show":
+		case "view":
 		case "display":
 			currentCommand = CommandType.DISPLAY;
 			break;
 
+		case "del":
+		case "remove":
 		case "delete":
 			currentCommand = CommandType.DELETE;
 			break;
+
+		case "mod":
 		case "edit":
 			currentCommand = CommandType.EDIT;
 			break;
@@ -49,10 +57,12 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			currentCommand = CommandType.SEARCH;
 			break;
 
+		case "tick":
+		case "done":
 		case "complete":
 			currentCommand = CommandType.COMPLETED;
 			break;
-			
+
 		case "redo":
 			currentCommand = CommandType.REDO;
 			break;
@@ -65,28 +75,29 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 	public String removeCommandWord(String input) {
 		try {
-			switch (currentCommand) {
-			case ADD:
-				return input.substring(4); // 4 is length of word "add "
-
-			case DISPLAY:
-				return input.substring(8); // 8 is length of word "display "
-
-			case DELETE:
-				return input.substring(7); // 7 is length of word "delete "
-
-			case SEARCH:
-				return input.substring(7); // 7 is length of word "search "
-
-			case EDIT:
-				return input.substring(5);
-
-			case COMPLETED:
-				return input.substring(9);
-
-			default:
-				return "";
-			}
+//			switch (currentCommand) {
+//			case ADD:
+//				return input.substring(4); // 4 is length of word "add "
+//
+//			case DISPLAY:
+//				return input.substring(8); // 8 is length of word "display "
+//
+//			case DELETE:
+//				return input.substring(7); // 7 is length of word "delete "
+//
+//			case SEARCH:
+//				return input.substring(7); // 7 is length of word "search "
+//
+//			case EDIT:
+//				return input.substring(5);
+//
+//			case COMPLETED:
+//				return input.substring(9);
+//
+//			default:
+//				return "";
+//		}
+			return input.substring(input.indexOf(' ')+1);
 		} catch (Exception e) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
 			throw new InvalidParameterException();
@@ -143,8 +154,9 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			int selection = Integer.valueOf(commandParam) - 1; // adjust to get
 			// correct index
 			result.setTask(SummaryReport.getDisplayList().get(selection));
-			if(result.getTaskDetails().isCompleted()) {
-				SummaryReport.setFeedBackMsg(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
+			if (result.getTaskDetails().isCompleted()) {
+				SummaryReport
+						.setFeedBackMsg(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
 				throw new InvalidParameterException();
 			}
 		} else {
@@ -184,6 +196,8 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		} else if (commandParam.toLowerCase().equals(
 				Constants.DISPLAY_COMPLETED)) {
 			result.setSearchMode(SearchType.COMPLETED);
+		} else if (commandParam.toLowerCase().equals(Constants.DISPLAY_OVERDUE)) {
+			result.setSearchMode(SearchType.OVERDUE);
 		} else {
 			DateTime date = CommonInterpreterMethods.getDate(commandParam);
 			if (date == null) {
@@ -203,6 +217,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			// the correct
 			// index in list
 			copyTaskParamToParsedResult(result, selection);
+			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();

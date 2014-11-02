@@ -44,14 +44,13 @@ public class Constants {
 		"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",
 			"<html><font color='red'>add</font> *insert task title*</html>",
 			"<html><font color='red'>edit</font> *corresponding ID*</html>",
-			"",
 			"<html><h3><u><i>Main Commands Group 2</i></h3></u></html>",
 			"<html><font color='red'>delete</font> *corresponding ID*</html>",
 			"<html><font color='red'>display</font> *date or category*</html>",
 			"<html><font color='red'>undo</font>",
+			"<html><font color='red'>redo</font>",
 			"<html><font color='red'>complete</font> *corresponding ID*</html>",
 			"<html><font color='red'>search</font> *keyword*</html>",
-			"",
 			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
 			"Addtional commands that works with main commands group 1",
 			"<html><font color='#1de9b6'>Note: Optional Command words are recognised by '-'</font></html>",
@@ -60,26 +59,24 @@ public class Constants {
 			"<html><font color='#1de9b6'>-</font><font color='ff7997'>from</font> *startdate* <font color='#1de9b6'>-</font><font color='ff7997'>to</font> *duedate*</html>",
 			"<html><font color='#1de9b6'>-</font><font color='ff7997'>impt</font> *Y or N*</html>",
 			"<html><font color='#1de9b6'>-</font><font color='ff7997'>note</font> *insert reminder notes*</html>",
-			"",
 			"Example:",
 			"add Homework1 -due 10/09/2014 -category School -impt Y",
 			"add Homework2 -from 20 aug 16:00 -to 10 sep 18:00",
-			"",
 			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
 			"Addtional commands that only works with some main commands",
 			"<html>For <font color='red'>edit</font>: <font color='#1de9b6'>-</font><font color='ff7997'>task</font> *new Title*</html>",
 			"Example: edit 1 -task homework3",
-			"",
 			"<html><h3><u><i>Advanced Display Command</i></h3></u></html>",
 			"<html><font color='red'>display</font> *startdate* <font color='#1de9b6'>-</font><font color='ff7997'>to</font> *duedate*</html>",
 			"<html><font color='red'>display</font> all</html>",
+			"<html><font color='red'>display</font> overdue</html>",
 			"<html><font color='red'>display</font> completed</html>",
 			"Example: display 23 mar -to 10 apr"
 			
 			
 	};
-	public static final String[] TASK_ATTRIBUTE = {"<b><i>Description</i></b>","<b><i>Category</i></b>","<b><i>Due on</i></b>"
-		, "<b><i>Important</b></i>","<b><i>Completed</b></i>","<b><i>Note</b></i>"};
+	public static final String[] TASK_ATTRIBUTE = {"Note","Category","From"
+		, "To","Completed","Important"};
 	
 	public static final String STRING_YES = "Yes";
 	public static final String STRING_NO = "No";
@@ -171,6 +168,8 @@ public class Constants {
 	public static final String MESSAGE_MISSING_SIGN_FROMTO_COMMAND = "Please make sure '-' sign is used for 'to' command";
 
 	public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed!";
+
+	public static final String DISPLAY_OVERDUE = "overdue";
 	
 	
 	

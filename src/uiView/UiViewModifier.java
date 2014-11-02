@@ -121,6 +121,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 				executor.execute(parseResult);
 			}
 			updateAllPanels();
+			updateDetailPanel();
+			updateFrame();
 		}
 	}
 	
