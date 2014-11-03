@@ -1,6 +1,7 @@
 package uiView;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
@@ -266,7 +267,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 		System.out.println("CHANGE TO TWOD ARRAY " + taskList.size());
 		for (int i = 0; i < taskList.size(); i++) {
 			tableContent[i][0] = (i + 1) + "";
-			tableContent[i][1] = taskList.get(i).getTitle();
+			tableContent[i][1] = Constants.STRING_OPEN_HTML+taskList.get(i).getTitle()+Constants.STRING_CLOSE_HTML;
 			if (taskList.get(i).getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR) {
 				dueDate = Constants.STRING_SOMEDAY;
 			} else {
@@ -280,6 +281,25 @@ public class ContentTablePanel extends JPanel implements Observer {
 		return tableContent;
 	}
 
+	private void adjustTableRowHeight(){
+		try {
+			System.out.println("HEIGHT IS CHANGE");
+		    for (int row=0; row<contentTable.getRowCount(); row++) {
+		        int rowHeight = contentTable.getRowHeight();
+		 
+		        for (int column=0; column<contentTable.getColumnCount(); column++) {
+		            Component comp = contentTable.prepareRenderer(contentTable.getCellRenderer(row, column), row, column);
+		            rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
+		        }
+		 
+		        contentTable.setRowHeight(row, rowHeight);
+		        System.out.println("ROW HEIGHT"+rowHeight);
+		    }
+		} catch(ClassCastException e) { 
+			System.out.println(e.getStackTrace());
+		}
+		contentTable.revalidate();
+	}
 	private void setContentTableColumnWidth(JTable contentTable) {
 		contentTable.getColumnModel().getColumn(0).setMaxWidth(20);
 		contentTable.getColumnModel().getColumn(1).setMaxWidth(600);

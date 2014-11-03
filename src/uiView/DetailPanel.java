@@ -446,7 +446,7 @@ public class DetailPanel extends JPanel implements Observer {
 		assert task.getTitle() != null;
 		// arr[0] = task.getTitle();
 		assert task.getCategory() != null;
-		arr[1] = task.getCategory();
+		arr[1] = Constants.STRING_OPEN_HTML+task.getCategory()+ Constants.STRING_CLOSE_HTML;
 		if (task.getCategory() == null) {
 			arr[1] = Constants.STRING_NA;
 		}
@@ -478,7 +478,7 @@ public class DetailPanel extends JPanel implements Observer {
 		if (task.getNote() == null) {
 			arr[0] = Constants.STRING_NA;
 		} else {
-			arr[0] = task.getNote();
+			arr[0] =  Constants.STRING_OPEN_HTML+task.getNote()+ Constants.STRING_CLOSE_HTML;
 		}
 
 		return arr;

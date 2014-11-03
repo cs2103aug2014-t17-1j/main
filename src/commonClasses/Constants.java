@@ -34,6 +34,8 @@ public class Constants {
 	public static final String FILENAME_TASKDO = "TaskDo.json";
 	
 	public static final String STRING_STRING = "";
+	public static final String STRING_OPEN_HTML = "<html>";
+	public static final String STRING_CLOSE_HTML = "</html>";
 	public static final String STRING_NA = "NA";
 	public static final String STRING_F1_HELP = "F1 Help";
 	public static final String STRING_F2_DETAILS = "F2 Details";
