@@ -64,12 +64,8 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 					@Override
 					public void valueChanged(ListSelectionEvent select) {
-						rowSelected = contentTable.getSelectedRow();
-						SummaryReport.setRowIndexHighlight(rowSelected);
-						parent.setRowSelected(SummaryReport.getRowIndexHighlight());
-						parent.updateDetailPanel();
+						createDetailPanelForSelectedRow();
 					}
-
 				});
 
 	}
@@ -77,6 +73,13 @@ public class ContentTablePanel extends JPanel implements Observer {
 	public int getSelectedTableRow() {
 		return rowSelected;
 	}
+	private void createDetailPanelForSelectedRow() {
+		rowSelected = contentTable.getSelectedRow();
+		SummaryReport.setRowIndexHighlight(rowSelected);
+		parent.setRowSelected(SummaryReport.getRowIndexHighlight());
+		parent.updateDetailPanel();
+	}
+
 
 	private void setContentIntoTable() {
 		if (taskList.size() != 0) {
@@ -120,7 +123,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 	public void selectRowHightlight(int rowSelected){
 		if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
 			contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+			createDetailPanelForSelectedRow();
 			contentTable.scrollRectToVisible(contentTable.getCellRect(rowSelected, 0, true));	
+			
 		}
 			
 	}

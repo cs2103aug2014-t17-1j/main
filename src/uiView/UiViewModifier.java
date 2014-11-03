@@ -117,8 +117,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			
 			updateAllPanels();
 			updateDetailPanel();
-			contentPanel.selectRowHightlight(SummaryReport.getRowIndexHighlight());
 			removeDetailPanel();
+			contentPanel.selectRowHightlight(SummaryReport.getRowIndexHighlight());
 			updateFrame();
 		}
 	}
