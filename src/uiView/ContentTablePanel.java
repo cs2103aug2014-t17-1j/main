@@ -37,7 +37,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 	private JTable contentTable;
 	private int rowSelected;
 	private UiParent parent;
-	private boolean firstTime = true;;
 
 	private SoftShadowJPanel parentJsp;
 
@@ -66,12 +65,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 					@Override
 					public void valueChanged(ListSelectionEvent select) {
 						rowSelected = contentTable.getSelectedRow();
-						parent.setRowSelected(rowSelected);
+						SummaryReport.setRowIndexHighlight(rowSelected);
+						parent.setRowSelected(SummaryReport.getRowIndexHighlight());
 						parent.updateDetailPanel();
-						if(firstTime){
-							parent.removeDetailPanel();
-							firstTime =false;
-						}
 					}
 
 				});
@@ -116,7 +112,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		setContentTableColumnWidth(contentTable);
 		setContentTableProperties();
 		setJScrollPanePropCentrePane();
-		firstTime = false;
 		contentTable.setFocusable(false);
 		add(parentJsp);
 	}
@@ -134,8 +129,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		setTableHeaderProperties();
 		setRowAndColumnSelectionMode();
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		contentTable.requestFocus();
-//		contentTable.setFocusable(false);
 		setKeysPressed();
 		addFocusListener();
 	}
@@ -144,10 +137,15 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
+//				if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
+//					contentTable.getModel().getValueAt(SummaryReport.getRowIndexHighlight(), 0);
+//				}else{
+//					contentTable.changeSelection(0, 0, false, false);
+//				}
 				
 				// TODO Auto-generated method stub
 				// contentTable.setRowSelectionInterval(0, 0);
-				//contentTable.changeSelection(0, 0, false, false);
+				
 			}
 
 			@Override
@@ -164,9 +162,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 		f1KeyPressedAction();
 	}
 
-	public void releaseFocus(){
-		requestFocus(false);
-	}
+//	public void releaseFocus(){
+//		requestFocus(false);
+//	}
+	
 	private void setRowAndColumnSelectionMode() {
 		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
 		contentTable.setRowHeight(Constants.TABLE_HEIGHT);
@@ -296,11 +295,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 	private void setJScrollPanePropCentrePane() {
 		parentJsp = new SoftShadowJPanel();
 		JScrollPane jsp = new JScrollPane(contentTable);
-		// TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
-		// null, Constants.HEADER_TAKSLIST,
-		// TitledBorder.DEFAULT_JUSTIFICATION,
-		// TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
-		// Constants.COLOR_TABLE_HEADER_TEXT);
 		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
 		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
@@ -311,7 +305,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	public void highlightRow() {
 		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
-		contentTable.requestFocusInWindow();
+		//contentTable.requestFocusInWindow();
 	}
 
 	@Override
@@ -321,8 +315,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
-//		contentTable.requestFocus();
-		contentTable.setFocusable(true);
 		repaint();
 		revalidate();
 		parent.updateFrame();

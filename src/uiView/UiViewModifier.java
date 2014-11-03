@@ -31,12 +31,9 @@ import commonClasses.SummaryReport;
 public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 
 	private JFrame mainFrame;
-
 	private Executor executor; 
-
 	private UIPanelList uiList;
 	private HeaderPanel headerPanel;
-	private ShorcutPanel helpPanel;
 	private CommandBoxPanel commandBoxPanel;
 	private DetailPanel detailPanel; 
 	private ContentTablePanel contentPanel;
@@ -54,8 +51,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame.setUndecorated(true);
 		handleDrag(mainFrame);
 	
-
-		System.out.println("SCREEN SIZE "+Constants.SCREEN_SIZE.height+"  WID"+Constants.SCREEN_SIZE.width);
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
@@ -67,10 +62,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		headerPanel = new HeaderPanel(new GridBagLayout(),this);
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
-		//helpPanel = new ShorcutPanel();
-		//mainFrame.add(helpPanel,BorderLayout.WEST);
-		
-		
 		commandBoxPanel = new CommandBoxPanel(this);
 		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
 		commandBoxPanel.setFocusToCommandBox();
@@ -81,16 +72,16 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		parentContentPanel.setBorder(new EmptyBorder(15,25,15,25));
 		parentContentPanel.setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
-		
-		
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
 		uiList.addUI(contentPanel);
 		uiList.addUI(commandBoxPanel);
 		setJFrameProperties();
+	
 		updateFrame();
 		
 		NotificationManager manager = new NotificationManager(this);
+		setFocusToCommandBox();
 	}
 	
 	public void updateAllPanels(){
@@ -126,9 +117,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			
 			updateAllPanels();
 			updateDetailPanel();
-			rowSelected = SummaryReport.getRowIndexHighlight();
 			contentPanel.selectRowHightlight(SummaryReport.getRowIndexHighlight());
-			System.out.println("ROW SELECTED "+rowSelected);
+			removeDetailPanel();
 			updateFrame();
 		}
 	}
@@ -172,7 +162,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 				
 			}
 			updateAllPanels();
-			setFocus();
+			//setFocus();
 			updateFrame();
 		}
 	
@@ -334,7 +324,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
     	if(detailPanel != null){
     		mainFrame.remove(detailPanel);
     	}
-    	
     	setFocusToCommandBox();
     	updateFrame();
     }
