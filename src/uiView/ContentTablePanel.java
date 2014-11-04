@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -49,15 +50,14 @@ public class ContentTablePanel extends JPanel implements Observer {
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG
 				);
-		System.out.println("SUMMARY REPORT LIST"+SummaryReport.getDisplayList().size());
+		//System.out.println("SUMMARY REPORT LIST"+SummaryReport.getDisplayList().size());
 		
 	}
 	
-	public void clearSelection(){
-		contentTable.clearSelection();
-	}
-	
-
+//	public void clearSelection(){
+//		contentTable.clearSelection();
+//	}
+//	
 
 	public void addListActionListener() {
 		contentTable.getSelectionModel().addListSelectionListener(
@@ -137,27 +137,25 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		setKeysPressed();
 		addFocusListener();
+	
 	}
 
 	private void addFocusListener() {
 		contentTable.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
-//				if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
-//					contentTable.getModel().getValueAt(SummaryReport.getRowIndexHighlight(), 0);
-//				}else{
-//					contentTable.changeSelection(0, 0, false, false);
-//				}
+
+				contentTable.setBorder(BorderFactory.createLineBorder(Color.CYAN,2));
 				
-				// TODO Auto-generated method stub
-				// contentTable.setRowSelectionInterval(0, 0);
-				
+			
 			}
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				// TODO Auto-generated method stub
 				//contentTable.clearSelection();
+				contentTable.setBorder(new EmptyBorder(0,0,0,0));
+			
 			}
 		});
 	}
@@ -190,7 +188,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 				Constants.COLOR_TABLE_HEADER_BG);
 
 		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(ColorBox.colorPool[957]);
+		headerRenderer.setBackground(ColorBox.colorPool[7]);
 		headerRenderer.setForeground(Color.WHITE);
 		headerRenderer.setFont(new Font("Serif", Font.BOLD, 15));
 
@@ -267,7 +265,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 		System.out.println("CHANGE TO TWOD ARRAY " + taskList.size());
 		for (int i = 0; i < taskList.size(); i++) {
 			tableContent[i][0] = (i + 1) + "";
-			tableContent[i][1] = Constants.STRING_OPEN_HTML+taskList.get(i).getTitle()+Constants.STRING_CLOSE_HTML;
+			tableContent[i][1] = taskList.get(i).getTitle();
 			if (taskList.get(i).getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR) {
 				dueDate = Constants.STRING_SOMEDAY;
 			} else {
@@ -307,15 +305,23 @@ public class ContentTablePanel extends JPanel implements Observer {
 	}
 
 	private void setTableCellProperties(JTable contentTable) {
-		for (int i = 0; i < taskList.size(); i++) {
+		
+		//for (int i = 0; i < taskList.size(); i++) {
 			contentTable.getColumnModel().getColumn(0)
 					.setCellRenderer(new CustomTableRender());
 			contentTable.getColumnModel().getColumn(1)
 					.setCellRenderer(new CustomTableRender());
 			contentTable.getColumnModel().getColumn(2)
 					.setCellRenderer(new CustomTableRender());
+//			contentTable.getColumnModel().getColumn(0)
+//			.setCellRenderer(new LineWrapCellRenderer());
+//	contentTable.getColumnModel().getColumn(1)
+//			.setCellRenderer(new LineWrapCellRenderer());
+//	contentTable.getColumnModel().getColumn(2)
+//			.setCellRenderer(new CustomTableRender());
+		//}
 		}
-	}
+	
 
 	private void setJScrollPanePropCentrePane() {
 		parentJsp = new SoftShadowJPanel();

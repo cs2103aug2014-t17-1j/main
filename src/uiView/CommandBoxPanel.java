@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -23,19 +24,34 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	private int typeCount;
 	private JTextField commandBox;
 	private String command;
+	private JLabel lblHintMsg;
 	private JLabel feedbackMsg;
 	private UiParent parent;
 	private CommandStack commandStack;
+	private String pieceOfCommand;
+	private String txtHintMsg;
 
 	public CommandBoxPanel(UiParent parent) {
+		pieceOfCommand ="";
+		txtHintMsg="";
 		commandStack = new CommandStack();
 		this.parent = parent;
 		setLayout(new BorderLayout());
 		initFeedbackMsg();
-		initCommandBox();
+		initCommandBox();		
 		add(feedbackMsg, BorderLayout.SOUTH);
-		add(commandBox, BorderLayout.NORTH);
+		add(commandBox, BorderLayout.CENTER);
 		setBackground(Constants.COLOR_COMMAND_PANEL_BG);
+
+	}
+
+	private void addHintMsg() {
+		lblHintMsg = new JLabel();
+		if(isValidCommandType()){
+			lblHintMsg.setText(txtHintMsg);
+		}
+		add(lblHintMsg,BorderLayout.NORTH);
+		revalidate();
 
 	}
 
@@ -115,20 +131,57 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-
+//		if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+//			removeCharAndAddHintMsg();
+//			
+//		}
 	}
 
+	private void removeCharAndAddHintMsg() {
+		if(isRemoveable()){
+			pieceOfCommand = removeLastChar(pieceOfCommand);
+			if(isValidCommandType()){
+				addHintMsg();
+			}
+		}
+	}
+
+	private boolean isRemoveable(){
+		if(pieceOfCommand.length() >1 ){
+			return true;
+		}
+		return false;
+	}
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
+//		pieceOfCommand += arg0.getKeyChar();
+//		System.out.println(pieceOfCommand);
+//		addHintMsg();
+//		
+	}
 
+	private boolean isValidCommandType() {
+		if(pieceOfCommand.contains(CommandType.ADD.toString().toLowerCase()+" ")){
+			txtHintMsg = Constants.HELPCOMMANDS[2];
+			return true;
+		}
+		if(pieceOfCommand.equalsIgnoreCase(CommandType.EDIT.toString()+Constants.STRING_SPACE)){
+			return true;
+		}
+		if(pieceOfCommand.equalsIgnoreCase(CommandType.DISPLAY.toString()+Constants.STRING_SPACE)){
+			return true;
+		}
+		
+		return false;
 	}
 
 	@Override
 	public void update() {
+		pieceOfCommand="";
 		String text_feedBack = SummaryReport.getFeedBackMsg();
 		feedbackMsg.setFont(new Font("Calibri", Font.BOLD, 20));
-		feedbackMsg.setForeground(new Color(0xe9, 0x1e, 0x63)); // Google pink
+		feedbackMsg.setForeground(Constants.COLOR_FEEDBACK_MSG); // Google pink
 																// e91e63
 		// TODO Auto-generated method stub
 		if (text_feedBack == null) {
@@ -137,5 +190,9 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 			feedbackMsg.setText(SummaryReport.getFeedBackMsg());
 		}
 
+	}
+	
+	private String removeLastChar(String str){
+		return str.substring(0,str.length()-2);
 	}
 }
