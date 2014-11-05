@@ -36,7 +36,6 @@ public class HeaderPanel extends JPanel{
 		GridBagConstraints c = new GridBagConstraints();
 
 		createHelpBtn(c);
-///		createDetailsBtn(c);
 		createCategoriesBtn(c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -52,30 +51,6 @@ public class HeaderPanel extends JPanel{
 		
 	}
 
-//	private void createCategoriesBtn(GridBagConstraints c) {
-//		btnCategory = new JButton(Constants.STRING_F3_CATEGORIES);
-//		btnCategory.setOpaque(false);
-//		btnCategory.setContentAreaFilled(false);
-//		btnCategory.setBorderPainted(false);
-//		btnCategory.setPreferredSize(new Dimension(120, 20));
-//		btnCategory.setForeground(Color.WHITE);
-//		btnCategory.setFocusable(false);
-//		btnCategory.addActionListener( new ActionListener(){
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				uiParent.pressedF3();
-//				
-//			}
-//			
-//		});
-//		c.fill = GridBagConstraints.NONE;
-//		c.anchor = GridBagConstraints.WEST;
-//		c.weightx = 0.0;
-//		c.gridx = 2;
-//		c.gridy = 0;
-//		add(btnCategory, c);
-//	}
 
 	private void createCategoriesBtn(GridBagConstraints c) {
 		JButton btnDetails = new JButton(Constants.STRING_F3_CATEGORIES);
@@ -131,7 +106,6 @@ public class HeaderPanel extends JPanel{
 		lblHeader = new JLabel();
 		lblHeader.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE));
 		lblHeader.setForeground(Constants.COLOR_HEADER_PANEL_TEXT);
-		//lblHeader.setText(SummaryReport.getHeader());
 		lblHeader.setText(Constants.PRODUCT_TASKDO);
 		lblHeader.setHorizontalAlignment(JLabel.CENTER);
 	}
@@ -152,9 +126,8 @@ public class HeaderPanel extends JPanel{
 	}
 
 	private void createMinimizeBtn(GridBagConstraints c) {
-		ImageIcon img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(
-				"image/delete-icon.png"));
-		JButton btnMin = new JButton(img);
+		ImageIcon icon = new ImageIcon(getClass().getResource("/image/delete-icon.png"));
+		JButton btnMin = new JButton(icon);
 		btnMin.setOpaque(false);
 		btnMin.setContentAreaFilled(false);
 		btnMin.setBorderPainted(false);
@@ -178,8 +151,7 @@ public class HeaderPanel extends JPanel{
 	}
 
 	private void createCloseBtn(GridBagConstraints c) {
-		ImageIcon img = new ImageIcon(Toolkit.getDefaultToolkit().getImage(
-				"image/cancel-icon.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource("/image/cancel-icon.png"));
 		JButton btnClose = new JButton(img);
 		btnClose.setOpaque(false);
 		btnClose.setContentAreaFilled(false);

@@ -2,9 +2,9 @@ package commonClasses;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.joda.time.DateTime;
+
 import taskDo.Task;
-import taskDo.TaskType;
-import uiView.Observer;
 
 /*
  * @author Paing Zin Oo(Jack)
@@ -55,9 +55,10 @@ public class SummaryReport{
 	}
 
 	private static void extractOverDueIndex(){
+		DateTime today = new DateTime();
 		overdueIndexList = new ArrayList<Integer>();
 		for(int i=0; i < displayList.size(); i++){
-			if(displayList.get(i).getTaskType().equals(TaskType.OVERDUE)){
+			if(displayList.get(i).getDueDate().toLocalDate().isBefore(today.toLocalDate())){
 				overdueIndexList.add(i);
 			}
 		}
