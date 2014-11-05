@@ -20,31 +20,33 @@ public class CustomTableRender extends DefaultTableCellRenderer{
 		   Component rendererComp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
 		     row, column);
 
+		   DefaultTableColor.setDefaultBackGroundColor(rendererComp, row, table.getSelectedRow());
 		   //Set foreground color
-		   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT);
-
-		   //Set background color
-		   imptRowIndexList = SummaryReport.getImptRowIndexList();
-		   if(row %2 == 0){
-			   rendererComp.setBackground(Constants.COLOR_TABLE_EVEN_ROW);
-		   } else{
-			   rendererComp.setBackground(Constants.COLOR_TABLE_ODD_ROW);
-		   }
-	
-		   for(Integer i: imptRowIndexList){
-			   if(row == i){
-				   rendererComp.setBackground(Constants.COLOR_TABLE_IMPT_ROW);
-				   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_IMPT);
-			   }
-		   }
-		   
-		   //Set background while isSelected
-		   if(isSelected){
-			   rendererComp.setBackground(Constants.COLOR_TABLE_ROW_HIGHLIGHT);
-			   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_HIGHLIGHT);
-		   }
-		
+//		   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT);
+//
+//		   //Set background color
+//		   imptRowIndexList = SummaryReport.getImptRowIndexList();
+//		   if(row %2 == 0){
+//			   rendererComp.setBackground(Constants.COLOR_TABLE_EVEN_ROW);
+//		   } else{
+//			   rendererComp.setBackground(Constants.COLOR_TABLE_ODD_ROW);
+//		   }
+//	
+//		   for(Integer i: imptRowIndexList){
+//			   if(row == i){
+//				   rendererComp.setBackground(Constants.COLOR_TABLE_IMPT_ROW);
+//				   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_IMPT);
+//			   }
+//		   }
+//		   
+//		   //Set background while isSelected
+//		   if(isSelected){
+//			   rendererComp.setBackground(Constants.COLOR_TABLE_ROW_HIGHLIGHT);
+//			   rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_HIGHLIGHT);
+//		   }
+//		
 		   setBorder(noFocusBorder);
+		   
 		   return rendererComp ;
 		  }
 	

@@ -54,7 +54,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
-		//mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
 		
 
@@ -117,7 +116,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			
 			updateAllPanels();
 			updateDetailPanel();
-			//removeDetailPanel();
+			removeDetailPanel();
 			contentPanel.selectRowHightlight(SummaryReport.getRowIndexHighlight());
 			updateFrame();
 		}
