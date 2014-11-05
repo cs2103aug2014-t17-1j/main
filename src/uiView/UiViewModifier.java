@@ -23,6 +23,7 @@ import Parser.Parser;
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 
+import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
