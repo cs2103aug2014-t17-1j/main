@@ -27,7 +27,6 @@ public class Executor {
 		}
 		
 		CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
-		StorageList.getInstance().saveToFile();	
 	}
 
 	private void executeUndo(ParsedResult parsedResult) {

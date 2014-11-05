@@ -31,6 +31,8 @@ public class CommandActionEdit implements CommandAction {
 		UpdateSummaryReport.updateForEdit(parsedResult, displayList);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		History.getUndoDisplayHistory().push(displayList);
+		
+		StorageList.getInstance().saveToFile();	
 	}
 
 	@Override
@@ -49,5 +51,7 @@ public class CommandActionEdit implements CommandAction {
 		UpdateSummaryReport.updateForEdit(parsedResult, displayList);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		History.getRedoDisplayHistory().push(displayList);
+		
+		StorageList.getInstance().saveToFile();	
 	}
 }
