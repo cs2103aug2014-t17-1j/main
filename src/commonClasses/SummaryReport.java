@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import taskDo.Task;
+import taskDo.TaskType;
 import uiView.Observer;
 
 /*
@@ -12,11 +13,14 @@ public class SummaryReport{
 	private static String feedBackMsg;
 	private static ArrayList<Task> displayList = new ArrayList<Task>();
 	private static ArrayList<Integer> imptRowIndexList;
-	private static int rowIndexHighlight = -1;
-
+	private static ArrayList<Integer> overdueIndexList;
+	private static int rowIndexHighlight = Constants.NOTHING_SELECTED;
 	
+	public static ArrayList<Integer> getOverdueIndexList() {
+		extractOverDueIndex();
+		return overdueIndexList;
+	}
 	
-
 	public static int getRowIndexHighlight() {
 		return rowIndexHighlight;
 	}
@@ -50,7 +54,15 @@ public class SummaryReport{
 		return imptRowIndexList;
 	}
 
-	public static void extractImptRowIndex(){
+	private static void extractOverDueIndex(){
+		overdueIndexList = new ArrayList<Integer>();
+		for(int i=0; i < displayList.size(); i++){
+			if(displayList.get(i).getTaskType().equals(TaskType.OVERDUE)){
+				overdueIndexList.add(i);
+			}
+		}
+	}
+	private static void extractImptRowIndex(){
 		imptRowIndexList = new ArrayList<Integer>();
 		for(int i=0 ; i < displayList.size(); i++){
 			if(displayList.get(i).isImportant()){

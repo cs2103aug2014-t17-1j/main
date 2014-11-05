@@ -135,6 +135,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 		setTableHeaderProperties();
 		setRowAndColumnSelectionMode();
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		contentTable.setDefaultRenderer(Object.class,new CustomTableRender());
 		setKeysPressed();
 		addFocusListener();
 	
@@ -305,21 +306,8 @@ public class ContentTablePanel extends JPanel implements Observer {
 	}
 
 	private void setTableCellProperties(JTable contentTable) {
-		
-		//for (int i = 0; i < taskList.size(); i++) {
-			contentTable.getColumnModel().getColumn(0)
-					.setCellRenderer(new CustomTableRender());
 			contentTable.getColumnModel().getColumn(1)
-					.setCellRenderer(new CustomTableRender());
-			contentTable.getColumnModel().getColumn(2)
-					.setCellRenderer(new CustomTableRender());
-//			contentTable.getColumnModel().getColumn(0)
-//			.setCellRenderer(new LineWrapCellRenderer());
-//	contentTable.getColumnModel().getColumn(1)
-//			.setCellRenderer(new LineWrapCellRenderer());
-//	contentTable.getColumnModel().getColumn(2)
-//			.setCellRenderer(new CustomTableRender());
-		//}
+					.setCellRenderer(new LineWrapCellRenderer());
 		}
 	
 
