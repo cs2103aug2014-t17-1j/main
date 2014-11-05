@@ -33,12 +33,8 @@ public class LineWrapCellRenderer  extends JTextArea implements TableCellRendere
             boolean hasFocus,
             int row,
             int column) {
-		
-
-    	
-		
-	
-        
+		setText((String) value);
+		DefaultTableColor.setDefaultBackGroundColor(this, row, table.getSelectedRow());
         setSize(table.getColumnModel().getColumn(column).getWidth(),
 				40);
         
@@ -46,36 +42,6 @@ public class LineWrapCellRenderer  extends JTextArea implements TableCellRendere
 			table.setRowHeight(row, getPreferredSize().height);
 		}
        
-
-		 
- 
-
-		   //Set background color
-		   imptRowIndexList = SummaryReport.getImptRowIndexList();
-		   if(row %2 == 0){
-			   setBackground(Constants.COLOR_TABLE_EVEN_ROW);
-		   } else{
-			   setBackground(Constants.COLOR_TABLE_ODD_ROW);
-		   }
-	
-		   for(Integer i: imptRowIndexList){
-			   if(row == i){
-				   setBackground(Constants.COLOR_TABLE_IMPT_ROW);
-//				   setForeground(Constants.COLOR_TABLE_TEXT_IMPT);
-				   setForeground(table.getForeground());
-			   }
-		   }
-		   
-		   //Set background while isSelected
-		   if(isSelected){
-			  setBackground(Constants.COLOR_TABLE_ROW_HIGHLIGHT);
-//			  setForeground(Constants.COLOR_TABLE_TEXT_HIGHLIGHT);
-			  setForeground(table.getSelectionForeground());
-		   }
-		
-		   //setBorder(noFocusBorder);
-        System.out.println("LINE WRAPPER");
-        setText((String) value);
         return this;
     }
 

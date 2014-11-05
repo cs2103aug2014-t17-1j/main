@@ -306,8 +306,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 	}
 
 	private void setTableCellProperties(JTable contentTable) {
-		
-	}
+			contentTable.getColumnModel().getColumn(1)
+					.setCellRenderer(new LineWrapCellRenderer());
+		}
 	
 
 	private void setJScrollPanePropCentrePane() {
