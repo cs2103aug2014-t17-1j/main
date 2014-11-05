@@ -1,5 +1,5 @@
 package taskDo;
 
 public enum TaskType {
-	TODO, DEADLINE, TIMED
+	TODO, DEADLINE, TIMED, OVERDUE
 }
