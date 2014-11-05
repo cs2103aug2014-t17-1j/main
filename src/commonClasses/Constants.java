@@ -45,6 +45,19 @@ public class Constants {
 	
 	public static final String MESSAGE_LOAD_ERROR = "Loading Error! Please check that file format is correct!";
 	public static final String CATEGORYKEYS[] = {"Name","Count"};
+	public static final String HINT[] ={"<html>add [title] -due [date] -category [categoryname] -impt [y/n] -note [extra notes]<br/>"
+			+ "Reminder: Optional commands have '-' in front</html>",
+		"<html>edit [ID] -title [new title] -due [duedate] -category [category] -impt [y/n] -note [new note]<br/>"
+		+ "Reminder: Optional commands have '-' in front</html>",
+		"<html>delete [ID]</br>"
+		+ "Tip: you can also try del, remove</html>",
+		"<html>complete [ID]</br>"
+		+ "Tip: You can also try tick,done",
+		"<html>display [date/category]</br/>"
+		+ "Tip: you can also try show, view. Look at help panel for advanced display commands</html>",
+		"<html>search [keyword]"
+		
+	};
 
 	public static final String [] HELPCOMMANDS = {
 		"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",

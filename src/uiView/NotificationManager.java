@@ -1,4 +1,4 @@
-package Parser;
+package uiView;
 
 import java.awt.AWTException;
 import java.awt.Image;
@@ -10,6 +10,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.melloware.jintellitype.JIntellitype;
@@ -24,8 +25,10 @@ public class NotificationManager {
 	      }
 
 	      SystemTray tray = SystemTray.getSystemTray();
-	      Toolkit toolkit = Toolkit.getDefaultToolkit();
-	      Image image = toolkit.getImage("Image/Task.Do Icon.png");
+	      ImageIcon tray_icon = new ImageIcon(getClass().getResource("/image/Task.Do Icon.png"));
+	      Image image = tray_icon.getImage();
+//	      Toolkit toolkit = Toolkit.getDefaultToolkit();
+//	      Image image = toolkit.getImage("Image/Task.Do Icon.png");
 
 	      PopupMenu menu = new PopupMenu();
 

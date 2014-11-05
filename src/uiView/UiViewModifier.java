@@ -10,19 +10,18 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import taskDo.Executor;
 import taskDo.UpdateSummaryReport;
-import Parser.NotificationManager;
 import Parser.ParsedResult;
 import Parser.Parser;
 
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
-
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -182,7 +181,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 
 
 	private void setJFrameProperties() {
-		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/Task.Do Icon.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource("/image/Task.Do Icon.png"));
+		mainFrame.setIconImage(icon.getImage());
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
 		mainFrame.pack();

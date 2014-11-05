@@ -38,20 +38,29 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 		this.parent = parent;
 		setLayout(new BorderLayout());
 		initFeedbackMsg();
-		initCommandBox();		
+		initCommandBox();
+		initHintMsg();
 		add(feedbackMsg, BorderLayout.SOUTH);
 		add(commandBox, BorderLayout.CENTER);
 		setBackground(Constants.COLOR_COMMAND_PANEL_BG);
 
 	}
 
-	private void addHintMsg() {
+	private void initHintMsg() {
 		lblHintMsg = new JLabel();
+		add(lblHintMsg,BorderLayout.SOUTH);
+	}
+
+	private void addHintMsg() {
+		
 		if(isValidCommandType()){
 			lblHintMsg.setText(txtHintMsg);
+		} else{
+			lblHintMsg.setText(Constants.STRING_STRING);
 		}
-		add(lblHintMsg,BorderLayout.NORTH);
+		add(lblHintMsg,BorderLayout.SOUTH);
 		revalidate();
+		parent.updateFrame();
 
 	}
 
@@ -131,10 +140,10 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-//		if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE){
-//			removeCharAndAddHintMsg();
-//			
-//		}
+		if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE){
+			removeCharAndAddHintMsg();
+			
+		}
 	}
 
 	private void removeCharAndAddHintMsg() {
@@ -155,21 +164,21 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-//		pieceOfCommand += arg0.getKeyChar();
-//		System.out.println(pieceOfCommand);
-//		addHintMsg();
-//		
+		pieceOfCommand += arg0.getKeyChar();
+		System.out.println(pieceOfCommand);
+		addHintMsg();
+		
 	}
 
 	private boolean isValidCommandType() {
-		if(pieceOfCommand.contains(CommandType.ADD.toString().toLowerCase()+" ")){
-			txtHintMsg = Constants.HELPCOMMANDS[2];
+		String commandType = pieceOfCommand.split(Constants.STRING_SPACE)[0];
+		if(commandType.equalsIgnoreCase(CommandType.ADD.toString().toLowerCase())){
+			txtHintMsg = Constants.HINT[0];
 			return true;
-		}
-		if(pieceOfCommand.equalsIgnoreCase(CommandType.EDIT.toString()+Constants.STRING_SPACE)){
+		}else if(commandType.equalsIgnoreCase(CommandType.ADD.toString().toLowerCase())){
+			txtHintMsg = Constants.HINT[1];
 			return true;
-		}
-		if(pieceOfCommand.equalsIgnoreCase(CommandType.DISPLAY.toString()+Constants.STRING_SPACE)){
+		}else if(commandType.equalsIgnoreCase(CommandType.ADD.toString().toLowerCase())){
 			return true;
 		}
 		
