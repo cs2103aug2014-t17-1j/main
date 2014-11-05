@@ -1,7 +1,7 @@
 package uiView;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -12,8 +12,6 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import taskDo.Executor;
@@ -21,6 +19,9 @@ import taskDo.UpdateSummaryReport;
 import Parser.NotificationManager;
 import Parser.ParsedResult;
 import Parser.Parser;
+
+import com.melloware.jintellitype.HotkeyListener;
+import com.melloware.jintellitype.JIntellitype;
 
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -40,13 +41,14 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	private int rowSelected;
 	private Parser parser;
 	private ParsedResult parseResult;
+	private boolean isMinimized;
 	
 	
 	int x =0;
 	int y =0;
 	
 	public UiViewModifier(){
-		
+		isMinimized = false;
 		mainFrame = this;
 		mainFrame.setUndecorated(true);
 		handleDrag(mainFrame);
@@ -54,7 +56,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
-		//mainFrame = new JFrame();
 		mainFrame.setLayout(new BorderLayout());
 		
 
@@ -82,6 +83,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		
 		NotificationManager manager = new NotificationManager(this);
 		setFocusToCommandBox();
+		addGlobalKey();
 	}
 	
 	public void updateAllPanels(){
@@ -117,7 +119,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			
 			updateAllPanels();
 			updateDetailPanel();
-			//removeDetailPanel();
+			removeDetailPanel();
 			contentPanel.selectRowHightlight(SummaryReport.getRowIndexHighlight());
 			updateFrame();
 		}
@@ -126,6 +128,35 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 //	public void setFrameVisible(boolean isVisible){
 //		setVisible(isVisible);
 //	}
+	private void addGlobalKey(){
+		JIntellitype.getInstance();
+		if (JIntellitype.checkInstanceAlreadyRunning("Task.Do")) {
+			   System.exit(1);
+		}
+		JIntellitype.getInstance().addHotKeyListener(new HotkeyListener(){
+			@Override
+			public void onHotKey(int arg0) {
+				// TODO Auto-generated method stub
+				if(isMinimized){
+					isMinimized = false;
+					mainFrame.setState(Frame.NORMAL);
+				} else{
+					if (arg0 == 1){
+				    	if(!mainFrame.isVisible()){
+				    		mainFrame.setVisible(true);
+				    	} else if(mainFrame.isVisible()){
+				    		mainFrame.setVisible(false);
+				    		
+				    	}
+				    }
+				}
+			    
+			}
+			
+		});
+		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_ALT + JIntellitype.MOD_SHIFT, (int)'M');
+	}
+
 
 	private void setJFrameProperties() {
 		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/Task.Do Icon.png"));
@@ -294,7 +325,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	@Override
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		isMinimized = true;
+		System.out.println("Window is maximzed");
 	}
 
 	@Override
