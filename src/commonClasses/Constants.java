@@ -34,6 +34,8 @@ public class Constants {
 	public static final String FILENAME_TASKDO = "TaskDo.json";
 	
 	public static final String STRING_STRING = "";
+	public static final String STRING_OPEN_HTML = "<html>";
+	public static final String STRING_CLOSE_HTML = "</html>";
 	public static final String STRING_NA = "NA";
 	public static final String STRING_F1_HELP = "F1 Help";
 	public static final String STRING_F2_DETAILS = "F2 Details";
@@ -85,6 +87,7 @@ public class Constants {
 	public static final String STRING_YES = "Yes";
 	public static final String STRING_NO = "No";
 	public static final String STRING_SOMEDAY = "someday";
+	public static final String STRING_SPACE = " ";
 	
 	public static final String []COLUMNTITLES = {"ID","Title","Due On"};
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
@@ -97,34 +100,35 @@ public class Constants {
 	public static final Color COLOR_LEFT_PANEL_TEXT = Color.BLACK;
 	public static final Color COLOR_LEFT_PANEL_HEADER = Color.BLACK;
 	
+	public static final Color COLOR_FEEDBACK_MSG = ColorBox.colorPool[8];
+	
 	public static final Color COLOR_DETAIL_PANEL_TEXT = Color.BLACK;
 	public static final Color COLOR_DETAIL_PANEL_BG = ColorBox.colorPool[0];
+	public static final Color COLOR_DETAIL_PANEL_HEADER_BG =ColorBox.colorPool[7];
 	
 	public static final Color COLOR_TABLE_TEXT = Color.BLACK;
 	public static final Color COLOR_TABLE_TEXT_HIGHLIGHT = Color.WHITE;
-	public static final Color COLOR_TABLE_EVEN_ROW = ColorBox.colorPool[954];
-	public static final Color COLOR_TABLE_ODD_ROW = ColorBox.colorPool[953];
-	public static final Color COLOR_TABLE_IMPT_ROW = ColorBox.colorPool[956];
+	public static final Color COLOR_TABLE_EVEN_ROW = ColorBox.colorPool[1];
+	public static final Color COLOR_TABLE_ODD_ROW = ColorBox.colorPool[2];
+	public static final Color COLOR_TABLE_IMPT_ROW = ColorBox.colorPool[3];
 	public static final Color COLOR_TABLE_TEXT_IMPT = Color.WHITE;
-	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[955];
+	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[4];
 	public static final Color COLOR_TABLE_HEADER_BG =ColorBox.colorPool[0];
 	public static final Color COLOR_TABLE_HEADER_TEXT = Color.BLACK;
 	public static final Color COLOR_TABLE_GRID = Color.WHITE;
 	
-	public static final Color COLOR_JSCROLL_BG =ColorBox.colorPool[951];
+	public static final Color COLOR_JSCROLL_BG =ColorBox.colorPool[5];
 	
-	public static final Color COLOR_CENTRE_PANEL_BG = ColorBox.colorPool[951];
+	public static final Color COLOR_CENTRE_PANEL_BG = ColorBox.colorPool[5];
 	
-	public static final Color COLOR_COMMAND_PANEL_BG = ColorBox.colorPool[950];
+	public static final Color COLOR_COMMAND_PANEL_BG = ColorBox.colorPool[6];
 	public static final Color COLOR_COMMAND_PANEL_TEXT = Color.BLACK;
-	
-	public static final Color COLOR_HEADER_PANEL_BG = ColorBox.colorPool[950];
-	public static final Color COLOR_HEADER_PANEL_TEXT = ColorBox.colorPool[832];
 
-	
+	public static final Color COLOR_HEADER_PANEL_BG = ColorBox.colorPool[6];
+	public static final Color COLOR_HEADER_PANEL_TEXT = Color.WHITE;
 	
 	public static final int DEFAULT_ROW_SELECTED = -1;
-	public static final int TABLE_HEIGHT = 40;
+	public static final int TABLE_HEIGHT = 60;
 	public static final int JSON_IDENTATION = 3;
 	/*
 	 *  @author Huang Li

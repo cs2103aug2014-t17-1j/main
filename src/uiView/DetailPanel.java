@@ -98,7 +98,7 @@ public class DetailPanel extends JPanel implements Observer {
 		
 		
 		label = new JLabel(taskAttribute[0]);
-		label.setBackground(ColorBox.colorPool[957]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
 		label.setFont(new Font("Calibiri",Font.BOLD,15));
 		label.setPreferredSize(new Dimension(0,(int)(size.height*0.051)));
@@ -125,7 +125,7 @@ public class DetailPanel extends JPanel implements Observer {
 		detailPanel.add(label, c);
 		
 		label = new JLabel(taskAttribute[1]);
-		label.setBackground(ColorBox.colorPool[957]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
 		label.setFont(new Font("Calibiri",Font.BOLD,15));
 		label.setOpaque(true);
@@ -151,7 +151,7 @@ public class DetailPanel extends JPanel implements Observer {
 		detailPanel.add(label, c);
 		
 		label = new JLabel(taskAttribute[2]);
-		label.setBackground(ColorBox.colorPool[957]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
 		label.setFont(new Font("Calibiri",Font.BOLD,15));
 		label.setOpaque(true);
@@ -164,7 +164,7 @@ public class DetailPanel extends JPanel implements Observer {
 		detailPanel.add(label, c);
 		
 		label = new JLabel(taskAttribute[3]);
-		label.setBackground(ColorBox.colorPool[957]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
 		label.setOpaque(true);
 		label.setFont(new Font("Calibiri",Font.BOLD,15));
@@ -203,7 +203,7 @@ public class DetailPanel extends JPanel implements Observer {
 		detailPanel.add(label, c);
 		
 		label = new JLabel(taskAttribute[4]);
-		label.setBackground(ColorBox.colorPool[957]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
 		label.setFont(new Font("Calibiri",Font.BOLD,15));
 		label.setOpaque(true);
@@ -229,7 +229,7 @@ public class DetailPanel extends JPanel implements Observer {
 		detailPanel.add(label, c);
 		
 		label = new JLabel(taskAttribute[5]);
-		label.setBackground(ColorBox.colorPool[957]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
 		label.setFont(new Font("Calibiri",Font.BOLD,15));
 		label.setOpaque(true);
@@ -369,7 +369,7 @@ public class DetailPanel extends JPanel implements Observer {
 				Constants.COLOR_TABLE_HEADER_BG);
 
 		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
-		headerRenderer.setBackground(ColorBox.colorPool[957]);
+		headerRenderer.setBackground(ColorBox.colorPool[7]);
 		headerRenderer.setForeground(Color.WHITE);
 		headerRenderer.setFont(new Font("Serif", Font.BOLD, 15));
 
@@ -446,7 +446,7 @@ public class DetailPanel extends JPanel implements Observer {
 		assert task.getTitle() != null;
 		// arr[0] = task.getTitle();
 		assert task.getCategory() != null;
-		arr[1] = task.getCategory();
+		arr[1] = Constants.STRING_OPEN_HTML+task.getCategory()+ Constants.STRING_CLOSE_HTML;
 		if (task.getCategory() == null) {
 			arr[1] = Constants.STRING_NA;
 		}
@@ -478,7 +478,7 @@ public class DetailPanel extends JPanel implements Observer {
 		if (task.getNote() == null) {
 			arr[0] = Constants.STRING_NA;
 		} else {
-			arr[0] = task.getNote();
+			arr[0] =  Constants.STRING_OPEN_HTML+task.getNote()+ Constants.STRING_CLOSE_HTML;
 		}
 
 		return arr;

@@ -94,7 +94,7 @@ public class CommonInterpreterMethods {
 	}
 
 	private static boolean checkRelativeDateFormat(String commandParam) {
-		Pattern pattern = Pattern.compile("^\\w+ \\d\\d:\\d\\d$");
+		Pattern pattern = Pattern.compile("^\\w+ \\d{1,2}:\\d\\d$");
 		Matcher matcher = pattern.matcher(commandParam);
 
 		if (matcher.find()) {

@@ -13,7 +13,10 @@ public class SummaryReport{
 	private static ArrayList<Task> displayList = new ArrayList<Task>();
 	private static ArrayList<Integer> imptRowIndexList;
 	private static int rowIndexHighlight = -1;
+
 	
+	
+
 	public static int getRowIndexHighlight() {
 		return rowIndexHighlight;
 	}

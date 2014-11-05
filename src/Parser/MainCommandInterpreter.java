@@ -74,7 +74,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 	}
 
 	public String removeCommandWord(String input) {
-		try {
+//		try {
 //			switch (currentCommand) {
 //			case ADD:
 //				return input.substring(4); // 4 is length of word "add "
@@ -97,11 +97,15 @@ public class MainCommandInterpreter extends CommandInterpreter {
 //			default:
 //				return "";
 //		}
-			return input.substring(input.indexOf(' ')+1);
-		} catch (Exception e) {
+//		} catch (Exception e) {
+//			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
+//			throw new InvalidParameterException();
+//		}
+		if(input.indexOf(' ') == -1) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
 			throw new InvalidParameterException();
 		}
+			return input.substring(input.indexOf(' ')+1);
 	}
 
 	public ParsedResult updateResults(ParsedResult result, String commandParam)

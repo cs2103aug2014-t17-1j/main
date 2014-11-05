@@ -31,12 +31,9 @@ import commonClasses.SummaryReport;
 public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 
 	private JFrame mainFrame;
-
 	private Executor executor; 
-
 	private UIPanelList uiList;
 	private HeaderPanel headerPanel;
-	private ShorcutPanel helpPanel;
 	private CommandBoxPanel commandBoxPanel;
 	private DetailPanel detailPanel; 
 	private ContentTablePanel contentPanel;
@@ -54,8 +51,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame.setUndecorated(true);
 		handleDrag(mainFrame);
 	
-
-		System.out.println("SCREEN SIZE "+Constants.SCREEN_SIZE.height+"  WID"+Constants.SCREEN_SIZE.width);
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		parser = new Parser();
 		executor = new Executor();
@@ -67,10 +62,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		headerPanel = new HeaderPanel(new GridBagLayout(),this);
 		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
-		//helpPanel = new ShorcutPanel();
-		//mainFrame.add(helpPanel,BorderLayout.WEST);
-		
-		
 		commandBoxPanel = new CommandBoxPanel(this);
 		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
 		commandBoxPanel.setFocusToCommandBox();
@@ -81,16 +72,16 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		parentContentPanel.setBorder(new EmptyBorder(15,25,15,25));
 		parentContentPanel.setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
-		
-		
 		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
 		
 		uiList.addUI(contentPanel);
 		uiList.addUI(commandBoxPanel);
 		setJFrameProperties();
+	
 		updateFrame();
 		
 		NotificationManager manager = new NotificationManager(this);
+		setFocusToCommandBox();
 	}
 	
 	public void updateAllPanels(){
@@ -98,24 +89,24 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		uiList.notifyUIs();
 	}
 	
-	public Component getCurrentFocusComponent(){
-		return mainFrame.getFocusOwner();
-	}
+//	public Component getCurrentFocusComponent(){
+//		return mainFrame.getFocusOwner();
+//	}
 	
-	public boolean isFocusOnCommandBox(){
-		if(getCurrentFocusComponent() instanceof JTextField){
-			return true;
-		}
-		return false;
-	}
+//	public boolean isFocusOnCommandBox(){
+//		if(getCurrentFocusComponent() instanceof JTextField){
+//			return true;
+//		}
+//		return false;
+//	}
 	
-	public boolean isFocusOnJTable(){
-		if(getCurrentFocusComponent() instanceof JTable){
-			return true;
-		}
-		return false;
-	}
-	
+//	public boolean isFocusOnJTable(){
+//		if(getCurrentFocusComponent() instanceof JTable){
+//			return true;
+//		}
+//		return false;
+//	}
+//	
 	public void passToParser(String command){
 		if(command!=null && !command.trim().isEmpty()){
 			parseResult = parser.parseString(command);
@@ -126,16 +117,15 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			
 			updateAllPanels();
 			updateDetailPanel();
-			rowSelected = SummaryReport.getRowIndexHighlight();
+			//removeDetailPanel();
 			contentPanel.selectRowHightlight(SummaryReport.getRowIndexHighlight());
-			System.out.println("ROW SELECTED "+rowSelected);
 			updateFrame();
 		}
 	}
 	
-	public void setFrameVisible(boolean isVisible){
-		setVisible(isVisible);
-	}
+//	public void setFrameVisible(boolean isVisible){
+//		setVisible(isVisible);
+//	}
 
 	private void setJFrameProperties() {
 		mainFrame.setIconImage(Toolkit.getDefaultToolkit().getImage("image/Task.Do Icon.png"));
@@ -143,8 +133,10 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		mainFrame.setResizable(false);
 		mainFrame.pack();
 		mainFrame.addWindowListener(this);
-		
-		//Center Screen
+		setFrametoCentre();
+	}
+
+	private void setFrametoCentre() {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		mainFrame.setLocation(dim.width /2 - mainFrame.getSize().width / 2, dim.height / 2 - mainFrame.getSize().height / 2);
 	}
@@ -172,7 +164,7 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 				
 			}
 			updateAllPanels();
-			setFocus();
+			//setFocus();
 			updateFrame();
 		}
 	
@@ -216,12 +208,13 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			}
 			if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(SummaryReport.getRowIndexHighlight()));
-			}else{
-				if(rowSelected < SummaryReport.getDisplayList().size()){
-					detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
-				}
-				
 			}
+			//else{
+//				if(rowSelected < SummaryReport.getDisplayList().size()){
+//					detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
+//				}
+//				
+//			}
 			
 			mainFrame.add(detailPanel,BorderLayout.EAST);
 			detailPanel.revalidate();
@@ -241,21 +234,19 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	public void updateFrame() {
 		mainFrame.pack();
 		mainFrame.revalidate();
-		mainFrame.repaint();
-		
-		
+		mainFrame.repaint();	
 	}
 	
-	public void setFocus(){
-		if(isFocusOnJTable()){
-			System.out.println("FOCUS ON TABLE");
-			contentPanel.highlightRow();
-		}
-		if(isFocusOnCommandBox()){
-			System.out.println("FOCUS ON COMMANDBOX");
-			commandBoxPanel.setFocusToCommandBox();
-		}
-	}
+//	public void setFocus(){
+//		if(isFocusOnJTable()){
+//			System.out.println("FOCUS ON TABLE");
+//			contentPanel.highlightRow();
+//		}
+//		if(isFocusOnCommandBox()){
+//			System.out.println("FOCUS ON COMMANDBOX");
+//			commandBoxPanel.setFocusToCommandBox();
+//		}
+//	}
 
 	public void setRowSelected (int selected){
 		rowSelected = selected;
@@ -334,7 +325,6 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
     	if(detailPanel != null){
     		mainFrame.remove(detailPanel);
     	}
-    	
     	setFocusToCommandBox();
     	updateFrame();
     }
