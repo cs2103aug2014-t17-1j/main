@@ -136,19 +136,27 @@ public class Constants {
 	 */
 
 	// Command Actions
+	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s IS MARKED AS COMPLETED";
+	public static final String MESSAGE_SUCCESS_ADD = "TASK IS ADDED SUCCESSFULLY";
 	public static final String MESSAGE_SUCCESS_DELETE = "TASK %1$s IS DELETED";
 	public static final String MESSAGE_SUCCESS_EDIT = "TASK %1$s IS EDITED";
-	public static final String MESSAGE_SUCCESS_ADD = "TASK IS ADDED SUCCESSFULLY";
-	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s IS MARKED AS COMPLETED";
+
 	public static final String MESSAGE_SUCCESS_SEARCH_SINGLE = "POSSIBLE RESULT LISTED FOR \"%1$s\"";
 	public static final String MESSAGE_SUCCESS_SEARCH_MUL = "POSSIBLE RESULTS LISTED FOR \"%1$s\"";
-//	public static final String MESSAGE_SUCCESS_SEARCH = "POSSIBLE RESULT(S) LISTED";
 	public static final String MESSAGE_FAIL_SEARCH = "NO TASK IS MATCHED";
+	
 	public static final String MESSAGE_SUCCESS_UNDO = "UNDO %1$s SUCCESSFULLY";
 	public static final String MESSAGE_SUCCESS_REDO = "REDO %1$s SUCCESSFULLY";
 	public static final String MESSAGE_FAIL_UNDO = "NO MORE COMMAND FOR UNDO";
 	public static final String MESSAGE_FAIL_REDO = "NO MORE COMMAND FOR REDO";
-	public static final String MESSAGE_DISPLAY = "DISPLAYING %1$s";
+
+	public static final String MESSAGE_DISPLAY_RANGE = "DISPLAY TASKS FROM %1$s TO %2$s";
+	public static final String MESSAGE_DISPLAY_ALL = "DISPLAY ALL UNCOMPLETED TASKS";
+	public static final String MESSAGE_DISPLAY_COMPLETED = "DISPLAY COMPLETED TASKS";
+	public static final String MESSAGE_DISPLAY_CATEGORY = "DISPLAY CATEGORY: %1$s";
+	public static final String MESSAGE_DISPLAY_DATE = "DISPLAY TASKS DUE ON %1$s";
+	public static final String MESSAGE_DISPLAY_OVERDUE = "DISPLAY OVERDUE TASKS";
+	
 	public static final int NILL_YEAR = 0;
 	
 	/*

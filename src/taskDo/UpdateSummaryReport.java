@@ -2,6 +2,10 @@ package taskDo;
 
 import java.util.ArrayList;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import Parser.ParsedResult;
 import commandFactory.CommandType;
 import commandFactory.Search;
@@ -65,72 +69,117 @@ public class UpdateSummaryReport {
 	}
 
 	private static void determineFeedbackMsg(ParsedResult parsedResult) {
-		String feedbackMsg;
-		int taskID = parsedResult.getSelectedItem()+1;
 		String searchInput = parsedResult.getTaskDetails().getTitle();
-		String command;
-		
+		String feedbackMsg = new String();
+		String command = new String();
+
+		int taskID = parsedResult.getSelectedItem()+1;
+
 		CommandType commandType = parsedResult.getCommandType();
+
 		switch(commandType){
 		case ADD:
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_ADD);
-			updateFeedbackMsg(feedbackMsg);	
 			break;
+
 		case DELETE:
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_DELETE, taskID);
-			updateFeedbackMsg(feedbackMsg);
 			break;
+
 		case EDIT:
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_EDIT, taskID);
-			updateFeedbackMsg(feedbackMsg);
 			break;
+
 		case DISPLAY:
-			updateFeedbackMsg(Constants.MESSAGE_DISPLAY);
+			feedbackMsg = determineDisplayContent(parsedResult);
 			break;
+
 		case UNDO:
 			command = History.getUndoCommandHistory().pop().toString();
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_UNDO, command);
-			updateFeedbackMsg(feedbackMsg);
 			break;
+
 		case REDO:
 			command = History.getRedoCommandHistory().pop().toString();
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_REDO, command);
-			updateFeedbackMsg(feedbackMsg);
 			break;
+
 		case COMPLETED:
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_COMPLETED, taskID);
-			updateFeedbackMsg(feedbackMsg);
 			break;
+
 		case SEARCH:
 			if(SummaryReport.getDisplayList().size()==1){
 				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_SINGLE, searchInput);
 			}else{
 				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_MUL, searchInput);
 			}
-			updateFeedbackMsg(feedbackMsg);
+			break;
 
-			break;
-		default:
-			break;
+		default:break;
 		}
+		updateFeedbackMsg(feedbackMsg);
 	}
 
-	private static void updateFeedbackMsg(String feedbackMsg) {
-		SummaryReport.setFeedBackMsg(feedbackMsg);
-	}
+	private static String determineDisplayContent(ParsedResult parsedResult) {
+		String feedbackMsg = new String();
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/YYYY");
+		
+		switch(parsedResult.getSearchMode()){
+		case ALL:
+			feedbackMsg = Constants.MESSAGE_DISPLAY_ALL;
+			break;
+			
+		case DATE: 
+			DateTime displayDate = parsedResult.getTaskDetails().getDueDate();
+			String date = fmt.print(displayDate);
+			feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_DATE, date);
+			break;
+			
+		case RANGEOFDATES:
+			DateTime strDate = parsedResult.getTaskDetails().getStartDate();
+			String start = fmt.print(strDate);
+			
+			DateTime endDate = parsedResult.getTaskDetails().getDueDate();
+			String end = fmt.print(endDate);
+			
+			feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_RANGE, start, end);
+			break;
+			
+		case COMPLETED:
+			feedbackMsg = Constants.MESSAGE_DISPLAY_COMPLETED;
+			break;
+			
+		case CATEGORY:
+			String category = parsedResult.getTaskDetails().getCategory().toString();
+			feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_CATEGORY, category);
+			break;
+			
+		case OVERDUE:
+			feedbackMsg = Constants.MESSAGE_DISPLAY_OVERDUE;
+			break;
+			
+		default:break;
+		}
+	return feedbackMsg;
+}
 
-	private static int searchIndex(int taskID){
-		Search search = new Search();
-		return search.searchById(taskID, SummaryReport.getDisplayList());
-	}
+private static void updateFeedbackMsg(String feedbackMsg) {
+	SummaryReport.setFeedBackMsg(feedbackMsg);
+}
 
-	public static void highlightTask(int taskID){
-		int highlightTask = searchIndex(taskID); 
-		SummaryReport.setRowIndexHighlight(highlightTask);
-	}
+private static int searchIndex(int taskID){
+	Search search = new Search();
+	return search.searchById(taskID, SummaryReport.getDisplayList());
+}
 
-	public static void unhighlightTask(){
-		SummaryReport.setRowIndexHighlight(-1);
-	}
+public static void highlightTask(int taskID){
+	int highlightTask = searchIndex(taskID); 
+	SummaryReport.setRowIndexHighlight(highlightTask);
+}
+
+public static void unhighlightTask(){
+	SummaryReport.setRowIndexHighlight(-1);
+}
 }
 

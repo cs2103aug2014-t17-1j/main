@@ -1,6 +1,9 @@
 package commandFactory;
 
+import java.util.ArrayList;
+
 import Parser.ParsedResult;
+import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
 public class CommandActionDisplay implements CommandAction{	
@@ -8,7 +11,8 @@ public class CommandActionDisplay implements CommandAction{
 	public void execute(ParsedResult parsedResult){
 		UpdateSummaryReport.unhighlightTask();
 		Search search = new Search();
-		UpdateSummaryReport.updateForDisplay(parsedResult, search.searchForDisplay(parsedResult));
+		ArrayList<Task> displayList = search.searchForDisplay(parsedResult);
+		UpdateSummaryReport.updateForDisplay(parsedResult, displayList);
 	}
 
 	@Override
