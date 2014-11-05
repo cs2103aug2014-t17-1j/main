@@ -1,6 +1,7 @@
 package uiView;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
@@ -20,7 +21,6 @@ import Parser.ParsedResult;
 import Parser.Parser;
 
 import com.melloware.jintellitype.HotkeyListener;
-import com.melloware.jintellitype.IntellitypeListener;
 import com.melloware.jintellitype.JIntellitype;
 
 import commonClasses.Constants;
@@ -41,13 +41,14 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	private int rowSelected;
 	private Parser parser;
 	private ParsedResult parseResult;
+	private boolean isMinimized;
 	
 	
 	int x =0;
 	int y =0;
 	
 	public UiViewModifier(){
-		
+		isMinimized = false;
 		mainFrame = this;
 		mainFrame.setUndecorated(true);
 		handleDrag(mainFrame);
@@ -136,18 +137,24 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 			@Override
 			public void onHotKey(int arg0) {
 				// TODO Auto-generated method stub
-			    if (arg0 == 1){
-			    	if(!mainFrame.isVisible()){
-			    		mainFrame.setVisible(true);
-			    	} else{
-			    		mainFrame.setVisible(false);
-			    	}
-			    }
-			   
+				if(isMinimized){
+					isMinimized = false;
+					mainFrame.setState(Frame.NORMAL);
+				} else{
+					if (arg0 == 1){
+				    	if(!mainFrame.isVisible()){
+				    		mainFrame.setVisible(true);
+				    	} else if(mainFrame.isVisible()){
+				    		mainFrame.setVisible(false);
+				    		
+				    	}
+				    }
+				}
+			    
 			}
 			
 		});
-		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_CONTROL + JIntellitype.MOD_SHIFT, (int)'M');
+		JIntellitype.getInstance().registerHotKey(1, JIntellitype.MOD_ALT + JIntellitype.MOD_SHIFT, (int)'M');
 	}
 
 
@@ -318,7 +325,8 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	@Override
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		isMinimized = true;
+		System.out.println("Window is maximzed");
 	}
 
 	@Override
