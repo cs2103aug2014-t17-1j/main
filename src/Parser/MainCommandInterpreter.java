@@ -158,6 +158,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			int selection = Integer.valueOf(commandParam) - 1; // adjust to get
 			// correct index
 			result.setTask(SummaryReport.getDisplayList().get(selection));
+			result.setSelectedItem(selection);
 			if (result.getTaskDetails().isCompleted()) {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
@@ -222,6 +223,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			// the correct
 			// index in list
 			copyTaskParamToParsedResult(result, selection);
+			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();
@@ -232,6 +234,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
 			int selection = Integer.valueOf(commandParam) - 1;
 			result.setTask(SummaryReport.getDisplayList().get(selection));
+			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
 			throw new InvalidParameterException();

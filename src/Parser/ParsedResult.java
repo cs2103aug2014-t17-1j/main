@@ -14,6 +14,7 @@ public class ParsedResult {
 	private Task task;
 	private SearchType searchMode;
 	private boolean isExecutorApplicable;
+	private int selectedItem;
 	
 	public ParsedResult() {
 		this.parsedCommand = null;
@@ -87,5 +88,15 @@ public class ParsedResult {
 	
 	public void setIsExecutorApplicable(boolean validation) {
 		this.isExecutorApplicable = validation;
+	}
+
+
+	public int getSelectedItem() {
+		return selectedItem;
+	}
+
+
+	public void setSelectedItem(int selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 }
