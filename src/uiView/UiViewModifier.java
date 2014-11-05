@@ -23,6 +23,7 @@ import Parser.Parser;
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
 
+import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
@@ -44,46 +45,62 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 	private boolean isMinimized;
 	
 	
+	
 	int x =0;
 	int y =0;
 	
 	public UiViewModifier(){
 		isMinimized = false;
 		mainFrame = this;
-		mainFrame.setUndecorated(true);
-		handleDrag(mainFrame);
-	
+		removeOriginalBoundaryFrame();
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
-		parser = new Parser();
-		executor = new Executor();
-		mainFrame.setLayout(new BorderLayout());
+		initParserAndExecutor();
 		
-
+		mainFrame.setLayout(new BorderLayout());
 		uiList = new UIPanelList();
 		headerPanel = new HeaderPanel(new GridBagLayout(),this);
-		mainFrame.add(headerPanel,BorderLayout.NORTH);
 		
-		commandBoxPanel = new CommandBoxPanel(this);
-		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
-		commandBoxPanel.setFocusToCommandBox();
+		
+		initCommandBoxPanel();
+		
+		JPanel parentContentPanel = initContentPanel();
+		mainFrame.add(headerPanel,BorderLayout.NORTH);
+		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
+		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
+		uiList.addUI(contentPanel);
+		uiList.addUI(commandBoxPanel);
+		
+		setJFrameProperties();
+		updateFrame();
+		new NotificationManager(this);
+		setFocusToCommandBox();
+		addGlobalKey();
+	}
+
+	private void initParserAndExecutor() {
+		parser = new Parser();
+		executor = new Executor();
 		UpdateSummaryReport.init();
+	}
+
+	private void removeOriginalBoundaryFrame() {
+		mainFrame.setUndecorated(true);
+		handleDrag(mainFrame);
+	}
+
+	private JPanel initContentPanel() {
 		contentPanel = new ContentTablePanel(this);
 		JPanel parentContentPanel = new JPanel();
 		parentContentPanel.add(contentPanel);
 		parentContentPanel.setBorder(new EmptyBorder(15,25,15,25));
 		parentContentPanel.setBackground(Constants.COLOR_CENTRE_PANEL_BG);
-		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
-		mainFrame.add(commandBoxPanel,BorderLayout.SOUTH);
-		
-		uiList.addUI(contentPanel);
-		uiList.addUI(commandBoxPanel);
-		setJFrameProperties();
-	
-		updateFrame();
-		
-		NotificationManager manager = new NotificationManager(this);
-		setFocusToCommandBox();
-		addGlobalKey();
+		return parentContentPanel;
+	}
+
+	private void initCommandBoxPanel() {
+		commandBoxPanel = new CommandBoxPanel(this);
+		commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
+		commandBoxPanel.setFocusToCommandBox();
 	}
 	
 	public void updateAllPanels(){
@@ -116,6 +133,9 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 				System.out.println("Parse String reached here");
 				executor.execute(parseResult);
 			}
+			if(parseResult.getCommandType().equals(CommandType.EXIT)){
+				exitApp();
+			}
 			
 			updateAllPanels();
 			updateDetailPanel();
@@ -125,9 +145,12 @@ public class UiViewModifier extends JFrame implements WindowListener,UiParent{
 		}
 	}
 	
-//	public void setFrameVisible(boolean isVisible){
-//		setVisible(isVisible);
-//	}
+	private void exitApp() {
+		JIntellitype.getInstance().cleanUp();
+		System.exit(0);
+		
+	}
+	
 	private void addGlobalKey(){
 		JIntellitype.getInstance();
 		if (JIntellitype.checkInstanceAlreadyRunning("Task.Do")) {

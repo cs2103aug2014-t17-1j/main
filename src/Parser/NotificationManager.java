@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import com.melloware.jintellitype.JIntellitype;
+
 public class NotificationManager {
 		private JFrame frame;
 	public NotificationManager(final JFrame frame) {
@@ -42,10 +44,11 @@ public class NotificationManager {
 	        }
 	      });
 	      menu.add(openItem);
-	      MenuItem closeItem = new MenuItem("Close");
+	      MenuItem closeItem = new MenuItem("Exit");
 	      closeItem.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	          System.exit(0);
+	        	JIntellitype.getInstance().cleanUp();
+	        	System.exit(0);
 	        }
 	      });
 	      menu.add(closeItem);
