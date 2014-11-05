@@ -25,6 +25,7 @@ public class Parser {
 			if (isInteger(input)) {
 				if (CommonInterpreterMethods.isValidSelection(input)) {
 					SummaryReport.setRowIndexHighlight(Integer.valueOf(input)-1); //get correct index in list
+					result.setCommandType(CommandType.OTHERS);
 					result.setIsExecutorApplicable(false);
 					return result;
 				} else {
@@ -56,6 +57,7 @@ public class Parser {
 			}
 		} catch (Exception e) {
 			result.setIsExecutorApplicable(false);
+			result.setCommandType(CommandType.INVALID);
 		}
 		return result;
 	}
