@@ -137,6 +137,10 @@ public class Task implements Comparable<Task>{
 	public int compareTo(Task task) {
 		 if (getDueDate() == null || task.getDueDate() == null){
 			 return -1;
+		 } else if(getDueDate().getYear() == 0) {
+			 return 1;
+		 } else if(task.getDueDate().getYear() == 0) {
+			 return -1;
 		 }
 		 return getDueDate().compareTo(task.getDueDate());
 	}
