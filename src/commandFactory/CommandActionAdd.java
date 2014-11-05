@@ -13,6 +13,7 @@ public class CommandActionAdd implements CommandAction{
 		
 		UpdateSummaryReport.updateByDueDate(parsedResult);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
+		StorageList.getInstance().saveToFile();	
 	}
 
 	@Override
@@ -21,5 +22,6 @@ public class CommandActionAdd implements CommandAction{
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		UpdateSummaryReport.updateByDueDate(parsedResult);
+		StorageList.getInstance().saveToFile();	
 	}
 }

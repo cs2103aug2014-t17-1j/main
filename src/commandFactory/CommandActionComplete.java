@@ -32,6 +32,8 @@ public class CommandActionComplete implements CommandAction{
 		
 		parsedResult.getTaskDetails().setCompleted(true);
 		StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
+		
+		StorageList.getInstance().saveToFile();	
 	}
 
 	@Override
@@ -48,5 +50,7 @@ public class CommandActionComplete implements CommandAction{
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		displayList = SummaryReport.getDisplayList();
 		History.getRedoDisplayHistory().push(displayList);
+		
+		StorageList.getInstance().saveToFile();	
 	}
 }

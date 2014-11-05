@@ -26,6 +26,8 @@ public class CommandActionDelete implements CommandAction{
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		History.getUndoDisplayHistory().push(displayList);
 		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult, displayList);
+		
+		StorageList.getInstance().saveToFile();	
 	}
 
 	@Override
@@ -38,5 +40,7 @@ public class CommandActionDelete implements CommandAction{
 		displayList = SummaryReport.getDisplayList();
 		History.getRedoDisplayHistory().push(displayList);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
+		
+		StorageList.getInstance().saveToFile();	
 	}
 }
