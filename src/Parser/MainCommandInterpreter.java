@@ -66,6 +66,11 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		case "redo":
 			currentCommand = CommandType.REDO;
 			break;
+			
+		case "quit":
+		case "exit":
+			currentCommand = CommandType.EXIT;
+			break;
 
 		default:
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);

@@ -35,8 +35,11 @@ public class Parser {
 			String[] seperatedInput = input.split("-");
 			String commandWord = getCommandWord(seperatedInput[0].trim());
 			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
+			result.setCommandType(mainHandler.getCommand());
 			if (commandDoesNotRequireParam(mainHandler.getCommand())) {
-				result.setCommandType(mainHandler.getCommand());
+				if(mainHandler.getCommand() == CommandType.EXIT) {
+					result.setIsExecutorApplicable(false);
+				}
 				return result;
 			}
 			String remainingInput = mainHandler
@@ -85,7 +88,7 @@ public class Parser {
 
 	private static boolean commandDoesNotRequireParam(CommandType command) {
 
-		if (command == CommandType.UNDO || command == CommandType.REDO)
+		if (command == CommandType.UNDO || command == CommandType.REDO || command == CommandType.EXIT)
 			return true;
 
 		return false;
