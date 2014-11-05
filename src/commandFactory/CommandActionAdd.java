@@ -10,7 +10,7 @@ public class CommandActionAdd implements CommandAction{
 	public void execute(ParsedResult parsedResult){
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
-		History.getCommandHistory().push(CommandType.ADD);
+		History.getUndoCommandHistory().push(CommandType.ADD);
 		
 		UpdateSummaryReport.updateByDueDate(parsedResult);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
@@ -21,6 +21,7 @@ public class CommandActionAdd implements CommandAction{
 	public void undo(ParsedResult parsedResult) {
 		UpdateSummaryReport.unhighlightTask();
 		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
+		History.getRedoCommandHistory().push(CommandType.ADD);
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		UpdateSummaryReport.updateByDueDate(parsedResult);
 		StorageList.getInstance().saveToFile();	

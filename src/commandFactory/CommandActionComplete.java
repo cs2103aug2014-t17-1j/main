@@ -19,6 +19,7 @@ public class CommandActionComplete implements CommandAction{
 		int taskIndex = targetTask.searchById(index, StorageList.getInstance().getTaskList());
 
 		History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
+		History.getUndoCommandHistory().push(CommandType.COMPLETED);
 		
 		ArrayList<Task> displayList = new ArrayList<Task>();
 		if(parsedResult.getCommandType().equals(CommandType.REDO)){
@@ -50,6 +51,7 @@ public class CommandActionComplete implements CommandAction{
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		displayList = SummaryReport.getDisplayList();
 		History.getRedoDisplayHistory().push(displayList);
+		History.getRedoCommandHistory().push(CommandType.COMPLETED);
 		
 		StorageList.getInstance().saveToFile();	
 	}

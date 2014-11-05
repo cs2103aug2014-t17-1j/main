@@ -16,6 +16,7 @@ public class CommandActionEdit implements CommandAction {
 		int taskId = parsedResult.getTaskDetails().getId();
 		int taskIndex = targetTask.searchById(taskId, StorageList.getInstance().getTaskList());	
 		History.getUndoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
+		History.getUndoCommandHistory().push(CommandType.EDIT);
 		StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
 
 		ArrayList<Task> displayList = new ArrayList<Task>();
@@ -51,6 +52,7 @@ public class CommandActionEdit implements CommandAction {
 		UpdateSummaryReport.updateForEdit(parsedResult, displayList);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		History.getRedoDisplayHistory().push(displayList);
+		History.getRedoCommandHistory().push(CommandType.EDIT);
 		
 		StorageList.getInstance().saveToFile();	
 	}

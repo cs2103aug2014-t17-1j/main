@@ -68,7 +68,8 @@ public class UpdateSummaryReport {
 		String feedbackMsg;
 		int taskID = parsedResult.getSelectedItem()+1;
 		String searchInput = parsedResult.getTaskDetails().getTitle();
-
+		String command;
+		
 		CommandType commandType = parsedResult.getCommandType();
 		switch(commandType){
 		case ADD:
@@ -87,11 +88,13 @@ public class UpdateSummaryReport {
 			updateFeedbackMsg(Constants.MESSAGE_DISPLAY);
 			break;
 		case UNDO:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_UNDO);
+			command = History.getUndoCommandHistory().pop().toString();
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_UNDO, command);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case REDO:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_REDO);
+			command = History.getRedoCommandHistory().pop().toString();
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_REDO, command);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case COMPLETED:

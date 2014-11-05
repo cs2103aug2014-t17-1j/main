@@ -25,6 +25,7 @@ public class CommandActionDelete implements CommandAction{
 		}
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		History.getUndoDisplayHistory().push(displayList);
+		History.getUndoCommandHistory().push(CommandType.DELETE);
 		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult, displayList);
 		
 		StorageList.getInstance().saveToFile();	
@@ -39,6 +40,7 @@ public class CommandActionDelete implements CommandAction{
 		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult, displayList);
 		displayList = SummaryReport.getDisplayList();
 		History.getRedoDisplayHistory().push(displayList);
+		History.getRedoCommandHistory().push(CommandType.DELETE);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		
 		StorageList.getInstance().saveToFile();	
