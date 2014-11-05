@@ -66,7 +66,9 @@ public class UpdateSummaryReport {
 
 	private static void determineFeedbackMsg(ParsedResult parsedResult) {
 		String feedbackMsg;
-//		int taskID = searchIndex(parsedResult.getTaskDetails().getId());
+		int taskID = parsedResult.getSelectedItem()+1;
+		String searchInput = parsedResult.getTaskDetails().getTitle();
+
 		CommandType commandType = parsedResult.getCommandType();
 		switch(commandType){
 		case ADD:
@@ -74,11 +76,11 @@ public class UpdateSummaryReport {
 			updateFeedbackMsg(feedbackMsg);	
 			break;
 		case DELETE:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_DELETE);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_DELETE, taskID);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case EDIT:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_EDIT);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_EDIT, taskID);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case DISPLAY:
@@ -93,17 +95,16 @@ public class UpdateSummaryReport {
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case COMPLETED:
-			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_COMPLETED);
+			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_COMPLETED, taskID);
 			updateFeedbackMsg(feedbackMsg);
 			break;
 		case SEARCH:
-//			if(SummaryReport.getDisplayList().size()==1){
-//				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_SINGLE, taskID);
-//			}else{
-//				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_MUL, taskID);
-//			}
-//			updateFeedbackMsg(feedbackMsg);
-			updateFeedbackMsg(Constants.MESSAGE_SUCCESS_SEARCH);
+			if(SummaryReport.getDisplayList().size()==1){
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_SINGLE, searchInput);
+			}else{
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_SEARCH_MUL, searchInput);
+			}
+			updateFeedbackMsg(feedbackMsg);
 
 			break;
 		default:
@@ -119,12 +120,12 @@ public class UpdateSummaryReport {
 		Search search = new Search();
 		return search.searchById(taskID, SummaryReport.getDisplayList());
 	}
-	
+
 	public static void highlightTask(int taskID){
 		int highlightTask = searchIndex(taskID); 
 		SummaryReport.setRowIndexHighlight(highlightTask);
 	}
-	
+
 	public static void unhighlightTask(){
 		SummaryReport.setRowIndexHighlight(-1);
 	}

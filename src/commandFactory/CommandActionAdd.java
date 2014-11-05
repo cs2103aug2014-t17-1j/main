@@ -10,6 +10,7 @@ public class CommandActionAdd implements CommandAction{
 	public void execute(ParsedResult parsedResult){
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
 		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
+		History.getCommandHistory().push(CommandType.ADD);
 		
 		UpdateSummaryReport.updateByDueDate(parsedResult);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());

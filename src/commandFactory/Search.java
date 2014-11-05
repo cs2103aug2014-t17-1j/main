@@ -179,11 +179,9 @@ public class Search {
 		DateTime today = new DateTime();
 		
 		for(Task task: StorageList.getInstance().getTaskList()){
-			if(isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday(task, today))
-				if(task.getDueDate().toLocalDate().isBefore(today.toLocalDate())){
-					task.setTaskType(TaskType.OVERDUE);
-				}
+			if(isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday(task, today)){
 				returnList.add(task);
+			}
 		}
 		return returnList;
 	}

@@ -37,7 +37,6 @@ public class Executor {
 			History.getRedoActionHistory().push(commandAction);
 
 			parsedResult.setTask(lastTask);
-//			parsedResult.setCommandType(CommandType.UNDO);
 			commandAction.undo(parsedResult);
 		}else{
 			History.getUndoTaskHistory().clear();

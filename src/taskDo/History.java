@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Stack;
 
 import commandFactory.CommandAction;
+import commandFactory.CommandType;
 
 public class History {
 
@@ -16,6 +17,8 @@ public class History {
 	private static Stack<ArrayList<Task>> undoDisplayHistory = new Stack<ArrayList<Task>>();
 
 	private static Stack<ArrayList<Task>> redoDisplayHistory = new Stack<ArrayList<Task>>();
+	
+	private static Stack<CommandType> commandHistory = new Stack<CommandType>();
 	
 	private History() {}
 
@@ -41,5 +44,9 @@ public class History {
 
 	public static Stack<ArrayList<Task>> getRedoDisplayHistory() {
 		return redoDisplayHistory;
+	}
+
+	public static Stack<CommandType> getCommandHistory() {
+		return commandHistory;
 	}
 }
