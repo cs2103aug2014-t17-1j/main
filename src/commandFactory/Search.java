@@ -176,15 +176,20 @@ public class Search {
 	}
 
 	public ArrayList<Task> searchByOverdueAndToday() {
+		DateTime today = new DateTime();
+		
 		for(Task task: StorageList.getInstance().getTaskList()){
-			if(isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday(task))
+			if(isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday(task, today))
+				if(task.getDueDate().toLocalDate().isBefore(today.toLocalDate())){
+					task.setTaskType(TaskType.OVERDUE);
+				}
 				returnList.add(task);
 		}
 		return returnList;
 	}
 
-	private boolean isNotAfterToday(Task task) {
-		DateTime today = new DateTime();
+	private boolean isNotAfterToday(Task task, DateTime today) {
+		
 		return !task.getDueDate().toLocalDate().isAfter(today.toLocalDate());
 	}
 }
