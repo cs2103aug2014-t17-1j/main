@@ -40,7 +40,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 		initFeedbackMsg();
 		initCommandBox();
 		initHintMsg();
-		add(feedbackMsg, BorderLayout.SOUTH);
+		//add(feedbackMsg, BorderLayout.SOUTH);
 		add(commandBox, BorderLayout.CENTER);
 		setBackground(Constants.COLOR_COMMAND_PANEL_BG);
 
@@ -52,14 +52,15 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	}
 
 	private void addHintMsg() {
-		
 		if(isValidCommandType()){
+			remove(feedbackMsg);
 			lblHintMsg.setText(txtHintMsg);
 		} else{
 			lblHintMsg.setText(Constants.STRING_STRING);
 		}
 		add(lblHintMsg,BorderLayout.SOUTH);
 		revalidate();
+		repaint();
 		parent.updateFrame();
 
 	}
@@ -68,8 +69,8 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 		assert feedbackMsg != null;
 		String feedBack = SummaryReport.getFeedBackMsg();
 		feedbackMsg = new JLabel(feedBack, JLabel.LEFT);
-		feedbackMsg.validate();
-		feedbackMsg.setForeground(Constants.COLOR_COMMAND_PANEL_TEXT);
+		//feedbackMsg.validate();
+		//feedbackMsg.setForeground(Constants.COLOR_COMMAND_PANEL_TEXT);
 	}
 
 	public void setFocusToCommandBox() {
@@ -143,10 +144,6 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 		if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE){
 			removeCharAndAddHintMsg();	
 		}
-		if(String.valueOf(pieceOfCommand).equals("\b")){
-			pieceOfCommand =Constants.STRING_STRING;
-			System.out.println(pieceOfCommand);
-		}
 	}
 
 	private void removeCharAndAddHintMsg() {
@@ -159,7 +156,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	}
 
 	private boolean isRemoveable(){
-		if(pieceOfCommand.length() >1 ){
+		if(pieceOfCommand.length() > 0 ){
 			return true;
 		}
 		return false;
@@ -167,7 +164,10 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
-		pieceOfCommand += arg0.getKeyChar();
+		if(arg0.getKeyChar()!='\b'){
+			pieceOfCommand += arg0.getKeyChar();
+		}
+		
 		System.out.println(pieceOfCommand);
 		addHintMsg();
 		
@@ -210,10 +210,16 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 		} else {
 			feedbackMsg.setText(SummaryReport.getFeedBackMsg());
 		}
-
+		
+		add(feedbackMsg, BorderLayout.SOUTH);
+		setOpaque(true);
+		revalidate();
+		repaint();
+		parent.updateFrame();
+		 
 	}
 	
 	private String removeLastChar(String str){
-		return str.substring(0,str.length()-2);
+		return str.substring(0,str.length()-1);
 	}
 }
