@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.joda.time.DateTime;
 
-import Parser.ParsedResult;
+import parser.ParsedResult;
 import commonClasses.Constants;
 import commonClasses.StorageList;
 import taskDo.SearchType;

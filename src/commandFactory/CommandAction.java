@@ -1,6 +1,6 @@
 package commandFactory;
 
-import Parser.ParsedResult;
+import parser.ParsedResult;
 
 public interface CommandAction {
 	public void execute(ParsedResult parsedResult);

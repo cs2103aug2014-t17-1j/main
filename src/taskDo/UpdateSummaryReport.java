@@ -6,7 +6,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
-import Parser.ParsedResult;
+import parser.ParsedResult;
 import commandFactory.CommandType;
 import commandFactory.Search;
 import commonClasses.Constants;

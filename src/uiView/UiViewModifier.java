@@ -15,13 +15,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import parser.ParsedResult;
+import parser.Parser;
 import taskDo.Executor;
 import taskDo.UpdateSummaryReport;
-import Parser.ParsedResult;
-import Parser.Parser;
 
 import com.melloware.jintellitype.HotkeyListener;
 import com.melloware.jintellitype.JIntellitype;
+
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;

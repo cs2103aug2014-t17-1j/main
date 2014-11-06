@@ -1,6 +1,6 @@
 package commandFactory;
 
-import Parser.ParsedResult;
+import parser.ParsedResult;
 import taskDo.UpdateSummaryReport;
 
 public class CommandActionSearch implements CommandAction{

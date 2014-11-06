@@ -1,7 +1,7 @@
 package commandFactory;
 
+import parser.ParsedResult;
 import commonClasses.StorageList;
-import Parser.ParsedResult;
 import taskDo.History;
 import taskDo.UpdateSummaryReport;
 

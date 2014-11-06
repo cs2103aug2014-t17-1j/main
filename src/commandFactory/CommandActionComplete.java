@@ -2,12 +2,12 @@ package commandFactory;
 
 import java.util.ArrayList;
 
+import parser.ParsedResult;
 import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 import taskDo.History;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
-import Parser.ParsedResult;
 
 public class CommandActionComplete implements CommandAction{
 

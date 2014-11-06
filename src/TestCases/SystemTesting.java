@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
+import parser.ParsedResult;
+import parser.Parser;
 import taskDo.Executor;
 import taskDo.Task;
-import Parser.ParsedResult;
-import Parser.Parser;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 

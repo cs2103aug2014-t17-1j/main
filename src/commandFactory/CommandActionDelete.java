@@ -2,11 +2,11 @@ package commandFactory;
 
 import java.util.ArrayList;
 
+import parser.ParsedResult;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 import commonClasses.StorageList;
 import commonClasses.SummaryReport;
-import Parser.ParsedResult;
 import taskDo.History;
 
 

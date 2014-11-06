@@ -1,4 +1,4 @@
-package Parser;
+package parser;
 
 import java.security.InvalidParameterException;
 import java.util.logging.Level;

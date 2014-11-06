@@ -1,6 +1,6 @@
 package taskDo;
 
-import Parser.ParsedResult;
+import parser.ParsedResult;
 import commandFactory.CommandAction;
 import commandFactory.CommandFactory;
 import commandFactory.CommandType;

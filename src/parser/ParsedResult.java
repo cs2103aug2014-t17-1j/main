@@ -1,4 +1,4 @@
-package Parser;
+package parser;
 
 import taskDo.SearchType;
 import taskDo.Task;

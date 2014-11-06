@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import org.joda.time.DateTime;
 import org.junit.Test;
 
+import parser.ParsedResult;
 import taskDo.Executor;
 import commonClasses.Constants;
 import commonClasses.StorageList;
 import taskDo.Task;
 import commandFactory.CommandType;
-import Parser.ParsedResult;
 
 public class ExecutorTestCase {
 
