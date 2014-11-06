@@ -49,12 +49,13 @@ public class Constants {
 			+ "Reminder: Optional commands have '-' in front</html>",
 		"<html>edit [ID] -title [new title] -due [duedate] -category [category] -impt [y/n] -note [new note]<br/>"
 		+ "Reminder: Optional commands have '-' in front</html>",
-		"<html>delete [ID]</br>"
+		"<html>delete [ID]<br>"
 		+ "Tip: you can also try del, remove</html>",
 		"<html>complete [ID]</br>"
 		+ "Tip: You can also try tick,done",
 		"<html>display [date/category]</br/>"
-		+ "Tip: you can also try show, view. Look at help panel for advanced display commands</html>",
+		+ "Tip: you can also try show, view. <br>"
+		+ "Look at help panel for advanced display commands</html>",
 		"<html>search [keyword]"
 		
 	};

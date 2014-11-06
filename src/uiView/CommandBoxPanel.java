@@ -141,8 +141,11 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE){
-			removeCharAndAddHintMsg();
-			
+			removeCharAndAddHintMsg();	
+		}
+		if(String.valueOf(pieceOfCommand).equals("\b")){
+			pieceOfCommand =Constants.STRING_STRING;
+			System.out.println(pieceOfCommand);
 		}
 	}
 
@@ -171,17 +174,26 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	}
 
 	private boolean isValidCommandType() {
-		String commandType = pieceOfCommand.split(Constants.STRING_SPACE)[0];
+		String commandType = pieceOfCommand.trim().split(Constants.STRING_SPACE)[0];
 		if(commandType.equalsIgnoreCase(CommandType.ADD.toString().toLowerCase())){
 			txtHintMsg = Constants.HINT[0];
 			return true;
-		}else if(commandType.equalsIgnoreCase(CommandType.ADD.toString().toLowerCase())){
+		}else if(commandType.equalsIgnoreCase(CommandType.EDIT.toString().toLowerCase())){
 			txtHintMsg = Constants.HINT[1];
 			return true;
-		}else if(commandType.equalsIgnoreCase(CommandType.ADD.toString().toLowerCase())){
+		}else if(commandType.equalsIgnoreCase(CommandType.DELETE.toString().toLowerCase())){
+			txtHintMsg = Constants.HINT[2];
+			return true;
+		}else if(commandType.equalsIgnoreCase(CommandType.COMPLETED.toString().toLowerCase())){
+			txtHintMsg = Constants.HINT[3];
+			return true;
+		}else if(commandType.equalsIgnoreCase(CommandType.DISPLAY.toString().toLowerCase())){
+			txtHintMsg = Constants.HINT[4];
+			return true;
+		}else if(commandType.equalsIgnoreCase(CommandType.SEARCH.toString().toLowerCase())){
+			txtHintMsg = Constants.HINT[5];
 			return true;
 		}
-		
 		return false;
 	}
 
