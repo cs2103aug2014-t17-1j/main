@@ -135,18 +135,23 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 		if (arg0.getKeyCode() == KeyEvent.VK_UP) {
 			commandBox.setText(commandStack.retrieveCommandFromForwardStack());
 		}
+		keyBackSpace(arg0);
 
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
+		keyBackSpace(arg0);
+		
+	}
+
+	private void keyBackSpace(KeyEvent arg0) {
 		if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE){
 			//removeCharAndAddHintMsg();	
 			pieceOfCommand = commandBox.getText();
 			addHintMsg();
 		}
-		
 	}
 
 //	private void removeCharAndAddHintMsg() {
