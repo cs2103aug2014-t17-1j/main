@@ -58,9 +58,12 @@ public class SummaryReport{
 		DateTime today = new DateTime();
 		overdueIndexList = new ArrayList<Integer>();
 		for(int i=0; i < displayList.size(); i++){
-			if(displayList.get(i).getDueDate().toLocalDate().isBefore(today.toLocalDate())){
-				overdueIndexList.add(i);
+			if(displayList.get(i).getDueDate().toLocalDate().getYear()!=Constants.NILL_YEAR){
+				if(displayList.get(i).getDueDate().toLocalDate().isBefore(today.toLocalDate())){
+					overdueIndexList.add(i);
+				}
 			}
+			
 		}
 	}
 	private static void extractImptRowIndex(){
