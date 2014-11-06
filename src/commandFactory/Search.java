@@ -136,7 +136,7 @@ public class Search {
 					if(isNotCompleted(taskList.get(j))){
 						String[] splittedDescription = taskList.get(j).getTitle().split(" ");
 						for(int k=0;k<splittedDescription.length;k++) {
-							int editDist = wfSearch.getEditDistance(splittedDescription[k], splittedInput[i]);
+							int editDist = wfSearch.getEditDistance(splittedDescription[k].toLowerCase(), splittedInput[i].toLowerCase());
 							if(editDist <= 2) {
 								returnList.add(taskList.get(j));
 								break;
