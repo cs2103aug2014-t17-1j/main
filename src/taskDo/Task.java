@@ -129,7 +129,7 @@ public class Task implements Comparable<Task>{
 		this.note = taskNote;
 	}
 	public String toString() {
-		 return "ID" + this.id + "[Catogory: "+ this.getCategory()+ " Task:"
+		 return "ID" + this.id + "Category: "+ this.getCategory()+ " Task:"
 		 +this.getTitle();
 	}
 

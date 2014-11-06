@@ -74,11 +74,22 @@ public class Search {
 		Task sourceTask = parsedResult.getTaskDetails();
 
 		for(Task targetTask: StorageList.getInstance().getTaskList()){
-			if(isSameDueDate(sourceTask, targetTask)&& isNotCompleted(targetTask)){
+			if(targetTask.getTaskType().equals(TaskType.TIMED) && isSourceTaskWithinTimedTask(sourceTask,targetTask)) {
+				returnList.add(targetTask);
+			} else if(isSameDueDate(sourceTask, targetTask)&& isNotCompleted(targetTask)){
 				returnList.add(targetTask);
 			}
 		}
 		return returnList;
+	}
+
+	private boolean isSourceTaskWithinTimedTask(Task sourceTask, Task targetTask) {
+		//sourceTask isbefore targetTask duedate
+		//source Task isafter targetTask start date
+		boolean isBefore = sourceTask.getDueDate().toLocalDate().isBefore(targetTask.getDueDate().toLocalDate());
+		boolean isAfter = sourceTask.getDueDate().toLocalDate().isAfter(targetTask.getStartDate().toLocalDate());
+		
+		return (isBefore && isAfter);
 	}
 
 	private boolean isSameDueDate(Task sourceTask, Task targetTask) {
