@@ -59,7 +59,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		default:
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
 		}
 	}
 
@@ -93,7 +93,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		}
 	} catch (Exception e) {
 		SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
-		throw new InvalidParameterException();
+		throw new InvalidParameterException(Constants.MESSAGE_MISSING_PARAM);
 	}
 	}
 
@@ -143,7 +143,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		} else {
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM);
 		}
 	}
 
@@ -153,18 +153,18 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		Task task = result.getTaskDetails();
 		if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_DATE);
 		}
 		if(result.getCommandType() == CommandType.DISPLAY) {
 			task.setStartDate(task.getDueDate());
 			if(task.getStartDate().isAfter(date)) {
 				SummaryReport.setFeedBackMsg(Constants.MESSAGE_END_DATE_EARLIER_THAN_START_DATE);
-				throw new InvalidParameterException();
+				throw new InvalidParameterException(Constants.MESSAGE_END_DATE_EARLIER_THAN_START_DATE);
 			}
 			result.setSearchMode(SearchType.RANGEOFDATES);
 		} else if(result.getTaskDetails().getStartDate() == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
 		}
 		task.setDueDate(date);
 		
@@ -176,14 +176,14 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		date = CommonInterpreterMethods.getDate(commandParam);
 		if(commandParam.contains(" to ")) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_SIGN_FROMTO_COMMAND);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_MISSING_SIGN_FROMTO_COMMAND);
 		} else if (date == null) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_DATE);
 		}
 		if(task.getTaskType() == TaskType.DEADLINE && result.getCommandType() != CommandType.EDIT) { //Means previously already used due optional command
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
 		}
 			task.setStartDate(date);
 			task.setTaskType(TaskType.TIMED);
@@ -200,11 +200,11 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			if (date == null) {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
-				throw new InvalidParameterException();
+				throw new InvalidParameterException(Constants.MESSAGE_INVALID_DATE);
 			}
 			if(task.getTaskType() == TaskType.TIMED && result.getCommandType() != CommandType.EDIT) { //Means previously used from to command
 				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
-				throw new InvalidParameterException();
+				throw new InvalidParameterException(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
 			}
 				task.setDueDate(date);
 				task.setStartDate(null);

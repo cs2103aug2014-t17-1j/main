@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.joda.time.DateTime;
 import org.json.JSONArray;
@@ -23,6 +25,7 @@ import commonClasses.SummaryReport;
 
 public class ReadAndWriteToFile {
 	private String jsonText;
+	private static final Logger log = Logger.getLogger(ReadAndWriteToFile.class.getName() );
 
 	public String getjSonText() {
 		return jsonText;
@@ -81,6 +84,7 @@ public class ReadAndWriteToFile {
 						taskList.add(task);
 					} 
 				} catch(Exception e) {
+					log.log(Level.FINER, e.toString(), e);
 					SummaryReport.setFeedBackMsg(Constants.MESSAGE_LOAD_ERROR);
 				}
 			}	

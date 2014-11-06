@@ -74,7 +74,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 		default:
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_COMMAND);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 //		}
 		if(input.indexOf(' ') == -1) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_MISSING_PARAM);
 		}
 			return input.substring(input.indexOf(' ')+1);
 	}
@@ -167,11 +167,11 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			if (result.getTaskDetails().isCompleted()) {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
-				throw new InvalidParameterException();
+				throw new InvalidParameterException(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
 			}
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_SELECTION);
 		}
 	}
 
@@ -214,7 +214,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			if (date == null) {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
-				throw new InvalidParameterException();
+				throw new InvalidParameterException(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
 			} else {
 				task.setDueDate(date);
 				result.setSearchMode(SearchType.DATE);
@@ -231,7 +231,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_SELECTION);
 		}
 	}
 
@@ -242,7 +242,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-			throw new InvalidParameterException();
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_SELECTION);
 		}
 	}
 
