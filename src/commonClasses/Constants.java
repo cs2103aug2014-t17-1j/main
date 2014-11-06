@@ -125,7 +125,7 @@ public class Constants {
 	public static final Color COLOR_TABLE_EVEN_ROW = ColorBox.colorPool[1];
 	public static final Color COLOR_TABLE_ODD_ROW = ColorBox.colorPool[2];
 	public static final Color COLOR_TABLE_IMPT_ROW = ColorBox.colorPool[3];
-	public static final Color COLOR_TABLE_OVERDUE_ROW = Color.ORANGE;
+	public static final Color COLOR_TABLE_OVERDUE_ROW = ColorBox.colorPool[9];
 	public static final Color COLOR_TABLE_TEXT_IMPT = Color.WHITE;
 	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[4];
 	public static final Color COLOR_TABLE_HEADER_BG =ColorBox.colorPool[0];
