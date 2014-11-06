@@ -142,34 +142,37 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	public void keyReleased(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getKeyCode()==KeyEvent.VK_BACK_SPACE){
-			removeCharAndAddHintMsg();	
+			//removeCharAndAddHintMsg();	
+			pieceOfCommand = commandBox.getText();
+			addHintMsg();
 		}
+		
 	}
 
-	private void removeCharAndAddHintMsg() {
-		if(isRemoveable()){
-			pieceOfCommand = removeLastChar(pieceOfCommand);
-			if(isValidCommandType()){
-				addHintMsg();
-			}
-		}
-	}
+//	private void removeCharAndAddHintMsg() {
+//		if(isRemoveable()){
+//			pieceOfCommand = removeLastChar(pieceOfCommand);
+//			if(isValidCommandType()){
+//				addHintMsg();
+//			}
+//		}
+//	}
 
-	private boolean isRemoveable(){
-		if(pieceOfCommand.length() > 0 ){
-			return true;
-		}
-		return false;
-	}
+//	private boolean isRemoveable(){
+//		if(pieceOfCommand.length() > 0 ){
+//			return true;
+//		}
+//		return false;
+//	}
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getKeyChar()!='\b'){
 			pieceOfCommand += arg0.getKeyChar();
-		}
+			System.out.println("TYPED "+pieceOfCommand);
+			addHintMsg();
+		} 
 		
-		System.out.println(pieceOfCommand);
-		addHintMsg();
 		
 	}
 
@@ -218,8 +221,8 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 		parent.updateFrame();
 		 
 	}
-	
-	private String removeLastChar(String str){
-		return str.substring(0,str.length()-1);
-	}
+//	
+//	private String removeLastChar(String str){
+//		return str.substring(0,str.length()-1);
+//	}
 }
