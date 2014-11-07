@@ -61,7 +61,7 @@ public class Constants {
 		+ "Tip: you can also try del, remove</html>",
 		"<html>complete [ID]</br>"
 		+ "Tip: You can also try tick,done",
-		"<html>display [date/category]</br/>"
+		"<html>display [date/category], overdue,all,completed,date -to date</br/>"
 		+ "Tip: you can also try show, view. <br>"
 		+ "Look at help panel for advanced display commands</html>",
 		"<html>search [keyword]"
@@ -92,7 +92,7 @@ public class Constants {
 			"add Homework2 -from 20 aug 16:00 -to 10 sep 18:00",
 			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
 			"Addtional commands that only works with some main commands",
-			"<html>For <font color='red'>edit</font>: <font color='#1de9b6'>-</font><font color='ff7997'>task</font> *new Title*</html>",
+			"<html>For <font color='red'>edit</font>: <font color='#1de9b6'>-</font><font color='ff7997'>title</font> *new Title*</html>",
 			"Example: edit 1 -task homework3",
 			"<html><h3><u><i>Advanced Display Command</i></h3></u></html>",
 			"<html><font color='red'>display</font> *startdate* <font color='#1de9b6'>-</font><font color='ff7997'>to</font> *duedate*</html>",
