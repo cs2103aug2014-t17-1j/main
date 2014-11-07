@@ -100,8 +100,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 
 	private void initCommandBoxPanel() {
 		commandBoxPanel = new CommandBoxPanel(this);
-		// commandBoxPanel.setBorder(new EmptyBorder(15,25,15,25));
-		commandBoxPanel.setBorder(new EmptyBorder(25, 35, 25, 35));
+		commandBoxPanel.setBorder(new EmptyBorder(20,20,20,20));
 		commandBoxPanel.setFocusToCommandBox();
 	}
 
