@@ -7,14 +7,10 @@
 	<classpathentry kind="lib" path="lib/joda-time-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/natty-0.8.jar"/>
 	<classpathentry kind="lib" path="lib/json-20090211.jar"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="lib/jintellitype-1.3.9.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-core-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-api-2.1.jar"/>
-=======
 	<classpathentry kind="lib" path="lib/jkeymaster-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jna-3.3.0-platform.jar"/>
 	<classpathentry kind="lib" path="lib/jna-3.3.0.jar"/>
->>>>>>> 8cf78d82fa38f664846bbe60e92c6c1af93cce19
 	<classpathentry kind="output" path="bin"/>
 </classpath>
