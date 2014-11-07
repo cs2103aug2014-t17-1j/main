@@ -2,6 +2,8 @@ package commandFactory;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.DateTime;
 
 import parser.ParsedResult;
@@ -15,6 +17,8 @@ public class Search {
 	int taskIndex;
 	ArrayList<Task> returnList;
 	SearchType searchType;
+	
+	private static final Logger log = LogManager.getLogger(Search.class);
 
 	public Search(){
 		taskIndex = -1;
@@ -128,6 +132,7 @@ public class Search {
 
 	public ArrayList<Task> searchByKeyword(ParsedResult parsedResult){
 		String searchInput = parsedResult.getTaskDetails().getTitle();
+		log.info("Search Input [" + searchInput + "].");
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		String[] splittedInput = searchInput.split(" ");
 		for(int i=0;i<splittedInput.length;i++) {

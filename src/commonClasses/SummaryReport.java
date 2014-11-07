@@ -11,7 +11,7 @@ import taskDo.Task;
  * @author Paing Zin Oo(Jack)
  */
 public class SummaryReport{
-//	private static Logger LOGGER = Logger.getLogger(SummaryReport.class.getName() );
+	private static Logger LOGGER = Logger.getLogger(SummaryReport.class.getName() );
 	private static String feedBackMsg;
 	private static ArrayList<Task> displayList = new ArrayList<Task>();
 	private static ArrayList<Integer> imptRowIndexList;
@@ -21,7 +21,7 @@ public class SummaryReport{
 	public static ArrayList<Integer> getOverdueIndexList() {
 		extractOverDueIndex();
 		assert overdueIndexList!=null;
-//		LOGGER.info("OVERDUE TASK ROW INDEX LIST SIZE "+overdueIndexList.size());
+		LOGGER.info("OVERDUE TASK ROW INDEX LIST SIZE "+overdueIndexList.size());
 		return overdueIndexList;
 	}
 	
@@ -78,7 +78,7 @@ public class SummaryReport{
 			}
 		}
 		assert imptRowIndexList!=null;
-//		LOGGER.info("IMPORTANT TASK ROW INDEX LIST SIZE "+imptRowIndexList.size());
+		LOGGER.info("IMPORTANT TASK ROW INDEX LIST SIZE "+imptRowIndexList.size());
 	}
 	
 }

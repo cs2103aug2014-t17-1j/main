@@ -1,1 +1,5 @@
 [INFO ] 2014-11-07 15:47:54.810 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 07-11-2014 16:01:58.108 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 07-11-2014 16:05:39.174 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 07-11-2014 16:05:43.679 [AWT-EventQueue-0] Executor - Command [SEARCH].
+[INFO ] 07-11-2014 16:05:43.680 [AWT-EventQueue-0] Search - Search Input [nihao].
