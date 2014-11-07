@@ -114,8 +114,6 @@ public class Constants {
 	public static final String STRING_DATEFORMAT = "dd-MM-yyyy HH:mm";
 	
 	public static final String []COLUMNTITLES = {"ID","Title","Due On"};
-	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
-	public static final String HEADER_TAKSLIST = "Tasks List";
 	public static final String HEADER_HELP = "HELP PANEL";
 	public static final String HEADER_DETAIL = "DETAILS";
 	public static final String HEADER_CATEGORIES = "CATEGORIES";
