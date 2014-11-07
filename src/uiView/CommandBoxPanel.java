@@ -208,14 +208,15 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	public void update() {
 		pieceOfCommand="";
 		String text_feedBack = SummaryReport.getFeedBackMsg();
-		feedbackMsg.setFont(new Font("Calibri", Font.BOLD, 20));
+		feedbackMsg.setFont(new Font("Calibri", Font.BOLD, 16));
 		feedbackMsg.setForeground(Constants.COLOR_FEEDBACK_MSG); // Google pink
 																// e91e63
 		// TODO Auto-generated method stub
 		if (text_feedBack == null) {
-			feedbackMsg.setText("");
+			feedbackMsg.setText(Constants.STRING_STRING);
 		} else {
 			feedbackMsg.setText(SummaryReport.getFeedBackMsg());
+			SummaryReport.setFeedBackMsg(Constants.STRING_STRING);
 		}
 		
 		add(feedbackMsg, BorderLayout.SOUTH);

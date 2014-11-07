@@ -14,12 +14,14 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-import com.melloware.jintellitype.JIntellitype;
+import com.tulskiy.keymaster.common.Provider;
 
 public class NotificationManager implements MouseListener{
 		private JFrame frame;
-	public NotificationManager(final JFrame frame) {
+		
+	public NotificationManager(final JFrame frame, final Provider provide) {
 		this.frame = frame;
+	
 	    if (!SystemTray.isSupported()) {
 	        System.out.println("SystemTray is not supported");
 	        return;
@@ -51,7 +53,8 @@ public class NotificationManager implements MouseListener{
 	      MenuItem closeItem = new MenuItem("Exit");
 	      closeItem.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	        	JIntellitype.getInstance().cleanUp();
+	        	provide.reset();
+	        	provide.stop();
 	        	System.exit(0);
 	        }
 	      });

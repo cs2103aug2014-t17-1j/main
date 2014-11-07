@@ -29,7 +29,7 @@ public class DefaultTableColor {
 		  for(Integer i: overdueRowIndexList){
 			  if(row ==i){
 				  component.setBackground(Constants.COLOR_TABLE_OVERDUE_ROW);
-				   component.setForeground(Constants.COLOR_TABLE_TEXT_IMPT);
+				   component.setForeground(Constants.COLOR_TABLE_TEXT);
 			  }
 		  }
 		  if(row == selectedRow){
