@@ -21,6 +21,7 @@ import commonClasses.SummaryReport;
  * @author Paing Zin Oo(Jack)
  */
 public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
+	private static final long serialVersionUID = -4442146738042473163L;
 	private int typeCount;
 	private JTextField commandBox;
 	private String command;

@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import javax.swing.BorderFactory;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+
 import org.joda.time.DateTime;
 
 import uiView.ColorBox;
@@ -21,7 +25,6 @@ public class Constants {
 	
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
 	public static final Dimension DIMENION_TABLE = new Dimension((int)(SCREEN_SIZE.width * 0.36 ), (int)(SCREEN_SIZE.height * 0.5));
-//	public static final Dimension DIMENION_TABLE = new Dimension((int)(SCREEN_SIZE.width * 0.36 ), (int)(SCREEN_SIZE.height * 0.5));
 	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.146),(int)(SCREEN_SIZE.height * 0.5));
 	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.3),(int)(SCREEN_SIZE.height * 0.46));
 	public static final Dimension DIMENSION_HELP_PANEL = new Dimension((int) (SCREEN_SIZE.width * 0.29), (int) (SCREEN_SIZE.height * 0.3));
@@ -145,6 +148,9 @@ public class Constants {
 	public static final int DEFAULT_ROW_SELECTED = -1;
 	public static final int TABLE_HEIGHT = 60;
 	public static final int JSON_IDENTATION = 3;
+	
+	public static final EmptyBorder EMPTY_BORDER = new EmptyBorder(0,0,0,0);
+	public static final Border TABLE_FOCUS_BORDER = BorderFactory.createLineBorder(Color.CYAN,2);
 	/*
 	 *  @author Huang Li
 	 */
