@@ -35,10 +35,11 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JFrame mainFrame;
 	private Executor executor;
-	private UIPanelList uiList;
+	private UiPanelList uiList;
 	private HeaderPanel headerPanel;
 	private CommandBoxPanel commandBoxPanel;
 	private DetailPanel detailPanel;
@@ -70,7 +71,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	}
 
 	private void initObserverList() {
-		uiList = new UIPanelList();
+		uiList = new UiPanelList();
 		initCommandBoxPanel();
 		headerPanel = new HeaderPanel(new GridBagLayout(), this);
 		JPanel parentContentPanel = initContentPanel();
@@ -108,7 +109,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	}
 
 	public void updateAllPanels() {
-		System.out.println("UPDATE");
 		uiList.notifyUIs();
 	}
 
@@ -203,7 +203,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	}
 
 	public void updateDetailPanel() {
-		if (rowSelected != -1) {
+		if (rowSelected != Constants.DEFAULT_ROW_SELECTED) {
 			System.out.println(rowSelected);
 			if (isDetailPanelExisting()) {
 				mainFrame.remove(detailPanel);

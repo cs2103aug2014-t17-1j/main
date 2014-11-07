@@ -16,14 +16,9 @@ import commonClasses.Constants;
  */
 public class ConvertToJson {
 	private ArrayList<Task> taskList;
-	private ArrayList<Category> categoryList;
 
 	public ArrayList<Task> getTaskList() {
 		return taskList;
-	}
-
-	public void setCategoryList(ArrayList<Category> categoryList) {
-		this.categoryList = categoryList;
 	}
 
 	public void setTaskList(ArrayList<Task> taskList) {
@@ -31,7 +26,7 @@ public class ConvertToJson {
 	}
 
 	public String changeToJsonObj(boolean isTask) {
-		String result = "";
+		String result = Constants.STRING_STRING;
 		try {
 			result = extractTaskFields();
 		} catch (Exception e) {
@@ -40,18 +35,6 @@ public class ConvertToJson {
 
 		return result;
 	}
-
-	/*
-	 * private String extractCategoryFields() { JSONArray categories = new
-	 * JSONArray(); for (int i = 0 ; i < categoryList.size(); i++){ Category
-	 * category = categoryList.get(i); JSONObject categoryJSonObj = new
-	 * JSONObject(); // categoryJSonObj.put(Constants.CATEGORYKEYS[0],
-	 * category.getName()); // categoryJSonObj.put(Constants.CATEGORYKEYS[1],
-	 * category.getCount()); categories.put(categoryJSonObj);
-	 * 
-	 * 
-	 * } return categories.toString(); }
-	 */
 
 	private String extractTaskFields() throws JSONException {
 		JSONArray tasks = new JSONArray();

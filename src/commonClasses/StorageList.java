@@ -13,13 +13,11 @@ import taskDo.Task;
 public class StorageList {
 	private static StorageList storageList;
 	private ArrayList<Task> mainTaskList;
-	//private ArrayList<Category> mainCategoryList;
 	private ReadAndWriteToFile readWrite;
 	private ConvertToJson convertTojson;
 	
 	private StorageList(){
 		 mainTaskList = new ArrayList<Task>();
-		// mainCategoryList = new ArrayList<Category>();
 		 readWrite = new ReadAndWriteToFile();
 		 convertTojson = new ConvertToJson();
 	}
@@ -44,20 +42,11 @@ public class StorageList {
 		mainTaskList = readWrite.readTasksFromFile();
 		CategoryList.getCategoryList();
 		CategoryList.updateCategoryList(mainTaskList);
-		//mainCategoryList = readWrite.readCategoriesFromFile();
 	}
 	
 	public void saveToFile(){
-		System.out.println("SIZE IS "+mainTaskList.size());
 		saveTasksToFile();
-		//saveCategoriesToFile();
 	}
-
-//	private void saveCategoriesToFile() {
-//		convertTojson.setCategoryList(mainCategoryList);
-//		readWrite.setjSonText(convertTojson.changeToJSonObj(false));
-//		readWrite.writeToFile(false);
-//	}
 
 	private void saveTasksToFile() {
 		convertTojson.setTaskList(mainTaskList);

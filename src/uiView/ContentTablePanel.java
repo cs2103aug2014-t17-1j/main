@@ -50,7 +50,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 	}
 	
 
-	public void addListActionListener() {
+	private void addListActionListener() {
 		contentTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
 

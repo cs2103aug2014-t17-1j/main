@@ -255,7 +255,7 @@ public class DetailPanel extends JPanel implements Observer {
 
 	}
 
-	public void createCategoryListPanel(UiParent uiparent) {
+	private void createCategoryListPanel(UiParent uiparent) {
 		parent = uiparent;
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
 

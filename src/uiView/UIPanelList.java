@@ -4,10 +4,10 @@ import java.util.ArrayList;
 /*
  * @author Paing Zin Oo(Jack)
  */
-public class UIPanelList {
+public class UiPanelList {
 	private ArrayList<Observer> uiList;
 	
-	public UIPanelList(){
+	public UiPanelList(){
 		uiList = new ArrayList<Observer>();
 	}
 	public void addUI(Observer o){

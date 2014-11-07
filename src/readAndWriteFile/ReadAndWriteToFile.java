@@ -55,21 +55,6 @@ public class ReadAndWriteToFile {
 		File f = new File(Constants.FILENAME_TASKDO);
 		if(f.exists()){
 			if(f.length()!=0){
-		/*		JSONParser parser = new JSONParser();
-				try{
-					JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME_TASKDO));
-					for(Object obj : jsonObjectArr){
-						JSONObject jsonObject = (JSONObject) obj;
-						Task task = extractTaskFields(jsonObject);
-						taskList.add(task);
-					}
-				}catch(FileNotFoundException e){
-					e.printStackTrace();
-				}catch(IOException e){
-					e.printStackTrace();
-				}catch(ParseException e){
-					e.printStackTrace();
-				} */
 				try {	
 					JSONTokener tokener = new JSONTokener(new FileReader(Constants.FILENAME_TASKDO));
 					JSONArray jsonArray = new JSONArray(tokener);
@@ -91,41 +76,6 @@ public class ReadAndWriteToFile {
 		}
 		return taskList;
 }
-
-//	public ArrayList<Category> readCategoriesFromFile(){
-//		ArrayList<Category> categoryList = new ArrayList<Category>();
-//		File f = new File(Constants.FILENAME_CATEGORY);
-//		if(f.exists()){
-//			if(f.length()!=0){
-//				JSONParser parser = new JSONParser();
-//				
-//				try{
-//					JSONArray jsonObjectArr = (JSONArray) parser.parse(new FileReader(Constants.FILENAME_CATEGORY));
-//					for(Object obj : jsonObjectArr){
-//						JSONObject jsonObject = (JSONObject) obj;
-//						Category category = extractCategoryFields(jsonObject);
-//						categoryList.add(category);
-//					}
-//				}catch(FileNotFoundException e){
-//					e.printStackTrace();
-//				}catch(IOException e){
-//					e.printStackTrace();
-//				}catch(ParseException e){
-//					e.printStackTrace();
-//				}
-//			}
-//			
-//		}
-//		
-//		
-//		return categoryList;
-//	}
-//	private Category extractCategoryFields(JSONObject jsonObject) {
-//		Category category = new Category((String)jsonObject.get(Constants.CATEGORYKEYS[0]));
-//		String count = (String)jsonObject.get(Constants.CATEGORYKEYS[1]);
-//		category.setCount(Integer.parseInt(count));
-//		return null;
-//	}
 
 	private Task extractTaskFields(JSONObject jsonObject) throws JSONException {
 		Task task = new Task();
