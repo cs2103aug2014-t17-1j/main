@@ -1,8 +1,9 @@
 package parser;
 
 import java.security.InvalidParameterException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import commandFactory.CommandType;
 import commonClasses.Constants;
@@ -13,7 +14,7 @@ public class Parser {
 	private ParsedResult result;
 	private MainCommandInterpreter mainHandler;
 	private OptionalCommandInterpreter optionHandler;
-	private static final Logger log = Logger.getLogger(Parser.class.getName() );
+	private static final Logger logger = LogManager.getLogger(Parser.class);
 	
 	public Parser() {
 		mainHandler = new MainCommandInterpreter();
@@ -59,7 +60,7 @@ public class Parser {
 
 			}
 		} catch (Exception e) {
-			log.log(Level.FINE, e.toString(), e);
+			logger.info("Exception:" + e.toString());
 			result.setIsExecutorApplicable(false);
 			result.setCommandType(CommandType.INVALID);
 		}
