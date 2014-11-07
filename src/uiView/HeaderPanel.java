@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.LayoutManager;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,15 +15,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import commonClasses.Constants;
-import commonClasses.SummaryReport;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class HeaderPanel extends JPanel{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JLabel lblHeader;
 	JButton btnHelp, btnCategory;
-	private static final int FONT_SIZE = 24;
 	UiParent uiParent;
 
 	public HeaderPanel(LayoutManager layout,UiParent uiParent) {
@@ -104,7 +105,7 @@ public class HeaderPanel extends JPanel{
 
 	private void createHeaderLbl() {
 		lblHeader = new JLabel();
-		lblHeader.setFont(new Font("Calibri", Font.BOLD, FONT_SIZE));
+		lblHeader.setFont(new Font("Calibri", Font.BOLD, Constants.HEADER_FONT_SIZE));
 		lblHeader.setForeground(Constants.COLOR_HEADER_PANEL_TEXT);
 		lblHeader.setText(Constants.PRODUCT_TASKDO);
 		lblHeader.setHorizontalAlignment(JLabel.CENTER);
@@ -151,7 +152,7 @@ public class HeaderPanel extends JPanel{
 	}
 
 	private void createCloseBtn(GridBagConstraints c) {
-		ImageIcon img = new ImageIcon(getClass().getResource("/image/cancel-icon.png"));
+		ImageIcon img = new ImageIcon(getClass().getResource(Constants.STRING_IMG_CANCEL_PNG));
 		JButton btnClose = new JButton(img);
 		btnClose.setOpaque(false);
 		btnClose.setContentAreaFilled(false);
@@ -162,8 +163,7 @@ public class HeaderPanel extends JPanel{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				uiParent.setVisible(false);
-				
+				uiParent.setVisible(false);		
 			}
 			
 		});

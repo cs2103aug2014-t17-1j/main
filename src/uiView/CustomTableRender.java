@@ -9,6 +9,10 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author Paing Zin Oo(Jack)
  */
 public class CustomTableRender extends DefaultTableCellRenderer{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public ArrayList<Integer> imptRowIndexList = new ArrayList<Integer>();
 	public Component getTableCellRendererComponent(JTable table, Object value,
 		    boolean isSelected, boolean hasFocus, int row, int column) {

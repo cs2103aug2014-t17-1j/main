@@ -2,8 +2,6 @@ package uiView;
 
 import java.awt.Frame;
 
-import javax.swing.JFrame;
-
 import com.tulskiy.keymaster.common.HotKey;
 import com.tulskiy.keymaster.common.HotKeyListener;
 
