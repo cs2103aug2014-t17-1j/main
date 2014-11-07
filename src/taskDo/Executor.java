@@ -1,6 +1,10 @@
 package taskDo;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import parser.ParsedResult;
+
 import commandFactory.CommandAction;
 import commandFactory.CommandFactory;
 import commandFactory.CommandType;
@@ -9,6 +13,8 @@ import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 
 public class Executor {
+	
+	private static final Logger log = LogManager.getLogger(Executor.class);
 
 	public Executor() {
 		StorageList.getInstance().loadFile();
@@ -17,7 +23,7 @@ public class Executor {
 	public void execute(ParsedResult parsedResult) {		
 		CommandFactory commandFactory = new CommandFactory();
 		CommandType commandType = parsedResult.getCommandType();
-
+		log.info("Command [" + commandType.toString() + "].");
 		if (commandType.equals(CommandType.UNDO)) {
 			executeUndo(parsedResult);
 		}else	if(commandType.equals(CommandType.REDO)){

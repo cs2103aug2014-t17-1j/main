@@ -20,6 +20,7 @@ public class UpdateSummaryReport {
 		displayList = search.searchByOverdueAndToday();
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
+		
 	}
 
 	public static void updateByDueDate(ParsedResult parsedResult){
@@ -124,62 +125,62 @@ public class UpdateSummaryReport {
 	private static String determineDisplayContent(ParsedResult parsedResult) {
 		String feedbackMsg = new String();
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/YYYY");
-		
+
 		switch(parsedResult.getSearchMode()){
 		case ALL:
 			feedbackMsg = Constants.MESSAGE_DISPLAY_ALL;
 			break;
-			
+
 		case DATE: 
 			DateTime displayDate = parsedResult.getTaskDetails().getDueDate();
 			String date = fmt.print(displayDate);
 			feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_DATE, date);
 			break;
-			
+
 		case RANGEOFDATES:
 			DateTime strDate = parsedResult.getTaskDetails().getStartDate();
 			String start = fmt.print(strDate);
-			
+
 			DateTime endDate = parsedResult.getTaskDetails().getDueDate();
 			String end = fmt.print(endDate);
-			
+
 			feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_RANGE, start, end);
 			break;
-			
+
 		case COMPLETED:
 			feedbackMsg = Constants.MESSAGE_DISPLAY_COMPLETED;
 			break;
-			
+
 		case CATEGORY:
 			String category = parsedResult.getTaskDetails().getCategory().toString();
 			feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_CATEGORY, category);
 			break;
-			
+
 		case OVERDUE:
 			feedbackMsg = Constants.MESSAGE_DISPLAY_OVERDUE;
 			break;
-			
+
 		default:break;
 		}
-	return feedbackMsg;
-}
+		return feedbackMsg;
+	}
 
-private static void updateFeedbackMsg(String feedbackMsg) {
-	SummaryReport.setFeedBackMsg(feedbackMsg);
-}
+	private static void updateFeedbackMsg(String feedbackMsg) {
+		SummaryReport.setFeedBackMsg(feedbackMsg);
+	}
 
-private static int searchIndex(int taskID){
-	Search search = new Search();
-	return search.searchById(taskID, SummaryReport.getDisplayList());
-}
+	private static int searchIndex(int taskID){
+		Search search = new Search();
+		return search.searchById(taskID, SummaryReport.getDisplayList());
+	}
 
-public static void highlightTask(int taskID){
-	int highlightTask = searchIndex(taskID); 
-	SummaryReport.setRowIndexHighlight(highlightTask);
-}
+	public static void highlightTask(int taskID){
+		int highlightTask = searchIndex(taskID); 
+		SummaryReport.setRowIndexHighlight(highlightTask);
+	}
 
-public static void unhighlightTask(){
-	SummaryReport.setRowIndexHighlight(-1);
-}
+	public static void unhighlightTask(){
+		SummaryReport.setRowIndexHighlight(-1);
+	}
 }
 
