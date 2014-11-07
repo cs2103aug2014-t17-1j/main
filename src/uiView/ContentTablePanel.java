@@ -1,7 +1,6 @@
 package uiView;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusEvent;
@@ -10,13 +9,11 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -34,7 +31,7 @@ import commonClasses.SummaryReport;
  * @author Paing Zin Oo(Jack)
  */
 public class ContentTablePanel extends JPanel implements Observer {
-
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Task> taskList;
 	private JTable contentTable;
 	private int rowSelected;
@@ -49,15 +46,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG
-				);
-		//System.out.println("SUMMARY REPORT LIST"+SummaryReport.getDisplayList().size());
-		
+				);	
 	}
 	
-//	public void clearSelection(){
-//		contentTable.clearSelection();
-//	}
-//	
 
 	public void addListActionListener() {
 		contentTable.getSelectionModel().addListSelectionListener(
@@ -94,6 +85,8 @@ public class ContentTablePanel extends JPanel implements Observer {
 	private void createTableWithContent() {
 		String[] columnTitle = Constants.COLUMNTITLES;
 		contentTable = new JTable(changeToTwoDArray(taskList), columnTitle) {
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			};
@@ -120,7 +113,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		add(parentJsp);
 	}
 	
-	//trying for select row 
 	public void selectRowHightlight(int rowSelected){
 		if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
 			contentTable.setRowSelectionInterval(rowSelected, rowSelected);
@@ -145,17 +137,12 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
-
-				contentTable.setBorder(BorderFactory.createLineBorder(Color.CYAN,2));
-				
-			
+				contentTable.setBorder(Constants.TABLE_FOCUS_BORDER);
 			}
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				// TODO Auto-generated method stub
-				//contentTable.clearSelection();
-				contentTable.setBorder(new EmptyBorder(0,0,0,0));
+				contentTable.setBorder(Constants.EMPTY_BORDER);
 			
 			}
 		});
@@ -166,10 +153,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		f2KeyPressedAction();
 		f1KeyPressedAction();
 	}
-
-//	public void releaseFocus(){
-//		requestFocus(false);
-//	}
 	
 	private void setRowAndColumnSelectionMode() {
 		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
@@ -203,6 +186,8 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.getInputMap().put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "Changed Focus");
 		contentTable.getActionMap().put("Changed Focus", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("TAB PRESSED IN TABLE");
@@ -215,9 +200,11 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.getInputMap().put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F3");
 		contentTable.getActionMap().put("F3", new AbstractAction() {
+			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				System.out.println("F3 Presed IN TABLE");
 				parent.removeDetailPanel();
 				parent.pressedF3();
 			}
@@ -228,32 +215,18 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.getInputMap().put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "Event");
 		contentTable.getActionMap().put("Event", new AbstractAction() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				
 				parent.pressedF1();
-
 			}
 
 		});
 	}
 
-	private void f3KeyPressedAction() {
-		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0), "e");
-		System.out.println("F2 KEy is pressed");
-		contentTable.getActionMap().put("e", new AbstractAction() {
-
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				contentTable.clearSelection();
-				parent.pressedF2();
-				//contentTable.setRowSelectionInterval(rowSelected, rowSelected);
-				parent.removeDetailPanel();
-			}
-
-		});
-	}
 
 	private void removeAllComponentsFromCentrePanel() {
 		removeAll();
@@ -262,8 +235,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private String[][] changeToTwoDArray(ArrayList<Task> taskList) {
 		String tableContent[][] = new String[taskList.size()][3];
-		String dueDate = "";
-		System.out.println("CHANGE TO TWOD ARRAY " + taskList.size());
+		String dueDate = Constants.STRING_STRING;
 		for (int i = 0; i < taskList.size(); i++) {
 			tableContent[i][0] = (i + 1) + "";
 			tableContent[i][1] = taskList.get(i).getTitle();
@@ -280,25 +252,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		return tableContent;
 	}
 
-	private void adjustTableRowHeight(){
-		try {
-			System.out.println("HEIGHT IS CHANGE");
-		    for (int row=0; row<contentTable.getRowCount(); row++) {
-		        int rowHeight = contentTable.getRowHeight();
-		 
-		        for (int column=0; column<contentTable.getColumnCount(); column++) {
-		            Component comp = contentTable.prepareRenderer(contentTable.getCellRenderer(row, column), row, column);
-		            rowHeight = Math.max(rowHeight, comp.getPreferredSize().height);
-		        }
-		 
-		        contentTable.setRowHeight(row, rowHeight);
-		        System.out.println("ROW HEIGHT"+rowHeight);
-		    }
-		} catch(ClassCastException e) { 
-			System.out.println(e.getStackTrace());
-		}
-		contentTable.revalidate();
-	}
 	private void setContentTableColumnWidth(JTable contentTable) {
 		contentTable.getColumnModel().getColumn(0).setMaxWidth(20);
 		contentTable.getColumnModel().getColumn(1).setMaxWidth(600);
@@ -314,7 +267,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 	private void setJScrollPanePropCentrePane() {
 		parentJsp = new SoftShadowJPanel();
 		JScrollPane jsp = new JScrollPane(contentTable);
-		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jsp.setBorder(Constants.EMPTY_BORDER);
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
 		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
 
@@ -324,12 +277,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	public void highlightRow() {
 		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
-		//contentTable.requestFocusInWindow();
 	}
 
 	@Override
 	public void update() {
-		System.out.println("UPDATE  IN CONTENT TABLE");
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();

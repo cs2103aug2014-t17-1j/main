@@ -10,7 +10,6 @@ public class CommandStack {
 	private Stack<String> forwardStack;
 	private Stack<String> backwardStack;
 	
-	
 	public CommandStack(){
 		forwardStack = new Stack<String>();
 		backwardStack = new Stack<String>();

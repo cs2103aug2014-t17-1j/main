@@ -2,7 +2,6 @@ package uiView;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
@@ -17,7 +16,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.border.EmptyBorder;
 
 import parser.ParsedResult;
 import parser.Parser;
@@ -34,6 +32,10 @@ import commonClasses.SummaryReport;
  */
 public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame mainFrame;
 	private Executor executor;
 	private UIPanelList uiList;
@@ -59,23 +61,24 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		initParserAndExecutor();
 
 		mainFrame.setLayout(new BorderLayout());
+		initObserverList();
+		setJFrameProperties();
+		updateFrame();
+		new NotificationManager(this, provide);
+		setFocusToCommandBox();
+		addGlobalKey(provide);
+	}
+
+	private void initObserverList() {
 		uiList = new UIPanelList();
-		headerPanel = new HeaderPanel(new GridBagLayout(), this);
-
 		initCommandBoxPanel();
-
+		headerPanel = new HeaderPanel(new GridBagLayout(), this);
 		JPanel parentContentPanel = initContentPanel();
 		mainFrame.add(headerPanel, BorderLayout.NORTH);
 		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
 		mainFrame.add(commandBoxPanel, BorderLayout.SOUTH);
 		uiList.addUI(contentPanel);
 		uiList.addUI(commandBoxPanel);
-
-		setJFrameProperties();
-		updateFrame();
-		new NotificationManager(this, provide);
-		setFocusToCommandBox();
-		addGlobalKey(provide);
 	}
 
 	private void initParserAndExecutor() {
@@ -93,14 +96,14 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		contentPanel = new ContentTablePanel(this);
 		JPanel parentContentPanel = new JPanel();
 		parentContentPanel.add(contentPanel);
-		parentContentPanel.setBorder(new EmptyBorder(15, 25, 15, 25));
+		parentContentPanel.setBorder(Constants.EMPTY_BORDER_CONTENT_TABLE);
 		parentContentPanel.setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		return parentContentPanel;
 	}
 
 	private void initCommandBoxPanel() {
 		commandBoxPanel = new CommandBoxPanel(this);
-		commandBoxPanel.setBorder(new EmptyBorder(20,20,20,20));
+		commandBoxPanel.setBorder(Constants.EMPTY_BORDER_COMMAND_BOX);
 		commandBoxPanel.setFocusToCommandBox();
 	}
 
@@ -109,24 +112,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		uiList.notifyUIs();
 	}
 
-	// public Component getCurrentFocusComponent(){
-	// return mainFrame.getFocusOwner();
-	// }
-
-	// public boolean isFocusOnCommandBox(){
-	// if(getCurrentFocusComponent() instanceof JTextField){
-	// return true;
-	// }
-	// return false;
-	// }
-
-	// public boolean isFocusOnJTable(){
-	// if(getCurrentFocusComponent() instanceof JTable){
-	// return true;
-	// }
-	// return false;
-	// }
-	//
 	public void passToParser(String command) {
 		if (command != null && !command.trim().isEmpty()) {
 			parseResult = parser.parseString(command);
@@ -148,7 +133,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	}
 
 	private void exitApp() {
-//		JIntellitype.getInstance().cleanUp();
 		provide.reset();
 		provide.stop();
 		System.exit(0);
@@ -158,12 +142,11 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	private void addGlobalKey(Provider provide) {
 		HotKeyListener quickLaunch = new QuickLaunchHotKey(this);
 		provide.register(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK), quickLaunch);
-
 	}
 
 	private void setJFrameProperties() {
 		ImageIcon icon = new ImageIcon(getClass().getResource(
-				"/image/Task.Do Icon.png"));
+				Constants.STRING_IMG_MAIN_ICON));
 		mainFrame.setIconImage(icon.getImage());
 		mainFrame.setVisible(true);
 		mainFrame.setResizable(false);
@@ -187,21 +170,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		}
 		updateAllPanels();
 		updateFrame();
-	}
-
-	public void pressedF2() {
-		if (rowSelected != Constants.DEFAULT_ROW_SELECTED) {
-			if (isDetailPanelExisting()) {
-				mainFrame.remove(detailPanel);
-			} else {
-				createDetailPanel(HotKeyType.F2);
-
-			}
-			updateAllPanels();
-			// setFocus();
-			updateFrame();
-		}
-
 	}
 
 	public void pressedF3() {
@@ -245,14 +213,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList()
 						.get(SummaryReport.getRowIndexHighlight()));
 			}
-			// else{
-			// if(rowSelected < SummaryReport.getDisplayList().size()){
-			// detailPanel = new
-			// DetailPanel(SummaryReport.getDisplayList().get(rowSelected));
-			// }
-			//
-			// }
-
+			
 			mainFrame.add(detailPanel, BorderLayout.EAST);
 			detailPanel.revalidate();
 			updateFrame();
@@ -273,17 +234,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		mainFrame.revalidate();
 		mainFrame.repaint();
 	}
-
-	// public void setFocus(){
-	// if(isFocusOnJTable()){
-	// System.out.println("FOCUS ON TABLE");
-	// contentPanel.highlightRow();
-	// }
-	// if(isFocusOnCommandBox()){
-	// System.out.println("FOCUS ON COMMANDBOX");
-	// commandBoxPanel.setFocusToCommandBox();
-	// }
-	// }
 
 	public void setRowSelected(int selected) {
 		rowSelected = selected;

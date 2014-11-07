@@ -8,6 +8,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 
 public class LineWrapCellRenderer  extends JTextArea implements TableCellRenderer {	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public LineWrapCellRenderer(){
 		super();
 		setLineWrap(true);

@@ -1,17 +1,16 @@
 package uiView;
 
 import java.awt.Component;
-import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import commonClasses.Constants;
-import commonClasses.SummaryReport;
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class CategoryCustomTableRender extends DefaultTableCellRenderer{
+	private static final long serialVersionUID = 1L;
 	public Component getTableCellRendererComponent(JTable table, Object value,
 		    boolean isSelected, boolean hasFocus, int row, int column) {
 
