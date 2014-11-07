@@ -147,7 +147,6 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	public void keyTyped(KeyEvent arg0) {
 		if(arg0.getKeyChar()!='\b'){
 			pieceOfCommand += arg0.getKeyChar();
-			System.out.println("TYPED "+pieceOfCommand);
 			addHintMsg();
 		} 
 		
@@ -180,9 +179,9 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 
 	@Override
 	public void update() {
-		pieceOfCommand="";
+		pieceOfCommand=Constants.STRING_STRING;
 		String text_feedBack = SummaryReport.getFeedBackMsg();
-		feedbackMsg.setFont(new Font("Calibri", Font.BOLD, 16));
+		feedbackMsg.setFont(new Font("Calibri", Font.BOLD, Constants.FEEDBACK_MSG_FONT_SIZE));
 		feedbackMsg.setForeground(Constants.COLOR_FEEDBACK_MSG); 
 		if (text_feedBack == null) {
 			feedbackMsg.setText(Constants.STRING_STRING);

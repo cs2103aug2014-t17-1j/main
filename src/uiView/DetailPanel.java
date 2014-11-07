@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -32,16 +31,20 @@ import org.joda.time.format.DateTimeFormatter;
 import taskDo.Category;
 import taskDo.CategoryList;
 import taskDo.Task;
+
 import commonClasses.Constants;
 
 /*
  * @author Paing Zin Oo(Jack)
  */
 public class DetailPanel extends JPanel implements Observer {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private UiParent parent;
 	private JTable categoryListTable;
 	private SoftShadowJPanel detailPanel;
-	private int count;
 	
 	public DetailPanel(HotKeyType hotkey, UiParent parent) {
 		switch (hotkey) {
@@ -73,22 +76,17 @@ public class DetailPanel extends JPanel implements Observer {
 		setPreferredSize(Constants.DIMENSION_HELP_PANEL);
 		setBorder(BorderFactory.createTitledBorder(null, title,
 				TitledBorder.DEFAULT_JUSTIFICATION,
-				TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
+				TitledBorder.DEFAULT_POSITION, Constants.FONT_TIME_NEW_ROMAN,
 				Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 	}
 
 	public DetailPanel(Task task) {
-		System.out.println("count is" + count++);
 		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
 		String taskDetail[] = changetoArr(task);
-		System.out.println("DETAIL PANEL FOR TASK");
 		setLayout(new BorderLayout());
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
-		setBorder(new EmptyBorder(15, 15, 15, 15));
-		// setBorder(BorderFactory.createTitledBorder(null,Constants.HEADER_DETAIL,
-		// TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
-		// Font.getFont("times new roman"), Constants.COLOR_DETAIL_PANEL_TEXT));
+		setBorder(Constants.EMPTY_BORDER_DETAIL_PANEL);
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 		detailPanel = new SoftShadowJPanel();
@@ -104,7 +102,6 @@ public class DetailPanel extends JPanel implements Observer {
 		label.setPreferredSize(new Dimension(0,(int)(size.height*0.051)));
 		label.setOpaque(true);
 		c.fill = GridBagConstraints.HORIZONTAL;
-//		c.ipady = (int) (size.height * (0.033));      //make this component tall
 		c.weightx = 1.0;
 		c.gridwidth = 2;
 		c.gridx = 0;
@@ -264,7 +261,7 @@ public class DetailPanel extends JPanel implements Observer {
 
 		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
-		setBorder(new EmptyBorder(15, 25, 15, 25));
+		setBorder(Constants.EMPTY_BORDER_CATEGORY_TABLE);
 		if (categoryList.size() != 0) {
 			createTableWithContent(categoryList);
 		} else {
@@ -285,6 +282,11 @@ public class DetailPanel extends JPanel implements Observer {
 	private void createTableWithContent(ArrayList<Category> categoryList) {
 		String dataArr[][] = changetoTwoDArr(categoryList);
 		categoryListTable = new JTable(dataArr, Constants.CATEGORYKEYS) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			};
@@ -325,6 +327,11 @@ public class DetailPanel extends JPanel implements Observer {
 				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "Changed Focus");
 		categoryListTable.getActionMap().put("Changed Focus",
 				new AbstractAction() {
+					/**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void actionPerformed(ActionEvent actionEvent) {
 						System.out.println("TAB PRESSED IN TABLE");
@@ -337,11 +344,15 @@ public class DetailPanel extends JPanel implements Observer {
 		categoryListTable.getInputMap().put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F3");
 		categoryListTable.getActionMap().put("F3", new AbstractAction() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
 				System.out.println("F3 Presed IN TABLE");
 				parent.removeDetailPanel();
-				// parent.pressedF3();
 			}
 		});
 	}
@@ -350,11 +361,14 @@ public class DetailPanel extends JPanel implements Observer {
 		categoryListTable.getInputMap().put(
 				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "Event");
 		categoryListTable.getActionMap().put("Event", new AbstractAction() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-
 				parent.pressedF1();
-
 			}
 
 		});
@@ -383,14 +397,11 @@ public class DetailPanel extends JPanel implements Observer {
 		categoryListTable.addFocusListener(new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
-				// TODO Auto-generated method stub
-				// contentTable.setRowSelectionInterval(0, 0);
 				categoryListTable.changeSelection(0, 0, false, false);
 			}
 
 			@Override
 			public void focusLost(FocusEvent arg0) {
-				// TODO Auto-generated method stub
 				categoryListTable.clearSelection();
 			}
 		});
@@ -406,12 +417,7 @@ public class DetailPanel extends JPanel implements Observer {
 			JTable categoryListTable) {
 		SoftShadowJPanel parentJsp = new SoftShadowJPanel();
 		JScrollPane jsp = new JScrollPane(categoryListTable);
-		// TitledBorder jScrollTitledBorder = BorderFactory.createTitledBorder(
-		// null, Constants.HEADER_TAKSLIST,
-		// TitledBorder.DEFAULT_JUSTIFICATION,
-		// TitledBorder.DEFAULT_POSITION, Font.getFont("times new roman"),
-		// Constants.COLOR_TABLE_HEADER_TEXT);
-		jsp.setBorder(new EmptyBorder(0, 0, 0, 0));
+		jsp.setBorder(Constants.EMPTY_BORDER);
 		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
 		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
 
@@ -444,24 +450,23 @@ public class DetailPanel extends JPanel implements Observer {
 	public String[] changetoArr(Task task) {
 		String arr[] = new String[6];
 		assert task.getTitle() != null;
-		// arr[0] = task.getTitle();
 		assert task.getCategory() != null;
 		arr[1] = Constants.STRING_OPEN_HTML+task.getCategory()+ Constants.STRING_CLOSE_HTML;
 		if (task.getCategory() == null) {
 			arr[1] = Constants.STRING_NA;
 		}
 		if (task.getStartDate() == null) {
-			arr[2] = "-";
+			arr[2] = Constants.STRING_DASH;
 		} else {
 			DateTimeFormatter dateFormat = DateTimeFormat
-					.forPattern("dd-MM-yyyy HH:mm");
+					.forPattern(Constants.STRING_DATEFORMAT);
 			arr[2] = dateFormat.print(task.getStartDate());
 		}
 		if (task.getDueDate().getYear() == Constants.NILL_YEAR) {
 			arr[3] = Constants.STRING_SOMEDAY;
 		} else {
 			DateTimeFormatter dateFormat = DateTimeFormat
-					.forPattern("dd-MM-yyyy HH:mm");
+					.forPattern(Constants.STRING_DATEFORMAT);
 			arr[3] = dateFormat.print(task.getDueDate());
 		}
 		if (task.isImportant()) {
@@ -493,12 +498,9 @@ public class DetailPanel extends JPanel implements Observer {
 
 	@Override
 	public void update() {
-		System.out.println("DETAIL PANEL UPDATE");
-		// TODO Auto-generated method stub
 		if (categoryListTable != null) {
 			removeAll();
 			createCategoryListPanel(parent);
-			System.out.println("REFRESH IN CATEGORY");
 			repaint();
 			revalidate();
 			parent.updateFrame();

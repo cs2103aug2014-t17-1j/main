@@ -2,6 +2,7 @@ package commonClasses;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
@@ -43,6 +44,10 @@ public class Constants {
 	public static final String STRING_F1_HELP = "F1 Help";
 	public static final String STRING_F2_DETAILS = "F2 Details";
 	public static final String STRING_F3_CATEGORIES = "F2 Categories";
+	public static final String STRING_IMG_CANCEL_PNG = "/image/cancel-icon.png";
+	public static final String STRING_IMG_MAIN_ICON = "/image/Task.Do Icon.png";
+	
+	
 	public static final String CATEGORY_COLUMN_TITLE[] = {"Name","Count"};
 	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
 	
@@ -105,6 +110,8 @@ public class Constants {
 	public static final String STRING_NO = "No";
 	public static final String STRING_SOMEDAY = "someday";
 	public static final String STRING_SPACE = " ";
+	public static final String STRING_DASH = "-";
+	public static final String STRING_DATEFORMAT = "dd-MM-yyyy HH:mm";
 	
 	public static final String []COLUMNTITLES = {"ID","Title","Due On"};
 	public static final String HEADER_SHORTCUTS = "SHORTCUTS";
@@ -148,9 +155,17 @@ public class Constants {
 	public static final int DEFAULT_ROW_SELECTED = -1;
 	public static final int TABLE_HEIGHT = 60;
 	public static final int JSON_IDENTATION = 3;
+	public static final int HEADER_FONT_SIZE = 24;
+	public static final int FEEDBACK_MSG_FONT_SIZE = 16;
 	
 	public static final EmptyBorder EMPTY_BORDER = new EmptyBorder(0,0,0,0);
 	public static final Border TABLE_FOCUS_BORDER = BorderFactory.createLineBorder(Color.CYAN,2);
+	public static final EmptyBorder EMPTY_BORDER_DETAIL_PANEL = new EmptyBorder(15, 15, 15, 15);
+	public static final EmptyBorder EMPTY_BORDER_CATEGORY_TABLE = new EmptyBorder(15, 25, 15, 25);
+	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX = new EmptyBorder(20,20,20,20);
+	public static final EmptyBorder EMPTY_BORDER_CONTENT_TABLE = new EmptyBorder(15, 25, 15, 25);
+	
+	public static final Font FONT_TIME_NEW_ROMAN = Font.getFont("times new roman");
 	/*
 	 *  @author Huang Li
 	 */
