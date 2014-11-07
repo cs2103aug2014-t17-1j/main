@@ -213,9 +213,10 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 																// e91e63
 		// TODO Auto-generated method stub
 		if (text_feedBack == null) {
-			feedbackMsg.setText("");
+			feedbackMsg.setText(Constants.STRING_STRING);
 		} else {
 			feedbackMsg.setText(SummaryReport.getFeedBackMsg());
+			SummaryReport.setFeedBackMsg(Constants.STRING_STRING);
 		}
 		
 		add(feedbackMsg, BorderLayout.SOUTH);
