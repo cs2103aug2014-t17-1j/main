@@ -6,3 +6,68 @@
 [INFO ] 07-11-2014 17:40:15.309 [AWT-EventQueue-0] Executor - Command [ADD].
 [INFO ] 07-11-2014 17:40:17.934 [AWT-EventQueue-0] Executor - Command [DELETE].
 [INFO ] 07-11-2014 22:45:39.696 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:25:41.023 [AWT-EventQueue-0] Parser - Exception:java.security.InvalidParameterException: Date has already passed. Please choose a relevant date
+[INFO ] 08-11-2014 19:25:45.560 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:25:57.046 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:26:02.718 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:26:21.454 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:26:26.719 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:26:41.151 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:26:48.335 [AWT-EventQueue-0] Executor - Command [ADD].
+[INFO ] 08-11-2014 19:27:02.267 [AWT-EventQueue-0] Executor - Command [DELETE].
+[INFO ] 08-11-2014 19:27:03.393 [AWT-EventQueue-0] Executor - Command [DELETE].
+[INFO ] 08-11-2014 19:27:03.642 [AWT-EventQueue-0] Executor - Command [DELETE].
+[INFO ] 08-11-2014 19:27:03.832 [AWT-EventQueue-0] Executor - Command [DELETE].
+[INFO ] 08-11-2014 19:27:03.987 [AWT-EventQueue-0] Executor - Command [DELETE].
+[INFO ] 08-11-2014 19:27:04.142 [AWT-EventQueue-0] Executor - Command [DELETE].
+[INFO ] 08-11-2014 19:27:04.268 [AWT-EventQueue-0] Executor - Command [DELETE].
+[INFO ] 08-11-2014 19:27:04.472 [AWT-EventQueue-0] Parser - Exception:java.security.InvalidParameterException: Invalid selection
+[INFO ] 08-11-2014 19:35:12.346 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:35:12.375 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:35:12.389 [main] Parser - Exception:java.security.InvalidParameterException: Missing start date for task
+[INFO ] 08-11-2014 19:35:12.389 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:35:12.390 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:35:12.402 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:35:12.423 [main] Parser - Exception:java.security.InvalidParameterException: Importance level not recognized
+[INFO ] 08-11-2014 19:37:29.018 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:37:29.047 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:37:29.060 [main] Parser - Exception:java.security.InvalidParameterException: Missing start date for task
+[INFO ] 08-11-2014 19:37:29.061 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:37:29.061 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:37:29.073 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:37:29.094 [main] Parser - Exception:java.security.InvalidParameterException: Importance level not recognized
+[INFO ] 08-11-2014 19:37:44.081 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:37:44.110 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:37:44.124 [main] Parser - Exception:java.security.InvalidParameterException: Missing start date for task
+[INFO ] 08-11-2014 19:37:44.124 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:37:44.125 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:37:44.138 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:37:44.158 [main] Parser - Exception:java.security.InvalidParameterException: Importance level not recognized
+[INFO ] 08-11-2014 19:39:13.837 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:39:13.866 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:39:13.880 [main] Parser - Exception:java.security.InvalidParameterException: Missing start date for task
+[INFO ] 08-11-2014 19:39:13.880 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:39:13.881 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:39:13.893 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:39:13.914 [main] Parser - Exception:java.security.InvalidParameterException: Importance level not recognized
+[INFO ] 08-11-2014 19:43:09.820 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:43:09.850 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:43:09.863 [main] Parser - Exception:java.security.InvalidParameterException: Missing start date for task
+[INFO ] 08-11-2014 19:43:09.864 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:43:09.865 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:43:09.877 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:43:09.898 [main] Parser - Exception:java.security.InvalidParameterException: Importance level not recognized
+[INFO ] 08-11-2014 19:43:58.803 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:43:58.832 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:43:58.845 [main] Parser - Exception:java.security.InvalidParameterException: Missing start date for task
+[INFO ] 08-11-2014 19:43:58.846 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:43:58.846 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:43:58.859 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:43:58.879 [main] Parser - Exception:java.security.InvalidParameterException: Importance level not recognized
+[INFO ] 08-11-2014 19:44:21.222 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:44:21.253 [main] Parser - Exception:java.security.InvalidParameterException: Cannot use 'due' and 'from to' combination in one command
+[INFO ] 08-11-2014 19:44:21.271 [main] Parser - Exception:java.security.InvalidParameterException: Missing start date for task
+[INFO ] 08-11-2014 19:44:21.272 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:44:21.273 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:44:21.286 [main] Parser - Exception:java.security.InvalidParameterException: Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow
+[INFO ] 08-11-2014 19:44:21.307 [main] Parser - Exception:java.security.InvalidParameterException: Importance level not recognized
