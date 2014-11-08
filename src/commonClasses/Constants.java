@@ -201,28 +201,26 @@ public class Constants {
 	public static final int DATE_FORMAT_ITERATIONS = 8;
 	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
 	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
-	public static final String MESSAGE_INVALID_DATE = "Date not recognized";
-	public static final String MESSAGE_INVALID_DISPLAY_SELECTION = "Either Category does not exist or date not recognized";
+	public static final String MESSAGE_INVALID_DATE = "Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow";
+	public static final String MESSAGE_INVALID_DISPLAY_SELECTION = "Invalid! Press F2 to check existing category or try DD/MM/YYYY";
 	public static final String MESSAGE_INVALID_SELECTION = "Invalid selection";
 	public static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "Importance level not recognized";
 	public static final String MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO = "Cannot use 'due' and 'from to' combination in one command";
 	public static final String MESSAGE_MISSING_START_DATE_FOR_TASK = "Missing start date for task";
 	public static final String MESSAGE_END_DATE_EARLIER_THAN_START_DATE = "End date cannot be earlier than start date";
+	public static final String MESSAGE_MISSING_PARAM = "Please insert parameters";
+	public static final String MESSAGE_MISSING_SIGN_FROMTO_COMMAND = "Please make sure '-' sign is used for 'to' command";
+	public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed!";
+	public static final String DISPLAY_OVERDUE = "overdue";
+	public static final String MESSAGE_DATE_HAS_PASSED = "Date has already passed. Please choose a relevant date";
+	
 	public static final String IMPT_NO = "N";
 	public static final String IMPT_YES = "Y";
-	
 	public static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
 	public static final String DISPLAY_COMPLETED = "completed";
 	public static final String DISPLAY_ALL = "all";
-	public static final String MESSAGE_MISSING_PARAM = "Please insert parameters";
-
-	public static final String MESSAGE_MISSING_SIGN_FROMTO_COMMAND = "Please make sure '-' sign is used for 'to' command";
-
-	public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed!";
-
-	public static final String DISPLAY_OVERDUE = "overdue";
-
 	public static final int NOTHING_SELECTED = -1;
+	public static final String FLOATING_TASK = "SOMEDAY";
 	
 	
 	

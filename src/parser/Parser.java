@@ -15,7 +15,7 @@ public class Parser {
 	private MainCommandInterpreter mainHandler;
 	private OptionalCommandInterpreter optionHandler;
 	private static final Logger logger = LogManager.getLogger(Parser.class);
-	
+
 	public Parser() {
 		mainHandler = new MainCommandInterpreter();
 		optionHandler = new OptionalCommandInterpreter();
@@ -23,38 +23,35 @@ public class Parser {
 
 	public ParsedResult parseString(String input) {
 		result = new ParsedResult();
-
-		// Processing first command and getting command param
 		try {
+			// Check if user is selecting a task
 			if (isInteger(input)) {
 				if (CommonInterpreterMethods.isValidSelection(input)) {
-					SummaryReport.setRowIndexHighlight(Integer.valueOf(input)-1); //get correct index in list
-					result.setCommandType(CommandType.OTHERS);
-					result.setIsExecutorApplicable(false);
+					updateUiSelection(input);
 					return result;
 				} else {
-					SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-					throw new InvalidParameterException();
+					SummaryReport
+							.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
+					throw new InvalidParameterException(
+							Constants.MESSAGE_INVALID_SELECTION);
 				}
 			}
+
+			// Processing main commands
 			String[] seperatedInput = input.split("-");
-			String commandWord = getCommandWord(seperatedInput[0].trim());
-			mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
-			result.setCommandType(mainHandler.getCommand());
-			if (commandDoesNotRequireParam(mainHandler.getCommand())) {
-				if(mainHandler.getCommand() == CommandType.EXIT) {
+			processMainCommand(seperatedInput);
+			if (mainHandler.commandDoesNotRequireParam()) {
+				if (mainHandler.getCommand() == CommandType.EXIT) {
 					result.setIsExecutorApplicable(false);
 				}
 				return result;
 			}
-			String remainingInput = mainHandler
-					.removeCommandWord(seperatedInput[0].trim());
-
-			result = mainHandler.updateResults(result, remainingInput.trim());
+			updateResultsForMainCommand(seperatedInput);
 
 			// Processing optional commands
-			processOptionalCommand(seperatedInput);
+			processOptionalCommandAndUpdateResults(seperatedInput);
 
+			// Floating task
 			if (result.getTaskDetails().getDueDate() == null) {
 				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
 
@@ -67,20 +64,42 @@ public class Parser {
 		return result;
 	}
 
+	private void updateResultsForMainCommand(String[] seperatedInput) {
+		String remainingInput = mainHandler.removeCommandWord(seperatedInput[0]
+				.trim());
+		result = mainHandler.updateResults(result, remainingInput.trim());
+	}
+
+	private void processMainCommand(String[] seperatedInput) {
+		String commandWord = CommonInterpreterMethods
+				.getCommandWord(seperatedInput[0].trim());
+		mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
+		result.setCommandType(mainHandler.getCommand());
+	}
+
+	private void updateUiSelection(String input) {
+		SummaryReport.setRowIndexHighlight(Integer.valueOf(input) - 1);
+		// Adjust value of input to get correct index
+		result.setCommandType(CommandType.OTHERS);
+		result.setIsExecutorApplicable(false);
+	}
+
 	private boolean isInteger(String input) {
 		try {
 			Integer.parseInt(input, 10);
+			// Radix 10 used to parse integer
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
 	}
 
-	private void processOptionalCommand(String[] remainingInput) {
+	private void processOptionalCommandAndUpdateResults(String[] remainingInput) {
 		String commandWord;
 
 		for (int i = 1; i < remainingInput.length; i++) {
-			commandWord = getCommandWord(remainingInput[i].trim());
+			commandWord = CommonInterpreterMethods
+					.getCommandWord(remainingInput[i].trim());
 
 			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
 
@@ -91,21 +110,6 @@ public class Parser {
 					remainingInput[i].trim());
 
 		}
-	}
-
-	private static boolean commandDoesNotRequireParam(CommandType command) {
-
-		if (command == CommandType.UNDO || command == CommandType.REDO || command == CommandType.EXIT)
-			return true;
-
-		return false;
-
-	}
-
-	private static String getCommandWord(String input) {
-		String[] splittedCommand = input.split(" ");
-
-		return splittedCommand[0];
 	}
 
 }

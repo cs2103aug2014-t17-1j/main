@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import taskDo.CategoryList;
 import taskDo.SearchType;
 import taskDo.Task;
+
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -14,7 +15,7 @@ import commonClasses.SummaryReport;
 public class MainCommandInterpreter extends CommandInterpreter {
 
 	// Members
-	CommandType currentCommand;
+	private CommandType currentCommand;
 
 	public MainCommandInterpreter() {
 
@@ -66,7 +67,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		case "redo":
 			currentCommand = CommandType.REDO;
 			break;
-			
+
 		case "quit":
 		case "exit":
 			currentCommand = CommandType.EXIT;
@@ -74,43 +75,17 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 		default:
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
-			throw new InvalidParameterException(Constants.MESSAGE_INVALID_COMMAND);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_COMMAND);
 		}
 	}
 
 	public String removeCommandWord(String input) {
-//		try {
-//			switch (currentCommand) {
-//			case ADD:
-//				return input.substring(4); // 4 is length of word "add "
-//
-//			case DISPLAY:
-//				return input.substring(8); // 8 is length of word "display "
-//
-//			case DELETE:
-//				return input.substring(7); // 7 is length of word "delete "
-//
-//			case SEARCH:
-//				return input.substring(7); // 7 is length of word "search "
-//
-//			case EDIT:
-//				return input.substring(5);
-//
-//			case COMPLETED:
-//				return input.substring(9);
-//
-//			default:
-//				return "";
-//		}
-//		} catch (Exception e) {
-//			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
-//			throw new InvalidParameterException();
-//		}
-		if(input.indexOf(' ') == -1) {
+		if (input.indexOf(' ') == -1) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
 			throw new InvalidParameterException(Constants.MESSAGE_MISSING_PARAM);
 		}
-			return input.substring(input.indexOf(' ')+1);
+		return input.substring(input.indexOf(' ') + 1);
 	}
 
 	public ParsedResult updateResults(ParsedResult result, String commandParam)
@@ -160,18 +135,20 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 	private void updateCompleteCase(ParsedResult result, String commandParam) {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
-			int selection = Integer.valueOf(commandParam) - 1; // adjust to get
-			// correct index
+			int selection = Integer.valueOf(commandParam) - 1;
+			// adjust value of commandparam to get correct index
 			result.setTask(SummaryReport.getDisplayList().get(selection));
 			result.setSelectedItem(selection);
 			if (result.getTaskDetails().isCompleted()) {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
-				throw new InvalidParameterException(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_TASK_ALREADY_COMPLETED);
 			}
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-			throw new InvalidParameterException(Constants.MESSAGE_INVALID_SELECTION);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_SELECTION);
 		}
 	}
 
@@ -210,11 +187,19 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		} else if (commandParam.toLowerCase().equals(Constants.DISPLAY_OVERDUE)) {
 			result.setSearchMode(SearchType.OVERDUE);
 		} else {
-			DateTime date = CommonInterpreterMethods.getDate(commandParam);
+			DateTime date;
+			try {
+				date = CommonInterpreterMethods.getDate(commandParam);
+			} catch (Exception e) {
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_DATE_HAS_PASSED);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_DATE_HAS_PASSED);
+			}
 			if (date == null) {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
-				throw new InvalidParameterException(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
 			} else {
 				task.setDueDate(date);
 				result.setSearchMode(SearchType.DATE);
@@ -231,7 +216,8 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-			throw new InvalidParameterException(Constants.MESSAGE_INVALID_SELECTION);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_SELECTION);
 		}
 	}
 
@@ -242,8 +228,20 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			result.setSelectedItem(selection);
 		} else {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
-			throw new InvalidParameterException(Constants.MESSAGE_INVALID_SELECTION);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_SELECTION);
 		}
+	}
+
+	public boolean commandDoesNotRequireParam() {
+
+		if (currentCommand == CommandType.UNDO
+				|| currentCommand == CommandType.REDO
+				|| currentCommand == CommandType.EXIT)
+			return true;
+
+		return false;
+
 	}
 
 }
