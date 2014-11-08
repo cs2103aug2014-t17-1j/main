@@ -15,42 +15,31 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.tulskiy.keymaster.common.Provider;
+import commonClasses.Constants;
 
-public class NotificationManager implements MouseListener{
+public class SystemTrayManager implements MouseListener{
 		private JFrame frame;
 		
-	public NotificationManager(final JFrame frame, final Provider provide) {
+	public SystemTrayManager(final JFrame frame, final Provider provide) {
 		this.frame = frame;
 	
 	    if (!SystemTray.isSupported()) {
-	        System.out.println("SystemTray is not supported");
 	        return;
 	      }
 
 	      SystemTray tray = SystemTray.getSystemTray();
-	      ImageIcon tray_icon = new ImageIcon(getClass().getResource("/image/Task.Do Icon.png"));
+	      ImageIcon tray_icon = new ImageIcon(getClass().getResource(Constants.STRING_IMG_MAIN_ICON));
 	      Image image = tray_icon.getImage();
-//	      Toolkit toolkit = Toolkit.getDefaultToolkit();
-//	      Image image = toolkit.getImage("Image/Task.Do Icon.png");
 
-	      PopupMenu menu = new PopupMenu();
-
-//	      MenuItem messageItem = new MenuItem("Show Message");
-//	      messageItem.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent e) {
-//	          JOptionPane.showMessageDialog(null, "www.java2s.com");
-//	        }
-//	      });
-//	      menu.add(messageItem);
-	      
-	      MenuItem openItem = new MenuItem("Open");
+	      PopupMenu menu = new PopupMenu();   
+	      MenuItem openItem = new MenuItem(Constants.STRING_OPEN_TASKDO);
 	      openItem.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	          frame.setVisible(true);
 	        }
 	      });
 	      menu.add(openItem);
-	      MenuItem closeItem = new MenuItem("Exit");
+	      MenuItem closeItem = new MenuItem(Constants.STRING_QUIT_TASKDO);
 	      closeItem.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	provide.reset();
@@ -59,7 +48,7 @@ public class NotificationManager implements MouseListener{
 	        }
 	      });
 	      menu.add(closeItem);
-	      TrayIcon icon = new TrayIcon(image, "Task.Do", menu);
+	      TrayIcon icon = new TrayIcon(image, Constants.PRODUCT_TASKDO, menu);
 	      icon.addMouseListener(this);
 	      icon.setImageAutoSize(true);
 

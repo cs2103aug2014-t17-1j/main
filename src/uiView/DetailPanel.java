@@ -31,21 +31,20 @@ import org.joda.time.format.DateTimeFormatter;
 import taskDo.Category;
 import taskDo.CategoryList;
 import taskDo.Task;
-
 import commonClasses.Constants;
 
-/*
- * @author Paing Zin Oo(Jack)
+/* This is the class for additional panel on the right of the frame
+ * and varies according such as categoryList Table, Help Panel or details Panel
+ * 
+ * @author Paing Zin Oo(Jack)  A0112581N
  */
 public class DetailPanel extends JPanel implements Observer {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private UiParent parent;
 	private JTable categoryListTable;
 	private SoftShadowJPanel detailPanel;
 	
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public DetailPanel(HotKeyType hotkey, UiParent parent) {
 		switch (hotkey) {
 		case F1:
@@ -282,9 +281,6 @@ public class DetailPanel extends JPanel implements Observer {
 	private void createTableWithContent(ArrayList<Category> categoryList) {
 		String dataArr[][] = changetoTwoDArr(categoryList);
 		categoryListTable = new JTable(dataArr, Constants.CATEGORYKEYS) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
@@ -324,17 +320,13 @@ public class DetailPanel extends JPanel implements Observer {
 
 	private void tabKeyPressedAction(JTable categoryListTable) {
 		categoryListTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "Changed Focus");
-		categoryListTable.getActionMap().put("Changed Focus",
+				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT,
 				new AbstractAction() {
-					/**
-					 * 
-					 */
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void actionPerformed(ActionEvent actionEvent) {
-						System.out.println("TAB PRESSED IN TABLE");
 						parent.pressedTab(false);
 					}
 				});
@@ -342,16 +334,12 @@ public class DetailPanel extends JPanel implements Observer {
 
 	private void f2KeyPressedAction(JTable categoryListTable) {
 		categoryListTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F3");
-		categoryListTable.getActionMap().put("F3", new AbstractAction() {
-			/**
-			 * 
-			 */
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				System.out.println("F3 Presed IN TABLE");
 				parent.removeDetailPanel();
 			}
 		});
@@ -359,11 +347,8 @@ public class DetailPanel extends JPanel implements Observer {
 
 	private void f1KeyPressedAction(JTable categoryListTable) {
 		categoryListTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "Event");
-		categoryListTable.getActionMap().put("Event", new AbstractAction() {
-			/**
-			 * 
-			 */
+				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -439,7 +424,6 @@ public class DetailPanel extends JPanel implements Observer {
 	public String[][] changetoTwoDArr(ArrayList<Category> categoryList) {
 		String[][] result = new String[categoryList.size()][2];
 		for (int i = 0; i < categoryList.size(); i++) {
-			System.out.println("COUNT" + categoryList.get(i).getCount());
 			result[i][0] = categoryList.get(i).getName();
 			result[i][1] = categoryList.get(i).getCount()
 					+ Constants.STRING_STRING;

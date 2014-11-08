@@ -5,15 +5,14 @@ import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-/*
- * @author Paing Zin Oo(Jack)
+/* This is the class for normal Cell Renderer
+ * 
+ * @author Paing Zin Oo(Jack)  A0112581N
  */
 public class CustomTableRender extends DefaultTableCellRenderer{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	public ArrayList<Integer> imptRowIndexList = new ArrayList<Integer>();
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public Component getTableCellRendererComponent(JTable table, Object value,
 		    boolean isSelected, boolean hasFocus, int row, int column) {
 

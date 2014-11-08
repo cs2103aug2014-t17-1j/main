@@ -26,5 +26,25 @@ public class CommandStackTestCase {
 		assertEquals(commandStack.retrieveCommandFromForwardStack(),command);
 		assertEquals(commandStack.retrieveCommandFromBackwardStack(),command);
 	}
+	
+	@Test
+	public void testNull(){
+		commandStack = new CommandStack();
+		String command = null;
+		commandStack.insertCommand(command);
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(),"");
+		assertEquals(commandStack.retrieveCommandFromForwardStack(),null);
+		
+	}
+	
+	@Test
+	public void testForinvalid(){
+		commandStack = new CommandStack();
+		String command = "ckjfksldjkfl";
+		commandStack.insertCommand(command);
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(),"");
+		assertEquals(commandStack.retrieveCommandFromForwardStack(),"ckjfksldjkfl");
+	}
+	
 
 }

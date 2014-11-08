@@ -1,27 +1,24 @@
 package commonClasses;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Logger;
 
 import org.joda.time.DateTime;
 
 import taskDo.Task;
 
-/*
+/* This class is used to store list of tasks which need to be displayed to user 
  * @author Paing Zin Oo(Jack)
  */
 public class SummaryReport{
-	private static Logger LOGGER = Logger.getLogger(SummaryReport.class.getName() );
 	private static String feedBackMsg;
 	private static ArrayList<Task> displayList = new ArrayList<Task>();
 	private static ArrayList<Integer> imptRowIndexList;
 	private static ArrayList<Integer> overdueIndexList;
 	private static int rowIndexHighlight = Constants.NOTHING_SELECTED;
 	
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public static ArrayList<Integer> getOverdueIndexList() {
 		extractOverDueIndex();
-		assert overdueIndexList!=null;
-		LOGGER.info("OVERDUE TASK ROW INDEX LIST SIZE "+overdueIndexList.size());
 		return overdueIndexList;
 	}
 	
@@ -77,8 +74,6 @@ public class SummaryReport{
 				imptRowIndexList.add(i);
 			}
 		}
-		assert imptRowIndexList!=null;
-		LOGGER.info("IMPORTANT TASK ROW INDEX LIST SIZE "+imptRowIndexList.size());
 	}
 	
 }

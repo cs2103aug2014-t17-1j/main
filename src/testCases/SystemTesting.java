@@ -2,14 +2,12 @@ package testCases;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
 
 import parser.ParsedResult;
 import parser.Parser;
 import taskDo.Executor;
-import taskDo.Task;
+
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 

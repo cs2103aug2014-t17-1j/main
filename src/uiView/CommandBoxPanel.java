@@ -17,8 +17,10 @@ import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/*
- * @author Paing Zin Oo(Jack)
+/* This class is for the commandBox Panel and whenever there is a command 
+ * from user, it will be pass to uiViewModifier for further processing
+ * 
+ * @author Paing Zin Oo(Jack)  A0112581N
  */
 public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	private static final long serialVersionUID = -4442146738042473163L;
@@ -32,6 +34,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	private String pieceOfCommand;
 	private String txtHintMsg;
 
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public CommandBoxPanel(UiParent parent) {
 		pieceOfCommand =Constants.STRING_STRING;
 		txtHintMsg=Constants.STRING_STRING;
@@ -96,7 +99,6 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 					commandStack.insertCommand(command);
 				}
 				commandBox.setText(Constants.STRING_STRING);
-				System.out.println(command);
 			}
 		});
 		commandBox.addKeyListener(this);
@@ -143,14 +145,13 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 			addHintMsg();
 		}
 	}
+	
 	@Override
 	public void keyTyped(KeyEvent arg0) {
 		if(arg0.getKeyChar()!='\b'){
 			pieceOfCommand += arg0.getKeyChar();
 			addHintMsg();
 		} 
-		
-		
 	}
 
 	private boolean isValidCommandType() {

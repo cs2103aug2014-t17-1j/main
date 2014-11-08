@@ -38,6 +38,8 @@ public class Constants {
 	public static final String FILENAME_TASKDO = "TaskDo.json";
 	
 	public static final String STRING_STRING = "";
+	public static final String STRING_EVENT = "EVENT";
+	public static final String STRING_ERROR_TASKDO_IS_ACTIVE = "TaskDo is Active";
 	public static final String STRING_OPEN_HTML = "<html>";
 	public static final String STRING_CLOSE_HTML = "</html>";
 	public static final String STRING_NA = "NA";
@@ -46,6 +48,8 @@ public class Constants {
 	public static final String STRING_F3_CATEGORIES = "F2 Categories";
 	public static final String STRING_IMG_CANCEL_PNG = "/image/cancel-icon.png";
 	public static final String STRING_IMG_MAIN_ICON = "/image/Task.Do Icon.png";
+	public static final String STRING_OPEN_TASKDO = "Open Task.Do";
+	public static final String STRING_QUIT_TASKDO = "Quit Task.Do";
 	
 	
 	public static final String CATEGORY_COLUMN_TITLE[] = {"Name","Count"};
@@ -162,6 +166,7 @@ public class Constants {
 	public static final EmptyBorder EMPTY_BORDER_CATEGORY_TABLE = new EmptyBorder(15, 25, 15, 25);
 	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX = new EmptyBorder(20,20,20,20);
 	public static final EmptyBorder EMPTY_BORDER_CONTENT_TABLE = new EmptyBorder(15, 25, 15, 25);
+	public static final EmptyBorder EMPTY_BORDER_LINEWRAPPER = new EmptyBorder(15,5,15,15);
 	
 	public static final Font FONT_TIME_NEW_ROMAN = Font.getFont("times new roman");
 	/*
@@ -201,7 +206,7 @@ public class Constants {
 	public static final int DATE_FORMAT_ITERATIONS = 8;
 	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
 	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
-	public static final String MESSAGE_INVALID_DATE = "Date not recognized. Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow";
+	public static final String MESSAGE_INVALID_DATE = "Date not recognized.Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow";
 	public static final String MESSAGE_INVALID_DISPLAY_SELECTION = "Invalid! Press F2 to check existing category or try DD/MM/YYYY";
 	public static final String MESSAGE_INVALID_SELECTION = "Invalid selection";
 	public static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "Importance level not recognized";

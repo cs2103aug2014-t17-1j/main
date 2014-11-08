@@ -5,10 +5,15 @@ import java.util.ArrayList;
 
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
-
+/* This is the class default color table cell renderer
+ * 
+ * @author Paing Zin Oo(Jack)  A0112581N
+ */
 public class DefaultTableColor {
 	public static ArrayList<Integer> imptRowIndexList;
 	public static ArrayList<Integer> overdueRowIndexList;
+	
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public static void setDefaultBackGroundColor(Component component, int row, int selectedRow){
 		component.setForeground(Constants.COLOR_TABLE_TEXT);
 		
