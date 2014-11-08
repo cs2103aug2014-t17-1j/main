@@ -23,11 +23,11 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import taskDo.Task;
-
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/*
+/* This is the content Table Panle where tasks title,seq no and due date
+ * 
  * @author Paing Zin Oo(Jack)
  */
 public class ContentTablePanel extends JPanel implements Observer {
@@ -39,6 +39,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private SoftShadowJPanel parentJsp;
 
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public ContentTablePanel(UiParent parent) {
 		this.parent = parent;
 		setPreferredSize(Constants.DIMENION_TABLE);
@@ -190,7 +191,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 			@Override
 			public void actionPerformed(ActionEvent actionEvent) {
-				System.out.println("TAB PRESSED IN TABLE");
 				parent.pressedTab(false);
 			}
 		});
@@ -198,8 +198,8 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private void f2KeyPressedAction() {
 		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), "F3");
-		contentTable.getActionMap().put("F3", new AbstractAction() {
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
 			
 			private static final long serialVersionUID = 1L;
 
@@ -213,8 +213,8 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private void f1KeyPressedAction() {
 		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), "Event");
-		contentTable.getActionMap().put("Event", new AbstractAction() {
+				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
 			/**
 			 * 
 			 */

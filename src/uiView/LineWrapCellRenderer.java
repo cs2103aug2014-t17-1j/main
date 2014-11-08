@@ -4,21 +4,23 @@ import java.awt.Component;
 
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
 
+import commonClasses.Constants;
+/* This is class for line wrapper used in table cell 
+ * 
+ * @author Paing Zin Oo(Jack)  A0112581N
+ */
 public class LineWrapCellRenderer  extends JTextArea implements TableCellRenderer {	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public LineWrapCellRenderer(){
 		super();
 		setLineWrap(true);
 		setWrapStyleWord(true);
 		setOpaque(true);
-		this.setBorder(new EmptyBorder(15,5,15,15));
+		this.setBorder(Constants.EMPTY_BORDER_LINEWRAPPER);
 	}
 	
 	@Override

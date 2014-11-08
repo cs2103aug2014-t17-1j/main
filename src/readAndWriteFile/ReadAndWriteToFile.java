@@ -21,7 +21,8 @@ import taskDo.TaskType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/*
+/* This class is used to read json format and transform into Task object and 
+ * write whole list of task list into json file
  * @author Paing Zin Oo(Jack)
  */
 

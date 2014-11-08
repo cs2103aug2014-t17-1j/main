@@ -27,15 +27,12 @@ import com.tulskiy.keymaster.common.Provider;
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
-/*
- * @author Paing Zin Oo(Jack)
+
+/* The main controller for all the panels 
+ * 
+ * @author Paing Zin Oo(Jack) A0112581N
  */
 public class UiViewModifier extends JFrame implements WindowListener, UiParent {
-
-	/**
-	 * 
-	 */
-	
 	private static final long serialVersionUID = 1L;
 	private JFrame mainFrame;
 	private Executor executor;
@@ -49,10 +46,10 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	private ParsedResult parseResult;
 	private boolean isMinimized;
 	private Provider provide;
+	private int x = 0;
+	private int y = 0;
 
-	int x = 0;
-	int y = 0;
-
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public UiViewModifier() {
 		provide = Provider.getCurrentProvider(false);
 		setMinimized(false);
@@ -65,7 +62,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		initObserverList();
 		setJFrameProperties();
 		updateFrame();
-		new NotificationManager(this, provide);
+		new SystemTrayManager(this, provide);
 		setFocusToCommandBox();
 		addGlobalKey(provide);
 	}
@@ -121,7 +118,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 			if (parseResult.getCommandType().equals(CommandType.EXIT)) {
 				exitApp();
 			}
-
 			updateAllPanels();
 			updateDetailPanel();
 			removeDetailPanel();
@@ -204,7 +200,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 
 	public void updateDetailPanel() {
 		if (rowSelected != Constants.DEFAULT_ROW_SELECTED) {
-			System.out.println(rowSelected);
 			if (isDetailPanelExisting()) {
 				mainFrame.remove(detailPanel);
 			}
@@ -280,7 +275,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
 		setMinimized(true);
-		System.out.println("Window is maximzed");
 	}
 
 	@Override
