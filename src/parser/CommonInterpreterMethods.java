@@ -1,5 +1,6 @@
 package parser;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,12 +10,13 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.joestelmach.natty.DateGroup;
-
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
 public class CommonInterpreterMethods {
 
+	// This method checks if it is a valid selection on the displayList of
+	// summaryReport
 	static boolean isValidSelection(String commandParam) {
 		int selection;
 		try {
@@ -31,15 +33,16 @@ public class CommonInterpreterMethods {
 	}
 
 	static boolean noDeadLine(String commandParam) {
-		if (commandParam.toUpperCase().equals("SOMEDAY")) {
+		if (commandParam.toUpperCase().equals(Constants.FLOATING_TASK)) {
 			return true;
 		}
 
 		return false;
 	}
 
-	static DateTime getDate(String commandParam) {
-
+	static DateTime getDate(String commandParam)
+			throws InvalidParameterException {
+		boolean dateHasPassed = false;
 		com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
 		DateTimeFormatter df;
 		DateTime date;
@@ -51,24 +54,23 @@ public class CommonInterpreterMethods {
 				group = parser.parse(date.toString());
 				DateTime dates = new DateTime(group.get(0).getDates().get(0));
 
-				if (dates.getYear() == 2000) {
+				if (!isYearSpecified(dates)) {
 					dates = dates.withYear(new DateTime().getYear());
 				}
-				DateTime currentTime = new DateTime();
-				if (dates.toLocalDate().isBefore(currentTime.toLocalDate()))
-					;
-
-				String parsed = dates.minuteOfDay().getAsText();
-				String current = currentTime.minuteOfDay().getAsText();
-				if (parsed.equals(current)) {
-					dates = dates.withHourOfDay(23);
-					dates = dates.withMinuteOfHour(59); // update the time to
-					// 2359
+				if (dateHasPassed(dates)) {
+					dateHasPassed = true;
+					throw new InvalidParameterException(
+							Constants.MESSAGE_DATE_HAS_PASSED);
 				}
-
+				if (!isTimeSpecifiedForDateTimeFormatter(dates)) {
+					dates = updateTime(dates);
+				}
 				return dates;
 			} catch (Exception e) {
-
+				if (dateHasPassed == true) {
+					throw new InvalidParameterException(
+							Constants.MESSAGE_DATE_HAS_PASSED);
+				}
 			}
 		}
 		if (containsDigits(commandParam)) {
@@ -81,18 +83,51 @@ public class CommonInterpreterMethods {
 			return null; // Not a valid date
 		}
 		DateTime dates = new DateTime(group.get(0).getDates().get(0));
-
-		DateTime currentTime = new DateTime();
-		String parsed = dates.minuteOfDay().getAsText();
-		String current = currentTime.minuteOfDay().getAsText();
-		if (parsed.equals(current)) {
-			dates = dates.withHourOfDay(23);
-			dates = dates.withMinuteOfHour(59); // update the time to 2359
+		if (!isTimeSpecifiedForNatty(dates)) {
+			dates = updateTime(dates);
 		}
 
 		return dates;
 	}
 
+	private static boolean isTimeSpecifiedForNatty(DateTime dates) {
+		DateTime currentTime = new DateTime();
+
+		String parsed = dates.minuteOfDay().getAsText();
+		String current = currentTime.minuteOfDay().getAsText();
+		// When time is not specified, Natty will use the time now.
+		return !parsed.equals(current);
+	}
+
+	private static boolean isYearSpecified(DateTime dates) {
+		return !(dates.getYear() == 2000);
+	}
+
+	// This methods updates the time of the dateTime object to 2359
+	private static DateTime updateTime(DateTime dates) {
+		dates = dates.withHourOfDay(23);
+		dates = dates.withMinuteOfHour(59);
+		return dates;
+	}
+
+	private static boolean dateHasPassed(DateTime dates) {
+
+		DateTime currentTime = new DateTime();
+
+		if (dates.toLocalDate().isBefore(currentTime.toLocalDate())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean isTimeSpecifiedForDateTimeFormatter(DateTime dates) {
+		// When time is not specfied, DateTimeFormatter will update time as 0
+		return !(dates.getMinuteOfDay() == 0);
+	}
+
+	// This method checks if the relativeDateFormat entered is supported by
+	// Task.Do
 	private static boolean checkRelativeDateFormat(String commandParam) {
 		Pattern pattern = Pattern.compile("^\\w+ \\d{1,2}:\\d\\d$");
 		Matcher matcher = pattern.matcher(commandParam);
@@ -105,6 +140,12 @@ public class CommonInterpreterMethods {
 
 	}
 
+	static String getCommandWord(String input) {
+		String[] splittedCommand = input.split(" ");
+
+		return splittedCommand[0];
+	}
+
 	private static boolean containsDigits(String commandParam) {
 		Pattern pattern = Pattern.compile("\\d+");
 		Matcher matcher = pattern.matcher(commandParam);
@@ -115,4 +156,5 @@ public class CommonInterpreterMethods {
 
 		return false;
 	}
+
 }
