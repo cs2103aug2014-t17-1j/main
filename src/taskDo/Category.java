@@ -1,13 +1,11 @@
 package taskDo;
-/*
- * @author Paing Zin Oo(Jack)
- */
+
 public class Category {
-	
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private String name;
 	private int count;
 	
-	//@author Paing Zin Oo(Jack) A0112581N
+	
 	public Category(String name){
 		this.name = name;
 		this.count = 1;

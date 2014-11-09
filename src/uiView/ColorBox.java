@@ -3,7 +3,7 @@ package uiView;
 import java.awt.Color;
 /* Various colors used for the projects
  * 
- * @author Paing Zin Oo(Jack)  A0112581N
+ *
  */
 public class ColorBox {
 	

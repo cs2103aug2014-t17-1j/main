@@ -10,13 +10,12 @@ import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
 public class Parser {
-
+	//@author Boo Tai Yi  A0111936J
 	private ParsedResult result;
 	private MainCommandInterpreter mainHandler;
 	private OptionalCommandInterpreter optionHandler;
 	private static final Logger logger = LogManager.getLogger(Parser.class);
-
-	//@author Boo Tai Yi  A0111936J
+	
 	public Parser() {
 		mainHandler = new MainCommandInterpreter();
 		optionHandler = new OptionalCommandInterpreter();

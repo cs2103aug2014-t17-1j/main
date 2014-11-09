@@ -11,12 +11,12 @@ import taskDo.Task;
 import commonClasses.Constants;
 
 /* Convert the tasks into String 
- * @author Paing Zin Oo(Jack) A0112581N
+ *
  */
 public class ConvertToJson {
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private ArrayList<Task> taskList;
 
-	//@author Paing Zin Oo(Jack)  A0112581N
 	public ArrayList<Task> getTaskList() {
 		return taskList;
 	}

@@ -6,13 +6,13 @@ import commonClasses.Constants;
 /* This class is for storing lists of commands that users that and store them in the stacks 
  *  so that they can retrieve accordingly
  *  
- * @author Paing Zin Oo(Jack)  A0112581N
  */
 public class CommandStack {
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private Stack<String> forwardStack;
 	private Stack<String> backwardStack;
 	
-	//@author Paing Zin Oo(Jack)  A0112581N
+	
 	public CommandStack(){
 		forwardStack = new Stack<String>();
 		backwardStack = new Stack<String>();

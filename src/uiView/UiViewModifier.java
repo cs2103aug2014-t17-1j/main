@@ -30,10 +30,10 @@ import commonClasses.SummaryReport;
 
 /* The main controller for all the panels 
  * 
- * @author Paing Zin Oo(Jack) A0112581N
  */
 public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	private static final long serialVersionUID = 1L;
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private JFrame mainFrame;
 	private Executor executor;
 	private UiPanelList uiList;
@@ -49,7 +49,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	private int x = 0;
 	private int y = 0;
 
-	//@author Paing Zin Oo(Jack)  A0112581N
 	public UiViewModifier() {
 		provide = Provider.getCurrentProvider(false);
 		setMinimized(false);
@@ -109,7 +108,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		uiList.notifyUIs();
 	}
 
-	//main API which communicates with Parser and Executor
+	// main API which communicates with Parser and Executor
 	public void passToParser(String command) {
 		if (command != null && !command.trim().isEmpty()) {
 			parseResult = parser.parseString(command);
@@ -137,7 +136,9 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 
 	private void addGlobalKey(Provider provide) {
 		HotKeyListener quickLaunch = new QuickLaunchHotKey(this);
-		provide.register(KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.ALT_MASK | InputEvent.SHIFT_MASK), quickLaunch);
+		provide.register(
+				KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.ALT_MASK
+						| InputEvent.SHIFT_MASK), quickLaunch);
 	}
 
 	private void setJFrameProperties() {
@@ -182,18 +183,18 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 
 	private void createDetailPanel(HotKeyType hotkey) {
 		switch (hotkey) {
-		case F1:
-			detailPanel = new DetailPanel(HotKeyType.F1, this);
-			break;
-		case F3:
-			detailPanel = new DetailPanel(SummaryReport.getDisplayList().get(
-					rowSelected));
-			break;
-		case F2:
-			detailPanel = new DetailPanel(HotKeyType.F2, this);
-			break;
-		default:
-			break;
+			case F1:
+				detailPanel = new DetailPanel(HotKeyType.F1, this);
+				break;
+			case F3:
+				detailPanel = new DetailPanel(SummaryReport.getDisplayList()
+						.get(rowSelected));
+				break;
+			case F2:
+				detailPanel = new DetailPanel(HotKeyType.F2, this);
+				break;
+			default:
+				break;
 
 		}
 		mainFrame.add(detailPanel, BorderLayout.EAST);
@@ -208,7 +209,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 				detailPanel = new DetailPanel(SummaryReport.getDisplayList()
 						.get(SummaryReport.getRowIndexHighlight()));
 			}
-			
+
 			mainFrame.add(detailPanel, BorderLayout.EAST);
 			detailPanel.revalidate();
 			updateFrame();

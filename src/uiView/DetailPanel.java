@@ -36,15 +36,15 @@ import commonClasses.Constants;
 /* This is the class for additional panel on the right of the frame
  * and varies according such as categoryList Table, Help Panel or details Panel
  * 
- * @author Paing Zin Oo(Jack)  A0112581N
+ * 
  */
 public class DetailPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private UiParent parent;
 	private JTable categoryListTable;
 	private SoftShadowJPanel detailPanel;
 	
-	//@author Paing Zin Oo(Jack)  A0112581N
 	public DetailPanel(HotKeyType hotkey, UiParent parent) {
 		switch (hotkey) {
 		case F1:

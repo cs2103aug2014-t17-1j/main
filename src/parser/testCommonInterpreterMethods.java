@@ -8,7 +8,7 @@ import org.junit.Test;
 import taskDo.Task;
 import commonClasses.SummaryReport;
 
-public class testCommonInterpreterMethods {
+public class TestCommonInterpreterMethods {
 
 	@Test
 	//@author Boo Tai Yi  A0111936J

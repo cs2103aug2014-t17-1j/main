@@ -19,16 +19,15 @@ import commonClasses.Constants;
 /* This is the header Panel where the name of the application and the buttons 
  *  such as F1 and F2 come in
  *  
- * @author Paing Zin Oo(Jack)  A0112581N
+ * 
  */
 public class HeaderPanel extends JPanel{
-
 	private static final long serialVersionUID = 1L;
+	//@author Paing Zin Oo(Jack)  A0112581N
 	JLabel lblHeader;
 	JButton btnHelp, btnCategory;
 	UiParent uiParent;
 
-	//@author Paing Zin Oo(Jack)  A0112581N
 	public HeaderPanel(LayoutManager layout,UiParent uiParent) {
 		super(layout);
 		this.uiParent = uiParent;
@@ -53,7 +52,6 @@ public class HeaderPanel extends JPanel{
 		
 	}
 
-
 	private void createCategoriesBtn(GridBagConstraints c) {
 		JButton btnDetails = new JButton(Constants.STRING_F3_CATEGORIES);
 		btnDetails.setOpaque(false);
@@ -63,13 +61,11 @@ public class HeaderPanel extends JPanel{
 		btnDetails.setForeground(Color.WHITE);
 		btnDetails.setFocusable(false);
 		btnDetails.addActionListener( new ActionListener(){
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				uiParent.pressedF3();
 				
 			}
-			
 		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.WEST;
@@ -128,7 +124,7 @@ public class HeaderPanel extends JPanel{
 	}
 
 	private void createMinimizeBtn(GridBagConstraints c) {
-		ImageIcon icon = new ImageIcon(getClass().getResource("/image/delete-icon.png"));
+		ImageIcon icon = new ImageIcon(getClass().getResource(Constants.STRING_IMG_DEL_PNG));
 		JButton btnMin = new JButton(icon);
 		btnMin.setOpaque(false);
 		btnMin.setContentAreaFilled(false);

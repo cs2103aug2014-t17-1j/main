@@ -28,18 +28,17 @@ import commonClasses.SummaryReport;
 
 /* This is the content Table Panle where tasks title,seq no and due date
  * 
- * @author Paing Zin Oo(Jack)
+ * 
  */
 public class ContentTablePanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private ArrayList<Task> taskList;
 	private JTable contentTable;
 	private int rowSelected;
 	private UiParent parent;
-
 	private SoftShadowJPanel parentJsp;
 
-	//@author Paing Zin Oo(Jack)  A0112581N
 	public ContentTablePanel(UiParent parent) {
 		this.parent = parent;
 		setPreferredSize(Constants.DIMENION_TABLE);
@@ -118,12 +117,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 		if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
 			contentTable.setRowSelectionInterval(rowSelected, rowSelected);
 			createDetailPanelForSelectedRow();
-			contentTable.scrollRectToVisible(contentTable.getCellRect(rowSelected, 0, true));	
-			
-		}
-			
+			contentTable.scrollRectToVisible(contentTable.getCellRect(rowSelected, 0, true));			
+		}	
 	}
-
 	private void setContentTableProperties() {
 		setTableHeaderProperties();
 		setRowAndColumnSelectionMode();
@@ -131,7 +127,6 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.setDefaultRenderer(Object.class,new CustomTableRender());
 		setKeysPressed();
 		addFocusListener();
-	
 	}
 
 	private void addFocusListener() {

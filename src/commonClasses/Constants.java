@@ -13,15 +13,10 @@ import org.joda.time.DateTime;
 
 import uiView.ColorBox;
 
-/*
- * @author Paing Zin Oo(Jack)
- */
-
 public class Constants {
 	
-	  // @author Paing Zin Oo(Jack) A0112581N
+	//@author Paing Zin Oo(Jack)  A0112581N
 	 
-	
 	public static final String PRODUCT_TASKDO = "Task.Do";
 	
 	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -50,6 +45,7 @@ public class Constants {
 	public static final String STRING_F3_CATEGORIES = "F2 Categories";
 	public static final String STRING_IMG_CANCEL_PNG = "/image/cancel-icon.png";
 	public static final String STRING_IMG_MAIN_ICON = "/image/Task.Do Icon.png";
+	public static final String STRING_IMG_DEL_PNG = "/image/delete-icon.png";
 	public static final String STRING_OPEN_TASKDO = "Open Task.Do";
 	public static final String STRING_QUIT_TASKDO = "Quit Task.Do";
 	public static final String STRING_DEFAULT_COMMAND_TEXT = "Enter your command here";
@@ -171,9 +167,8 @@ public class Constants {
 	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX_PANEL = new EmptyBorder(10, 10, 10, 10);
 	
 	public static final Font FONT_TIME_NEW_ROMAN = Font.getFont("times new roman");
-	/*
-	 *  @author Huang Li
-	 */
+	
+	//@Author Huang Li A0112508R
 
 	// Command Actions
 	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s IS MARKED AS COMPLETED";
@@ -199,9 +194,7 @@ public class Constants {
 	
 	public static final int NILL_YEAR = 0;
 	
-	/*
-	 *  @author Boo Tai Yi
-	 */
+	//@author Boo Tai Yi  A0111936J
 
 	// Parser
 	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy", "ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MMM", "dd MMM yyyy HH:mm", "dd MMM yyyy" };

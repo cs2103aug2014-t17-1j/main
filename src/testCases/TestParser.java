@@ -1,10 +1,11 @@
-package parser;
+package testCases;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import parser.ParsedResult;
+import parser.Parser;
 import taskDo.TaskType;
-
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;

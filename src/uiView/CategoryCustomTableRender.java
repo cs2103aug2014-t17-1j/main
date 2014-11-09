@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import commonClasses.Constants;
 /* This is the class for rendering table's cells for categoryList
  * 
- *@author Paing Zin Oo(Jack)  A0112581N
+ *
  */
 public class CategoryCustomTableRender extends DefaultTableCellRenderer{
 	private static final long serialVersionUID = 1L;

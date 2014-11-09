@@ -4,7 +4,6 @@ import javax.swing.JFrame;
 
 /* The interface for all the panels 
  *
- * @author Paing Zin Oo(Jack)  A0112581N
  */
 public interface UiParent {
 	//@author Paing Zin Oo(Jack)  A0112581N

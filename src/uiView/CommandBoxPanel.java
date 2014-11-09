@@ -19,10 +19,11 @@ import commonClasses.SummaryReport;
 /* This class is for the commandBox Panel and whenever there is a command 
  * from user, it will be pass to uiViewModifier for further processing
  * 
- * @author Paing Zin Oo(Jack)  A0112581N
+ * 
  */
 public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	private static final long serialVersionUID = -4442146738042473163L;
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private int typeCount;
 	private JTextField commandBox;
 	private String command;
@@ -33,7 +34,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	private String pieceOfCommand;
 	private String txtHintMsg;
 
-	//@author Paing Zin Oo(Jack)  A0112581N
+	
 	public CommandBoxPanel(UiParent parent) {
 		pieceOfCommand =Constants.STRING_STRING;
 		txtHintMsg=Constants.STRING_STRING;

@@ -9,7 +9,6 @@ import org.joda.time.DateTime;
 import parser.ParsedResult;
 import commonClasses.Constants;
 import commonClasses.StorageList;
-import testCases.WagnerFischerSearch;
 
 public class Search {
 	//@Author Huang Li A0112508R
@@ -153,7 +152,7 @@ public class Search {
 	}
 
 
-	//@Author Boo Tai Yi A0111936J
+	//@author Boo Tai Yi  A0111936J
 	public ArrayList<Task> searchByKeyword(ParsedResult parsedResult){
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		String searchInput = parsedResult.getTaskDetails().getTitle();
