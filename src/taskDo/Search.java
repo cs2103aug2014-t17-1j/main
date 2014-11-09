@@ -12,11 +12,11 @@ import commonClasses.StorageList;
 import testCases.WagnerFischerSearch;
 
 public class Search {
+	//@Author Huang Li A0112508R
 	ArrayList<Task> returnList;
 	SearchType searchType;
 	int taskIndex;
 	
-	//@Author Huang Li A0112508R
 	private static final Logger log = LogManager.getLogger(Search.class);
 
 	public Search(){
