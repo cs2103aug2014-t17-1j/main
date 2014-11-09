@@ -79,8 +79,10 @@ public class DetailPanel extends JPanel implements Observer {
 				Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 	}
-
+	
+	//@author Boo Tai Yi  A0111936J
 	public DetailPanel(Task task) {
+		
 		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
 		String taskDetail[] = changetoArr(task);
 		setLayout(new BorderLayout());
@@ -90,153 +92,31 @@ public class DetailPanel extends JPanel implements Observer {
 		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
 		detailPanel = new SoftShadowJPanel();
 		detailPanel.setLayout(new GridBagLayout());
-		JLabel label;
 		GridBagConstraints c = new GridBagConstraints();
-		
-		
-		label = new JLabel(taskAttribute[0]);
-		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
-		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.051)));
-		label.setOpaque(true);
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 0;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskDetail[0]);
-		label.setBackground(Color.white);
-		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.050)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 1;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskAttribute[1]);
-		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
-		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 2;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskDetail[1]);
-		label.setBackground(Color.white);
-		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 3;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskAttribute[2]);
-		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
-		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 0.5;
-		c.gridwidth = 1;
-		c.gridx = 0;
-		c.gridy = 4;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskAttribute[3]);
-		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
-		label.setForeground(Color.white);
-		label.setOpaque(true);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 0.5;
-		c.gridwidth = 1;
-		c.gridx = 1;
-		c.gridy = 4;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskDetail[2]);
-		label.setBackground(Color.white);
-		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 0.5;
-		c.gridwidth = 1;
-		c.gridx = 0;
-		c.gridy = 5;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskDetail[3]);
-		label.setBackground(Color.white);
-		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 0.5;
-		c.gridwidth = 1;
-		c.gridx = 1;
-		c.gridy = 5;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskAttribute[4]);
-		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
-		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 6;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskDetail[4]);
-		label.setBackground(Color.white);
-		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 7;
-		detailPanel.add(label, c);
-		
-		label = new JLabel(taskAttribute[5]);
-		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
-		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 8;
-		detailPanel.add(label, c);
-		
+		addAttributesAndDetails(taskAttribute, taskDetail, size, c);
+		add(detailPanel);
+
+	}
+
+	private void addAttributesAndDetails(String[] taskAttribute,
+			String[] taskDetail, Dimension size, GridBagConstraints c) {
+		addFirstAttribute(taskAttribute, size, c);
+		addFirstDetail(taskDetail, size, c);
+		addSecondAttribute(taskAttribute, size, c);
+		addSecondDetail(taskDetail, size, c);
+		addThirdAttribute(taskAttribute, size, c);
+		addFourthAttribute(taskAttribute, size, c);
+		addThirdDetail(taskDetail, size, c);
+		addFourthDetail(taskDetail, size, c);
+		addFifthAttribute(taskAttribute, size, c);
+		addFifthDetail(taskDetail, size, c);
+		addSixthAttribute(taskAttribute, size, c);
+		addSixthDetail(taskDetail, size, c);
+	}
+
+	private void addSixthDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
 		label = new JLabel(taskDetail[5]);
 		label.setBackground(Color.white);
 		label.setForeground(Color.black);
@@ -249,11 +129,196 @@ public class DetailPanel extends JPanel implements Observer {
 		c.gridx = 0;
 		c.gridy = 9;
 		detailPanel.add(label, c);
-
-		add(detailPanel);
-
 	}
 
+	private void addSixthAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[5]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 8;
+		detailPanel.add(label, c);
+	}
+
+	private void addFifthDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[4]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 7;
+		detailPanel.add(label, c);
+	}
+
+	private void addFifthAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[4]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 6;
+		detailPanel.add(label, c);
+	}
+
+	private void addFourthDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[3]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 5;
+		detailPanel.add(label, c);
+	}
+
+	private void addThirdDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[2]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 5;
+		detailPanel.add(label, c);
+	}
+
+	private void addFourthAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[3]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setOpaque(true);
+		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 4;
+		detailPanel.add(label, c);
+	}
+
+	private void addThirdAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[2]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 4;
+		detailPanel.add(label, c);
+	}
+
+	private void addSecondDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[1]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 3;
+		detailPanel.add(label, c);
+	}
+
+	private void addSecondAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[1]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		detailPanel.add(label, c);
+	}
+
+	private void addFirstDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[0]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.050)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 1;
+		detailPanel.add(label, c);
+	}
+
+	private void addFirstAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[0]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setPreferredSize(new Dimension(0,(int)(size.height*0.051)));
+		label.setOpaque(true);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 0;
+		detailPanel.add(label, c);
+	}
+
+	//@author Paing Zin Oo(Jack)  A0112581N
 	private void createCategoryListPanel(UiParent uiparent) {
 		parent = uiparent;
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();

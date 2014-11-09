@@ -17,6 +17,7 @@ public class CommonInterpreterMethods {
 
 	// This method checks if it is a valid selection on the displayList of
 	// summaryReport
+	//@author Boo Tai Yi  A0111936J
 	static boolean isValidSelection(String commandParam) {
 		int selection;
 		try {

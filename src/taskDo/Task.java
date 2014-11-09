@@ -1,9 +1,7 @@
 package taskDo;
 import org.joda.time.DateTime;
 
-/*
- * @author Paing Zin Oo(Jack)
- */
+
 public class Task implements Comparable<Task>{
 	
 	private final int INCREMENT = 1;
@@ -18,6 +16,7 @@ public class Task implements Comparable<Task>{
 	private boolean completed;
 	private TaskType type;
 	
+	//@author Boo Tai Yi  A0111936J
 	public Task( String category, String description,
 			boolean important, DateTime dueDate, DateTime startDate,
 			boolean completed) {

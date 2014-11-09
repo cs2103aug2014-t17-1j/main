@@ -14,6 +14,7 @@ import commonClasses.SummaryReport;
 
 public class OptionalCommandInterpreter extends CommandInterpreter {
 
+	//@author Boo Tai Yi  A0111936J
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TITLE, NOTE
 	}

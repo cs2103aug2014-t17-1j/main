@@ -14,6 +14,7 @@ import commonClasses.SummaryReport;
 
 public class MainCommandInterpreter extends CommandInterpreter {
 
+	//@author Boo Tai Yi  A0111936J
 	// Members
 	private CommandType currentCommand;
 

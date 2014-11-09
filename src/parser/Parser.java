@@ -16,6 +16,7 @@ public class Parser {
 	private OptionalCommandInterpreter optionHandler;
 	private static final Logger logger = LogManager.getLogger(Parser.class);
 
+	//@author Boo Tai Yi  A0111936J
 	public Parser() {
 		mainHandler = new MainCommandInterpreter();
 		optionHandler = new OptionalCommandInterpreter();

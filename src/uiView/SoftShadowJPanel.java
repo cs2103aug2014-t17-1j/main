@@ -13,6 +13,7 @@ public class SoftShadowJPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private static final int PIXELS = 10;
 
+	//@author Boo Tai Yi  A0111936J
 	public SoftShadowJPanel() {
 		Border border = BorderFactory.createEmptyBorder(PIXELS, PIXELS, PIXELS,
 				PIXELS);

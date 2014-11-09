@@ -8,7 +8,7 @@ import com.tulskiy.keymaster.common.HotKeyListener;
 public class QuickLaunchHotKey implements HotKeyListener {
 
 	private UiViewModifier uiView;
-
+	//@author Boo Tai Yi  A0111936J
 	public QuickLaunchHotKey(UiViewModifier uiView) {
 		this.uiView = uiView;
 	}

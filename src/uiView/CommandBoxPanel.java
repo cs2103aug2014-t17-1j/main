@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import commandFactory.CommandType;
 import commonClasses.Constants;
@@ -80,7 +79,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 
 	private void initCommandBox() {
 		commandBox = new JTextField();
-		commandBox.setBorder(new EmptyBorder(10, 10, 10, 10));
+		commandBox.setBorder(Constants.EMPTY_BORDER_COMMAND_BOX_PANEL);
 		if (typeCount == 0) {
 			setIntroTextInCommandBox();
 		}
@@ -106,7 +105,7 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 
 	private void setIntroTextInCommandBox() {
 		commandBox.setForeground(Color.GRAY);
-		commandBox.setText("Enter your command here");
+		commandBox.setText(Constants.STRING_DEFAULT_COMMAND_TEXT);
 
 	}
 
@@ -148,12 +147,13 @@ public class CommandBoxPanel extends JPanel implements KeyListener, Observer {
 	
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		if(arg0.getKeyChar()!='\b'){
+		if(arg0.getKeyChar() != Constants.CHAR_BACKSPACE){
 			pieceOfCommand += arg0.getKeyChar();
 			addHintMsg();
 		} 
 	}
 
+	//checking for whether command type is valid or not
 	private boolean isValidCommandType() {
 		String commandType = pieceOfCommand.trim().split(Constants.STRING_SPACE)[0];
 		if(commandType.equalsIgnoreCase(CommandType.ADD.toString().toLowerCase())){
