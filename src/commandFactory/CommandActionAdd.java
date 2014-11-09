@@ -1,17 +1,21 @@
 package commandFactory;
 
+import java.util.ArrayList;
+
 import parser.ParsedResult;
 import commonClasses.StorageList;
 import taskDo.History;
+import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
 public class CommandActionAdd implements CommandAction{
 	@Override
 	public void execute(ParsedResult parsedResult){
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
 		
-		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
+		taskList.add(parsedResult.getTaskDetails());
 		
 		history.getUndoTaskHistory().push(parsedResult.getTaskDetails());
 		history.getUndoCommandHistory().push(CommandType.ADD);
@@ -24,6 +28,7 @@ public class CommandActionAdd implements CommandAction{
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
 		
@@ -32,7 +37,7 @@ public class CommandActionAdd implements CommandAction{
 		history.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 		history.getRedoCommandHistory().push(CommandType.ADD);
 		
-		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
+		taskList.remove(parsedResult.getTaskDetails());
 		
 		updateSR.updateByDueDate(parsedResult);
 		
