@@ -10,10 +10,12 @@ public class CommandActionDisplay implements CommandAction{
 	@Override
 	public void execute(ParsedResult parsedResult){
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		Search search = new Search();
+		
 		updateSR.unhighlightTask();
 		
-		Search search = new Search();
-		ArrayList<Task> displayList = search.searchForDisplay(parsedResult);
+		displayList = search.searchForDisplay(parsedResult);
 		updateSR.updateForDisplay(parsedResult, displayList);
 	}
 

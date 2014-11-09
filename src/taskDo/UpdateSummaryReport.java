@@ -65,12 +65,14 @@ public class UpdateSummaryReport {
 	}
 
 	public void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
-
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
+		
 		if(displayList.isEmpty()){
 			updateFeedbackMsg(Constants.MESSAGE_FAIL_SEARCH);
-		}else{determineFeedbackMsg(parsedResult);}
+		}else{
+			determineFeedbackMsg(parsedResult);
+		}
 	}
 
 	private void updateDisplayTaskList(ArrayList<Task> displayList) {
