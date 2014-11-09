@@ -8,7 +8,6 @@ import org.joda.time.format.DateTimeFormatter;
 
 import parser.ParsedResult;
 import commandFactory.CommandType;
-import commandFactory.Search;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 

@@ -3,6 +3,7 @@ package commandFactory;
 import java.util.ArrayList;
 
 import parser.ParsedResult;
+import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 

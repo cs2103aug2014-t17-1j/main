@@ -1,4 +1,4 @@
-package commandFactory;
+package testCases;
 
 public class WagnerFischerSearch {
 	

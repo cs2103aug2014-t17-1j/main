@@ -6,6 +6,7 @@ import parser.ParsedResult;
 import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 import taskDo.History;
+import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 

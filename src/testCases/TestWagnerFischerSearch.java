@@ -1,4 +1,4 @@
-package commandFactory;
+package testCases;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package commandFactory;
+package taskDo;
 
 import java.util.ArrayList;
 
@@ -9,9 +9,7 @@ import org.joda.time.DateTime;
 import parser.ParsedResult;
 import commonClasses.Constants;
 import commonClasses.StorageList;
-import taskDo.SearchType;
-import taskDo.Task;
-import taskDo.TaskType;
+import testCases.WagnerFischerSearch;
 
 public class Search {
 	int taskIndex;
