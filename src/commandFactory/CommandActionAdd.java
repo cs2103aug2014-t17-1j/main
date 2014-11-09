@@ -18,7 +18,7 @@ public class CommandActionAdd implements CommandAction{
 		
 		addIntoList(parsedResult, taskList);
 		pushToUndoStacks(parsedResult, history);
-		displayResult(parsedResult, updateSR);
+		updateDisplayList(parsedResult, updateSR);
 		saveIntoFile();
 	}
 
@@ -40,7 +40,7 @@ public class CommandActionAdd implements CommandAction{
 		clearHighlight(updateSR);
 		pushToRedoStacks(parsedResult, history);
 		removeFromList(parsedResult, taskList);
-		displayResult(parsedResult, updateSR);
+		updateDisplayList(parsedResult, updateSR);
 		saveIntoFile();	
 	}
 
@@ -58,7 +58,7 @@ public class CommandActionAdd implements CommandAction{
 		history.getRedoCommandHistory().push(CommandType.ADD);
 	}
 
-	private void displayResult(ParsedResult parsedResult,
+	private void updateDisplayList(ParsedResult parsedResult,
 			UpdateSummaryReport updateSR) {
 		updateSR.updateByDueDate(parsedResult);
 		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
