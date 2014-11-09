@@ -15,7 +15,8 @@ public class Search {
 	ArrayList<Task> returnList;
 	SearchType searchType;
 	int taskIndex;
-
+	
+	//@Author Huang Li A0112508R
 	private static final Logger log = LogManager.getLogger(Search.class);
 
 	public Search(){
@@ -151,14 +152,8 @@ public class Search {
 		return isNotBefore && isNotAfter;
 	}
 
-	/**
-	 * Wagner Fischer Search method
-	 * 
-	 * @Author Boo Tai Yi
-	 * @Refactor Huang Li
-	 * @param parsedResult
-	 * @return
-	 */
+
+	//@Author Boo Tai Yi A0111936J
 	public ArrayList<Task> searchByKeyword(ParsedResult parsedResult){
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		String searchInput = parsedResult.getTaskDetails().getTitle();
@@ -167,35 +162,53 @@ public class Search {
 		log.info("Search Input [" + searchInput + "].");
 		
 		for(int charIdx=0; charIdx < splittedInput.length; charIdx++) {
-			for(int taskIdx=0; taskIdx<taskList.size(); taskIdx++){
-				if(isNotCompleted(taskList.get(taskIdx))){
-					if(taskList.get(taskIdx).getTitle().contains(splittedInput[charIdx])){
-						returnList.add(taskList.get(taskIdx));
-					}
-				}
-			}
+			addLevelOneValidTasks(taskList, splittedInput, charIdx);
 		}
 
 		if(returnList.isEmpty()) { //2nd level search fail
 			WagnerFischerSearch wfSearch = new WagnerFischerSearch();
 			for(int charIdx=0;charIdx<splittedInput.length;charIdx++) {
-				for(int taskIdx=0;taskIdx<taskList.size();taskIdx++){
-					if(isNotCompleted(taskList.get(taskIdx))){
-						String[] splittedDescription = taskList.get(taskIdx).getTitle().split(" ");
-						for(int splitIdx=0;splitIdx<splittedDescription.length;splitIdx++) {
-							int editDist = wfSearch.getEditDistance(splittedDescription[splitIdx].toLowerCase(), splittedInput[charIdx].toLowerCase());
-							if(editDist <= 2) {
-								returnList.add(taskList.get(taskIdx));
-								break;
-							}
-						}
-					}
-				}
+				searchForValidTasks(taskList, splittedInput, wfSearch, charIdx);
 			}
 		}
 		return returnList;
 	}
 
+	private void addLevelOneValidTasks(ArrayList<Task> taskList,
+			String[] splittedInput, int charIdx) {
+		for(int taskIdx=0; taskIdx<taskList.size(); taskIdx++){
+			if(isNotCompleted(taskList.get(taskIdx))){
+				if(taskList.get(taskIdx).getTitle().contains(splittedInput[charIdx])){
+					returnList.add(taskList.get(taskIdx));
+				}
+			}
+		}
+	}
+
+	private void searchForValidTasks(ArrayList<Task> taskList,
+			String[] splittedInput, WagnerFischerSearch wfSearch, int charIdx) {
+		for(int taskIdx=0;taskIdx<taskList.size();taskIdx++){
+			if(isNotCompleted(taskList.get(taskIdx))){
+				String[] splittedDescription = taskList.get(taskIdx).getTitle().split(" ");
+				addValidTasks(taskList, splittedInput, wfSearch,
+						charIdx, taskIdx, splittedDescription);
+			}
+		}
+	}
+
+	private void addValidTasks(ArrayList<Task> taskList,
+			String[] splittedInput, WagnerFischerSearch wfSearch, int charIdx,
+			int taskIdx, String[] splittedDescription) {
+		for(int splitIdx=0;splitIdx<splittedDescription.length;splitIdx++) {
+			int editDist = wfSearch.getEditDistance(splittedDescription[splitIdx].toLowerCase(), splittedInput[charIdx].toLowerCase());
+			if(editDist <= 2) {
+				returnList.add(taskList.get(taskIdx));
+				break;
+			}
+		}
+	}
+
+	//@Author Huang Li A0112508R
 	public ArrayList<Task> searchByCompleted(){
 		for(Task task: StorageList.getInstance().getTaskList()){
 			if(task.isCompleted()){
