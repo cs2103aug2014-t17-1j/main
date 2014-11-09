@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import taskDo.SearchType;
 import taskDo.Task;
 import taskDo.TaskType;
-
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -21,40 +20,36 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 
 	// Members
 	OptionalCommand currentCommand;
-
-	public OptionalCommandInterpreter() {
-
-	}
-
+	
 	public void identifyAndSetCommand(String command)
 			throws InvalidParameterException {
 
 		switch (command) {
-		case "due":
+		case Constants.OPTIONAL_COMMAND_STRING_DUE:
 			currentCommand = OptionalCommand.DUE;
 			break;
 
-		case "from":
+		case Constants.OPTIONAL_COMMAND_STRING_FROM:
 			currentCommand = OptionalCommand.FROM;
 			break;
 
-		case "to":
+		case Constants.OPTIONAL_COMMAND_STRING_TO:
 			currentCommand = OptionalCommand.TO;
 			break;
 
-		case "category":
+		case Constants.OPTIONAL_COMMAND_STRING_CATEGORY:
 			currentCommand = OptionalCommand.CATEGORY;
 			break;
 
-		case "impt":
+		case Constants.OPTIONAL_COMMAND_STRING_IMPT:
 			currentCommand = OptionalCommand.IMPT;
 			break;
 
-		case "title":
+		case Constants.OPTIONAL_COMMAND_STRING_TITLE:
 			currentCommand = OptionalCommand.TITLE;
 			break;
 
-		case "note":
+		case Constants.OPTIONAL_COMMAND_STRING_NOTE:
 			currentCommand = OptionalCommand.NOTE;
 			break;
 
@@ -93,7 +88,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 				return remainingInput.substring(5); // Length of word "note "
 
 			default:
-				return "";
+				return Constants.STRING_STRING;
 			}
 		} catch (Exception e) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
@@ -164,7 +159,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 					Constants.MESSAGE_DATE_HAS_PASSED);
 		}
 		Task task = result.getTaskDetails();
-		if (date == null) {
+		if (CommonInterpreterMethods.isInvalidDate(date)) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException(Constants.MESSAGE_INVALID_DATE);
 		}
@@ -198,12 +193,12 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 			throw new InvalidParameterException(
 					Constants.MESSAGE_DATE_HAS_PASSED);
 		}
-		if (commandParam.contains(" to ")) {
+		if (commandParam.contains(Constants.STRING_SPACE_TO_SPACE)) {
 			SummaryReport
 					.setFeedBackMsg(Constants.MESSAGE_MISSING_SIGN_FROMTO_COMMAND);
 			throw new InvalidParameterException(
 					Constants.MESSAGE_MISSING_SIGN_FROMTO_COMMAND);
-		} else if (date == null) {
+		} else if (CommonInterpreterMethods.isInvalidDate(date)) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 			throw new InvalidParameterException(Constants.MESSAGE_INVALID_DATE);
 		}
@@ -233,7 +228,7 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 				throw new InvalidParameterException(
 						Constants.MESSAGE_DATE_HAS_PASSED);
 			}
-			if (date == null) {
+			if (CommonInterpreterMethods.isInvalidDate(date)) {
 				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
 				throw new InvalidParameterException(
 						Constants.MESSAGE_INVALID_DATE);

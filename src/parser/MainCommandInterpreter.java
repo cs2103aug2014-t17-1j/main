@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 import taskDo.CategoryList;
 import taskDo.SearchType;
 import taskDo.Task;
-
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
@@ -18,10 +17,6 @@ public class MainCommandInterpreter extends CommandInterpreter {
 	// Members
 	private CommandType currentCommand;
 
-	public MainCommandInterpreter() {
-
-	}
-
 	public CommandType getCommand() {
 		return this.currentCommand;
 	}
@@ -29,48 +24,48 @@ public class MainCommandInterpreter extends CommandInterpreter {
 	public void identifyAndSetCommand(String command)
 			throws InvalidParameterException {
 		switch (command) {
-		case "new":
-		case "create":
-		case "add":
+		case Constants.COMMAND_STRING_NEW:
+		case Constants.COMMAND_STRING_CREATE:
+		case Constants.COMMAND_STRING_ADD:
 			currentCommand = CommandType.ADD;
 			break;
 
-		case "show":
-		case "view":
-		case "display":
+		case Constants.COMMAND_STRING_SHOW:
+		case Constants.COMMAND_STRING_VIEW:
+		case Constants.COMMAND_STRING_DISPLAY:
 			currentCommand = CommandType.DISPLAY;
 			break;
 
-		case "del":
-		case "remove":
-		case "delete":
+		case Constants.COMMAND_STRING_DEL:
+		case Constants.COMMAND_STRING_REMOVE:
+		case Constants.COMMAND_STRING_DELETE:
 			currentCommand = CommandType.DELETE;
 			break;
 
-		case "mod":
-		case "edit":
+		case Constants.COMMAND_STRING_MOD:
+		case Constants.COMMAND_STRING_EDIT:
 			currentCommand = CommandType.EDIT;
 			break;
-		case "undo":
+		case Constants.COMMAND_STRING_UNDO:
 			currentCommand = CommandType.UNDO;
 			break;
 
-		case "search":
+		case Constants.COMMAND_STRING_SEARCH:
 			currentCommand = CommandType.SEARCH;
 			break;
 
-		case "tick":
-		case "done":
-		case "complete":
+		case Constants.COMMAND_STRING_TICK:
+		case Constants.COMMAND_STRING_DONE:
+		case Constants.COMMAND_STRING_COMPLETE:
 			currentCommand = CommandType.COMPLETED;
 			break;
 
-		case "redo":
+		case Constants.COMMAND_STRING_REDO:
 			currentCommand = CommandType.REDO;
 			break;
 
-		case "quit":
-		case "exit":
+		case Constants.COMMAND_STRING_QUIT:
+		case Constants.COMMAND_STRING_EXIT:
 			currentCommand = CommandType.EXIT;
 			break;
 
@@ -82,11 +77,11 @@ public class MainCommandInterpreter extends CommandInterpreter {
 	}
 
 	public String removeCommandWord(String input) {
-		if (input.indexOf(' ') == -1) {
+		if (input.indexOf(Constants.CHAR_SPACING) == -1) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
 			throw new InvalidParameterException(Constants.MESSAGE_MISSING_PARAM);
 		}
-		return input.substring(input.indexOf(' ') + 1);
+		return input.substring(input.indexOf(Constants.CHAR_SPACING) + 1);
 	}
 
 	public ParsedResult updateResults(ParsedResult result, String commandParam)
@@ -136,8 +131,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 	private void updateCompleteCase(ParsedResult result, String commandParam) {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
-			int selection = Integer.valueOf(commandParam) - 1;
-			// adjust value of commandparam to get correct index
+			int selection = getSelection(commandParam);
 			result.setTask(SummaryReport.getDisplayList().get(selection));
 			result.setSelectedItem(selection);
 			if (result.getTaskDetails().isCompleted()) {
@@ -151,6 +145,10 @@ public class MainCommandInterpreter extends CommandInterpreter {
 			throw new InvalidParameterException(
 					Constants.MESSAGE_INVALID_SELECTION);
 		}
+	}
+
+	private int getSelection(String commandParam) {
+		return Integer.valueOf(commandParam) - 1;
 	}
 
 	private void copyTaskParamToParsedResult(ParsedResult result, int selection) {
@@ -167,7 +165,6 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		result.getTaskDetails().setImportant(selectedTask.isImportant());
 		result.getTaskDetails().setTaskType(selectedTask.getTaskType());
 		result.getTaskDetails().setNote(selectedTask.getNote());
-
 	}
 
 	private void updateDisplayCase(ParsedResult result, String commandParam) {
@@ -196,7 +193,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 				throw new InvalidParameterException(
 						Constants.MESSAGE_DATE_HAS_PASSED);
 			}
-			if (date == null) {
+			if (CommonInterpreterMethods.isInvalidDate(date)) {
 				SummaryReport
 						.setFeedBackMsg(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
 				throw new InvalidParameterException(
@@ -208,11 +205,11 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		}
 	}
 
+	
+
 	private void updateForEditCase(ParsedResult result, String commandParam) {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
-			int selection = Integer.valueOf(commandParam) - 1; // adjust to get
-			// the correct
-			// index in list
+			int selection = getSelection(commandParam); 
 			copyTaskParamToParsedResult(result, selection);
 			result.setSelectedItem(selection);
 		} else {
@@ -224,7 +221,7 @@ public class MainCommandInterpreter extends CommandInterpreter {
 
 	private void updateForDeleteCase(ParsedResult result, String commandParam) {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
-			int selection = Integer.valueOf(commandParam) - 1;
+			int selection = getSelection(commandParam);
 			result.setTask(SummaryReport.getDisplayList().get(selection));
 			result.setSelectedItem(selection);
 		} else {

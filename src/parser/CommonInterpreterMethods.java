@@ -10,13 +10,13 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import com.joestelmach.natty.DateGroup;
+
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
 public class CommonInterpreterMethods {
 
-	// This method checks if it is a valid selection on the displayList of
-	// summaryReport
+	// This method checks if it is a valid selection on the displayList of summaryReport
 	//@author Boo Tai Yi  A0111936J
 	static boolean isValidSelection(String commandParam) {
 		int selection;
@@ -101,6 +101,7 @@ public class CommonInterpreterMethods {
 	}
 
 	private static boolean isYearSpecified(DateTime dates) {
+		//For DateTimeFormatter, when year is not specified, it will be defaulted to 2000
 		return !(dates.getYear() == 2000);
 	}
 
@@ -123,14 +124,14 @@ public class CommonInterpreterMethods {
 	}
 
 	private static boolean isTimeSpecifiedForDateTimeFormatter(DateTime dates) {
-		// When time is not specfied, DateTimeFormatter will update time as 0
+		// When time is not specified, DateTimeFormatter will update time as 0
 		return !(dates.getMinuteOfDay() == 0);
 	}
 
 	// This method checks if the relativeDateFormat entered is supported by
 	// Task.Do
 	private static boolean checkRelativeDateFormat(String commandParam) {
-		Pattern pattern = Pattern.compile("^\\w+ \\d{1,2}:\\d\\d$");
+		Pattern pattern = Pattern.compile(Constants.REGEX_STRING_RELATIVE_DATE_FORMAT);
 		Matcher matcher = pattern.matcher(commandParam);
 
 		if (matcher.find()) {
@@ -148,7 +149,7 @@ public class CommonInterpreterMethods {
 	}
 
 	private static boolean containsDigits(String commandParam) {
-		Pattern pattern = Pattern.compile("\\d+");
+		Pattern pattern = Pattern.compile(Constants.REGEX_STRING_CHECK_FOR_DIGITS);
 		Matcher matcher = pattern.matcher(commandParam);
 
 		if (matcher.find()) {
@@ -158,4 +159,9 @@ public class CommonInterpreterMethods {
 		return false;
 	}
 
+	static boolean isInvalidDate(DateTime date) {
+		//getDate method returns null if it is a invalid date
+		return date == null;
+	}
+	
 }

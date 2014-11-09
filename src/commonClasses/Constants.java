@@ -196,9 +196,7 @@ public class Constants {
 	
 	//@author Boo Tai Yi  A0111936J
 
-	// Parser
-	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy", "ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MMM", "dd MMM yyyy HH:mm", "dd MMM yyyy" };
-	public static final int DATE_FORMAT_ITERATIONS = 8;
+	//Parser Related
 	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
 	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
 	public static final String MESSAGE_INVALID_DATE = "Invalid format.Try DD/MM/YYYY HH:mm,DD/MM/YYYY,dd MMM or today";
@@ -221,7 +219,51 @@ public class Constants {
 	public static final String DISPLAY_ALL = "all";
 	public static final int NOTHING_SELECTED = -1;
 	public static final String FLOATING_TASK = "SOMEDAY";
+
+	public static final char CHAR_SPACING = ' ';
+
+	public static final String COMMAND_STRING_EXIT = "exit";
+	public static final String COMMAND_STRING_QUIT = "quit";
+
+	public static final String COMMAND_STRING_REDO = "redo";
+
+	public static final String COMMAND_STRING_COMPLETE = "complete";
+	public static final String COMMAND_STRING_DONE = "done";
+	public static final String COMMAND_STRING_TICK = "tick";
+
+	public static final String COMMAND_STRING_SEARCH = "search";
+
+	public static final String COMMAND_STRING_UNDO = "undo";
+
+	public static final String COMMAND_STRING_EDIT = "edit";
+	public static final String COMMAND_STRING_MOD = "mod";
+
+	public static final String COMMAND_STRING_DELETE = "delete";
+	public static final String COMMAND_STRING_REMOVE = "remove";
+	public static final String COMMAND_STRING_DEL = "del";
+
+	public static final String COMMAND_STRING_DISPLAY = "display";
+	public static final String COMMAND_STRING_VIEW = "view";
+	public static final String COMMAND_STRING_SHOW = "show";
+
+	public static final String COMMAND_STRING_CREATE = "create";
+	public static final String COMMAND_STRING_NEW = "new";
+	public static final String COMMAND_STRING_ADD = "add";
+
+	public static final String STRING_SPACE_TO_SPACE = " to ";
+	public static final String OPTIONAL_COMMAND_STRING_NOTE = "note";
+	public static final String OPTIONAL_COMMAND_STRING_TITLE = "title";
+	public static final String OPTIONAL_COMMAND_STRING_IMPT = "impt";
+	public static final String OPTIONAL_COMMAND_STRING_CATEGORY = "category";
+	public static final String OPTIONAL_COMMAND_STRING_TO = "to";
+	public static final String OPTIONAL_COMMAND_STRING_FROM = "from";
+	public static final String OPTIONAL_COMMAND_STRING_DUE = "due";
+	public static final String OPTIONAL_COMMAND_MARKER = "-";
 	
+	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy", "ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MMM", "dd MMM yyyy HH:mm", "dd MMM yyyy" };
+	public static final int DATE_FORMAT_ITERATIONS = 8;
+	public static final String REGEX_STRING_RELATIVE_DATE_FORMAT = "^\\w+ \\d{1,2}:\\d\\d$";
+	public static final String REGEX_STRING_CHECK_FOR_DIGITS = "\\d+";
 	
 	
 }

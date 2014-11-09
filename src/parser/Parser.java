@@ -10,12 +10,12 @@ import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
 public class Parser {
-	//@author Boo Tai Yi  A0111936J
+	// @author Boo Tai Yi A0111936J
 	private ParsedResult result;
 	private MainCommandInterpreter mainHandler;
 	private OptionalCommandInterpreter optionHandler;
 	private static final Logger logger = LogManager.getLogger(Parser.class);
-	
+
 	public Parser() {
 		mainHandler = new MainCommandInterpreter();
 		optionHandler = new OptionalCommandInterpreter();
@@ -38,7 +38,7 @@ public class Parser {
 			}
 
 			// Processing main commands
-			String[] seperatedInput = input.split("-");
+			String[] seperatedInput = input.split(Constants.OPTIONAL_COMMAND_MARKER);
 			processMainCommand(seperatedInput);
 			if (mainHandler.commandDoesNotRequireParam()) {
 				if (mainHandler.getCommand() == CommandType.EXIT) {
@@ -51,10 +51,8 @@ public class Parser {
 			// Processing optional commands
 			processOptionalCommandAndUpdateResults(seperatedInput);
 
-			// Floating task
-			if (result.getTaskDetails().getDueDate() == null) {
+			if (isFloatingTask()) {
 				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
-
 			}
 		} catch (Exception e) {
 			logger.info("Exception:" + e.toString());
@@ -62,6 +60,10 @@ public class Parser {
 			result.setCommandType(CommandType.INVALID);
 		}
 		return result;
+	}
+
+	private boolean isFloatingTask() {
+		return result.getTaskDetails().getDueDate() == null;
 	}
 
 	private void updateResultsForMainCommand(String[] seperatedInput) {
@@ -96,7 +98,7 @@ public class Parser {
 
 	private void processOptionalCommandAndUpdateResults(String[] remainingInput) {
 		String commandWord;
-
+		// Index 0 contains main commands. Index 1 onwards contains optional commands
 		for (int i = 1; i < remainingInput.length; i++) {
 			commandWord = CommonInterpreterMethods
 					.getCommandWord(remainingInput[i].trim());
@@ -108,7 +110,6 @@ public class Parser {
 
 			result = optionHandler.updateResults(result,
 					remainingInput[i].trim());
-
 		}
 	}
 
