@@ -13,6 +13,7 @@ import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 
 public class Executor {
+	//@Author Huang Li A0112508R
 	private static final Logger log = LogManager.getLogger(Executor.class);
 
 	public Executor() {
