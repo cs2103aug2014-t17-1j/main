@@ -36,29 +36,31 @@ public class Executor {
 	}
 
 	private void executeUndo(ParsedResult parsedResult) {
-		if(!History.getUndoActionHistory().empty()){
-			CommandAction commandAction = History.getUndoActionHistory().pop();
-			Task lastTask = History.getUndoTaskHistory().pop();
+		History history = History.getInstance();
+		if(!history.getUndoActionHistory().empty()){
+			CommandAction commandAction = history.getUndoActionHistory().pop();
+			Task lastTask = history.getUndoTaskHistory().pop();
 
-			History.getRedoActionHistory().push(commandAction);
+			history.getRedoActionHistory().push(commandAction);
 
 			parsedResult.setTask(lastTask);
 			commandAction.undo(parsedResult);
 		}else{
-			History.getUndoTaskHistory().clear();
+			history.getUndoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);
 		}
 	}
 
 	private void executeRedo(ParsedResult parsedResult) {
-		if(!History.getRedoActionHistory().empty()){
-			CommandAction commandAction = History.getRedoActionHistory().pop();
-			Task lastTask = History.getRedoTaskHistory().pop();
-			History.getUndoActionHistory().push(commandAction);
+		History history = History.getInstance();
+		if(!history.getRedoActionHistory().empty()){
+			CommandAction commandAction = history.getRedoActionHistory().pop();
+			Task lastTask = history.getRedoTaskHistory().pop();
+			history.getUndoActionHistory().push(commandAction);
 			parsedResult.setTask(lastTask);
 			commandAction.execute(parsedResult);
 		}else{
-			History.getRedoTaskHistory().clear();
+			history.getRedoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);
 		}
 	}
@@ -68,7 +70,7 @@ public class Executor {
 		CommandAction commandAction = commandFactory.getCommandAction(commandType);			
 		commandAction.execute(parsedResult);
 		if(!commandType.equals(CommandType.DISPLAY)&&!commandType.equals(CommandType.SEARCH)){
-			History.getUndoActionHistory().push(commandAction);
+			History.getInstance().getUndoActionHistory().push(commandAction);
 		}
 	}
 }

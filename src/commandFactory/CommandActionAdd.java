@@ -8,9 +8,10 @@ import taskDo.UpdateSummaryReport;
 public class CommandActionAdd implements CommandAction{
 	@Override
 	public void execute(ParsedResult parsedResult){
+		History history = History.getInstance();
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
-		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
-		History.getUndoCommandHistory().push(CommandType.ADD);
+		history.getUndoTaskHistory().push(parsedResult.getTaskDetails());
+		history.getUndoCommandHistory().push(CommandType.ADD);
 		
 		UpdateSummaryReport.updateByDueDate(parsedResult);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
@@ -19,9 +20,10 @@ public class CommandActionAdd implements CommandAction{
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
+		History history = History.getInstance();
 		UpdateSummaryReport.unhighlightTask();
-		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
-		History.getRedoCommandHistory().push(CommandType.ADD);
+		history.getRedoTaskHistory().push(parsedResult.getTaskDetails());
+		history.getRedoCommandHistory().push(CommandType.ADD);
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		UpdateSummaryReport.updateByDueDate(parsedResult);
 		StorageList.getInstance().saveToFile();	

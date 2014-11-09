@@ -20,7 +20,6 @@ public class UpdateSummaryReport {
 		displayList = search.searchByOverdueAndToday();
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
-		
 	}
 
 	public static void updateByDueDate(ParsedResult parsedResult){
@@ -96,12 +95,12 @@ public class UpdateSummaryReport {
 			break;
 
 		case UNDO:
-			command = History.getUndoCommandHistory().pop().toString();
+			command = History.getInstance().getUndoCommandHistory().pop().toString();
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_UNDO, command);
 			break;
 
 		case REDO:
-			command = History.getRedoCommandHistory().pop().toString();
+			command = History.getInstance().getRedoCommandHistory().pop().toString();
 			feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_REDO, command);
 			break;
 

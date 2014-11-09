@@ -14,18 +14,20 @@ public class CommandActionDelete implements CommandAction{
 	@Override
 	public void execute(ParsedResult parsedResult){
 		UpdateSummaryReport.unhighlightTask();
+		History history = History.getInstance();
+		
 		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
 		
 		ArrayList<Task> displayList = new ArrayList<Task>();
 		if(parsedResult.getCommandType().equals(CommandType.REDO)){
-			displayList = History.getRedoDisplayHistory().pop();
+			displayList = history.getRedoDisplayHistory().pop();
 		}
 		else{
 			displayList = SummaryReport.getDisplayList();
 		}
-		History.getUndoTaskHistory().push(parsedResult.getTaskDetails());
-		History.getUndoDisplayHistory().push(displayList);
-		History.getUndoCommandHistory().push(CommandType.DELETE);
+		history.getUndoTaskHistory().push(parsedResult.getTaskDetails());
+		history.getUndoDisplayHistory().push(displayList);
+		history.getUndoCommandHistory().push(CommandType.DELETE);
 		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult, displayList);
 		
 		StorageList.getInstance().saveToFile();	
@@ -33,14 +35,16 @@ public class CommandActionDelete implements CommandAction{
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
+		History history = History.getInstance();
+		
 		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
-		History.getRedoTaskHistory().push(parsedResult.getTaskDetails());
+		history.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 
-		ArrayList<Task> displayList = History.getUndoDisplayHistory().pop();
+		ArrayList<Task> displayList = history.getUndoDisplayHistory().pop();
 		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult, displayList);
 		displayList = SummaryReport.getDisplayList();
-		History.getRedoDisplayHistory().push(displayList);
-		History.getRedoCommandHistory().push(CommandType.DELETE);
+		history.getRedoDisplayHistory().push(displayList);
+		history.getRedoCommandHistory().push(CommandType.DELETE);
 		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
 		
 		StorageList.getInstance().saveToFile();	
