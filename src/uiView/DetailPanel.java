@@ -40,21 +40,21 @@ import commonClasses.Constants;
  */
 public class DetailPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	private UiParent parent;
 	private JTable categoryListTable;
 	private SoftShadowJPanel detailPanel;
-	
+
 	public DetailPanel(HotKeyType hotkey, UiParent parent) {
 		switch (hotkey) {
-		case F1:
-			createHelpPanel();
-			break;
-		case F2:
-			createCategoryListPanel(parent);
-			break;
-		default:
-			break;
+			case F1:
+				createHelpPanel();
+				break;
+			case F2:
+				createCategoryListPanel(parent);
+				break;
+			default:
+				break;
 		}
 
 	}
@@ -79,10 +79,10 @@ public class DetailPanel extends JPanel implements Observer {
 				Constants.COLOR_DETAIL_PANEL_TEXT));
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 	}
-	
-	//@author Boo Tai Yi  A0111936J
+
+	// @author Boo Tai Yi A0111936J
 	public DetailPanel(Task task) {
-		
+
 		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
 		String taskDetail[] = changetoArr(task);
 		setLayout(new BorderLayout());
@@ -120,9 +120,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskDetail[5]);
 		label.setBackground(Color.white);
 		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -137,9 +137,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskAttribute[5]);
 		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -154,9 +154,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskDetail[4]);
 		label.setBackground(Color.white);
 		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -171,9 +171,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskAttribute[4]);
 		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -188,9 +188,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskDetail[3]);
 		label.setBackground(Color.white);
 		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridwidth = 1;
@@ -205,9 +205,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskDetail[2]);
 		label.setBackground(Color.white);
 		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridwidth = 1;
@@ -223,8 +223,8 @@ public class DetailPanel extends JPanel implements Observer {
 		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
 		label.setOpaque(true);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridwidth = 1;
@@ -239,9 +239,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskAttribute[2]);
 		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.5;
 		c.gridwidth = 1;
@@ -256,9 +256,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskDetail[1]);
 		label.setBackground(Color.white);
 		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -273,9 +273,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskAttribute[1]);
 		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.049)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -290,9 +290,9 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskDetail[0]);
 		label.setBackground(Color.white);
 		label.setForeground(Color.black);
-		label.setFont(new Font("Calibiri",Font.PLAIN,15));
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
 		label.setOpaque(true);
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.050)));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.050)));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		c.gridwidth = 2;
@@ -307,8 +307,8 @@ public class DetailPanel extends JPanel implements Observer {
 		label = new JLabel(taskAttribute[0]);
 		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
 		label.setForeground(Color.white);
-		label.setFont(new Font("Calibiri",Font.BOLD,15));
-		label.setPreferredSize(new Dimension(0,(int)(size.height*0.051)));
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.051)));
 		label.setOpaque(true);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
@@ -318,7 +318,7 @@ public class DetailPanel extends JPanel implements Observer {
 		detailPanel.add(label, c);
 	}
 
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	private void createCategoryListPanel(UiParent uiparent) {
 		parent = uiparent;
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();
@@ -371,10 +371,10 @@ public class DetailPanel extends JPanel implements Observer {
 	}
 
 	public void setFocustoTable() {
-		if(categoryListTable != null){
+		if (categoryListTable != null) {
 			categoryListTable.requestFocus();
 		}
-		
+
 	}
 
 	private void setKeysPressed(JTable categoryListTable) {
@@ -385,7 +385,8 @@ public class DetailPanel extends JPanel implements Observer {
 
 	private void tabKeyPressedAction(JTable categoryListTable) {
 		categoryListTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), Constants.STRING_EVENT);
+				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0),
+				Constants.STRING_EVENT);
 		categoryListTable.getActionMap().put(Constants.STRING_EVENT,
 				new AbstractAction() {
 					private static final long serialVersionUID = 1L;
@@ -399,29 +400,33 @@ public class DetailPanel extends JPanel implements Observer {
 
 	private void f2KeyPressedAction(JTable categoryListTable) {
 		categoryListTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), Constants.STRING_EVENT);
-		categoryListTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
-			private static final long serialVersionUID = 1L;
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0),
+				Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				parent.removeDetailPanel();
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.removeDetailPanel();
+					}
+				});
 	}
 
 	private void f1KeyPressedAction(JTable categoryListTable) {
 		categoryListTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constants.STRING_EVENT);
-		categoryListTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
-			private static final long serialVersionUID = 1L;
+				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
+				Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				parent.pressedF1();
-			}
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.pressedF1();
+					}
 
-		});
+				});
 	}
 
 	private void setTableHeaderProperties(JTable categoryListTable) {
@@ -458,8 +463,10 @@ public class DetailPanel extends JPanel implements Observer {
 	}
 
 	private void setContentTableColumnWidth(JTable contentTable) {
-		contentTable.getColumnModel().getColumn(0).setMaxWidth(Constants.MAX_WIDTH_CATEGORY_NAME);
-		contentTable.getColumnModel().getColumn(1).setMaxWidth(Constants.MAX_WIDTH_CATEGORY_COUNT);
+		contentTable.getColumnModel().getColumn(0)
+				.setMaxWidth(Constants.MAX_WIDTH_CATEGORY_NAME);
+		contentTable.getColumnModel().getColumn(1)
+				.setMaxWidth(Constants.MAX_WIDTH_CATEGORY_COUNT);
 
 	}
 
@@ -500,7 +507,8 @@ public class DetailPanel extends JPanel implements Observer {
 		String arr[] = new String[6];
 		assert task.getTitle() != null;
 		assert task.getCategory() != null;
-		arr[1] = Constants.STRING_OPEN_HTML+task.getCategory()+ Constants.STRING_CLOSE_HTML;
+		arr[1] = Constants.STRING_OPEN_HTML + task.getCategory()
+				+ Constants.STRING_CLOSE_HTML;
 		if (task.getCategory() == null) {
 			arr[1] = Constants.STRING_NA;
 		}
@@ -532,7 +540,8 @@ public class DetailPanel extends JPanel implements Observer {
 		if (task.getNote() == null) {
 			arr[0] = Constants.STRING_NA;
 		} else {
-			arr[0] =  Constants.STRING_OPEN_HTML+task.getNote()+ Constants.STRING_CLOSE_HTML;
+			arr[0] = Constants.STRING_OPEN_HTML + task.getNote()
+					+ Constants.STRING_CLOSE_HTML;
 		}
 
 		return arr;

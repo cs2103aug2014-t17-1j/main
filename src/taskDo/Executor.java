@@ -13,35 +13,36 @@ import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 
 public class Executor {
-	//@Author Huang Li A0112508R
+	// @Author Huang Li A0112508R
 	private static final Logger log = LogManager.getLogger(Executor.class);
 
 	public Executor() {
 		StorageList.getInstance().loadFile();
 	}
 
-	public void execute(ParsedResult parsedResult) {		
+	public void execute(ParsedResult parsedResult) {
 		CommandFactory commandFactory = new CommandFactory();
 		CommandType commandType = parsedResult.getCommandType();
-		
+
 		log.info("Command [" + commandType.toString() + "].");
-		
+
 		if (commandType.equals(CommandType.UNDO)) {
 			executeUndo(parsedResult);
-		}else	if(commandType.equals(CommandType.REDO)){
+		} else if (commandType.equals(CommandType.REDO)) {
 			executeRedo(parsedResult);
-		}else{
+		} else {
 			executeCommand(parsedResult, commandFactory, commandType);
 		}
-		
-		CategoryList.updateCategoryList(StorageList.getInstance().getTaskList());
+
+		CategoryList
+				.updateCategoryList(StorageList.getInstance().getTaskList());
 	}
 
 	private void executeUndo(ParsedResult parsedResult) {
 		History history = History.getInstance();
 		CommandAction commandAction = null;
-		
-		try{
+
+		try {
 			commandAction = history.getUndoActionHistory().pop();
 			Task lastTask = history.getUndoTaskHistory().pop();
 
@@ -49,9 +50,9 @@ public class Executor {
 
 			parsedResult.setTask(lastTask);
 			commandAction.undo(parsedResult);
-		}catch(Exception e){
+		} catch (Exception e) {
 			log.info("no more undo command [" + e + "].");
-			
+
 			history.getUndoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);
 		}
@@ -60,16 +61,16 @@ public class Executor {
 	private void executeRedo(ParsedResult parsedResult) {
 		History history = History.getInstance();
 		CommandAction commandAction = null;
-		
-		try{
+
+		try {
 			commandAction = history.getRedoActionHistory().pop();
 			Task lastTask = history.getRedoTaskHistory().pop();
-			
+
 			history.getUndoActionHistory().push(commandAction);
-			
+
 			parsedResult.setTask(lastTask);
 			commandAction.execute(parsedResult);
-		}catch(Exception e){
+		} catch (Exception e) {
 			log.info("no more redo command [" + e + "].");
 			history.getRedoTaskHistory().clear();
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);
@@ -78,14 +79,14 @@ public class Executor {
 
 	private void executeCommand(ParsedResult parsedResult,
 			CommandFactory commandFactory, CommandType commandType) {
-		
+
 		History history = History.getInstance();
 		CommandAction commandAction = null;
-		
+
 		commandAction = commandFactory.getCommandAction(commandType);
 		commandAction.execute(parsedResult);
-		
-		if(isNotDisplayAndSearch(commandType)){
+
+		if (isNotDisplayAndSearch(commandType)) {
 			history.getUndoActionHistory().push(commandAction);
 		}
 	}

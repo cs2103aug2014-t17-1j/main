@@ -8,44 +8,45 @@ import uiView.CommandStack;
 
 public class CommandStackTestCase {
 	private CommandStack commandStack;
+
 	@Test
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	public void test() {
 		String command = "";
 		commandStack = new CommandStack();
 		commandStack.insertCommand(command);
-		assertEquals(commandStack.retrieveCommandFromForwardStack(),command);
-		assertEquals(commandStack.retrieveCommandFromForwardStack(),command);
-		
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), command);
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), command);
+
 	}
-	
+
 	@Test
-	public void testLongString(){
+	public void testLongString() {
 		commandStack = new CommandStack();
 		String command = "new task";
 		commandStack.insertCommand(command);
-		assertEquals(commandStack.retrieveCommandFromForwardStack(),command);
-		assertEquals(commandStack.retrieveCommandFromBackwardStack(),command);
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), command);
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(), command);
 	}
-	
+
 	@Test
-	public void testNull(){
+	public void testNull() {
 		commandStack = new CommandStack();
 		String command = null;
 		commandStack.insertCommand(command);
-		assertEquals(commandStack.retrieveCommandFromBackwardStack(),"");
-		assertEquals(commandStack.retrieveCommandFromForwardStack(),null);
-		
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(), "");
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), null);
+
 	}
-	
+
 	@Test
-	public void testForinvalid(){
+	public void testForinvalid() {
 		commandStack = new CommandStack();
 		String command = "ckjfksldjkfl";
 		commandStack.insertCommand(command);
-		assertEquals(commandStack.retrieveCommandFromBackwardStack(),"");
-		assertEquals(commandStack.retrieveCommandFromForwardStack(),"ckjfksldjkfl");
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(), "");
+		assertEquals(commandStack.retrieveCommandFromForwardStack(),
+				"ckjfksldjkfl");
 	}
-	
 
 }

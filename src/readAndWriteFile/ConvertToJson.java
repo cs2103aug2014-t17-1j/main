@@ -14,7 +14,7 @@ import commonClasses.Constants;
  *
  */
 public class ConvertToJson {
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	private ArrayList<Task> taskList;
 
 	public ArrayList<Task> getTaskList() {

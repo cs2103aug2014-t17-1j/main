@@ -27,7 +27,7 @@ import commonClasses.SummaryReport;
  */
 
 public class ReadAndWriteToFile {
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	private String jsonText;
 	private static final Logger logger = LogManager.getLogger(Executor.class);
 
@@ -82,7 +82,6 @@ public class ReadAndWriteToFile {
 			}
 		}
 		return taskList;
-
 
 	}
 

@@ -1,9 +1,9 @@
 package taskDo;
+
 import org.joda.time.DateTime;
 
-
-public class Task implements Comparable<Task>{
-	//@author Boo Tai Yi  A0111936J
+public class Task implements Comparable<Task> {
+	// @author Boo Tai Yi A0111936J
 	private final int INCREMENT = 1;
 	private static int lastTaskId = 0;
 	private int id;
@@ -15,13 +15,12 @@ public class Task implements Comparable<Task>{
 	private DateTime startDate;
 	private boolean completed;
 	private TaskType type;
-	
-	public Task( String category, String description,
-			boolean important, DateTime dueDate, DateTime startDate,
-			boolean completed) {
+
+	public Task(String category, String description, boolean important,
+			DateTime dueDate, DateTime startDate, boolean completed) {
 		super();
 		lastTaskId++;
-		this.id = lastTaskId+INCREMENT;
+		this.id = lastTaskId + INCREMENT;
 		this.category = category;
 		this.title = description;
 		this.important = important;
@@ -29,32 +28,32 @@ public class Task implements Comparable<Task>{
 		this.startDate = startDate;
 		this.completed = completed;
 	}
-	
-	public Task(){
+
+	public Task() {
 		lastTaskId++;
-		this.id = lastTaskId+INCREMENT;
+		this.id = lastTaskId + INCREMENT;
 		this.title = "";
 		this.type = TaskType.TODO;
 		this.category = "Others";
 		this.note = "";
 	}
-	
-	public Task(String description){
+
+	public Task(String description) {
 		this.title = description;
-		
+
 	}
-	
-	public static int getLastTaskId(){
+
+	public static int getLastTaskId() {
 		return lastTaskId;
 	}
-	
-	//for testing only
-	public Task (DateTime dueDate){
-		this.id=lastTaskId+1;
+
+	// for testing only
+	public Task(DateTime dueDate) {
+		this.id = lastTaskId + 1;
 		lastTaskId++;
 		this.dueDate = dueDate;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -110,11 +109,11 @@ public class Task implements Comparable<Task>{
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
-	
+
 	public TaskType getTaskType() {
 		return this.type;
 	}
-	
+
 	public void setTaskType(TaskType taskType) {
 		this.type = taskType;
 	}
@@ -122,24 +121,25 @@ public class Task implements Comparable<Task>{
 	public String getNote() {
 		return this.note;
 	}
-	
+
 	public void setNote(String taskNote) {
 		this.note = taskNote;
 	}
+
 	public String toString() {
-		 return "ID" + this.id + "Category: "+ this.getCategory()+ " Task:"
-		 +this.getTitle();
+		return "ID" + this.id + "Category: " + this.getCategory() + " Task:"
+				+ this.getTitle();
 	}
 
 	@Override
 	public int compareTo(Task task) {
-		 if (getDueDate() == null || task.getDueDate() == null){
-			 return -1;
-		 } else if(getDueDate().getYear() == 0) {
-			 return 1;
-		 } else if(task.getDueDate().getYear() == 0) {
-			 return -1;
-		 }
-		 return getDueDate().compareTo(task.getDueDate());
+		if (getDueDate() == null || task.getDueDate() == null) {
+			return -1;
+		} else if (getDueDate().getYear() == 0) {
+			return 1;
+		} else if (task.getDueDate().getYear() == 0) {
+			return -1;
+		}
+		return getDueDate().compareTo(task.getDueDate());
 	}
 }

@@ -33,7 +33,7 @@ import commonClasses.SummaryReport;
  */
 public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	private static final long serialVersionUID = 1L;
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	private JFrame mainFrame;
 	private Executor executor;
 	private UiPanelList uiList;
@@ -56,7 +56,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		removeOriginalBoundaryFrame();
 		rowSelected = Constants.DEFAULT_ROW_SELECTED;
 		initParserAndExecutor();
-
 		mainFrame.setLayout(new BorderLayout());
 		initObserverList();
 		setJFrameProperties();
@@ -131,7 +130,6 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		provide.reset();
 		provide.stop();
 		System.exit(0);
-
 	}
 
 	private void addGlobalKey(Provider provide) {

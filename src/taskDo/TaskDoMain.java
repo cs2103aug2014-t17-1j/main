@@ -18,7 +18,8 @@ public class TaskDoMain {
 	static FileLock lock;
 	static FileChannel channel;
 	private static final Logger logger = LogManager.getLogger(TaskDoMain.class);
-	//@author Boo Tai Yi  A0111936J
+
+	// @author Boo Tai Yi A0111936J
 	public static void main(String args[]) {
 		try {
 			if (isAppActive()) {

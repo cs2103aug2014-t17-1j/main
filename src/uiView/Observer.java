@@ -1,4 +1,5 @@
 package uiView;
+
 /* Observer class for all panels to update
  * 
  */

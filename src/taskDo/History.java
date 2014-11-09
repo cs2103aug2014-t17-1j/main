@@ -7,9 +7,9 @@ import commandFactory.CommandAction;
 import commandFactory.CommandType;
 
 public class History {
-	//@Author Huang Li A0112508R
+	// @Author Huang Li A0112508R
 	private static History history;
-	
+
 	private Stack<ArrayList<Task>> undoDisplayHistory = new Stack<ArrayList<Task>>();
 	private Stack<ArrayList<Task>> redoDisplayHistory = new Stack<ArrayList<Task>>();
 	private Stack<CommandAction> undoActionHistory = new Stack<CommandAction>();
@@ -18,16 +18,17 @@ public class History {
 	private Stack<CommandType> redoCommandHistory = new Stack<CommandType>();
 	private Stack<Task> redoTaskHistory = new Stack<Task>();
 	private Stack<Task> undoTaskHistory = new Stack<Task>();
-	
-	private History() {}
 
-	public static History getInstance(){
-		if(history == null){
+	private History() {
+	}
+
+	public static History getInstance() {
+		if (history == null) {
 			history = new History();
 		}
 		return history;
 	}
-	
+
 	public Stack<CommandAction> getUndoActionHistory() {
 		return undoActionHistory;
 	}

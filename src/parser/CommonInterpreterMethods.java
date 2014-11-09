@@ -16,8 +16,9 @@ import commonClasses.SummaryReport;
 
 public class CommonInterpreterMethods {
 
-	// This method checks if it is a valid selection on the displayList of summaryReport
-	//@author Boo Tai Yi  A0111936J
+	// This method checks if it is a valid selection on the displayList of
+	// summaryReport
+	// @author Boo Tai Yi A0111936J
 	static boolean isValidSelection(String commandParam) {
 		int selection;
 		try {
@@ -101,7 +102,8 @@ public class CommonInterpreterMethods {
 	}
 
 	private static boolean isYearSpecified(DateTime dates) {
-		//For DateTimeFormatter, when year is not specified, it will be defaulted to 2000
+		// For DateTimeFormatter, when year is not specified, it will be
+		// defaulted to 2000
 		return !(dates.getYear() == 2000);
 	}
 
@@ -131,7 +133,8 @@ public class CommonInterpreterMethods {
 	// This method checks if the relativeDateFormat entered is supported by
 	// Task.Do
 	private static boolean checkRelativeDateFormat(String commandParam) {
-		Pattern pattern = Pattern.compile(Constants.REGEX_STRING_RELATIVE_DATE_FORMAT);
+		Pattern pattern = Pattern
+				.compile(Constants.REGEX_STRING_RELATIVE_DATE_FORMAT);
 		Matcher matcher = pattern.matcher(commandParam);
 
 		if (matcher.find()) {
@@ -149,7 +152,8 @@ public class CommonInterpreterMethods {
 	}
 
 	private static boolean containsDigits(String commandParam) {
-		Pattern pattern = Pattern.compile(Constants.REGEX_STRING_CHECK_FOR_DIGITS);
+		Pattern pattern = Pattern
+				.compile(Constants.REGEX_STRING_CHECK_FOR_DIGITS);
 		Matcher matcher = pattern.matcher(commandParam);
 
 		if (matcher.find()) {
@@ -160,8 +164,8 @@ public class CommonInterpreterMethods {
 	}
 
 	static boolean isInvalidDate(DateTime date) {
-		//getDate method returns null if it is a invalid date
+		// getDate method returns null if it is a invalid date
 		return date == null;
 	}
-	
+
 }

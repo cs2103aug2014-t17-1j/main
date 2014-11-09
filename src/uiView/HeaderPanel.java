@@ -21,14 +21,14 @@ import commonClasses.Constants;
  *  
  * 
  */
-public class HeaderPanel extends JPanel{
+public class HeaderPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	JLabel lblHeader;
 	JButton btnHelp, btnCategory;
 	UiParent uiParent;
 
-	public HeaderPanel(LayoutManager layout,UiParent uiParent) {
+	public HeaderPanel(LayoutManager layout, UiParent uiParent) {
 		super(layout);
 		this.uiParent = uiParent;
 		createHeaderLbl();
@@ -49,7 +49,7 @@ public class HeaderPanel extends JPanel{
 		createDummyBtn(c);
 		createMinimizeBtn(c);
 		createCloseBtn(c);
-		
+
 	}
 
 	private void createCategoriesBtn(GridBagConstraints c) {
@@ -60,11 +60,11 @@ public class HeaderPanel extends JPanel{
 		btnDetails.setPreferredSize(new Dimension(120, 20));
 		btnDetails.setForeground(Color.WHITE);
 		btnDetails.setFocusable(false);
-		btnDetails.addActionListener( new ActionListener(){
+		btnDetails.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				uiParent.pressedF3();
-				
+
 			}
 		});
 		c.fill = GridBagConstraints.NONE;
@@ -83,14 +83,14 @@ public class HeaderPanel extends JPanel{
 		btnHelp.setPreferredSize(new Dimension(80, 20));
 		btnHelp.setForeground(Color.WHITE);
 		btnHelp.setFocusable(false);
-		btnHelp.addActionListener( new ActionListener(){
+		btnHelp.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				uiParent.pressedF1();
-				
+
 			}
-			
+
 		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.WEST;
@@ -102,13 +102,15 @@ public class HeaderPanel extends JPanel{
 
 	private void createHeaderLbl() {
 		lblHeader = new JLabel();
-		lblHeader.setFont(new Font("Calibri", Font.BOLD, Constants.HEADER_FONT_SIZE));
+		lblHeader.setFont(new Font("Calibri", Font.BOLD,
+				Constants.HEADER_FONT_SIZE));
 		lblHeader.setForeground(Constants.COLOR_HEADER_PANEL_TEXT);
 		lblHeader.setText(Constants.PRODUCT_TASKDO);
 		lblHeader.setHorizontalAlignment(JLabel.CENTER);
 	}
 
-	private void createDummyBtn(GridBagConstraints c) { //To center Task.Do label
+	private void createDummyBtn(GridBagConstraints c) { // To center Task.Do
+														// label
 		JButton btnDummy = new JButton();
 		btnDummy.setOpaque(false);
 		btnDummy.setContentAreaFilled(false);
@@ -124,21 +126,22 @@ public class HeaderPanel extends JPanel{
 	}
 
 	private void createMinimizeBtn(GridBagConstraints c) {
-		ImageIcon icon = new ImageIcon(getClass().getResource(Constants.STRING_IMG_DEL_PNG));
+		ImageIcon icon = new ImageIcon(getClass().getResource(
+				Constants.STRING_IMG_DEL_PNG));
 		JButton btnMin = new JButton(icon);
 		btnMin.setOpaque(false);
 		btnMin.setContentAreaFilled(false);
 		btnMin.setBorderPainted(false);
 		btnMin.setPreferredSize(new Dimension(20, 20));
 		btnMin.setFocusable(false);
-		btnMin.addActionListener(new ActionListener(){
+		btnMin.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				uiParent.getMainFrame().setState(Frame.ICONIFIED);
-				
+
 			}
-			
+
 		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.EAST;
@@ -149,20 +152,21 @@ public class HeaderPanel extends JPanel{
 	}
 
 	private void createCloseBtn(GridBagConstraints c) {
-		ImageIcon img = new ImageIcon(getClass().getResource(Constants.STRING_IMG_CANCEL_PNG));
+		ImageIcon img = new ImageIcon(getClass().getResource(
+				Constants.STRING_IMG_CANCEL_PNG));
 		JButton btnClose = new JButton(img);
 		btnClose.setOpaque(false);
 		btnClose.setContentAreaFilled(false);
 		btnClose.setBorderPainted(false);
 		btnClose.setPreferredSize(new Dimension(20, 20));
 		btnClose.setFocusable(false);
-		btnClose.addActionListener( new ActionListener(){
+		btnClose.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				uiParent.setVisible(false);		
+				uiParent.setVisible(false);
 			}
-			
+
 		});
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.EAST;
@@ -171,9 +175,5 @@ public class HeaderPanel extends JPanel{
 		c.gridy = 0;
 		add(btnClose, c);
 	}
-
-
-
-
 
 }

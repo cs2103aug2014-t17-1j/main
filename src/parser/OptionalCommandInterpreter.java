@@ -13,51 +13,51 @@ import commonClasses.SummaryReport;
 
 public class OptionalCommandInterpreter extends CommandInterpreter {
 
-	//@author Boo Tai Yi  A0111936J
+	// @author Boo Tai Yi A0111936J
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TITLE, NOTE
 	}
 
 	// Members
 	OptionalCommand currentCommand;
-	
+
 	public void identifyAndSetCommand(String command)
 			throws InvalidParameterException {
 
 		switch (command) {
-		case Constants.OPTIONAL_COMMAND_STRING_DUE:
-			currentCommand = OptionalCommand.DUE;
-			break;
+			case Constants.OPTIONAL_COMMAND_STRING_DUE:
+				currentCommand = OptionalCommand.DUE;
+				break;
 
-		case Constants.OPTIONAL_COMMAND_STRING_FROM:
-			currentCommand = OptionalCommand.FROM;
-			break;
+			case Constants.OPTIONAL_COMMAND_STRING_FROM:
+				currentCommand = OptionalCommand.FROM;
+				break;
 
-		case Constants.OPTIONAL_COMMAND_STRING_TO:
-			currentCommand = OptionalCommand.TO;
-			break;
+			case Constants.OPTIONAL_COMMAND_STRING_TO:
+				currentCommand = OptionalCommand.TO;
+				break;
 
-		case Constants.OPTIONAL_COMMAND_STRING_CATEGORY:
-			currentCommand = OptionalCommand.CATEGORY;
-			break;
+			case Constants.OPTIONAL_COMMAND_STRING_CATEGORY:
+				currentCommand = OptionalCommand.CATEGORY;
+				break;
 
-		case Constants.OPTIONAL_COMMAND_STRING_IMPT:
-			currentCommand = OptionalCommand.IMPT;
-			break;
+			case Constants.OPTIONAL_COMMAND_STRING_IMPT:
+				currentCommand = OptionalCommand.IMPT;
+				break;
 
-		case Constants.OPTIONAL_COMMAND_STRING_TITLE:
-			currentCommand = OptionalCommand.TITLE;
-			break;
+			case Constants.OPTIONAL_COMMAND_STRING_TITLE:
+				currentCommand = OptionalCommand.TITLE;
+				break;
 
-		case Constants.OPTIONAL_COMMAND_STRING_NOTE:
-			currentCommand = OptionalCommand.NOTE;
-			break;
+			case Constants.OPTIONAL_COMMAND_STRING_NOTE:
+				currentCommand = OptionalCommand.NOTE;
+				break;
 
-		default:
-			SummaryReport
-					.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
-			throw new InvalidParameterException(
-					Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
+			default:
+				SummaryReport
+						.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
 		}
 	}
 
@@ -65,30 +65,34 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		try {
 			switch (currentCommand) {
 
-			case DUE:
-				return remainingInput.substring(4); // Length of word "due "
+				case DUE:
+					return remainingInput.substring(4); // Length of word "due "
 
-			case FROM:
-				return remainingInput.substring(5); // Length of word "from "
+				case FROM:
+					return remainingInput.substring(5); // Length of word
+														// "from "
 
-			case TO:
-				return remainingInput.substring(3); // Length of word "to "
+				case TO:
+					return remainingInput.substring(3); // Length of word "to "
 
-			case IMPT:
-				return remainingInput.substring(5); // Length of word "impt "
+				case IMPT:
+					return remainingInput.substring(5); // Length of word
+														// "impt "
 
-			case CATEGORY:
-				return remainingInput.substring(9); // Length of word
-													// "category "
+				case CATEGORY:
+					return remainingInput.substring(9); // Length of word
+					// "category "
 
-			case TITLE:
-				return remainingInput.substring(6); // Length of word "title "
+				case TITLE:
+					return remainingInput.substring(6); // Length of word
+														// "title "
 
-			case NOTE:
-				return remainingInput.substring(5); // Length of word "note "
+				case NOTE:
+					return remainingInput.substring(5); // Length of word
+														// "note "
 
-			default:
-				return Constants.STRING_STRING;
+				default:
+					return Constants.STRING_STRING;
 			}
 		} catch (Exception e) {
 			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
@@ -101,34 +105,34 @@ public class OptionalCommandInterpreter extends CommandInterpreter {
 		Task task = result.getTaskDetails();
 
 		switch (currentCommand) {
-		case DUE:
-			updateDueCase(result, commandParam);
-			break;
+			case DUE:
+				updateDueCase(result, commandParam);
+				break;
 
-		case FROM:
-			updateFromCase(result, commandParam);
-			break;
+			case FROM:
+				updateFromCase(result, commandParam);
+				break;
 
-		case TO:
-			updateToCase(result, commandParam);
-			break;
+			case TO:
+				updateToCase(result, commandParam);
+				break;
 
-		case CATEGORY:
-			task.setCategory(commandParam);
-			break;
+			case CATEGORY:
+				task.setCategory(commandParam);
+				break;
 
-		case TITLE:
-			task.setTitle(commandParam);
-			break;
+			case TITLE:
+				task.setTitle(commandParam);
+				break;
 
-		case IMPT:
-			updateImportantCase(commandParam, task);
-			break;
+			case IMPT:
+				updateImportantCase(commandParam, task);
+				break;
 
-		case NOTE:
-			task.setNote(commandParam);
+			case NOTE:
+				task.setNote(commandParam);
 
-		default:// do nothing
+			default:// do nothing
 		}
 
 		return result;

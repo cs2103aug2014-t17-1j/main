@@ -10,24 +10,24 @@ import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
-public class CommandActionComplete implements CommandAction{
-	//@Author Huang Li A0112508R
+public class CommandActionComplete implements CommandAction {
+	// @Author Huang Li A0112508R
 	@Override
 	public void execute(ParsedResult parsedResult) {
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
 		Search targetTask = new Search();
-		
+
 		updateSR.unhighlightTask();
-		
+
 		int taskIndex = findTaskIndex(parsedResult, taskList, targetTask);
-		
+
 		pushToUndoStacks(taskList, history, taskIndex);
 		updateDisplayList(parsedResult, updateSR, history);
 		updateTaskList(parsedResult, taskList, taskIndex);
-		
-		saveIntoFile();	
+
+		saveIntoFile();
 	}
 
 	private int findTaskIndex(ParsedResult parsedResult,
@@ -50,13 +50,13 @@ public class CommandActionComplete implements CommandAction{
 	private void updateDisplayList(ParsedResult parsedResult,
 			UpdateSummaryReport updateSR, History history) {
 		ArrayList<Task> displayList;
-		if(parsedResult.getCommandType().equals(CommandType.REDO)){
+		if (parsedResult.getCommandType().equals(CommandType.REDO)) {
 			displayList = history.getRedoDisplayHistory().pop();
-		}else{
+		} else {
 			displayList = SummaryReport.getDisplayList();
 		}
 		history.getUndoDisplayHistory().push(displayList);
-		
+
 		updateSR.updateForDeleteAndComplete(parsedResult, displayList);
 	}
 
@@ -73,16 +73,16 @@ public class CommandActionComplete implements CommandAction{
 		Task lastTask = parsedResult.getTaskDetails();
 		History history = History.getInstance();
 		Search targetTask = new Search();
-		
+
 		int taskIndex = findLastTaskIndex(taskList, lastTask, targetTask);
-		
+
 		history.getRedoTaskHistory().push(taskList.get(taskIndex));
-		
+
 		updateTaskList(taskList, lastTask, taskIndex);
 		updateDisplayList(parsedResult, updateSR, lastTask, history);
 		pushDisplayListForRedo(history);
-		
-		saveIntoFile();	
+
+		saveIntoFile();
 	}
 
 	private void pushDisplayListForRedo(History history) {
@@ -102,7 +102,7 @@ public class CommandActionComplete implements CommandAction{
 
 	private void updateTaskList(ArrayList<Task> taskList, Task lastTask,
 			int taskIndex) {
-		lastTask.setCompleted(false);		
+		lastTask.setCompleted(false);
 		taskList.set(taskIndex, lastTask);
 	}
 

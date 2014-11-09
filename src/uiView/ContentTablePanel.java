@@ -32,7 +32,7 @@ import commonClasses.SummaryReport;
  */
 public class ContentTablePanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
-	//@author Paing Zin Oo(Jack)  A0112581N
+	// @author Paing Zin Oo(Jack) A0112581N
 	private ArrayList<Task> taskList;
 	private JTable contentTable;
 	private int rowSelected;
@@ -45,26 +45,23 @@ public class ContentTablePanel extends JPanel implements Observer {
 		taskList = SummaryReport.getDisplayList();
 		removeAllComponentsFromCentrePanel();
 		setContentIntoTable();
-		setBackground(Constants.COLOR_CENTRE_PANEL_BG
-				);	
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
 	}
-	
 
 	private void addListActionListener() {
 		contentTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
-
 					@Override
 					public void valueChanged(ListSelectionEvent select) {
 						createDetailPanelForSelectedRow();
 					}
 				});
-
 	}
 
 	public int getSelectedTableRow() {
 		return rowSelected;
 	}
+
 	private void createDetailPanelForSelectedRow() {
 		rowSelected = contentTable.getSelectedRow();
 		SummaryReport.setRowIndexHighlight(rowSelected);
@@ -72,11 +69,10 @@ public class ContentTablePanel extends JPanel implements Observer {
 		parent.updateDetailPanel();
 	}
 
-
 	private void setContentIntoTable() {
 		if (taskList.size() != 0) {
 			createTableWithContent();
-		} else{
+		} else {
 			createEmptyTable();
 		}
 
@@ -102,7 +98,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private void createEmptyTable() {
 		String[] columnTitle = Constants.COLUMNTITLES;
-		DefaultTableModel model = new DefaultTableModel(0,columnTitle.length);
+		DefaultTableModel model = new DefaultTableModel(0, columnTitle.length);
 		model.setColumnIdentifiers(columnTitle);
 		contentTable = new JTable(model);
 		setTableCellProperties(contentTable);
@@ -112,19 +108,21 @@ public class ContentTablePanel extends JPanel implements Observer {
 		contentTable.setFocusable(false);
 		add(parentJsp);
 	}
-	
-	public void selectRowHightlight(int rowSelected){
-		if(SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED){
+
+	public void selectRowHightlight(int rowSelected) {
+		if (SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED) {
 			contentTable.setRowSelectionInterval(rowSelected, rowSelected);
 			createDetailPanelForSelectedRow();
-			contentTable.scrollRectToVisible(contentTable.getCellRect(rowSelected, 0, true));			
-		}	
+			contentTable.scrollRectToVisible(contentTable.getCellRect(
+					rowSelected, 0, true));
+		}
 	}
+
 	private void setContentTableProperties() {
 		setTableHeaderProperties();
 		setRowAndColumnSelectionMode();
 		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		contentTable.setDefaultRenderer(Object.class,new CustomTableRender());
+		contentTable.setDefaultRenderer(Object.class, new CustomTableRender());
 		setKeysPressed();
 		addFocusListener();
 	}
@@ -139,7 +137,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 			@Override
 			public void focusLost(FocusEvent arg0) {
 				contentTable.setBorder(Constants.EMPTY_BORDER);
-			
+
 			}
 		});
 	}
@@ -149,7 +147,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 		f2KeyPressedAction();
 		f1KeyPressedAction();
 	}
-	
+
 	private void setRowAndColumnSelectionMode() {
 		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
 		contentTable.setRowHeight(Constants.TABLE_HEIGHT);
@@ -180,48 +178,51 @@ public class ContentTablePanel extends JPanel implements Observer {
 
 	private void tabKeyPressedAction() {
 		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0), "Changed Focus");
-		contentTable.getActionMap().put("Changed Focus", new AbstractAction() {
-			private static final long serialVersionUID = 1L;
+				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0),
+				Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				parent.pressedTab(false);
-			}
-		});
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.pressedTab(false);
+					}
+				});
 	}
 
 	private void f2KeyPressedAction() {
 		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0), Constants.STRING_EVENT);
-		contentTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
-			
-			private static final long serialVersionUID = 1L;
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0),
+				Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
 
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				parent.removeDetailPanel();
-				parent.pressedF3();
-			}
-		});
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.removeDetailPanel();
+						parent.pressedF3();
+					}
+				});
 	}
 
 	private void f1KeyPressedAction() {
 		contentTable.getInputMap().put(
-				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), Constants.STRING_EVENT);
-		contentTable.getActionMap().put(Constants.STRING_EVENT, new AbstractAction() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				parent.pressedF1();
-			}
+				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
+				Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
 
-		});
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.pressedF1();
+					}
+
+				});
 	}
-
 
 	private void removeAllComponentsFromCentrePanel() {
 		removeAll();
@@ -232,7 +233,7 @@ public class ContentTablePanel extends JPanel implements Observer {
 		String tableContent[][] = new String[taskList.size()][3];
 		String dueDate = Constants.STRING_STRING;
 		for (int i = 0; i < taskList.size(); i++) {
-			tableContent[i][0] = (i + 1) + "";
+			tableContent[i][0] = (i + 1) + Constants.STRING_STRING;
 			tableContent[i][1] = taskList.get(i).getTitle();
 			if (taskList.get(i).getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR) {
 				dueDate = Constants.STRING_SOMEDAY;
@@ -254,10 +255,9 @@ public class ContentTablePanel extends JPanel implements Observer {
 	}
 
 	private void setTableCellProperties(JTable contentTable) {
-			contentTable.getColumnModel().getColumn(1)
-					.setCellRenderer(new LineWrapCellRenderer());
-		}
-	
+		contentTable.getColumnModel().getColumn(1)
+				.setCellRenderer(new LineWrapCellRenderer());
+	}
 
 	private void setJScrollPanePropCentrePane() {
 		parentJsp = new SoftShadowJPanel();

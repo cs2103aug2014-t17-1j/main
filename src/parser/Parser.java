@@ -38,7 +38,8 @@ public class Parser {
 			}
 
 			// Processing main commands
-			String[] seperatedInput = input.split(Constants.OPTIONAL_COMMAND_MARKER);
+			String[] seperatedInput = input
+					.split(Constants.OPTIONAL_COMMAND_MARKER);
 			processMainCommand(seperatedInput);
 			if (mainHandler.commandDoesNotRequireParam()) {
 				if (mainHandler.getCommand() == CommandType.EXIT) {
@@ -98,7 +99,8 @@ public class Parser {
 
 	private void processOptionalCommandAndUpdateResults(String[] remainingInput) {
 		String commandWord;
-		// Index 0 contains main commands. Index 1 onwards contains optional commands
+		// Index 0 contains main commands. Index 1 onwards contains optional
+		// commands
 		for (int i = 1; i < remainingInput.length; i++) {
 			commandWord = CommonInterpreterMethods
 					.getCommandWord(remainingInput[i].trim());

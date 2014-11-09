@@ -9,37 +9,37 @@ import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 import taskDo.History;
 
-
-public class CommandActionDelete implements CommandAction{	
-	//@Author Huang Li A0112508R
+public class CommandActionDelete implements CommandAction {
+	// @Author Huang Li A0112508R
 	@Override
-	public void execute(ParsedResult parsedResult){
+	public void execute(ParsedResult parsedResult) {
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		ArrayList<Task> displayList = new ArrayList<Task>();
 		History history = History.getInstance();
-		
+
 		updateSR.unhighlightTask();
-		
+
 		removeFromTaskList(parsedResult);
-		
+
 		displayList = getDisplayList(parsedResult, history);
 		pushToUndoStacks(parsedResult, displayList, history);
-		
+
 		updateSR.updateForDeleteAndComplete(parsedResult, displayList);
-		
-		saveIntoFile();	
+
+		saveIntoFile();
 	}
 
 	private void removeFromTaskList(ParsedResult parsedResult) {
-		StorageList.getInstance().getTaskList().remove(parsedResult.getTaskDetails());
+		StorageList.getInstance().getTaskList()
+				.remove(parsedResult.getTaskDetails());
 	}
 
 	private ArrayList<Task> getDisplayList(ParsedResult parsedResult,
 			History history) {
 		ArrayList<Task> displayList;
-		if(parsedResult.getCommandType().equals(CommandType.REDO)){
+		if (parsedResult.getCommandType().equals(CommandType.REDO)) {
 			displayList = history.getRedoDisplayHistory().pop();
-		}else{
+		} else {
 			displayList = SummaryReport.getDisplayList();
 		}
 		return displayList;
@@ -60,14 +60,14 @@ public class CommandActionDelete implements CommandAction{
 	public void undo(ParsedResult parsedResult) {
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
-		
+
 		addIntoTaskList(parsedResult);
 		history.getRedoTaskHistory().push(parsedResult.getTaskDetails());
 
-		updateDisplayList(parsedResult, updateSR, history);		
+		updateDisplayList(parsedResult, updateSR, history);
 		pushToRedoStacks(history);
-		
-		saveIntoFile();	
+
+		saveIntoFile();
 	}
 
 	private void pushToRedoStacks(History history) {
@@ -86,6 +86,7 @@ public class CommandActionDelete implements CommandAction{
 	}
 
 	private void addIntoTaskList(ParsedResult parsedResult) {
-		StorageList.getInstance().getTaskList().add(parsedResult.getTaskDetails());
+		StorageList.getInstance().getTaskList()
+				.add(parsedResult.getTaskDetails());
 	}
 }

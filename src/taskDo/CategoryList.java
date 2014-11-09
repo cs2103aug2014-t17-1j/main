@@ -3,7 +3,7 @@ package taskDo;
 import java.util.ArrayList;
 
 public class CategoryList {
-	//@author Boo Tai Yi  A0111936J
+	// @author Boo Tai Yi A0111936J
 	// Members
 	private static ArrayList<Category> categoryList;
 

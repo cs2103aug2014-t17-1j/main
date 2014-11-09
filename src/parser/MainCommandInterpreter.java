@@ -13,7 +13,7 @@ import commonClasses.SummaryReport;
 
 public class MainCommandInterpreter extends CommandInterpreter {
 
-	//@author Boo Tai Yi  A0111936J
+	// @author Boo Tai Yi A0111936J
 	// Members
 	private CommandType currentCommand;
 
@@ -24,55 +24,55 @@ public class MainCommandInterpreter extends CommandInterpreter {
 	public void identifyAndSetCommand(String command)
 			throws InvalidParameterException {
 		switch (command) {
-		case Constants.COMMAND_STRING_NEW:
-		case Constants.COMMAND_STRING_CREATE:
-		case Constants.COMMAND_STRING_ADD:
-			currentCommand = CommandType.ADD;
-			break;
+			case Constants.COMMAND_STRING_NEW:
+			case Constants.COMMAND_STRING_CREATE:
+			case Constants.COMMAND_STRING_ADD:
+				currentCommand = CommandType.ADD;
+				break;
 
-		case Constants.COMMAND_STRING_SHOW:
-		case Constants.COMMAND_STRING_VIEW:
-		case Constants.COMMAND_STRING_DISPLAY:
-			currentCommand = CommandType.DISPLAY;
-			break;
+			case Constants.COMMAND_STRING_SHOW:
+			case Constants.COMMAND_STRING_VIEW:
+			case Constants.COMMAND_STRING_DISPLAY:
+				currentCommand = CommandType.DISPLAY;
+				break;
 
-		case Constants.COMMAND_STRING_DEL:
-		case Constants.COMMAND_STRING_REMOVE:
-		case Constants.COMMAND_STRING_DELETE:
-			currentCommand = CommandType.DELETE;
-			break;
+			case Constants.COMMAND_STRING_DEL:
+			case Constants.COMMAND_STRING_REMOVE:
+			case Constants.COMMAND_STRING_DELETE:
+				currentCommand = CommandType.DELETE;
+				break;
 
-		case Constants.COMMAND_STRING_MOD:
-		case Constants.COMMAND_STRING_EDIT:
-			currentCommand = CommandType.EDIT;
-			break;
-		case Constants.COMMAND_STRING_UNDO:
-			currentCommand = CommandType.UNDO;
-			break;
+			case Constants.COMMAND_STRING_MOD:
+			case Constants.COMMAND_STRING_EDIT:
+				currentCommand = CommandType.EDIT;
+				break;
+			case Constants.COMMAND_STRING_UNDO:
+				currentCommand = CommandType.UNDO;
+				break;
 
-		case Constants.COMMAND_STRING_SEARCH:
-			currentCommand = CommandType.SEARCH;
-			break;
+			case Constants.COMMAND_STRING_SEARCH:
+				currentCommand = CommandType.SEARCH;
+				break;
 
-		case Constants.COMMAND_STRING_TICK:
-		case Constants.COMMAND_STRING_DONE:
-		case Constants.COMMAND_STRING_COMPLETE:
-			currentCommand = CommandType.COMPLETED;
-			break;
+			case Constants.COMMAND_STRING_TICK:
+			case Constants.COMMAND_STRING_DONE:
+			case Constants.COMMAND_STRING_COMPLETE:
+				currentCommand = CommandType.COMPLETED;
+				break;
 
-		case Constants.COMMAND_STRING_REDO:
-			currentCommand = CommandType.REDO;
-			break;
+			case Constants.COMMAND_STRING_REDO:
+				currentCommand = CommandType.REDO;
+				break;
 
-		case Constants.COMMAND_STRING_QUIT:
-		case Constants.COMMAND_STRING_EXIT:
-			currentCommand = CommandType.EXIT;
-			break;
+			case Constants.COMMAND_STRING_QUIT:
+			case Constants.COMMAND_STRING_EXIT:
+				currentCommand = CommandType.EXIT;
+				break;
 
-		default:
-			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
-			throw new InvalidParameterException(
-					Constants.MESSAGE_INVALID_COMMAND);
+			default:
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_COMMAND);
 		}
 	}
 
@@ -90,35 +90,35 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		Task task = result.getTaskDetails();
 		switch (currentCommand) {
 
-		case ADD:
-			task.setTitle(commandParam);
-			break;
+			case ADD:
+				task.setTitle(commandParam);
+				break;
 
-		case DELETE:
-			updateForDeleteCase(result, commandParam);
-			break;
+			case DELETE:
+				updateForDeleteCase(result, commandParam);
+				break;
 
-		case EDIT:
-			updateForEditCase(result, commandParam);
-			break;
+			case EDIT:
+				updateForEditCase(result, commandParam);
+				break;
 
-		case DISPLAY:
-			updateDisplayCase(result, commandParam);
-			break;
+			case DISPLAY:
+				updateDisplayCase(result, commandParam);
+				break;
 
-		case UNDO:
-			// do nothing
-			break;
+			case UNDO:
+				// do nothing
+				break;
 
-		case COMPLETED:
-			updateCompleteCase(result, commandParam);
-			break;
+			case COMPLETED:
+				updateCompleteCase(result, commandParam);
+				break;
 
-		case SEARCH:
-			updateSearchCase(result, commandParam);
+			case SEARCH:
+				updateSearchCase(result, commandParam);
 
-		default:
-			// do nothing
+			default:
+				// do nothing
 
 		}
 		return result;
@@ -205,11 +205,9 @@ public class MainCommandInterpreter extends CommandInterpreter {
 		}
 	}
 
-	
-
 	private void updateForEditCase(ParsedResult result, String commandParam) {
 		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
-			int selection = getSelection(commandParam); 
+			int selection = getSelection(commandParam);
 			copyTaskParamToParsedResult(result, selection);
 			result.setSelectedItem(selection);
 		} else {

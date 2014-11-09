@@ -14,26 +14,31 @@ import org.joda.time.DateTime;
 import uiView.ColorBox;
 
 public class Constants {
-	
-	//@author Paing Zin Oo(Jack)  A0112581N
-	 
+
+	// @author Paing Zin Oo(Jack) A0112581N
+
 	public static final String PRODUCT_TASKDO = "Task.Do";
-	
-	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
-	public static final Dimension DIMENION_TABLE = new Dimension((int)(SCREEN_SIZE.width * 0.36 ), (int)(SCREEN_SIZE.height * 0.5));
-	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.146),(int)(SCREEN_SIZE.height * 0.5));
-	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.3),(int)(SCREEN_SIZE.height * 0.46));
-	public static final Dimension DIMENSION_HELP_PANEL = new Dimension((int) (SCREEN_SIZE.width * 0.29), (int) (SCREEN_SIZE.height * 0.3));
-	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension((int)(SCREEN_SIZE.width * 0.36),(int)(SCREEN_SIZE.height * 0.49));
-	
-	public static final int MAX_WIDTH_CATEGORY_NAME = (int)(SCREEN_SIZE.height *0.5);
-	public static final int MAX_WIDTH_CATEGORY_COUNT = (int)(SCREEN_SIZE.height *0.2);
-	
-	
+
+	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit()
+			.getScreenSize();
+	public static final Dimension DIMENION_TABLE = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.36), (int) (SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.146), (int) (SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.3), (int) (SCREEN_SIZE.height * 0.46));
+	public static final Dimension DIMENSION_HELP_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.29), (int) (SCREEN_SIZE.height * 0.3));
+	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.36), (int) (SCREEN_SIZE.height * 0.49));
+
+	public static final int MAX_WIDTH_CATEGORY_NAME = (int) (SCREEN_SIZE.height * 0.5);
+	public static final int MAX_WIDTH_CATEGORY_COUNT = (int) (SCREEN_SIZE.height * 0.2);
+
 	public static final String FILENAME_TASKDO = "TaskDo.json";
-	
+
 	public static final char CHAR_BACKSPACE = '\b';
-	
+
 	public static final String STRING_STRING = "";
 	public static final String STRING_EVENT = "EVENT";
 	public static final String STRING_ERROR_TASKDO_IS_ACTIVE = "TaskDo is Active";
@@ -49,28 +54,29 @@ public class Constants {
 	public static final String STRING_OPEN_TASKDO = "Open Task.Do";
 	public static final String STRING_QUIT_TASKDO = "Quit Task.Do";
 	public static final String STRING_DEFAULT_COMMAND_TEXT = "Enter your command here";
-	
-	public static final String CATEGORY_COLUMN_TITLE[] = {"Name","Count"};
-	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
-	
+
+	public static final String CATEGORY_COLUMN_TITLE[] = { "Name", "Count" };
+	public static final String TASKKEYS[] = { "Title", "category", "important",
+			"startDate", "dueDate", "completed", "taskType", "taskNote" };
+
 	public static final String MESSAGE_LOAD_ERROR = "Loading Error! Please check that file format is correct!";
-	public static final String CATEGORYKEYS[] = {"Name","Count"};
-	public static final String HINT[] ={"<html>add [title] -due [date] -category [categoryname] -impt [y/n] -note [extra notes]<br/>"
-			+ "Reminder: Optional commands have '-' in front</html>",
-		"<html>edit [ID] -title [new title] -due [duedate] -category [category] -impt [y/n] -note [new note]<br/>"
-		+ "Reminder: Optional commands have '-' in front</html>",
-		"<html>delete [ID]<br>"
-		+ "Tip: you can also try del, remove</html>",
-		"<html>complete [ID]</br>"
-		+ "Tip: You can also try tick,done",
-		"<html>display [date/category], overdue,all,completed,date -to date</br/>"
-		+ "Tip: you can also try show, view. <br>"
-		+ "Look at help panel for advanced display commands</html>",
-		"<html>search [keyword]"
-		
+	public static final String CATEGORYKEYS[] = { "Name", "Count" };
+	public static final String HINT[] = {
+			"<html>add [title] -due [date] -category [categoryname] -impt [y/n] -note [extra notes]<br/>"
+					+ "Reminder: Optional commands have '-' in front</html>",
+			"<html>edit [ID] -title [new title] -due [duedate] -category [category] -impt [y/n] -note [new note]<br/>"
+					+ "Reminder: Optional commands have '-' in front</html>",
+			"<html>delete [ID]<br>"
+					+ "Tip: you can also try del, remove</html>",
+			"<html>complete [ID]</br>" + "Tip: You can also try tick,done",
+			"<html>display [date/category], overdue,all,completed,date -to date</br/>"
+					+ "Tip: you can also try show, view. <br>"
+					+ "Look at help panel for advanced display commands</html>",
+			"<html>search [keyword]"
+
 	};
-	public static final String [] HELPCOMMANDS = {
-		"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",
+	public static final String[] HELPCOMMANDS = {
+			"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",
 			"<html><font color='red'>add</font> *insert task title*</html>",
 			"<html><font color='red'>edit</font> *corresponding ID*</html>",
 			"<html><h3><u><i>Main Commands Group 2</i></h3></u></html>",
@@ -101,34 +107,33 @@ public class Constants {
 			"<html><font color='red'>display</font> overdue</html>",
 			"<html><font color='red'>display</font> completed</html>",
 			"Example: display 23 mar -to 10 apr"
-			
-			
+
 	};
-	public static final String[] TASK_ATTRIBUTE = {"Note","Category","From"
-		, "To","Completed","Important"};
-	
+	public static final String[] TASK_ATTRIBUTE = { "Note", "Category", "From",
+			"To", "Completed", "Important" };
+
 	public static final String STRING_YES = "Yes";
 	public static final String STRING_NO = "No";
 	public static final String STRING_SOMEDAY = "someday";
 	public static final String STRING_SPACE = " ";
 	public static final String STRING_DASH = "-";
 	public static final String STRING_DATEFORMAT = "dd-MM-yyyy HH:mm";
-	
-	public static final String []COLUMNTITLES = {"ID","Title","Due On"};
+
+	public static final String[] COLUMNTITLES = { "ID", "Title", "Due On" };
 	public static final String HEADER_HELP = "HELP PANEL";
 	public static final String HEADER_DETAIL = "DETAILS";
 	public static final String HEADER_CATEGORIES = "CATEGORIES";
-	
+
 	public static final Color COLOR_LEFT_PANEL_BG = ColorBox.colorPool[0];
 	public static final Color COLOR_LEFT_PANEL_TEXT = Color.BLACK;
 	public static final Color COLOR_LEFT_PANEL_HEADER = Color.BLACK;
-	
+
 	public static final Color COLOR_FEEDBACK_MSG = ColorBox.colorPool[8];
-	
+
 	public static final Color COLOR_DETAIL_PANEL_TEXT = Color.BLACK;
 	public static final Color COLOR_DETAIL_PANEL_BG = ColorBox.colorPool[0];
-	public static final Color COLOR_DETAIL_PANEL_HEADER_BG =ColorBox.colorPool[7];
-	
+	public static final Color COLOR_DETAIL_PANEL_HEADER_BG = ColorBox.colorPool[7];
+
 	public static final Color COLOR_TABLE_TEXT = Color.BLACK;
 	public static final Color COLOR_TABLE_TEXT_HIGHLIGHT = Color.WHITE;
 	public static final Color COLOR_TABLE_EVEN_ROW = ColorBox.colorPool[1];
@@ -137,38 +142,46 @@ public class Constants {
 	public static final Color COLOR_TABLE_OVERDUE_ROW = ColorBox.colorPool[9];
 	public static final Color COLOR_TABLE_TEXT_IMPT = Color.WHITE;
 	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[4];
-	public static final Color COLOR_TABLE_HEADER_BG =ColorBox.colorPool[0];
+	public static final Color COLOR_TABLE_HEADER_BG = ColorBox.colorPool[0];
 	public static final Color COLOR_TABLE_HEADER_TEXT = Color.BLACK;
 	public static final Color COLOR_TABLE_GRID = Color.WHITE;
-	
-	public static final Color COLOR_JSCROLL_BG =ColorBox.colorPool[5];
-	
+
+	public static final Color COLOR_JSCROLL_BG = ColorBox.colorPool[5];
+
 	public static final Color COLOR_CENTRE_PANEL_BG = ColorBox.colorPool[5];
-	
+
 	public static final Color COLOR_COMMAND_PANEL_BG = ColorBox.colorPool[6];
 	public static final Color COLOR_COMMAND_PANEL_TEXT = Color.BLACK;
 
 	public static final Color COLOR_HEADER_PANEL_BG = ColorBox.colorPool[6];
 	public static final Color COLOR_HEADER_PANEL_TEXT = Color.WHITE;
-	
+
 	public static final int DEFAULT_ROW_SELECTED = -1;
 	public static final int TABLE_HEIGHT = 60;
 	public static final int JSON_IDENTATION = 3;
 	public static final int HEADER_FONT_SIZE = 24;
 	public static final int FEEDBACK_MSG_FONT_SIZE = 16;
-	
-	public static final EmptyBorder EMPTY_BORDER = new EmptyBorder(0,0,0,0);
-	public static final Border TABLE_FOCUS_BORDER = BorderFactory.createLineBorder(Color.CYAN,2);
-	public static final EmptyBorder EMPTY_BORDER_DETAIL_PANEL = new EmptyBorder(15, 15, 15, 15);
-	public static final EmptyBorder EMPTY_BORDER_CATEGORY_TABLE = new EmptyBorder(15, 25, 15, 25);
-	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX = new EmptyBorder(20,20,20,20);
-	public static final EmptyBorder EMPTY_BORDER_CONTENT_TABLE = new EmptyBorder(15, 25, 15, 25);
-	public static final EmptyBorder EMPTY_BORDER_LINEWRAPPER = new EmptyBorder(15,5,15,15);
-	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX_PANEL = new EmptyBorder(10, 10, 10, 10);
-	
-	public static final Font FONT_TIME_NEW_ROMAN = Font.getFont("times new roman");
-	
-	//@Author Huang Li A0112508R
+
+	public static final EmptyBorder EMPTY_BORDER = new EmptyBorder(0, 0, 0, 0);
+	public static final Border TABLE_FOCUS_BORDER = BorderFactory
+			.createLineBorder(Color.CYAN, 2);
+	public static final EmptyBorder EMPTY_BORDER_DETAIL_PANEL = new EmptyBorder(
+			15, 15, 15, 15);
+	public static final EmptyBorder EMPTY_BORDER_CATEGORY_TABLE = new EmptyBorder(
+			15, 25, 15, 25);
+	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX = new EmptyBorder(
+			20, 20, 20, 20);
+	public static final EmptyBorder EMPTY_BORDER_CONTENT_TABLE = new EmptyBorder(
+			15, 25, 15, 25);
+	public static final EmptyBorder EMPTY_BORDER_LINEWRAPPER = new EmptyBorder(
+			15, 5, 15, 15);
+	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX_PANEL = new EmptyBorder(
+			10, 10, 10, 10);
+
+	public static final Font FONT_TIME_NEW_ROMAN = Font
+			.getFont("times new roman");
+
+	// @Author Huang Li A0112508R
 
 	// Command Actions
 	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s IS MARKED AS COMPLETED";
@@ -179,7 +192,7 @@ public class Constants {
 	public static final String MESSAGE_SUCCESS_SEARCH_SINGLE = "POSSIBLE RESULT LISTED FOR \"%1$s\"";
 	public static final String MESSAGE_SUCCESS_SEARCH_MUL = "POSSIBLE RESULTS LISTED FOR \"%1$s\"";
 	public static final String MESSAGE_FAIL_SEARCH = "NO TASK IS MATCHED";
-	
+
 	public static final String MESSAGE_SUCCESS_UNDO = "UNDO %1$s SUCCESSFULLY";
 	public static final String MESSAGE_SUCCESS_REDO = "REDO %1$s SUCCESSFULLY";
 	public static final String MESSAGE_FAIL_UNDO = "NO MORE COMMAND FOR UNDO";
@@ -191,12 +204,12 @@ public class Constants {
 	public static final String MESSAGE_DISPLAY_CATEGORY = "DISPLAY CATEGORY: %1$s";
 	public static final String MESSAGE_DISPLAY_DATE = "DISPLAY TASKS DUE ON %1$s";
 	public static final String MESSAGE_DISPLAY_OVERDUE = "DISPLAY OVERDUE TASKS";
-	
-	public static final int NILL_YEAR = 0;
-	
-	//@author Boo Tai Yi  A0111936J
 
-	//Parser Related
+	public static final int NILL_YEAR = 0;
+
+	// @author Boo Tai Yi A0111936J
+
+	// Parser Related
 	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
 	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
 	public static final String MESSAGE_INVALID_DATE = "Invalid format.Try DD/MM/YYYY HH:mm,DD/MM/YYYY,dd MMM or today";
@@ -211,10 +224,10 @@ public class Constants {
 	public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed!";
 	public static final String DISPLAY_OVERDUE = "overdue";
 	public static final String MESSAGE_DATE_HAS_PASSED = "Date has already passed. Please choose a relevant date";
-	
+
 	public static final String IMPT_NO = "N";
 	public static final String IMPT_YES = "Y";
-	public static final DateTime SOMEDAY = new DateTime(0,1,1,0,0);
+	public static final DateTime SOMEDAY = new DateTime(0, 1, 1, 0, 0);
 	public static final String DISPLAY_COMPLETED = "completed";
 	public static final String DISPLAY_ALL = "all";
 	public static final int NOTHING_SELECTED = -1;
@@ -259,11 +272,12 @@ public class Constants {
 	public static final String OPTIONAL_COMMAND_STRING_FROM = "from";
 	public static final String OPTIONAL_COMMAND_STRING_DUE = "due";
 	public static final String OPTIONAL_COMMAND_MARKER = "-";
-	
-	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy", "ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MMM", "dd MMM yyyy HH:mm", "dd MMM yyyy" };
+
+	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy",
+			"ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MMM",
+			"dd MMM yyyy HH:mm", "dd MMM yyyy" };
 	public static final int DATE_FORMAT_ITERATIONS = 8;
 	public static final String REGEX_STRING_RELATIVE_DATE_FORMAT = "^\\w+ \\d{1,2}:\\d\\d$";
 	public static final String REGEX_STRING_CHECK_FOR_DIGITS = "\\d+";
-	
-	
+
 }

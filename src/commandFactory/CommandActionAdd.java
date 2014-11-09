@@ -8,14 +8,14 @@ import taskDo.History;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
-public class CommandActionAdd implements CommandAction{
-	//@Author Huang Li A0112508R
+public class CommandActionAdd implements CommandAction {
+	// @Author Huang Li A0112508R
 	@Override
-	public void execute(ParsedResult parsedResult){
+	public void execute(ParsedResult parsedResult) {
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
-		
+
 		addIntoList(parsedResult, taskList);
 		pushToUndoStacks(parsedResult, history);
 		updateDisplayList(parsedResult, updateSR);
@@ -36,12 +36,12 @@ public class CommandActionAdd implements CommandAction{
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
-		
+
 		clearHighlight(updateSR);
 		pushToRedoStacks(parsedResult, history);
 		removeFromList(parsedResult, taskList);
 		updateDisplayList(parsedResult, updateSR);
-		saveIntoFile();	
+		saveIntoFile();
 	}
 
 	private void clearHighlight(UpdateSummaryReport updateSR) {

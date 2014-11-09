@@ -10,30 +10,30 @@ import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
-public class CommandActionEdit implements CommandAction {	
-	//@Author Huang Li A0112508R
+public class CommandActionEdit implements CommandAction {
+	// @Author Huang Li A0112508R
 	@Override
-	public void execute(ParsedResult parsedResult){
+	public void execute(ParsedResult parsedResult) {
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
 		Search targetTask = new Search();
-		
+
 		int taskId = parsedResult.getTaskDetails().getId();
 		int taskIndex = targetTask.searchById(taskId, taskList);
-		
+
 		pushToUndoStacks(taskList, history, taskIndex);
-		
+
 		taskList.set(taskIndex, parsedResult.getTaskDetails());
 
 		ArrayList<Task> displayList = getDisplayList(parsedResult, history);
 		history.getUndoDisplayHistory().push(displayList);
-		
+
 		replaceTaskInDisplayList(parsedResult, taskId, displayList);
 		updateDisplayList(parsedResult, updateSR, displayList);
 		history.getUndoDisplayHistory().push(displayList);
-		
-		StorageList.getInstance().saveToFile();	
+
+		StorageList.getInstance().saveToFile();
 	}
 
 	private void updateDisplayList(ParsedResult parsedResult,
@@ -47,16 +47,16 @@ public class CommandActionEdit implements CommandAction {
 		Search targetTask;
 		int taskIndex;
 		targetTask = new Search();
-		taskIndex = targetTask.searchById(taskId, displayList);	
+		taskIndex = targetTask.searchById(taskId, displayList);
 		displayList.set(taskIndex, parsedResult.getTaskDetails());
 	}
 
 	private ArrayList<Task> getDisplayList(ParsedResult parsedResult,
 			History history) {
 		ArrayList<Task> displayList;
-		if(parsedResult.getCommandType().equals(CommandType.REDO)){
+		if (parsedResult.getCommandType().equals(CommandType.REDO)) {
 			displayList = history.getRedoDisplayHistory().pop();
-		}else{
+		} else {
 			displayList = SummaryReport.getDisplayList();
 		}
 		return displayList;
@@ -75,19 +75,20 @@ public class CommandActionEdit implements CommandAction {
 		Task lastTask = parsedResult.getTaskDetails();
 		History history = History.getInstance();
 		Search targetTask = new Search();
-		
+
 		int taskId = lastTask.getId();
 		int taskIndex = targetTask.searchById(taskId, taskList);
 		history.getRedoTaskHistory().push(taskList.get(taskIndex));
-		
+
 		taskList.set(taskIndex, lastTask);
 
-		ArrayList<Task> displayList = updateDisplayList(lastTask, history, taskId);
-		
+		ArrayList<Task> displayList = updateDisplayList(lastTask, history,
+				taskId);
+
 		updateDisplayList(parsedResult, updateSR, displayList);
 		pushToRedoStacks(displayList, history);
-		
-		StorageList.getInstance().saveToFile();	
+
+		StorageList.getInstance().saveToFile();
 	}
 
 	private ArrayList<Task> updateDisplayList(Task lastTask, History history,
@@ -95,10 +96,10 @@ public class CommandActionEdit implements CommandAction {
 		ArrayList<Task> displayList;
 		Search targetTask;
 		int taskIndex;
-		
+
 		displayList = history.getUndoDisplayHistory().pop();
 		targetTask = new Search();
-		taskIndex = targetTask.searchById(taskId, displayList);	
+		taskIndex = targetTask.searchById(taskId, displayList);
 		displayList.set(taskIndex, lastTask);
 		return displayList;
 	}

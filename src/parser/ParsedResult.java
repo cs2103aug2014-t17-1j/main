@@ -7,7 +7,7 @@ import commandFactory.CommandType;
 
 public class ParsedResult {
 
-	//@author Boo Tai Yi  A0111936J
+	// @author Boo Tai Yi A0111936J
 	// Members
 	private CommandType parsedCommand;
 	private Task task;
