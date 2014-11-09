@@ -12,6 +12,7 @@ import taskDo.UpdateSummaryReport;
 public class CommandActionEdit implements CommandAction {	
 	@Override
 	public void execute(ParsedResult parsedResult){
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
 		Search targetTask = new Search();
 		
@@ -31,8 +32,8 @@ public class CommandActionEdit implements CommandAction {
 		targetTask = new Search();
 		taskIndex = targetTask.searchById(taskId, displayList);	
 		displayList.set(taskIndex, parsedResult.getTaskDetails());
-		UpdateSummaryReport.updateForEdit(parsedResult, displayList);
-		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
+		updateSR.updateForEdit(parsedResult, displayList);
+		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
 		history.getUndoDisplayHistory().push(displayList);
 		
 		StorageList.getInstance().saveToFile();	
@@ -40,7 +41,7 @@ public class CommandActionEdit implements CommandAction {
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
-		
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
 		History history = History.getInstance();
 		Search targetTask = new Search();
 		
@@ -54,8 +55,8 @@ public class CommandActionEdit implements CommandAction {
 		targetTask = new Search();
 		taskIndex = targetTask.searchById(taskId, displayList);	
 		displayList.set(taskIndex, lastTask);
-		UpdateSummaryReport.updateForEdit(parsedResult, displayList);
-		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
+		updateSR.updateForEdit(parsedResult, displayList);
+		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
 		history.getRedoDisplayHistory().push(displayList);
 		history.getRedoCommandHistory().push(CommandType.EDIT);
 		

@@ -82,7 +82,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	private void initParserAndExecutor() {
 		parser = new Parser();
 		executor = new Executor();
-		UpdateSummaryReport.init();
+		UpdateSummaryReport.getInstance().init();
 	}
 
 	private void removeOriginalBoundaryFrame() {

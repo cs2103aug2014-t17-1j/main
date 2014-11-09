@@ -13,7 +13,8 @@ public class CommandActionComplete implements CommandAction{
 
 	@Override
 	public void execute(ParsedResult parsedResult) {
-		UpdateSummaryReport.unhighlightTask();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		updateSR.unhighlightTask();
 		
 		History history = History.getInstance();
 		Search targetTask = new Search();
@@ -32,7 +33,7 @@ public class CommandActionComplete implements CommandAction{
 			displayList = SummaryReport.getDisplayList();
 		}
 		history.getUndoDisplayHistory().push(displayList);
-		UpdateSummaryReport.updateForDeleteAndComplete(parsedResult, displayList);
+		updateSR.updateForDeleteAndComplete(parsedResult, displayList);
 		
 		parsedResult.getTaskDetails().setCompleted(true);
 		StorageList.getInstance().getTaskList().set(taskIndex, parsedResult.getTaskDetails());
@@ -42,19 +43,26 @@ public class CommandActionComplete implements CommandAction{
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
-		
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		Task lastTask = parsedResult.getTaskDetails();
 		History history = History.getInstance();
 		Search targetTask = new Search();
 		
+		// change completed task back to uncompleted
 		parsedResult.getTaskDetails().setCompleted(false);
-		Task lastTask = parsedResult.getTaskDetails();
-		int taskIndex = targetTask.searchById(lastTask.getId(), StorageList.getInstance().getTaskList());
-		history.getRedoTaskHistory().push(StorageList.getInstance().getTaskList().get(taskIndex));
+		int taskIndex = targetTask.searchById(lastTask.getId(), taskList);
+		
+		history.getRedoTaskHistory().push(taskList.get(taskIndex));
+		
 		StorageList.getInstance().getTaskList().set(taskIndex, lastTask);
 		
+		// display changed task list base on current list showing
 		ArrayList<Task> displayList = history.getUndoDisplayHistory().pop();
-		UpdateSummaryReport.updateForUndoDeleteAndComplete(parsedResult, displayList);
-		UpdateSummaryReport.highlightTask(parsedResult.getTaskDetails().getId());
+		updateSR.updateForUndoDeleteAndComplete(parsedResult, displayList);
+		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
+		
+		// save displaying list for redo
 		displayList = SummaryReport.getDisplayList();
 		history.getRedoDisplayHistory().push(displayList);
 		history.getRedoCommandHistory().push(CommandType.COMPLETED);

@@ -14,7 +14,16 @@ import commonClasses.SummaryReport;
 
 public class UpdateSummaryReport {
 
-	public static void init(){
+	private static UpdateSummaryReport updateSR;
+	
+	public static UpdateSummaryReport getInstance(){
+		if (updateSR == null){
+			updateSR = new UpdateSummaryReport();
+		}
+		return updateSR;
+	}
+	
+	public void init(){
 		ArrayList<Task> displayList = new ArrayList<Task>();
 		Search search = new Search();
 		displayList = search.searchByOverdueAndToday();
@@ -22,40 +31,40 @@ public class UpdateSummaryReport {
 		SummaryReport.sortByDueDate();
 	}
 
-	public static void updateByDueDate(ParsedResult parsedResult){
+	public void updateByDueDate(ParsedResult parsedResult){
 		Search search = new Search();
 		updateDisplayTaskList(search.searchByDate(parsedResult));
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult);
 	}
 
-	public static void updateForEdit(ParsedResult parsedResult, ArrayList<Task> displayList){
+	public void updateForEdit(ParsedResult parsedResult, ArrayList<Task> displayList){
 		updateDisplayTaskList(displayList);
 		determineFeedbackMsg(parsedResult);
 	}
 
-	public static void updateForDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
+	public void updateForDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.remove(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult);
 	}
 
-	public static void updateForUndoDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
+	public void updateForUndoDeleteAndComplete(ParsedResult parsedResult, ArrayList<Task> displayList){
 		displayList.add(parsedResult.getTaskDetails());
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult);
 	}
 
-	public static void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
+	public void updateForDisplay(ParsedResult parsedResult, ArrayList<Task> displayList){
 
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
 		determineFeedbackMsg(parsedResult);
 	}
 
-	public static void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
+	public void updateForSearch(ParsedResult parsedResult, ArrayList<Task> displayList){
 
 		updateDisplayTaskList(displayList);
 		SummaryReport.sortByDueDate();
@@ -64,11 +73,11 @@ public class UpdateSummaryReport {
 		}else{determineFeedbackMsg(parsedResult);}
 	}
 
-	private static void updateDisplayTaskList(ArrayList<Task> displayList) {
+	private void updateDisplayTaskList(ArrayList<Task> displayList) {
 		SummaryReport.setDisplayList(displayList);
 	}
 
-	private static void determineFeedbackMsg(ParsedResult parsedResult) {
+	private void determineFeedbackMsg(ParsedResult parsedResult) {
 		String searchInput = parsedResult.getTaskDetails().getTitle();
 		String feedbackMsg = new String();
 		String command = new String();
@@ -121,7 +130,7 @@ public class UpdateSummaryReport {
 		updateFeedbackMsg(feedbackMsg);
 	}
 
-	private static String determineDisplayContent(ParsedResult parsedResult) {
+	private String determineDisplayContent(ParsedResult parsedResult) {
 		String feedbackMsg = new String();
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/YYYY");
 
@@ -164,21 +173,21 @@ public class UpdateSummaryReport {
 		return feedbackMsg;
 	}
 
-	private static void updateFeedbackMsg(String feedbackMsg) {
+	private void updateFeedbackMsg(String feedbackMsg) {
 		SummaryReport.setFeedBackMsg(feedbackMsg);
 	}
 
-	private static int searchIndex(int taskID){
+	private int searchIndex(int taskID){
 		Search search = new Search();
 		return search.searchById(taskID, SummaryReport.getDisplayList());
 	}
 
-	public static void highlightTask(int taskID){
+	public void highlightTask(int taskID){
 		int highlightTask = searchIndex(taskID); 
 		SummaryReport.setRowIndexHighlight(highlightTask);
 	}
 
-	public static void unhighlightTask(){
+	public void unhighlightTask(){
 		SummaryReport.setRowIndexHighlight(-1);
 	}
 }

@@ -9,10 +9,12 @@ import taskDo.UpdateSummaryReport;
 public class CommandActionDisplay implements CommandAction{	
 	@Override
 	public void execute(ParsedResult parsedResult){
-		UpdateSummaryReport.unhighlightTask();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		updateSR.unhighlightTask();
+		
 		Search search = new Search();
 		ArrayList<Task> displayList = search.searchForDisplay(parsedResult);
-		UpdateSummaryReport.updateForDisplay(parsedResult, displayList);
+		updateSR.updateForDisplay(parsedResult, displayList);
 	}
 
 	@Override
