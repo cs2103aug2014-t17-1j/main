@@ -11,6 +11,7 @@ import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
 public class CommandActionEdit implements CommandAction {	
+	//@Author Huang Li A0112508R
 	@Override
 	public void execute(ParsedResult parsedResult){
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
@@ -18,65 +19,92 @@ public class CommandActionEdit implements CommandAction {
 		History history = History.getInstance();
 		Search targetTask = new Search();
 		
-		// push command and task into undo stacks
 		int taskId = parsedResult.getTaskDetails().getId();
-		int taskIndex = targetTask.searchById(taskId, taskList);	
-		history.getUndoTaskHistory().push(taskList.get(taskIndex));
-		history.getUndoCommandHistory().push(CommandType.EDIT);
+		int taskIndex = targetTask.searchById(taskId, taskList);
 		
-		// amend task list
+		pushToUndoStacks(taskList, history, taskIndex);
+		
 		taskList.set(taskIndex, parsedResult.getTaskDetails());
 
-		// amend display list
-		ArrayList<Task> displayList = new ArrayList<Task>();
+		ArrayList<Task> displayList = getDisplayList(parsedResult, history);
+		history.getUndoDisplayHistory().push(displayList);
+		
+		replaceTaskInDisplayList(parsedResult, taskId, displayList);
+		updateDisplayList(parsedResult, updateSR, displayList);
+		history.getUndoDisplayHistory().push(displayList);
+		
+		StorageList.getInstance().saveToFile();	
+	}
+
+	private void updateDisplayList(ParsedResult parsedResult,
+			UpdateSummaryReport updateSR, ArrayList<Task> displayList) {
+		updateSR.updateForEdit(parsedResult, displayList);
+		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
+	}
+
+	private void replaceTaskInDisplayList(ParsedResult parsedResult,
+			int taskId, ArrayList<Task> displayList) {
+		Search targetTask;
+		int taskIndex;
+		targetTask = new Search();
+		taskIndex = targetTask.searchById(taskId, displayList);	
+		displayList.set(taskIndex, parsedResult.getTaskDetails());
+	}
+
+	private ArrayList<Task> getDisplayList(ParsedResult parsedResult,
+			History history) {
+		ArrayList<Task> displayList;
 		if(parsedResult.getCommandType().equals(CommandType.REDO)){
 			displayList = history.getRedoDisplayHistory().pop();
 		}else{
 			displayList = SummaryReport.getDisplayList();
 		}
-		history.getUndoDisplayHistory().push(displayList);
-		
-		// replace task in display list
-		targetTask = new Search();
-		taskIndex = targetTask.searchById(taskId, displayList);	
-		displayList.set(taskIndex, parsedResult.getTaskDetails());
-		
-		updateSR.updateForEdit(parsedResult, displayList);
-		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
-		
-		history.getUndoDisplayHistory().push(displayList);
-		
-		StorageList.getInstance().saveToFile();	
+		return displayList;
+	}
+
+	private void pushToUndoStacks(ArrayList<Task> taskList, History history,
+			int taskIndex) {
+		history.getUndoTaskHistory().push(taskList.get(taskIndex));
+		history.getUndoCommandHistory().push(CommandType.EDIT);
 	}
 
 	@Override
 	public void undo(ParsedResult parsedResult) {
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
-		ArrayList<Task> displayList = new ArrayList<Task>();
 		Task lastTask = parsedResult.getTaskDetails();
 		History history = History.getInstance();
 		Search targetTask = new Search();
 		
-		// amend task list
 		int taskId = lastTask.getId();
 		int taskIndex = targetTask.searchById(taskId, taskList);
 		history.getRedoTaskHistory().push(taskList.get(taskIndex));
 		
 		taskList.set(taskIndex, lastTask);
 
-		// amend display list
+		ArrayList<Task> displayList = updateDisplayList(lastTask, history, taskId);
+		
+		updateDisplayList(parsedResult, updateSR, displayList);
+		pushToRedoStacks(displayList, history);
+		
+		StorageList.getInstance().saveToFile();	
+	}
+
+	private ArrayList<Task> updateDisplayList(Task lastTask, History history,
+			int taskId) {
+		ArrayList<Task> displayList;
+		Search targetTask;
+		int taskIndex;
+		
 		displayList = history.getUndoDisplayHistory().pop();
 		targetTask = new Search();
 		taskIndex = targetTask.searchById(taskId, displayList);	
 		displayList.set(taskIndex, lastTask);
-		
-		updateSR.updateForEdit(parsedResult, displayList);
-		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
-		
+		return displayList;
+	}
+
+	private void pushToRedoStacks(ArrayList<Task> displayList, History history) {
 		history.getRedoDisplayHistory().push(displayList);
 		history.getRedoCommandHistory().push(CommandType.EDIT);
-		
-		StorageList.getInstance().saveToFile();	
 	}
 }
