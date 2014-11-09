@@ -10,6 +10,11 @@ import parser.ParsedResult;
 import commonClasses.Constants;
 import commonClasses.StorageList;
 
+/**
+ * Search is a help class for command executing
+ * and also update SummaryReport
+ *
+ */
 public class Search {
 	// @Author Huang Li A0112508R
 	ArrayList<Task> returnList;

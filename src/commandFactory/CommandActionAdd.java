@@ -8,6 +8,11 @@ import taskDo.History;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
+/**
+ * Add action, add task into task list
+ * undo is to remove from task list
+ *
+ */
 public class CommandActionAdd implements CommandAction {
 	// @Author Huang Li A0112508R
 	@Override

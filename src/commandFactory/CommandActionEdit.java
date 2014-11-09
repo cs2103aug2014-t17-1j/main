@@ -10,6 +10,12 @@ import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
+/**
+ * Edit action, to replace parsed task with task inside task list
+ * accroding to taskID and task index
+ * undo is to pop original task from stack and replace back
+ *
+ */
 public class CommandActionEdit implements CommandAction {
 	// @Author Huang Li A0112508R
 	@Override

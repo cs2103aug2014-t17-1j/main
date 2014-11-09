@@ -12,6 +12,12 @@ import commonClasses.Constants;
 import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 
+/**
+ * Executor is to executing commands
+ * commands based on commandType
+ * commands taken from parsedResult
+ *
+ */
 public class Executor {
 	// @Author Huang Li A0112508R
 	private static final Logger log = LogManager.getLogger(Executor.class);

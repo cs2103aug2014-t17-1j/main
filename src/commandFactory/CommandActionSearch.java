@@ -6,7 +6,11 @@ import parser.ParsedResult;
 import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
-
+/**
+ * Search action is specially for blur search by keyword
+ * can not undo
+ *
+ */
 public class CommandActionSearch implements CommandAction {
 	// @Author Huang Li A0112508R
 	@Override

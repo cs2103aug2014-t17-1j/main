@@ -7,6 +7,12 @@ import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
+/**
+ * Display action, depends on UpdateSummaryReport class
+ * determine display type and display accordingly
+ * can not undo
+ *
+ */
 public class CommandActionDisplay implements CommandAction {
 	// @Author Huang Li A0112508R
 	@Override

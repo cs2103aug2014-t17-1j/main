@@ -11,6 +11,12 @@ import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
+/**
+ * Update the SummaryReport
+ * all are APIs which updates by different requests
+ * by date, by overdue, by all, by completed, by ID, etc
+ *
+ */
 public class UpdateSummaryReport {
 	// @Author Huang Li A0112508R
 	private static UpdateSummaryReport updateSR;

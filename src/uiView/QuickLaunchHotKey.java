@@ -4,7 +4,9 @@ import java.awt.Frame;
 
 import com.tulskiy.keymaster.common.HotKey;
 import com.tulskiy.keymaster.common.HotKeyListener;
-
+/*
+ * This hot key listener is used to toggle the application 
+ */
 public class QuickLaunchHotKey implements HotKeyListener {
 
 	private UiViewModifier uiView;

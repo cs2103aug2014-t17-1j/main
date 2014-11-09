@@ -10,6 +10,11 @@ import taskDo.Search;
 import taskDo.Task;
 import taskDo.UpdateSummaryReport;
 
+/**
+ * complete task action, set complete as yes inside taskDetails
+ * undo is to set complete back to no
+ *
+ */
 public class CommandActionComplete implements CommandAction {
 	// @Author Huang Li A0112508R
 	@Override

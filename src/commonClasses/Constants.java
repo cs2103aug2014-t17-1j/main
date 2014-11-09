@@ -12,7 +12,9 @@ import javax.swing.border.EmptyBorder;
 import org.joda.time.DateTime;
 
 import uiView.ColorBox;
-
+/*
+ * Constants using throughout project
+ */
 public class Constants {
 
 	// @author Paing Zin Oo(Jack) A0112581N

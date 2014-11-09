@@ -6,6 +6,11 @@ import java.util.Stack;
 import commandFactory.CommandAction;
 import commandFactory.CommandType;
 
+/**
+ * History is a class of stacks
+ * for storing undo and redo data
+ *
+ */
 public class History {
 	// @Author Huang Li A0112508R
 	private static History history;

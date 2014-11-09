@@ -26,7 +26,7 @@ import taskDo.Task;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/* This is the content Table Panle where tasks title,seq no and due date
+/* This is the content Table Panel where tasks title,seq no and due date
  * 
  * 
  */

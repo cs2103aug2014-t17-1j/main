@@ -13,7 +13,10 @@ import com.joestelmach.natty.DateGroup;
 
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
-
+/*
+ * This class contains all the common methods used throughout the Parser package. It is mainly used by the mainCommandInterpreter
+ * and the optionalCommandInterpreter
+ */
 public class CommonInterpreterMethods {
 
 	// This method checks if it is a valid selection on the displayList of

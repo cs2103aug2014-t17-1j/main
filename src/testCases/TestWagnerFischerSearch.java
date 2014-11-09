@@ -6,7 +6,7 @@ import org.junit.Test;
 import taskDo.WagnerFischerSearch;
 
 public class TestWagnerFischerSearch {
-	//@author Boo Tai Yi  A0111936J
+	// @author Boo Tai Yi A0111936J
 	@Test
 	public void test() {
 		WagnerFischerSearch testing = new WagnerFischerSearch();

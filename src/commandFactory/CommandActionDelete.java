@@ -9,6 +9,11 @@ import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 import taskDo.History;
 
+/**
+ * Delete action, remove task into task list
+ * undo is to add task back
+ *
+ */
 public class CommandActionDelete implements CommandAction {
 	// @Author Huang Li A0112508R
 	@Override
