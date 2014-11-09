@@ -18,9 +18,9 @@ import uiView.ColorBox;
  */
 
 public class Constants {
-	/*
-	 *  @author Paing Zin Oo(Jack)
-	 */
+	
+	  // @author Paing Zin Oo(Jack) A0112581N
+	 
 	
 	public static final String PRODUCT_TASKDO = "Task.Do";
 	
@@ -37,6 +37,8 @@ public class Constants {
 	
 	public static final String FILENAME_TASKDO = "TaskDo.json";
 	
+	public static final char CHAR_BACKSPACE = '\b';
+	
 	public static final String STRING_STRING = "";
 	public static final String STRING_EVENT = "EVENT";
 	public static final String STRING_ERROR_TASKDO_IS_ACTIVE = "TaskDo is Active";
@@ -50,7 +52,7 @@ public class Constants {
 	public static final String STRING_IMG_MAIN_ICON = "/image/Task.Do Icon.png";
 	public static final String STRING_OPEN_TASKDO = "Open Task.Do";
 	public static final String STRING_QUIT_TASKDO = "Quit Task.Do";
-	
+	public static final String STRING_DEFAULT_COMMAND_TEXT = "Enter your command here";
 	
 	public static final String CATEGORY_COLUMN_TITLE[] = {"Name","Count"};
 	public static final String TASKKEYS[] = {"Title", "category" ,"important","startDate","dueDate","completed","taskType","taskNote"} ;
@@ -71,7 +73,6 @@ public class Constants {
 		"<html>search [keyword]"
 		
 	};
-
 	public static final String [] HELPCOMMANDS = {
 		"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",
 			"<html><font color='red'>add</font> *insert task title*</html>",
@@ -167,6 +168,7 @@ public class Constants {
 	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX = new EmptyBorder(20,20,20,20);
 	public static final EmptyBorder EMPTY_BORDER_CONTENT_TABLE = new EmptyBorder(15, 25, 15, 25);
 	public static final EmptyBorder EMPTY_BORDER_LINEWRAPPER = new EmptyBorder(15,5,15,15);
+	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX_PANEL = new EmptyBorder(10, 10, 10, 10);
 	
 	public static final Font FONT_TIME_NEW_ROMAN = Font.getFont("times new roman");
 	/*
@@ -206,7 +208,7 @@ public class Constants {
 	public static final int DATE_FORMAT_ITERATIONS = 8;
 	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
 	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
-	public static final String MESSAGE_INVALID_DATE = "Date not recognized.Try DD/MM/YYYY HH:mm, DD/MM/YYYY, dd MMM or tomorrow";
+	public static final String MESSAGE_INVALID_DATE = "Invalid format.Try DD/MM/YYYY HH:mm,DD/MM/YYYY,dd MMM or today";
 	public static final String MESSAGE_INVALID_DISPLAY_SELECTION = "Invalid! Press F2 to check existing category or try DD/MM/YYYY";
 	public static final String MESSAGE_INVALID_SELECTION = "Invalid selection";
 	public static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "Importance level not recognized";

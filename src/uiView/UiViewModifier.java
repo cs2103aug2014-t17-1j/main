@@ -109,6 +109,7 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		uiList.notifyUIs();
 	}
 
+	//main API which communicates with Parser and Executor
 	public void passToParser(String command) {
 		if (command != null && !command.trim().isEmpty()) {
 			parseResult = parser.parseString(command);

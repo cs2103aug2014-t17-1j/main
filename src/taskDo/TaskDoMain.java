@@ -14,14 +14,11 @@ import commonClasses.Constants;
 import commonClasses.StorageList;
 import commonClasses.SummaryReport;
 
-/*
- * @author Paing Zin Oo(Jack)
- */
-
 public class TaskDoMain {
 	static FileLock lock;
 	static FileChannel channel;
 	private static final Logger logger = LogManager.getLogger(TaskDoMain.class);
+	//@author Boo Tai Yi  A0111936J
 	public static void main(String args[]) {
 		try {
 			if (isAppActive()) {
@@ -33,7 +30,6 @@ public class TaskDoMain {
 		}
 
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
-		System.out.println(taskList);
 		SummaryReport.setDisplayList(taskList);
 		new UiViewModifier();
 

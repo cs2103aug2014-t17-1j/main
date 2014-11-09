@@ -11,6 +11,7 @@ import commonClasses.SummaryReport;
 
 public class TestParser {
 
+	//@author Boo Tai Yi  A0111936J
 	@Test
 	public void testAdd() {
 		Parser testingParser = new Parser();

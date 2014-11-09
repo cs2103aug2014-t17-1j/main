@@ -3,6 +3,7 @@ package uiView;
  * 
  * @author Paing Zin Oo(Jack)  A0112581N
  */
+//@author Paing Zin Oo(Jack)  A0112581N
 public enum HotKeyType {
 	F1,F2,F3;
 

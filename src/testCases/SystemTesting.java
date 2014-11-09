@@ -14,6 +14,7 @@ import commonClasses.SummaryReport;
 public class SystemTesting {
 	@Test
 	public void test() {
+		//@author Paing Zin Oo(Jack)  A0112581N
 		String command = "add new ";
 		Parser parser = new Parser();
 		Executor executor = new Executor();
@@ -28,7 +29,7 @@ public class SystemTesting {
 		if(parseResult.getIsExecutorApplicable()){
 			executor.execute(parseResult);
 		}
-		assertEquals(SummaryReport.getFeedBackMsg(), Constants.MESSAGE_SUCCESS_DELETE);
+		assertEquals(SummaryReport.getFeedBackMsg(), "TASK 1 IS DELETED");
 		
 		command = "fjsklfdklfje";
 		parseResult = parser.parseString(command);

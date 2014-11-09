@@ -19,7 +19,7 @@ import commonClasses.Constants;
 
 public class SystemTrayManager implements MouseListener{
 		private JFrame frame;
-		
+	//@author Boo Tai Yi  A0111936J
 	public SystemTrayManager(final JFrame frame, final Provider provide) {
 		this.frame = frame;
 	

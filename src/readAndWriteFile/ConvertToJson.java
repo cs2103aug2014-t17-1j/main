@@ -6,17 +6,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import taskDo.Category;
 import taskDo.Task;
 
 import commonClasses.Constants;
 
-/*
- * @author Paing Zin Oo(Jack)
+/* Convert the tasks into String 
+ * @author Paing Zin Oo(Jack) A0112581N
  */
 public class ConvertToJson {
 	private ArrayList<Task> taskList;
 
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public ArrayList<Task> getTaskList() {
 		return taskList;
 	}

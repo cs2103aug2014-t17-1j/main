@@ -23,13 +23,14 @@ import commonClasses.SummaryReport;
 
 /* This class is used to read json format and transform into Task object and 
  * write whole list of task list into json file
- * @author Paing Zin Oo(Jack)
+ * @author Paing Zin Oo(Jack) A0112581N
  */
 
 public class ReadAndWriteToFile {
 	private String jsonText;
 	private static final Logger logger = LogManager.getLogger(Executor.class);
 
+	//@author Paing Zin Oo(Jack)  A0112581N
 	public String getjSonText() {
 		return jsonText;
 	}
@@ -84,7 +85,6 @@ public class ReadAndWriteToFile {
 
 
 	}
-
 
 	private Task extractTaskFields(JSONObject jsonObject) throws JSONException {
 		Task task = new Task();
