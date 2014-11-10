@@ -12,12 +12,12 @@ import javax.swing.border.EmptyBorder;
 import org.joda.time.DateTime;
 
 import uiView.ColorBox;
-/*
+/**
  * Constants using throughout project
  */
 public class Constants {
 
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 
 	public static final String PRODUCT_TASKDO = "Task.Do";
 
@@ -183,7 +183,7 @@ public class Constants {
 	public static final Font FONT_TIME_NEW_ROMAN = Font
 			.getFont("times new roman");
 
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 
 	// Command Actions
 	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s IS MARKED AS COMPLETED";
@@ -209,7 +209,7 @@ public class Constants {
 
 	public static final int NILL_YEAR = 0;
 
-	// @author Boo Tai Yi A0111936J
+	// @author   A0111936J
 
 	// Parser Related
 	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";

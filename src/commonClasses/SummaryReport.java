@@ -7,11 +7,11 @@ import org.joda.time.DateTime;
 
 import taskDo.Task;
 
-/* This class is used to store list of tasks which need to be displayed to user 
+/** This class is used to store list of tasks which need to be displayed to user 
  * 
  */
 public class SummaryReport {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private static String feedBackMsg;
 	private static ArrayList<Task> displayList = new ArrayList<Task>();
 	private static ArrayList<Integer> imptRowIndexList;

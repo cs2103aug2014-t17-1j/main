@@ -16,13 +16,13 @@ import javax.swing.JFrame;
 
 import com.tulskiy.keymaster.common.Provider;
 import commonClasses.Constants;
-/*
+/**
  * This class manages the systemTray for Task.Do. Allows task.do to run in the background
  */
 public class SystemTrayManager implements MouseListener {
 	private JFrame frame;
 
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	public SystemTrayManager(final JFrame frame, final Provider provide) {
 		this.frame = frame;
 

@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/* This is the class default color table cell renderer
+/** 
+ * This is the class default color table cell renderer
  * 
- *
  */
 public class DefaultTableColor {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	public static ArrayList<Integer> imptRowIndexList;
 	public static ArrayList<Integer> overdueRowIndexList;
 

@@ -10,11 +10,12 @@ import taskDo.Task;
 
 import commonClasses.Constants;
 
-/* Convert the tasks into String 
+/** 
+ * Convert the tasks into String 
  *
  */
 public class ConvertToJson {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private ArrayList<Task> taskList;
 
 	public ArrayList<Task> getTaskList() {

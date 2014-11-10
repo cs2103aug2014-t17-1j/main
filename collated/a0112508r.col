@@ -1,0 +1,1181 @@
+//@author: a0112508r
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandAction.java
+	 */
+
+public interface CommandAction {
+	public void execute(ParsedResult parsedResult);
+
+	public void undo(ParsedResult parsedResult);
+}
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandAction.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionAdd.java
+	 */
+
+	@Override
+	public void execute(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		History history = History.getInstance();
+
+		addIntoList(parsedResult, taskList);
+		pushToUndoStacks(parsedResult, history);
+		updateDisplayList(parsedResult, updateSR);
+		saveIntoFile();
+	}
+
+	private void addIntoList(ParsedResult parsedResult, ArrayList<Task> taskList) {
+		taskList.add(parsedResult.getTaskDetails());
+	}
+
+	private void pushToUndoStacks(ParsedResult parsedResult, History history) {
+		history.getUndoTaskHistory().push(parsedResult.getTaskDetails());
+		history.getUndoCommandHistory().push(CommandType.ADD);
+	}
+
+	@Override
+	public void undo(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		History history = History.getInstance();
+
+		clearHighlight(updateSR);
+		pushToRedoStacks(parsedResult, history);
+		removeFromList(parsedResult, taskList);
+		updateDisplayList(parsedResult, updateSR);
+		saveIntoFile();
+	}
+
+	private void clearHighlight(UpdateSummaryReport updateSR) {
+		updateSR.unhighlightTask();
+	}
+
+	private void removeFromList(ParsedResult parsedResult,
+			ArrayList<Task> taskList) {
+		taskList.remove(parsedResult.getTaskDetails());
+	}
+
+	private void pushToRedoStacks(ParsedResult parsedResult, History history) {
+		history.getRedoTaskHistory().push(parsedResult.getTaskDetails());
+		history.getRedoCommandHistory().push(CommandType.ADD);
+	}
+
+	private void updateDisplayList(ParsedResult parsedResult,
+			UpdateSummaryReport updateSR) {
+		updateSR.updateByDueDate(parsedResult);
+		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
+	}
+
+	private void saveIntoFile() {
+		StorageList.getInstance().saveToFile();
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionAdd.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionComplete.java
+	 */
+
+	@Override
+	public void execute(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		History history = History.getInstance();
+		Search targetTask = new Search();
+
+		updateSR.unhighlightTask();
+
+		int taskIndex = findTaskIndex(parsedResult, taskList, targetTask);
+
+		pushToUndoStacks(taskList, history, taskIndex);
+		updateDisplayList(parsedResult, updateSR, history);
+		updateTaskList(parsedResult, taskList, taskIndex);
+
+		saveIntoFile();
+	}
+
+	private int findTaskIndex(ParsedResult parsedResult,
+			ArrayList<Task> taskList, Search targetTask) {
+		int index = parsedResult.getTaskDetails().getId();
+		int taskIndex = targetTask.searchById(index, taskList);
+		return taskIndex;
+	}
+
+	private void saveIntoFile() {
+		StorageList.getInstance().saveToFile();
+	}
+
+	private void updateTaskList(ParsedResult parsedResult,
+			ArrayList<Task> taskList, int taskIndex) {
+		parsedResult.getTaskDetails().setCompleted(true);
+		taskList.set(taskIndex, parsedResult.getTaskDetails());
+	}
+
+	private void updateDisplayList(ParsedResult parsedResult,
+			UpdateSummaryReport updateSR, History history) {
+		ArrayList<Task> displayList;
+		if (parsedResult.getCommandType().equals(CommandType.REDO)) {
+			displayList = history.getRedoDisplayHistory().pop();
+		} else {
+			displayList = SummaryReport.getDisplayList();
+		}
+		history.getUndoDisplayHistory().push(displayList);
+
+		updateSR.updateForDeleteAndComplete(parsedResult, displayList);
+	}
+
+	private void pushToUndoStacks(ArrayList<Task> taskList, History history,
+			int taskIndex) {
+		history.getUndoTaskHistory().push(taskList.get(taskIndex));
+		history.getUndoCommandHistory().push(CommandType.COMPLETED);
+	}
+
+	@Override
+	public void undo(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		Task lastTask = parsedResult.getTaskDetails();
+		History history = History.getInstance();
+		Search targetTask = new Search();
+
+		int taskIndex = findLastTaskIndex(taskList, lastTask, targetTask);
+
+		history.getRedoTaskHistory().push(taskList.get(taskIndex));
+
+		updateTaskList(taskList, lastTask, taskIndex);
+		updateDisplayList(parsedResult, updateSR, lastTask, history);
+		pushDisplayListForRedo(history);
+
+		saveIntoFile();
+	}
+
+	private void pushDisplayListForRedo(History history) {
+		ArrayList<Task> displayList;
+		displayList = SummaryReport.getDisplayList();
+		history.getRedoDisplayHistory().push(displayList);
+		history.getRedoCommandHistory().push(CommandType.COMPLETED);
+	}
+
+	private void updateDisplayList(ParsedResult parsedResult,
+			UpdateSummaryReport updateSR, Task lastTask, History history) {
+		ArrayList<Task> displayList;
+		displayList = history.getUndoDisplayHistory().pop();
+		updateSR.updateForUndoDeleteAndComplete(parsedResult, displayList);
+		updateSR.highlightTask(lastTask.getId());
+	}
+
+	private void updateTaskList(ArrayList<Task> taskList, Task lastTask,
+			int taskIndex) {
+		lastTask.setCompleted(false);
+		taskList.set(taskIndex, lastTask);
+	}
+
+	private int findLastTaskIndex(ArrayList<Task> taskList, Task lastTask,
+			Search targetTask) {
+		int index = lastTask.getId();
+		int taskIndex = targetTask.searchById(index, taskList);
+		return taskIndex;
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionComplete.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionDelete.java
+	 */
+
+	@Override
+	public void execute(ParsedResult parsedResult) {
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		History history = History.getInstance();
+
+		updateSR.unhighlightTask();
+
+		removeFromTaskList(parsedResult);
+
+		displayList = getDisplayList(parsedResult, history);
+		pushToUndoStacks(parsedResult, displayList, history);
+
+		updateSR.updateForDeleteAndComplete(parsedResult, displayList);
+
+		saveIntoFile();
+	}
+
+	private void removeFromTaskList(ParsedResult parsedResult) {
+		StorageList.getInstance().getTaskList()
+				.remove(parsedResult.getTaskDetails());
+	}
+
+	private ArrayList<Task> getDisplayList(ParsedResult parsedResult,
+			History history) {
+		ArrayList<Task> displayList;
+		if (parsedResult.getCommandType().equals(CommandType.REDO)) {
+			displayList = history.getRedoDisplayHistory().pop();
+		} else {
+			displayList = SummaryReport.getDisplayList();
+		}
+		return displayList;
+	}
+
+	private void pushToUndoStacks(ParsedResult parsedResult,
+			ArrayList<Task> displayList, History history) {
+		history.getUndoTaskHistory().push(parsedResult.getTaskDetails());
+		history.getUndoDisplayHistory().push(displayList);
+		history.getUndoCommandHistory().push(CommandType.DELETE);
+	}
+
+	private void saveIntoFile() {
+		StorageList.getInstance().saveToFile();
+	}
+
+	@Override
+	public void undo(ParsedResult parsedResult) {
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		History history = History.getInstance();
+
+		addIntoTaskList(parsedResult);
+		history.getRedoTaskHistory().push(parsedResult.getTaskDetails());
+
+		updateDisplayList(parsedResult, updateSR, history);
+		pushToRedoStacks(history);
+
+		saveIntoFile();
+	}
+
+	private void pushToRedoStacks(History history) {
+		ArrayList<Task> displayList;
+		displayList = SummaryReport.getDisplayList();
+		history.getRedoDisplayHistory().push(displayList);
+		history.getRedoCommandHistory().push(CommandType.DELETE);
+	}
+
+	private void updateDisplayList(ParsedResult parsedResult,
+			UpdateSummaryReport updateSR, History history) {
+		ArrayList<Task> displayList;
+		displayList = history.getUndoDisplayHistory().pop();
+		updateSR.updateForUndoDeleteAndComplete(parsedResult, displayList);
+		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
+	}
+
+	private void addIntoTaskList(ParsedResult parsedResult) {
+		StorageList.getInstance().getTaskList()
+				.add(parsedResult.getTaskDetails());
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionDelete.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionDisplay.java
+	 */
+
+	@Override
+	public void execute(ParsedResult parsedResult) {
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		Search search = new Search();
+
+		updateSR.unhighlightTask();
+
+		displayList = search.searchForDisplay(parsedResult);
+		updateSR.updateForDisplay(parsedResult, displayList);
+	}
+
+	@Override
+	public void undo(ParsedResult parsedResult) {
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionDisplay.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionEdit.java
+	 */
+
+	@Override
+	public void execute(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		History history = History.getInstance();
+		Search targetTask = new Search();
+
+		int taskId = parsedResult.getTaskDetails().getId();
+		int taskIndex = targetTask.searchById(taskId, taskList);
+
+		pushToUndoStacks(taskList, history, taskIndex);
+
+		taskList.set(taskIndex, parsedResult.getTaskDetails());
+
+		ArrayList<Task> displayList = getDisplayList(parsedResult, history);
+		history.getUndoDisplayHistory().push(displayList);
+
+		replaceTaskInDisplayList(parsedResult, taskId, displayList);
+		updateDisplayList(parsedResult, updateSR, displayList);
+		history.getUndoDisplayHistory().push(displayList);
+
+		StorageList.getInstance().saveToFile();
+	}
+
+	private void updateDisplayList(ParsedResult parsedResult,
+			UpdateSummaryReport updateSR, ArrayList<Task> displayList) {
+		updateSR.updateForEdit(parsedResult, displayList);
+		updateSR.highlightTask(parsedResult.getTaskDetails().getId());
+	}
+
+	private void replaceTaskInDisplayList(ParsedResult parsedResult,
+			int taskId, ArrayList<Task> displayList) {
+		Search targetTask;
+		int taskIndex;
+		targetTask = new Search();
+		taskIndex = targetTask.searchById(taskId, displayList);
+		displayList.set(taskIndex, parsedResult.getTaskDetails());
+	}
+
+	private ArrayList<Task> getDisplayList(ParsedResult parsedResult,
+			History history) {
+		ArrayList<Task> displayList;
+		if (parsedResult.getCommandType().equals(CommandType.REDO)) {
+			displayList = history.getRedoDisplayHistory().pop();
+		} else {
+			displayList = SummaryReport.getDisplayList();
+		}
+		return displayList;
+	}
+
+	private void pushToUndoStacks(ArrayList<Task> taskList, History history,
+			int taskIndex) {
+		history.getUndoTaskHistory().push(taskList.get(taskIndex));
+		history.getUndoCommandHistory().push(CommandType.EDIT);
+	}
+
+	@Override
+	public void undo(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		Task lastTask = parsedResult.getTaskDetails();
+		History history = History.getInstance();
+		Search targetTask = new Search();
+
+		int taskId = lastTask.getId();
+		int taskIndex = targetTask.searchById(taskId, taskList);
+		history.getRedoTaskHistory().push(taskList.get(taskIndex));
+
+		taskList.set(taskIndex, lastTask);
+
+		ArrayList<Task> displayList = updateDisplayList(lastTask, history,
+				taskId);
+
+		updateDisplayList(parsedResult, updateSR, displayList);
+		pushToRedoStacks(displayList, history);
+
+		StorageList.getInstance().saveToFile();
+	}
+
+	private ArrayList<Task> updateDisplayList(Task lastTask, History history,
+			int taskId) {
+		ArrayList<Task> displayList;
+		Search targetTask;
+		int taskIndex;
+
+		displayList = history.getUndoDisplayHistory().pop();
+		targetTask = new Search();
+		taskIndex = targetTask.searchById(taskId, displayList);
+		displayList.set(taskIndex, lastTask);
+		return displayList;
+	}
+
+	private void pushToRedoStacks(ArrayList<Task> displayList, History history) {
+		history.getRedoDisplayHistory().push(displayList);
+		history.getRedoCommandHistory().push(CommandType.EDIT);
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionEdit.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionSearch.java
+	 */
+
+	@Override
+	public void execute(ParsedResult parsedResult) {
+		UpdateSummaryReport updateSR = UpdateSummaryReport.getInstance();
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		Search search = new Search();
+
+		updateSR.unhighlightTask();
+
+		displayList = search.searchForDisplay(parsedResult);
+		updateSR.updateForSearch(parsedResult, displayList);
+	}
+
+	@Override
+	public void undo(ParsedResult parsedResult) {
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandActionSearch.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandFactory.java
+	 */
+
+	public CommandAction getCommandAction(CommandType commandType) {
+		switch (commandType) {
+			case ADD:
+				return new CommandActionAdd();
+			case DELETE:
+				return new CommandActionDelete();
+			case DISPLAY:
+				return new CommandActionDisplay();
+			case EDIT:
+				return new CommandActionEdit();
+			case COMPLETED:
+				return new CommandActionComplete();
+			case SEARCH:
+				return new CommandActionSearch();
+			default:
+				return null;
+		}
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandFactory.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandType.java
+	 */
+
+public enum CommandType {
+	ADD, DELETE, DISPLAY, SEARCH, COMPLETED, EDIT, UNDO, REDO, EXIT, OTHERS, INVALID
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commandFactory\CommandType.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\Constants.java
+	 */
+
+
+	// Command Actions
+	public static final String MESSAGE_SUCCESS_COMPLETED = "TASK %1$s IS MARKED AS COMPLETED";
+	public static final String MESSAGE_SUCCESS_ADD = "TASK IS ADDED SUCCESSFULLY";
+	public static final String MESSAGE_SUCCESS_DELETE = "TASK %1$s IS DELETED";
+	public static final String MESSAGE_SUCCESS_EDIT = "TASK %1$s IS EDITED";
+
+	public static final String MESSAGE_SUCCESS_SEARCH_SINGLE = "POSSIBLE RESULT LISTED FOR \"%1$s\"";
+	public static final String MESSAGE_SUCCESS_SEARCH_MUL = "POSSIBLE RESULTS LISTED FOR \"%1$s\"";
+	public static final String MESSAGE_FAIL_SEARCH = "NO TASK IS MATCHED";
+
+	public static final String MESSAGE_SUCCESS_UNDO = "UNDO %1$s SUCCESSFULLY";
+	public static final String MESSAGE_SUCCESS_REDO = "REDO %1$s SUCCESSFULLY";
+	public static final String MESSAGE_FAIL_UNDO = "NO MORE COMMAND FOR UNDO";
+	public static final String MESSAGE_FAIL_REDO = "NO MORE COMMAND FOR REDO";
+
+	public static final String MESSAGE_DISPLAY_RANGE = "DISPLAY TASKS FROM %1$s TO %2$s";
+	public static final String MESSAGE_DISPLAY_ALL = "DISPLAY ALL UNCOMPLETED TASKS";
+	public static final String MESSAGE_DISPLAY_COMPLETED = "DISPLAY COMPLETED TASKS";
+	public static final String MESSAGE_DISPLAY_CATEGORY = "DISPLAY CATEGORY: %1$s";
+	public static final String MESSAGE_DISPLAY_DATE = "DISPLAY TASKS DUE ON %1$s";
+	public static final String MESSAGE_DISPLAY_OVERDUE = "DISPLAY OVERDUE TASKS";
+
+	public static final int NILL_YEAR = 0;
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\Constants.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Executor.java
+	 */
+
+	private static final Logger log = LogManager.getLogger(Executor.class);
+
+	public Executor() {
+		StorageList.getInstance().loadFile();
+	}
+
+	public void execute(ParsedResult parsedResult) {
+		CommandFactory commandFactory = new CommandFactory();
+		CommandType commandType = parsedResult.getCommandType();
+
+		log.info("Command [" + commandType.toString() + "].");
+
+		if (commandType.equals(CommandType.UNDO)) {
+			executeUndo(parsedResult);
+		} else if (commandType.equals(CommandType.REDO)) {
+			executeRedo(parsedResult);
+		} else {
+			executeCommand(parsedResult, commandFactory, commandType);
+		}
+
+		CategoryList
+				.updateCategoryList(StorageList.getInstance().getTaskList());
+	}
+
+	private void executeUndo(ParsedResult parsedResult) {
+		History history = History.getInstance();
+		CommandAction commandAction = null;
+
+		try {
+			commandAction = history.getUndoActionHistory().pop();
+			Task lastTask = history.getUndoTaskHistory().pop();
+
+			history.getRedoActionHistory().push(commandAction);
+
+			parsedResult.setTask(lastTask);
+			commandAction.undo(parsedResult);
+		} catch (Exception e) {
+			log.info("no more undo command [" + e + "].");
+
+			history.getUndoTaskHistory().clear();
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_UNDO);
+		}
+	}
+
+	private void executeRedo(ParsedResult parsedResult) {
+		History history = History.getInstance();
+		CommandAction commandAction = null;
+
+		try {
+			commandAction = history.getRedoActionHistory().pop();
+			Task lastTask = history.getRedoTaskHistory().pop();
+
+			history.getUndoActionHistory().push(commandAction);
+
+			parsedResult.setTask(lastTask);
+			commandAction.execute(parsedResult);
+		} catch (Exception e) {
+			log.info("no more redo command [" + e + "].");
+			history.getRedoTaskHistory().clear();
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_FAIL_REDO);
+		}
+	}
+
+	private void executeCommand(ParsedResult parsedResult,
+			CommandFactory commandFactory, CommandType commandType) {
+
+		History history = History.getInstance();
+		CommandAction commandAction = null;
+
+		commandAction = commandFactory.getCommandAction(commandType);
+		commandAction.execute(parsedResult);
+
+		if (isNotDisplayAndSearch(commandType)) {
+			history.getUndoActionHistory().push(commandAction);
+		}
+	}
+
+	private boolean isNotDisplayAndSearch(CommandType commandType) {
+		boolean isNotDisplay = !commandType.equals(CommandType.DISPLAY);
+		boolean isNotSearch = !commandType.equals(CommandType.SEARCH);
+		return isNotDisplay && isNotSearch;
+	}
+}
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Executor.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\History.java
+	 */
+
+	private static History history;
+
+	private Stack<ArrayList<Task>> undoDisplayHistory = new Stack<ArrayList<Task>>();
+	private Stack<ArrayList<Task>> redoDisplayHistory = new Stack<ArrayList<Task>>();
+	private Stack<CommandAction> undoActionHistory = new Stack<CommandAction>();
+	private Stack<CommandAction> redoActionHistory = new Stack<CommandAction>();
+	private Stack<CommandType> undoCommandHistory = new Stack<CommandType>();
+	private Stack<CommandType> redoCommandHistory = new Stack<CommandType>();
+	private Stack<Task> redoTaskHistory = new Stack<Task>();
+	private Stack<Task> undoTaskHistory = new Stack<Task>();
+
+	private History() {
+	}
+
+	public static History getInstance() {
+		if (history == null) {
+			history = new History();
+		}
+		return history;
+	}
+
+	public Stack<CommandAction> getUndoActionHistory() {
+		return undoActionHistory;
+	}
+
+	public Stack<Task> getUndoTaskHistory() {
+		return undoTaskHistory;
+	}
+
+	public Stack<CommandAction> getRedoActionHistory() {
+		return redoActionHistory;
+	}
+
+	public Stack<Task> getRedoTaskHistory() {
+		return redoTaskHistory;
+	}
+
+	public Stack<ArrayList<Task>> getUndoDisplayHistory() {
+		return undoDisplayHistory;
+	}
+
+	public Stack<ArrayList<Task>> getRedoDisplayHistory() {
+		return redoDisplayHistory;
+	}
+
+	public Stack<CommandType> getUndoCommandHistory() {
+		return undoCommandHistory;
+	}
+
+	public Stack<CommandType> getRedoCommandHistory() {
+		return redoCommandHistory;
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\History.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Search.java
+	 */
+
+	ArrayList<Task> returnList;
+	SearchType searchType;
+	int taskIndex;
+
+	private static final Logger log = LogManager.getLogger(Search.class);
+
+	public Search() {
+		taskIndex = -1;
+		returnList = new ArrayList<Task>();
+	}
+
+	public int searchById(int id, ArrayList<Task> taskList) {
+		for (Task task : taskList) {
+			if (id == task.getId()) {
+				taskIndex = taskList.indexOf(task);
+				break;
+			}
+		}
+		return taskIndex;
+	}
+
+	public ArrayList<Task> searchForDisplay(ParsedResult parsedResult) {
+		switch (parsedResult.getSearchMode()) {
+			case ALL:
+				return searchByAll();
+			case DATE:
+				return searchByDate(parsedResult);
+			case RANGEOFDATES:
+				return searchByRangeOfDates(parsedResult);
+			case COMPLETED:
+				return searchByCompleted();
+			case CATEGORY:
+				return searchByCategory(parsedResult);
+			case KEYWORD:
+				return searchByKeyword(parsedResult);
+			case OVERDUE:
+				return searchByOverdue();
+			default:
+				return null;
+		}
+	}
+
+	private ArrayList<Task> searchByCategory(ParsedResult parsedResult) {
+		String category = parsedResult.getTaskDetails().getCategory()
+				.toLowerCase();
+		for (Task task : StorageList.getInstance().getTaskList()) {
+			if (task.getCategory().toLowerCase().equals(category)) {
+				returnList.add(task);
+			}
+		}
+		return returnList;
+	}
+
+	private ArrayList<Task> searchByAll() {
+		for (Task task : StorageList.getInstance().getTaskList()) {
+			if (isNotCompleted(task)) {
+				returnList.add(task);
+			}
+		}
+		return returnList;
+	}
+
+	public ArrayList<Task> searchByDate(ParsedResult parsedResult) {
+		Task parsedTask = parsedResult.getTaskDetails();
+
+		for (Task task : StorageList.getInstance().getTaskList()) {
+			if (isTimedTask(task) && isWithinTimedTask(parsedTask, task)) {
+				returnList.add(task);
+			} else if (isSameDueDate(parsedTask, task) && isNotCompleted(task)) {
+				returnList.add(task);
+			}
+		}
+		return returnList;
+	}
+
+	private boolean isTimedTask(Task targetTask) {
+		return targetTask.getTaskType().equals(TaskType.TIMED);
+	}
+
+	private boolean isWithinTimedTask(Task parsedTask, Task task) {
+		// sourceTask isbefore targetTask duedate
+		// source Task isafter targetTask start date
+		DateTime dueDate = parsedTask.getDueDate();
+
+		boolean isBefore = dueDate.toLocalDate().isBefore(
+				task.getDueDate().toLocalDate());
+		boolean isAfter = dueDate.toLocalDate().isAfter(
+				task.getStartDate().toLocalDate());
+
+		return (isBefore && isAfter);
+	}
+
+	private boolean isSameDueDate(Task sourceTask, Task targetTask) {
+		DateTime target = targetTask.getDueDate();
+		DateTime source = sourceTask.getDueDate();
+
+		return target.toLocalDate().equals(source.toLocalDate());
+	}
+
+	public ArrayList<Task> searchByRangeOfDates(ParsedResult parsedResult) {
+		Task sourceTask = parsedResult.getTaskDetails();
+
+		for (Task targetTask : StorageList.getInstance().getTaskList()) {
+			if (isNotCompleted(targetTask)) {
+				addValidTask(sourceTask, targetTask);
+			}
+		}
+		return returnList;
+	}
+
+	private void addValidTask(Task sourceTask, Task targetTask) {
+		if (targetTask.getTaskType().equals(TaskType.DEADLINE)) {
+			addDeadlineTask(sourceTask, targetTask);
+		} else if (isTimedTask(targetTask)) {
+			addTimedTask(sourceTask, targetTask);
+		}
+	}
+
+	private void addTimedTask(Task sourceTask, Task targetTask) {
+		if (isTimedTaskWithinRange(sourceTask, targetTask)) {
+			returnList.add(targetTask);
+		}
+	}
+
+	private void addDeadlineTask(Task sourceTask, Task targetTask) {
+		if (isDeadlineTaskWithinRange(sourceTask, targetTask)) {
+			returnList.add(targetTask);
+		}
+	}
+
+	private boolean isTimedTaskWithinRange(Task sourceTask, Task targetTask) {
+		boolean isNotBefore = !targetTask.getDueDate().toLocalDate()
+				.isBefore(sourceTask.getStartDate().toLocalDate());
+		boolean isNotAfter = !targetTask.getStartDate().toLocalDate()
+				.isAfter(sourceTask.getDueDate().toLocalDate());
+		return isNotBefore && isNotAfter;
+	}
+
+	private boolean isDeadlineTaskWithinRange(Task sourceTask, Task targetTask) {
+		boolean isNotBefore = !targetTask.getDueDate().toLocalDate()
+				.isBefore(sourceTask.getStartDate().toLocalDate());
+		boolean isNotAfter = !targetTask.getDueDate().toLocalDate()
+				.isAfter(sourceTask.getDueDate().toLocalDate());
+		return isNotBefore && isNotAfter;
+	}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Search.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Search.java
+	 */
+
+	public ArrayList<Task> searchByCompleted() {
+		for (Task task : StorageList.getInstance().getTaskList()) {
+			if (task.isCompleted()) {
+				returnList.add(task);
+			}
+		}
+		return returnList;
+	}
+
+	public ArrayList<Task> searchByOverdue() {
+		DateTime today = new DateTime();
+
+		for (Task task : StorageList.getInstance().getTaskList()) {
+			boolean isOverDue = task.getDueDate().isBefore(today);
+			if (isNotSomeday(task) && isNotCompleted(task) && isOverDue)
+				returnList.add(task);
+		}
+		return returnList;
+	}
+
+	public ArrayList<Task> searchByOverdueAndToday() {
+		DateTime today = new DateTime();
+
+		for (Task task : StorageList.getInstance().getTaskList()) {
+			boolean isNotAfterToday = !task.getDueDate().toLocalDate()
+					.isAfter(today.toLocalDate());
+			if (isNotSomeday(task) && isNotCompleted(task) && isNotAfterToday) {
+				returnList.add(task);
+			}
+		}
+		return returnList;
+	}
+
+	private boolean isNotSomeday(Task task) {
+		return task.getDueDate().toLocalDate().getYear() != Constants.NILL_YEAR;
+	}
+
+	private boolean isNotCompleted(Task targetTask) {
+		return !targetTask.isCompleted();
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Search.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\UpdateSummaryReport.java
+	 */
+
+	private static UpdateSummaryReport updateSR;
+
+	public static UpdateSummaryReport getInstance() {
+		if (updateSR == null) {
+			updateSR = new UpdateSummaryReport();
+		}
+		return updateSR;
+	}
+
+	public void init() {
+		ArrayList<Task> displayList = new ArrayList<Task>();
+		Search search = new Search();
+		displayList = search.searchByOverdueAndToday();
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+	}
+
+	public void updateByDueDate(ParsedResult parsedResult) {
+		Search search = new Search();
+		updateDisplayTaskList(search.searchByDate(parsedResult));
+		SummaryReport.sortByDueDate();
+		determineFeedbackMsg(parsedResult);
+	}
+
+	public void updateForEdit(ParsedResult parsedResult,
+			ArrayList<Task> displayList) {
+		updateDisplayTaskList(displayList);
+		determineFeedbackMsg(parsedResult);
+	}
+
+	public void updateForDeleteAndComplete(ParsedResult parsedResult,
+			ArrayList<Task> displayList) {
+		displayList.remove(parsedResult.getTaskDetails());
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+		determineFeedbackMsg(parsedResult);
+	}
+
+	public void updateForUndoDeleteAndComplete(ParsedResult parsedResult,
+			ArrayList<Task> displayList) {
+		displayList.add(parsedResult.getTaskDetails());
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+		determineFeedbackMsg(parsedResult);
+	}
+
+	public void updateForDisplay(ParsedResult parsedResult,
+			ArrayList<Task> displayList) {
+
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+		determineFeedbackMsg(parsedResult);
+	}
+
+	public void updateForSearch(ParsedResult parsedResult,
+			ArrayList<Task> displayList) {
+		updateDisplayTaskList(displayList);
+		SummaryReport.sortByDueDate();
+
+		if (displayList.isEmpty()) {
+			updateFeedbackMsg(Constants.MESSAGE_FAIL_SEARCH);
+		} else {
+			determineFeedbackMsg(parsedResult);
+		}
+	}
+
+	private void updateDisplayTaskList(ArrayList<Task> displayList) {
+		SummaryReport.setDisplayList(displayList);
+	}
+
+	private void determineFeedbackMsg(ParsedResult parsedResult) {
+		String searchInput = parsedResult.getTaskDetails().getTitle();
+		String feedbackMsg = new String();
+		String command = new String();
+
+		int taskID = parsedResult.getSelectedItem() + 1;
+
+		CommandType commandType = parsedResult.getCommandType();
+
+		switch (commandType) {
+			case ADD:
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_ADD);
+				break;
+
+			case DELETE:
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_DELETE,
+						taskID);
+				break;
+
+			case EDIT:
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_EDIT,
+						taskID);
+				break;
+
+			case DISPLAY:
+				feedbackMsg = determineDisplayContent(parsedResult);
+				break;
+
+			case UNDO:
+				command = History.getInstance().getUndoCommandHistory().pop()
+						.toString();
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_UNDO,
+						command);
+				break;
+
+			case REDO:
+				command = History.getInstance().getRedoCommandHistory().pop()
+						.toString();
+				feedbackMsg = String.format(Constants.MESSAGE_SUCCESS_REDO,
+						command);
+				break;
+
+			case COMPLETED:
+				feedbackMsg = String.format(
+						Constants.MESSAGE_SUCCESS_COMPLETED, taskID);
+				break;
+
+			case SEARCH:
+				if (SummaryReport.getDisplayList().size() == 1) {
+					feedbackMsg = String.format(
+							Constants.MESSAGE_SUCCESS_SEARCH_SINGLE,
+							searchInput);
+				} else {
+					feedbackMsg = String.format(
+							Constants.MESSAGE_SUCCESS_SEARCH_MUL, searchInput);
+				}
+				break;
+
+			default:
+				break;
+		}
+		updateFeedbackMsg(feedbackMsg);
+	}
+
+	private String determineDisplayContent(ParsedResult parsedResult) {
+		String feedbackMsg = new String();
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("dd/MM/YYYY");
+
+		switch (parsedResult.getSearchMode()) {
+			case ALL:
+				feedbackMsg = Constants.MESSAGE_DISPLAY_ALL;
+				break;
+
+			case DATE:
+				DateTime displayDate = parsedResult.getTaskDetails()
+						.getDueDate();
+				String date = fmt.print(displayDate);
+				feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_DATE,
+						date);
+				break;
+
+			case RANGEOFDATES:
+				DateTime strDate = parsedResult.getTaskDetails().getStartDate();
+				String start = fmt.print(strDate);
+
+				DateTime endDate = parsedResult.getTaskDetails().getDueDate();
+				String end = fmt.print(endDate);
+
+				feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_RANGE,
+						start, end);
+				break;
+
+			case COMPLETED:
+				feedbackMsg = Constants.MESSAGE_DISPLAY_COMPLETED;
+				break;
+
+			case CATEGORY:
+				String category = parsedResult.getTaskDetails().getCategory()
+						.toString();
+				feedbackMsg = String.format(Constants.MESSAGE_DISPLAY_CATEGORY,
+						category);
+				break;
+
+			case OVERDUE:
+				feedbackMsg = Constants.MESSAGE_DISPLAY_OVERDUE;
+				break;
+
+			default:
+				break;
+		}
+		return feedbackMsg;
+	}
+
+	private void updateFeedbackMsg(String feedbackMsg) {
+		SummaryReport.setFeedBackMsg(feedbackMsg);
+	}
+
+	private int searchIndex(int taskID) {
+		Search search = new Search();
+		return search.searchById(taskID, SummaryReport.getDisplayList());
+	}
+
+	public void highlightTask(int taskID) {
+		int highlightTask = searchIndex(taskID);
+		SummaryReport.setRowIndexHighlight(highlightTask);
+	}
+
+	public void unhighlightTask() {
+		SummaryReport.setRowIndexHighlight(-1);
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\UpdateSummaryReport.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\testCases\ExecutorTestCase.java
+	 */
+
+	private ArrayList<Task> testArrayList = new ArrayList<Task>();
+	private ParsedResult testParsedResult = new ParsedResult();
+	private Executor executor = new Executor();
+	private DateTime dueDate = new DateTime();
+
+	@Test
+	public void test() {
+		testDeleteEmptyList();
+		testAddSomedayTask1();
+		testAddTodayTask1();
+	}
+
+	private void testDeleteEmptyList() {
+		Task testTask = new Task();
+		testTask.setTitle("");
+		testTask.setDueDate(dueDate);
+		testTask.setId(0);
+
+		testParsedResult.setCommandType(CommandType.DELETE);
+		testParsedResult.setTask(testTask);
+
+		executor.execute(testParsedResult);
+
+		assertEquals(StorageList.getInstance().getTaskList(), testArrayList);
+	}
+
+	private void testAddSomedayTask1() {
+		Task testTask = new Task();
+
+		testTask.setTitle("someday task");
+		dueDate = Constants.SOMEDAY;
+		testTask.setDueDate(dueDate);
+		testTask.setId(0);
+
+		testParsedResult.setCommandType(CommandType.ADD);
+		testParsedResult.setTask(testTask);
+
+		executor.execute(testParsedResult);
+
+		testArrayList.add(testTask);
+
+		assertEquals(StorageList.getInstance().getTaskList(), testArrayList);
+	}
+
+	private void testAddTodayTask1() {
+		Task testTask = new Task();
+
+		testTask.setTitle("today task");
+		testTask.setDueDate(dueDate);
+		testTask.setId(1);
+
+		testParsedResult.setCommandType(CommandType.ADD);
+		testParsedResult.setTask(testTask);
+
+		executor.execute(testParsedResult);
+
+		testArrayList.add(testTask);
+
+		assertEquals(StorageList.getInstance().getTaskList(), testArrayList);
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\testCases\ExecutorTestCase.java
+
+
+
+
+

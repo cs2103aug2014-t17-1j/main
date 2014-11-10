@@ -12,7 +12,7 @@ import commandFactory.CommandType;
  *
  */
 public class History {
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 	private static History history;
 
 	private Stack<ArrayList<Task>> undoDisplayHistory = new Stack<ArrayList<Task>>();

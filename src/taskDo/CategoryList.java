@@ -1,11 +1,11 @@
 package taskDo;
 
 import java.util.ArrayList;
-/*
+/**
  * This class manages all the categories that has been added by the user. Used by UI to display to category panel
  */
 public class CategoryList {
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	// Members
 	private static ArrayList<Category> categoryList;
 

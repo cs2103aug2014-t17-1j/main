@@ -16,14 +16,14 @@ import javax.swing.JPanel;
 
 import commonClasses.Constants;
 
-/* This is the header Panel where the name of the application and the buttons 
+/** 
+ * This is the header Panel where the name of the application and the buttons 
  *  such as F1 and F2 come in
  *  
- * 
  */
 public class HeaderPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	JLabel lblHeader;
 	JButton btnHelp, btnCategory;
 	UiParent uiParent;

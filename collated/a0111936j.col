@@ -1,0 +1,2003 @@
+//@author: a0111936j
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\Constants.java
+	 */
+
+
+	// Parser Related
+	public static final String MESSAGE_INVALID_COMMAND = "Invalid Command";
+	public static final String MESSAGE_INVALID_OPTIONAL_COMMAND = "Invalid Optional Command";
+	public static final String MESSAGE_INVALID_DATE = "Invalid format.Try DD/MM/YYYY HH:mm,DD/MM/YYYY,dd MMM or today";
+	public static final String MESSAGE_INVALID_DISPLAY_SELECTION = "Invalid! Press F2 to check existing category or try DD/MM/YYYY";
+	public static final String MESSAGE_INVALID_SELECTION = "Invalid selection";
+	public static final String MESSAGE_INVALID_IMPORTANCE_PARAM = "Importance level not recognized";
+	public static final String MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO = "Cannot use 'due' and 'from to' combination in one command";
+	public static final String MESSAGE_MISSING_START_DATE_FOR_TASK = "Missing start date for task";
+	public static final String MESSAGE_END_DATE_EARLIER_THAN_START_DATE = "End date cannot be earlier than start date";
+	public static final String MESSAGE_MISSING_PARAM = "Please insert parameters";
+	public static final String MESSAGE_MISSING_SIGN_FROMTO_COMMAND = "Please make sure '-' sign is used for 'to' command";
+	public static final String MESSAGE_TASK_ALREADY_COMPLETED = "Task is already completed!";
+	public static final String DISPLAY_OVERDUE = "overdue";
+	public static final String MESSAGE_DATE_HAS_PASSED = "Date has already passed. Please choose a relevant date";
+
+	public static final String IMPT_NO = "N";
+	public static final String IMPT_YES = "Y";
+	public static final DateTime SOMEDAY = new DateTime(0, 1, 1, 0, 0);
+	public static final String DISPLAY_COMPLETED = "completed";
+	public static final String DISPLAY_ALL = "all";
+	public static final int NOTHING_SELECTED = -1;
+	public static final String FLOATING_TASK = "SOMEDAY";
+
+	public static final char CHAR_SPACING = ' ';
+
+	public static final String COMMAND_STRING_EXIT = "exit";
+	public static final String COMMAND_STRING_QUIT = "quit";
+
+	public static final String COMMAND_STRING_REDO = "redo";
+
+	public static final String COMMAND_STRING_COMPLETE = "complete";
+	public static final String COMMAND_STRING_DONE = "done";
+	public static final String COMMAND_STRING_TICK = "tick";
+
+	public static final String COMMAND_STRING_SEARCH = "search";
+
+	public static final String COMMAND_STRING_UNDO = "undo";
+
+	public static final String COMMAND_STRING_EDIT = "edit";
+	public static final String COMMAND_STRING_MOD = "mod";
+
+	public static final String COMMAND_STRING_DELETE = "delete";
+	public static final String COMMAND_STRING_REMOVE = "remove";
+	public static final String COMMAND_STRING_DEL = "del";
+
+	public static final String COMMAND_STRING_DISPLAY = "display";
+	public static final String COMMAND_STRING_VIEW = "view";
+	public static final String COMMAND_STRING_SHOW = "show";
+
+	public static final String COMMAND_STRING_CREATE = "create";
+	public static final String COMMAND_STRING_NEW = "new";
+	public static final String COMMAND_STRING_ADD = "add";
+
+	public static final String STRING_SPACE_TO_SPACE = " to ";
+	public static final String OPTIONAL_COMMAND_STRING_NOTE = "note";
+	public static final String OPTIONAL_COMMAND_STRING_TITLE = "title";
+	public static final String OPTIONAL_COMMAND_STRING_IMPT = "impt";
+	public static final String OPTIONAL_COMMAND_STRING_CATEGORY = "category";
+	public static final String OPTIONAL_COMMAND_STRING_TO = "to";
+	public static final String OPTIONAL_COMMAND_STRING_FROM = "from";
+	public static final String OPTIONAL_COMMAND_STRING_DUE = "due";
+	public static final String OPTIONAL_COMMAND_MARKER = "-";
+
+	public static String[] dateFormats = { "dd/MM/yyyy HH:mm", "dd/MM/yyyy",
+			"ddMMyyyy HH:mm", "ddMMyyyy", "dd MMM HH:mm", "dd MMM",
+			"dd MMM yyyy HH:mm", "dd MMM yyyy" };
+	public static final int DATE_FORMAT_ITERATIONS = 8;
+	public static final String REGEX_STRING_RELATIVE_DATE_FORMAT = "^\\w+ \\d{1,2}:\\d\\d$";
+	public static final String REGEX_STRING_CHECK_FOR_DIGITS = "\\d+";
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\Constants.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\parser\CommandInterpreter.java
+	 */
+
+	abstract void identifyAndSetCommand(String command);
+
+	abstract String removeCommandWord(String input);
+
+	abstract ParsedResult updateResults(ParsedResult result, String Param);
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\parser\CommandInterpreter.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\parser\CommonInterpreterMethods.java
+	 */
+
+	static boolean isValidSelection(String commandParam) {
+		int selection;
+		try {
+			selection = Integer.valueOf(commandParam);
+		} catch (Exception e) {
+			return false;
+		}
+
+		if (selection >= 1
+				&& selection <= SummaryReport.getDisplayList().size()) {
+			return true;
+		}
+		return false;
+	}
+
+	static boolean noDeadLine(String commandParam) {
+		if (commandParam.toUpperCase().equals(Constants.FLOATING_TASK)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	static DateTime getDate(String commandParam)
+			throws InvalidParameterException {
+		boolean dateHasPassed = false;
+		com.joestelmach.natty.Parser parser = new com.joestelmach.natty.Parser();
+		DateTimeFormatter df;
+		DateTime date;
+		List<DateGroup> group;
+		for (int i = 0; i < Constants.DATE_FORMAT_ITERATIONS; i++) {
+			try {
+				df = DateTimeFormat.forPattern(Constants.dateFormats[i]);
+				date = df.parseDateTime(commandParam);
+				group = parser.parse(date.toString());
+				DateTime dates = new DateTime(group.get(0).getDates().get(0));
+
+				if (!isYearSpecified(dates)) {
+					dates = dates.withYear(new DateTime().getYear());
+				}
+				if (dateHasPassed(dates)) {
+					dateHasPassed = true;
+					throw new InvalidParameterException(
+							Constants.MESSAGE_DATE_HAS_PASSED);
+				}
+				if (!isTimeSpecifiedForDateTimeFormatter(dates)) {
+					dates = updateTime(dates);
+				}
+				return dates;
+			} catch (Exception e) {
+				if (dateHasPassed == true) {
+					throw new InvalidParameterException(
+							Constants.MESSAGE_DATE_HAS_PASSED);
+				}
+			}
+		}
+		if (containsDigits(commandParam)) {
+			if (!checkRelativeDateFormat(commandParam)) {
+				return null;
+			}
+		}
+		group = parser.parse(commandParam);
+		if (group.isEmpty()) {
+			return null; // Not a valid date
+		}
+		DateTime dates = new DateTime(group.get(0).getDates().get(0));
+		if (!isTimeSpecifiedForNatty(dates)) {
+			dates = updateTime(dates);
+		}
+
+		return dates;
+	}
+
+	private static boolean isTimeSpecifiedForNatty(DateTime dates) {
+		DateTime currentTime = new DateTime();
+
+		String parsed = dates.minuteOfDay().getAsText();
+		String current = currentTime.minuteOfDay().getAsText();
+		// When time is not specified, Natty will use the time now.
+		return !parsed.equals(current);
+	}
+
+	private static boolean isYearSpecified(DateTime dates) {
+		// For DateTimeFormatter, when year is not specified, it will be
+		// defaulted to 2000
+		return !(dates.getYear() == 2000);
+	}
+
+	// This methods updates the time of the dateTime object to 2359
+	private static DateTime updateTime(DateTime dates) {
+		dates = dates.withHourOfDay(23);
+		dates = dates.withMinuteOfHour(59);
+		return dates;
+	}
+
+	private static boolean dateHasPassed(DateTime dates) {
+
+		DateTime currentTime = new DateTime();
+
+		if (dates.toLocalDate().isBefore(currentTime.toLocalDate())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean isTimeSpecifiedForDateTimeFormatter(DateTime dates) {
+		// When time is not specified, DateTimeFormatter will update time as 0
+		return !(dates.getMinuteOfDay() == 0);
+	}
+
+	// This method checks if the relativeDateFormat entered is supported by
+	// Task.Do
+	private static boolean checkRelativeDateFormat(String commandParam) {
+		Pattern pattern = Pattern
+				.compile(Constants.REGEX_STRING_RELATIVE_DATE_FORMAT);
+		Matcher matcher = pattern.matcher(commandParam);
+
+		if (matcher.find()) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	static String getCommandWord(String input) {
+		String[] splittedCommand = input.split(" ");
+
+		return splittedCommand[0];
+	}
+
+	private static boolean containsDigits(String commandParam) {
+		Pattern pattern = Pattern
+				.compile(Constants.REGEX_STRING_CHECK_FOR_DIGITS);
+		Matcher matcher = pattern.matcher(commandParam);
+
+		if (matcher.find()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	static boolean isInvalidDate(DateTime date) {
+		// getDate method returns null if it is a invalid date
+		return date == null;
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\parser\CommonInterpreterMethods.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\parser\MainCommandInterpreter.java
+	 */
+
+	// Members
+	private CommandType currentCommand;
+
+	public CommandType getCommand() {
+		return this.currentCommand;
+	}
+
+	public void identifyAndSetCommand(String command)
+			throws InvalidParameterException {
+		switch (command) {
+			case Constants.COMMAND_STRING_NEW:
+			case Constants.COMMAND_STRING_CREATE:
+			case Constants.COMMAND_STRING_ADD:
+				currentCommand = CommandType.ADD;
+				break;
+
+			case Constants.COMMAND_STRING_SHOW:
+			case Constants.COMMAND_STRING_VIEW:
+			case Constants.COMMAND_STRING_DISPLAY:
+				currentCommand = CommandType.DISPLAY;
+				break;
+
+			case Constants.COMMAND_STRING_DEL:
+			case Constants.COMMAND_STRING_REMOVE:
+			case Constants.COMMAND_STRING_DELETE:
+				currentCommand = CommandType.DELETE;
+				break;
+
+			case Constants.COMMAND_STRING_MOD:
+			case Constants.COMMAND_STRING_EDIT:
+				currentCommand = CommandType.EDIT;
+				break;
+			case Constants.COMMAND_STRING_UNDO:
+				currentCommand = CommandType.UNDO;
+				break;
+
+			case Constants.COMMAND_STRING_SEARCH:
+				currentCommand = CommandType.SEARCH;
+				break;
+
+			case Constants.COMMAND_STRING_TICK:
+			case Constants.COMMAND_STRING_DONE:
+			case Constants.COMMAND_STRING_COMPLETE:
+				currentCommand = CommandType.COMPLETED;
+				break;
+
+			case Constants.COMMAND_STRING_REDO:
+				currentCommand = CommandType.REDO;
+				break;
+
+			case Constants.COMMAND_STRING_QUIT:
+			case Constants.COMMAND_STRING_EXIT:
+				currentCommand = CommandType.EXIT;
+				break;
+
+			default:
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_COMMAND);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_COMMAND);
+		}
+	}
+
+	public String removeCommandWord(String input) {
+		if (input.indexOf(Constants.CHAR_SPACING) == -1) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
+			throw new InvalidParameterException(Constants.MESSAGE_MISSING_PARAM);
+		}
+		return input.substring(input.indexOf(Constants.CHAR_SPACING) + 1);
+	}
+
+	public ParsedResult updateResults(ParsedResult result, String commandParam)
+			throws InvalidParameterException {
+		result.setCommandType(currentCommand);
+		Task task = result.getTaskDetails();
+		switch (currentCommand) {
+
+			case ADD:
+				task.setTitle(commandParam);
+				break;
+
+			case DELETE:
+				updateForDeleteCase(result, commandParam);
+				break;
+
+			case EDIT:
+				updateForEditCase(result, commandParam);
+				break;
+
+			case DISPLAY:
+				updateDisplayCase(result, commandParam);
+				break;
+
+			case UNDO:
+				// do nothing
+				break;
+
+			case COMPLETED:
+				updateCompleteCase(result, commandParam);
+				break;
+
+			case SEARCH:
+				updateSearchCase(result, commandParam);
+
+			default:
+				// do nothing
+
+		}
+		return result;
+	}
+
+	private void updateSearchCase(ParsedResult result, String commandParam) {
+		result.getTaskDetails().setTitle(commandParam);
+		result.setSearchMode(SearchType.KEYWORD);
+	}
+
+	private void updateCompleteCase(ParsedResult result, String commandParam) {
+		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
+			int selection = getSelection(commandParam);
+			result.setTask(SummaryReport.getDisplayList().get(selection));
+			result.setSelectedItem(selection);
+			if (result.getTaskDetails().isCompleted()) {
+				SummaryReport
+						.setFeedBackMsg(Constants.MESSAGE_TASK_ALREADY_COMPLETED);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_TASK_ALREADY_COMPLETED);
+			}
+		} else {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_SELECTION);
+		}
+	}
+
+	private int getSelection(String commandParam) {
+		return Integer.valueOf(commandParam) - 1;
+	}
+
+	private void copyTaskParamToParsedResult(ParsedResult result, int selection) {
+		Task selectedTask = new Task();
+
+		selectedTask = SummaryReport.getDisplayList().get(selection);
+
+		result.getTaskDetails().setId(selectedTask.getId());
+		result.getTaskDetails().setTitle(selectedTask.getTitle());
+		result.getTaskDetails().setCategory(selectedTask.getCategory());
+		result.getTaskDetails().setStartDate(selectedTask.getStartDate());
+		result.getTaskDetails().setDueDate(selectedTask.getDueDate());
+		result.getTaskDetails().setCompleted(selectedTask.isCompleted());
+		result.getTaskDetails().setImportant(selectedTask.isImportant());
+		result.getTaskDetails().setTaskType(selectedTask.getTaskType());
+		result.getTaskDetails().setNote(selectedTask.getNote());
+	}
+
+	private void updateDisplayCase(ParsedResult result, String commandParam) {
+		Task task = result.getTaskDetails();
+
+		if (CategoryList.isExistingCategory(commandParam)) {
+			task.setCategory(commandParam);
+			result.setSearchMode(SearchType.CATEGORY);
+		} else if (CommonInterpreterMethods.noDeadLine(commandParam)) {
+			task.setDueDate(Constants.SOMEDAY);
+			task.setStartDate(null);
+			result.setSearchMode(SearchType.DATE);
+		} else if (commandParam.toLowerCase().equals(Constants.DISPLAY_ALL)) {
+			result.setSearchMode(SearchType.ALL);
+		} else if (commandParam.toLowerCase().equals(
+				Constants.DISPLAY_COMPLETED)) {
+			result.setSearchMode(SearchType.COMPLETED);
+		} else if (commandParam.toLowerCase().equals(Constants.DISPLAY_OVERDUE)) {
+			result.setSearchMode(SearchType.OVERDUE);
+		} else {
+			DateTime date;
+			try {
+				date = CommonInterpreterMethods.getDate(commandParam);
+			} catch (Exception e) {
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_DATE_HAS_PASSED);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_DATE_HAS_PASSED);
+			}
+			if (CommonInterpreterMethods.isInvalidDate(date)) {
+				SummaryReport
+						.setFeedBackMsg(Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_DISPLAY_SELECTION);
+			} else {
+				task.setDueDate(date);
+				result.setSearchMode(SearchType.DATE);
+			}
+		}
+	}
+
+	private void updateForEditCase(ParsedResult result, String commandParam) {
+		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
+			int selection = getSelection(commandParam);
+			copyTaskParamToParsedResult(result, selection);
+			result.setSelectedItem(selection);
+		} else {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_SELECTION);
+		}
+	}
+
+	private void updateForDeleteCase(ParsedResult result, String commandParam) {
+		if (CommonInterpreterMethods.isValidSelection(commandParam)) {
+			int selection = getSelection(commandParam);
+			result.setTask(SummaryReport.getDisplayList().get(selection));
+			result.setSelectedItem(selection);
+		} else {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_SELECTION);
+		}
+	}
+
+	public boolean commandDoesNotRequireParam() {
+
+		if (currentCommand == CommandType.UNDO
+				|| currentCommand == CommandType.REDO
+				|| currentCommand == CommandType.EXIT)
+			return true;
+
+		return false;
+
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\parser\MainCommandInterpreter.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\parser\OptionalCommandInterpreter.java
+	 */
+
+	enum OptionalCommand {
+		DUE, FROM, TO, CATEGORY, IMPT, TITLE, NOTE
+	}
+
+	// Members
+	OptionalCommand currentCommand;
+
+	public void identifyAndSetCommand(String command)
+			throws InvalidParameterException {
+
+		switch (command) {
+			case Constants.OPTIONAL_COMMAND_STRING_DUE:
+				currentCommand = OptionalCommand.DUE;
+				break;
+
+			case Constants.OPTIONAL_COMMAND_STRING_FROM:
+				currentCommand = OptionalCommand.FROM;
+				break;
+
+			case Constants.OPTIONAL_COMMAND_STRING_TO:
+				currentCommand = OptionalCommand.TO;
+				break;
+
+			case Constants.OPTIONAL_COMMAND_STRING_CATEGORY:
+				currentCommand = OptionalCommand.CATEGORY;
+				break;
+
+			case Constants.OPTIONAL_COMMAND_STRING_IMPT:
+				currentCommand = OptionalCommand.IMPT;
+				break;
+
+			case Constants.OPTIONAL_COMMAND_STRING_TITLE:
+				currentCommand = OptionalCommand.TITLE;
+				break;
+
+			case Constants.OPTIONAL_COMMAND_STRING_NOTE:
+				currentCommand = OptionalCommand.NOTE;
+				break;
+
+			default:
+				SummaryReport
+						.setFeedBackMsg(Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_OPTIONAL_COMMAND);
+		}
+	}
+
+	public String removeCommandWord(String remainingInput) {
+		try {
+			switch (currentCommand) {
+
+				case DUE:
+					return remainingInput.substring(4); // Length of word "due "
+
+				case FROM:
+					return remainingInput.substring(5); // Length of word
+														// "from "
+
+				case TO:
+					return remainingInput.substring(3); // Length of word "to "
+
+				case IMPT:
+					return remainingInput.substring(5); // Length of word
+														// "impt "
+
+				case CATEGORY:
+					return remainingInput.substring(9); // Length of word
+					// "category "
+
+				case TITLE:
+					return remainingInput.substring(6); // Length of word
+														// "title "
+
+				case NOTE:
+					return remainingInput.substring(5); // Length of word
+														// "note "
+
+				default:
+					return Constants.STRING_STRING;
+			}
+		} catch (Exception e) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_MISSING_PARAM);
+			throw new InvalidParameterException(Constants.MESSAGE_MISSING_PARAM);
+		}
+	}
+
+	public ParsedResult updateResults(ParsedResult result, String commandParam)
+			throws InvalidParameterException {
+		Task task = result.getTaskDetails();
+
+		switch (currentCommand) {
+			case DUE:
+				updateDueCase(result, commandParam);
+				break;
+
+			case FROM:
+				updateFromCase(result, commandParam);
+				break;
+
+			case TO:
+				updateToCase(result, commandParam);
+				break;
+
+			case CATEGORY:
+				task.setCategory(commandParam);
+				break;
+
+			case TITLE:
+				task.setTitle(commandParam);
+				break;
+
+			case IMPT:
+				updateImportantCase(commandParam, task);
+				break;
+
+			case NOTE:
+				task.setNote(commandParam);
+
+			default:// do nothing
+		}
+
+		return result;
+	}
+
+	private void updateImportantCase(String commandParam, Task task)
+			throws InvalidParameterException {
+		if (commandParam.toUpperCase().equals(Constants.IMPT_YES)) {
+			task.setImportant(true);
+		} else if (commandParam.toUpperCase().equals(Constants.IMPT_NO)) {
+			task.setImportant(false);
+		} else {
+			SummaryReport
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_IMPORTANCE_PARAM);
+		}
+	}
+
+	private void updateToCase(ParsedResult result, String commandParam)
+			throws InvalidParameterException {
+		DateTime date;
+		try {
+			date = CommonInterpreterMethods.getDate(commandParam);
+		} catch (Exception e) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_DATE_HAS_PASSED);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_DATE_HAS_PASSED);
+		}
+		Task task = result.getTaskDetails();
+		if (CommonInterpreterMethods.isInvalidDate(date)) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_DATE);
+		}
+		if (result.getCommandType() == CommandType.DISPLAY) {
+			task.setStartDate(task.getDueDate());
+			if (task.getStartDate().isAfter(date)) {
+				SummaryReport
+						.setFeedBackMsg(Constants.MESSAGE_END_DATE_EARLIER_THAN_START_DATE);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_END_DATE_EARLIER_THAN_START_DATE);
+			}
+			result.setSearchMode(SearchType.RANGEOFDATES);
+		} else if (result.getTaskDetails().getStartDate() == null) {
+			SummaryReport
+					.setFeedBackMsg(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_MISSING_START_DATE_FOR_TASK);
+		}
+		task.setDueDate(date);
+
+	}
+
+	private void updateFromCase(ParsedResult result, String commandParam)
+			throws InvalidParameterException {
+		DateTime date;
+		Task task = result.getTaskDetails();
+		try {
+			date = CommonInterpreterMethods.getDate(commandParam);
+		} catch (Exception e) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_DATE_HAS_PASSED);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_DATE_HAS_PASSED);
+		}
+		if (commandParam.contains(Constants.STRING_SPACE_TO_SPACE)) {
+			SummaryReport
+					.setFeedBackMsg(Constants.MESSAGE_MISSING_SIGN_FROMTO_COMMAND);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_MISSING_SIGN_FROMTO_COMMAND);
+		} else if (CommonInterpreterMethods.isInvalidDate(date)) {
+			SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
+			throw new InvalidParameterException(Constants.MESSAGE_INVALID_DATE);
+		}
+		if (task.getTaskType() == TaskType.DEADLINE
+				&& result.getCommandType() != CommandType.EDIT) {
+			SummaryReport
+					.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
+			throw new InvalidParameterException(
+					Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
+		}
+		task.setStartDate(date);
+		task.setTaskType(TaskType.TIMED);
+	}
+
+	private void updateDueCase(ParsedResult result, String commandParam)
+			throws InvalidParameterException {
+		DateTime date;
+		Task task = result.getTaskDetails();
+		if (CommonInterpreterMethods.noDeadLine(commandParam)) {
+			task.setDueDate(Constants.SOMEDAY);
+			task.setStartDate(null);
+		} else {
+			try {
+				date = CommonInterpreterMethods.getDate(commandParam);
+			} catch (Exception e) {
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_DATE_HAS_PASSED);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_DATE_HAS_PASSED);
+			}
+			if (CommonInterpreterMethods.isInvalidDate(date)) {
+				SummaryReport.setFeedBackMsg(Constants.MESSAGE_INVALID_DATE);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_DATE);
+			}
+			if (task.getTaskType() == TaskType.TIMED
+					&& result.getCommandType() != CommandType.EDIT) {
+				SummaryReport
+						.setFeedBackMsg(Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
+				throw new InvalidParameterException(
+						Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO);
+			}
+			task.setDueDate(date);
+			task.setStartDate(null);
+			task.setTaskType(TaskType.DEADLINE);
+		}
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\parser\OptionalCommandInterpreter.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\parser\ParsedResult.java
+	 */
+
+	// Members
+	private CommandType parsedCommand;
+	private Task task;
+	private SearchType searchMode;
+	private boolean isExecutorApplicable;
+	private int selectedItem;
+
+	public ParsedResult() {
+		this.parsedCommand = null;
+		this.task = new Task();
+		this.searchMode = null;
+		this.isExecutorApplicable = true;
+	}
+
+	// Accessors
+	public CommandType getCommandType() {
+		return this.parsedCommand;
+	}
+
+	public Task getTaskDetails() {
+		return this.task;
+	}
+
+	public SearchType getSearchMode() {
+		return this.searchMode;
+	}
+
+	public boolean getIsExecutorApplicable() {
+		return this.isExecutorApplicable;
+	}
+
+	public int getSelectedItem() {
+		return selectedItem;
+	}
+
+	// Mutators
+	public void setCommandType(CommandType setCommand) {
+		this.parsedCommand = setCommand;
+	}
+
+	public void setSearchMode(SearchType setSearch) {
+		this.searchMode = setSearch;
+	}
+
+	public void setTask(Task setTask) {
+		this.task = setTask;
+	}
+
+	public void setIsExecutorApplicable(boolean validation) {
+		this.isExecutorApplicable = validation;
+	}
+
+	public void setSelectedItem(int selectedItem) {
+		this.selectedItem = selectedItem;
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\parser\ParsedResult.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\parser\Parser.java
+	 */
+
+	private ParsedResult result;
+	private MainCommandInterpreter mainHandler;
+	private OptionalCommandInterpreter optionHandler;
+	private static final Logger logger = LogManager.getLogger(Parser.class);
+
+	public Parser() {
+		mainHandler = new MainCommandInterpreter();
+		optionHandler = new OptionalCommandInterpreter();
+	}
+
+	public ParsedResult parseString(String input) {
+		result = new ParsedResult();
+		try {
+			// Check if user is selecting a task
+			if (isInteger(input)) {
+				if (CommonInterpreterMethods.isValidSelection(input)) {
+					updateUiSelection(input);
+					return result;
+				} else {
+					SummaryReport
+							.setFeedBackMsg(Constants.MESSAGE_INVALID_SELECTION);
+					throw new InvalidParameterException(
+							Constants.MESSAGE_INVALID_SELECTION);
+				}
+			}
+
+			// Processing main commands
+			String[] seperatedInput = input
+					.split(Constants.OPTIONAL_COMMAND_MARKER);
+			processMainCommand(seperatedInput);
+			if (mainHandler.commandDoesNotRequireParam()) {
+				if (mainHandler.getCommand() == CommandType.EXIT) {
+					result.setIsExecutorApplicable(false);
+				}
+				return result;
+			}
+			updateResultsForMainCommand(seperatedInput);
+
+			// Processing optional commands
+			processOptionalCommandAndUpdateResults(seperatedInput);
+
+			if (isFloatingTask()) {
+				result.getTaskDetails().setDueDate(Constants.SOMEDAY);
+			}
+		} catch (Exception e) {
+			logger.info("Exception:" + e.toString());
+			result.setIsExecutorApplicable(false);
+			result.setCommandType(CommandType.INVALID);
+		}
+		return result;
+	}
+
+	private boolean isFloatingTask() {
+		return result.getTaskDetails().getDueDate() == null;
+	}
+
+	private void updateResultsForMainCommand(String[] seperatedInput) {
+		String remainingInput = mainHandler.removeCommandWord(seperatedInput[0]
+				.trim());
+		result = mainHandler.updateResults(result, remainingInput.trim());
+	}
+
+	private void processMainCommand(String[] seperatedInput) {
+		String commandWord = CommonInterpreterMethods
+				.getCommandWord(seperatedInput[0].trim());
+		mainHandler.identifyAndSetCommand(commandWord.toLowerCase());
+		result.setCommandType(mainHandler.getCommand());
+	}
+
+	private void updateUiSelection(String input) {
+		SummaryReport.setRowIndexHighlight(Integer.valueOf(input) - 1);
+		// Adjust value of input to get correct index
+		result.setCommandType(CommandType.OTHERS);
+		result.setIsExecutorApplicable(false);
+	}
+
+	private boolean isInteger(String input) {
+		try {
+			Integer.parseInt(input, 10);
+			// Radix 10 used to parse integer
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	private void processOptionalCommandAndUpdateResults(String[] remainingInput) {
+		String commandWord;
+		// Index 0 contains main commands. Index 1 onwards contains optional
+		// commands
+		for (int i = 1; i < remainingInput.length; i++) {
+			commandWord = CommonInterpreterMethods
+					.getCommandWord(remainingInput[i].trim());
+
+			optionHandler.identifyAndSetCommand(commandWord.toLowerCase());
+
+			remainingInput[i] = optionHandler
+					.removeCommandWord(remainingInput[i].trim());
+
+			result = optionHandler.updateResults(result,
+					remainingInput[i].trim());
+		}
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\parser\Parser.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\parser\TestCommonInterpreterMethods.java
+	 */
+
+	public void testIsValidSelection() {
+
+		ArrayList<Task> testingList = new ArrayList<Task>();
+		testingList.add(new Task());
+		testingList.add(new Task());
+		testingList.add(new Task());
+		testingList.add(new Task());
+
+		// List size of 4. Selection available on GUI will be 1 to 4.
+		SummaryReport.setDisplayList(testingList);
+
+		// Lower boundary case value
+		boolean result = CommonInterpreterMethods.isValidSelection("0");
+		Assert.assertEquals(false, result);
+
+		// Lower boundary case value
+		result = CommonInterpreterMethods.isValidSelection("1");
+		Assert.assertEquals(true, result);
+
+		// Upper boundary case value
+		result = CommonInterpreterMethods.isValidSelection("4");
+		Assert.assertEquals(true, result);
+
+		// Upper boundary case value
+		result = CommonInterpreterMethods.isValidSelection("5");
+		Assert.assertEquals(false, result);
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\parser\TestCommonInterpreterMethods.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\CategoryList.java
+	 */
+
+	// Members
+	private static ArrayList<Category> categoryList;
+
+	// Constructor
+	private CategoryList() {
+
+	}
+
+	// Accessor
+	public static ArrayList<Category> getCategoryList() {
+		if (categoryList == null) {
+			categoryList = new ArrayList<Category>();
+		}
+		return categoryList;
+	}
+
+	// Mutator
+	public static boolean addCategory(String name) {
+		categoryList.add(new Category(name));
+		return true;
+	}
+
+	public static boolean deleteCategory(String name) {
+		for (int i = 0; i < categoryList.size(); i++) {
+			if (categoryList.get(i).getName().toLowerCase()
+					.equals(name.toLowerCase())) {
+				categoryList.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// Extra methods
+	public static void updateCategoryList(ArrayList<Task> updatedTask) {
+
+		categoryList.clear();
+
+		for (int i = 0; i < updatedTask.size(); i++) {
+			if (!updatedTask.get(i).isCompleted()) {
+				String categoryName = updatedTask.get(i).getCategory();
+				if (categoryName != null) {
+					if (isExistingCategory(categoryName.toLowerCase())) {
+						addCountToCategory(categoryName.toLowerCase());
+					} else {
+						addCategory(categoryName.toLowerCase());
+					}
+
+				}
+			}
+		}
+
+	}
+
+	public static boolean isExistingCategory(String name) {
+		if (CategoryList.getCategoryList().isEmpty()) {
+			return false;
+		}
+		for (int i = 0; i < categoryList.size(); i++) {
+			if (categoryList.get(i).getName().toLowerCase()
+					.equals(name.toLowerCase())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static int getCategoryIndex(String name) {
+		for (int i = 0; i < categoryList.size(); i++) {
+			if (categoryList.get(i).getName().toLowerCase()
+					.equals(name.toLowerCase())) {
+				return i;
+			}
+		}
+		return -1;// index not found
+	}
+
+	public static void addCountToCategory(String name) {
+		int index = getCategoryIndex(name);
+
+		if (index != -1) {
+			categoryList.get(index).addCount();
+		}
+	}
+
+	public static void minusCountToCategory(String name) {
+		int index = getCategoryIndex(name);
+
+		if (index != -1) {
+			categoryList.get(index).decreaseCount();
+		}
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\CategoryList.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Search.java
+	 */
+
+	public ArrayList<Task> searchByKeyword(ParsedResult parsedResult) {
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		String searchInput = parsedResult.getTaskDetails().getTitle();
+		String[] splittedInput = searchInput.split(" ");
+
+		log.info("Search Input [" + searchInput + "].");
+
+		for (int charIdx = 0; charIdx < splittedInput.length; charIdx++) {
+			addLevelOneValidTasks(taskList, splittedInput, charIdx);
+		}
+
+		if (returnList.isEmpty()) { // 2nd level search fail
+			WagnerFischerSearch wfSearch = new WagnerFischerSearch();
+			for (int charIdx = 0; charIdx < splittedInput.length; charIdx++) {
+				searchForValidTasks(taskList, splittedInput, wfSearch, charIdx);
+			}
+		}
+		return returnList;
+	}
+
+	private void addLevelOneValidTasks(ArrayList<Task> taskList,
+			String[] splittedInput, int charIdx) {
+		for (int taskIdx = 0; taskIdx < taskList.size(); taskIdx++) {
+			if (isNotCompleted(taskList.get(taskIdx))) {
+				if (taskList.get(taskIdx).getTitle()
+						.contains(splittedInput[charIdx])) {
+					returnList.add(taskList.get(taskIdx));
+				}
+			}
+		}
+	}
+
+	private void searchForValidTasks(ArrayList<Task> taskList,
+			String[] splittedInput, WagnerFischerSearch wfSearch, int charIdx) {
+		for (int taskIdx = 0; taskIdx < taskList.size(); taskIdx++) {
+			if (isNotCompleted(taskList.get(taskIdx))) {
+				String[] splittedDescription = taskList.get(taskIdx).getTitle()
+						.split(" ");
+				addValidTasks(taskList, splittedInput, wfSearch, charIdx,
+						taskIdx, splittedDescription);
+			}
+		}
+	}
+
+	private void addValidTasks(ArrayList<Task> taskList,
+			String[] splittedInput, WagnerFischerSearch wfSearch, int charIdx,
+			int taskIdx, String[] splittedDescription) {
+		for (int splitIdx = 0; splitIdx < splittedDescription.length; splitIdx++) {
+			int editDist = wfSearch.getEditDistance(
+					splittedDescription[splitIdx].toLowerCase(),
+					splittedInput[charIdx].toLowerCase());
+			if (editDist <= 2) {
+				returnList.add(taskList.get(taskIdx));
+				break;
+			}
+		}
+	}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Search.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\SearchType.java
+	 */
+
+public enum SearchType {
+	KEYWORD, CATEGORY, DATE, ID, RANGEOFDATES, ALL, COMPLETED, OVERDUE
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\SearchType.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Task.java
+	 */
+
+	private final int INCREMENT = 1;
+	private static int lastTaskId = 0;
+	private int id;
+	private String category;
+	private String title;
+	private String note;
+	private boolean important;
+	private DateTime dueDate;
+	private DateTime startDate;
+	private boolean completed;
+	private TaskType type;
+
+	public Task(String category, String description, boolean important,
+			DateTime dueDate, DateTime startDate, boolean completed) {
+		super();
+		lastTaskId++;
+		this.id = lastTaskId + INCREMENT;
+		this.category = category;
+		this.title = description;
+		this.important = important;
+		this.dueDate = dueDate;
+		this.startDate = startDate;
+		this.completed = completed;
+	}
+
+	public Task() {
+		lastTaskId++;
+		this.id = lastTaskId + INCREMENT;
+		this.title = "";
+		this.type = TaskType.TODO;
+		this.category = "Others";
+		this.note = "";
+	}
+
+	public Task(String description) {
+		this.title = description;
+
+	}
+
+	public static int getLastTaskId() {
+		return lastTaskId;
+	}
+
+	// for testing only
+	public Task(DateTime dueDate) {
+		this.id = lastTaskId + 1;
+		lastTaskId++;
+		this.dueDate = dueDate;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public boolean isImportant() {
+		return important;
+	}
+
+	public void setImportant(boolean important) {
+		this.important = important;
+	}
+
+	public DateTime getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(DateTime dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public DateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(DateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	public TaskType getTaskType() {
+		return this.type;
+	}
+
+	public void setTaskType(TaskType taskType) {
+		this.type = taskType;
+	}
+
+	public String getNote() {
+		return this.note;
+	}
+
+	public void setNote(String taskNote) {
+		this.note = taskNote;
+	}
+
+	public String toString() {
+		return "ID" + this.id + "Category: " + this.getCategory() + " Task:"
+				+ this.getTitle();
+	}
+
+	@Override
+	public int compareTo(Task task) {
+		if (getDueDate() == null || task.getDueDate() == null) {
+			return -1;
+		} else if (getDueDate().getYear() == 0) {
+			return 1;
+		} else if (task.getDueDate().getYear() == 0) {
+			return -1;
+		}
+		return getDueDate().compareTo(task.getDueDate());
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Task.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\TaskDoMain.java
+	 */
+
+	public static void main(String args[]) {
+		try {
+			if (isAppActive()) {
+				System.exit(1);
+			}
+		} catch (Exception e) {
+			logger.error(Constants.STRING_ERROR_TASKDO_IS_ACTIVE);
+			e.printStackTrace();
+		}
+
+		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
+		SummaryReport.setDisplayList(taskList);
+		new UiViewModifier();
+
+	}
+
+	@SuppressWarnings("resource")
+	public static boolean isAppActive() throws Exception {
+		File file = new File(System.getProperty("user.home"), "TaskDoLock.tmp");
+		channel = new RandomAccessFile(file, "rw").getChannel();
+
+		lock = channel.tryLock();
+		if (lock == null) {
+			channel.close();
+			return true;
+		}
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				try {
+					lock.release();
+					channel.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		return false;
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\TaskDoMain.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\TaskType.java
+	 */
+
+public enum TaskType {
+	TODO, DEADLINE, TIMED
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\TaskType.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\WagnerFischerSearch.java
+	 */
+
+
+	// Calculates the levenshtein distance between 2 Strings
+	public int getEditDistance(String input1, String input2) {
+
+		int length1 = input1.length();
+		int length2 = input2.length();
+		int tracker;
+
+		int[][] arr = new int[length1 + 1][length2 + 1];
+
+		for (int i = 0; i <= length1; i++) {
+			arr[i][0] = i;
+		}
+		for (int j = 0; j <= length2; j++) {
+			arr[0][j] = j;
+		}
+
+		for (int i = 1; i <= length1; i++) {
+			for (int j = 1; j <= length2; j++) {
+				if (input1.charAt(i - 1) == input2.charAt(j - 1)) {
+					tracker = 0;
+				} else {
+					tracker = 1;
+				}
+
+				int tempMinimum = Math.min(arr[i - 1][j], arr[i][j - 1]) + 1;
+				arr[i][j] = Math
+						.min(tempMinimum, (arr[i - 1][j - 1] + tracker));
+			}
+		}
+
+		return arr[length1][length2];
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\WagnerFischerSearch.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\testCases\TestParser.java
+	 */
+
+	@Test
+	public void testAdd() {
+		Parser testingParser = new Parser();
+		ParsedResult result = new ParsedResult();
+
+		// No Deadline, category, impt, note
+		result = testingParser
+				.parseString("add homework -category testing -impt N -note extra points");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.ADD, result.getCommandType());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
+		Assert.assertEquals("testing", result.getTaskDetails().getCategory());
+		Assert.assertEquals(false, result.getTaskDetails().isImportant());
+		Assert.assertEquals("extra points", result.getTaskDetails().getNote());
+		Assert.assertEquals(TaskType.TODO, result.getTaskDetails()
+				.getTaskType());
+
+		// With Deadline
+		result = testingParser.parseString("add homework -due 20/08/2200");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.ADD, result.getCommandType());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
+		Assert.assertEquals("20/08/2200", result.getTaskDetails().getDueDate()
+				.toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals(TaskType.DEADLINE, result.getTaskDetails()
+				.getTaskType());
+
+		// With Deadline, category, impt, note
+		result = testingParser
+				.parseString("add homework -due 20 aug 2200 -category testing -impt Y -note extra points");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.ADD, result.getCommandType());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
+		Assert.assertEquals("20/08/2200", result.getTaskDetails().getDueDate()
+				.toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals("testing", result.getTaskDetails().getCategory());
+		Assert.assertEquals(true, result.getTaskDetails().isImportant());
+		Assert.assertEquals("extra points", result.getTaskDetails().getNote());
+		Assert.assertEquals(TaskType.DEADLINE, result.getTaskDetails()
+				.getTaskType());
+
+		// From startDate to end date
+		result = testingParser
+				.parseString("add homework -from 20 aug 2200 -to 10 sep 2200");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.ADD, result.getCommandType());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
+		Assert.assertEquals("20/08/2200", result.getTaskDetails()
+				.getStartDate().toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals("10/09/2200", result.getTaskDetails().getDueDate()
+				.toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals(TaskType.TIMED, result.getTaskDetails()
+				.getTaskType());
+
+		// From startDate to end date, category, impt, note
+		result = testingParser
+				.parseString("add homework -from 20 aug 2200 -to 10 sep 2200 -category Sample -impt Y -note extra points");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.ADD, result.getCommandType());
+		Assert.assertEquals("homework", result.getTaskDetails().getTitle());
+		Assert.assertEquals("20/08/2200", result.getTaskDetails()
+				.getStartDate().toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals("10/09/2200", result.getTaskDetails().getDueDate()
+				.toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals("Sample", result.getTaskDetails().getCategory());
+		Assert.assertEquals(true, result.getTaskDetails().isImportant());
+		Assert.assertEquals("extra points", result.getTaskDetails().getNote());
+		Assert.assertEquals(TaskType.TIMED, result.getTaskDetails()
+				.getTaskType());
+
+		// due date, start date, end date, category,impt, note (Expected error)
+		result = testingParser
+				.parseString("add homework -due today -from 20 aug 2200 -to 10 sep 2200 -category Sample -impt Y -note extra points");
+		Assert.assertEquals(false, result.getIsExecutorApplicable());
+		Assert.assertEquals(
+				Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO,
+				SummaryReport.getFeedBackMsg());
+
+		result = testingParser
+				.parseString("add homework -from 20 aug 2200 -to 10 sep 2200 -due today -category Sample -impt Y -note extra points");
+		Assert.assertEquals(false, result.getIsExecutorApplicable());
+		Assert.assertEquals(
+				Constants.MESSAGE_INVALID_COMBINATION_DUE_AND_FROMTO,
+				SummaryReport.getFeedBackMsg());
+
+		// Using 'to' command without 'from' command(expected error)
+		result = testingParser
+				.parseString("add homework -to 10 sep 2200 -category Sample -impt Y -note extra points");
+		Assert.assertEquals(false, result.getIsExecutorApplicable());
+		Assert.assertEquals(Constants.MESSAGE_MISSING_START_DATE_FOR_TASK,
+				SummaryReport.getFeedBackMsg());
+
+		// With Deadline, category, impt, note (Put in invalid date, error
+		// expected)
+		result = testingParser
+				.parseString("add homework -due 20th aug 2200 -category testing -impt Y -note extra points");
+		Assert.assertEquals(false, result.getIsExecutorApplicable());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_DATE,
+				SummaryReport.getFeedBackMsg());
+
+		// start date,end date, category, impt, note (Put in invalid start date,
+		// error expected)
+		result = testingParser
+				.parseString("add homework -from 20th aug 2200 -to 10 sep 2200 -category testing -impt Y -note extra points");
+		Assert.assertEquals(false, result.getIsExecutorApplicable());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_DATE,
+				SummaryReport.getFeedBackMsg());
+
+		// start date,end date, category, impt, note (Put in invalid end date,
+		// error expected)
+		result = testingParser
+				.parseString("add homework -from 20 aug 2200 -to 10th sep 2200 -category testing -impt Y -note extra points");
+		Assert.assertEquals(false, result.getIsExecutorApplicable());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_DATE,
+				SummaryReport.getFeedBackMsg());
+
+		// start date, end date, category, impt, note (Put in invalid impt
+		// level, error expected)
+		result = testingParser
+				.parseString("add homework -from 20 aug 2200 -to 10 sep 2200 -category testing -impt anything  -note extra points");
+		Assert.assertEquals(false, result.getIsExecutorApplicable());
+		Assert.assertEquals(Constants.MESSAGE_INVALID_IMPORTANCE_PARAM,
+				SummaryReport.getFeedBackMsg());
+	}
+
+	@Test
+	public void testDisplay() {
+		Parser testingParser = new Parser();
+		ParsedResult result = new ParsedResult();
+
+		// no deadline
+		result = testingParser.parseString("display someday");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
+		Assert.assertEquals(Constants.SOMEDAY, result.getTaskDetails()
+				.getDueDate());
+
+		// with deadline
+		result = testingParser.parseString("display 20/08/2200");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
+		Assert.assertEquals("20/08/2200", result.getTaskDetails().getDueDate()
+				.toLocalDate().toString("dd/MM/yyyy"));
+
+		// range of dates
+		result = testingParser
+				.parseString("display 20/08/2200 -to 10 sep 2200");
+		Assert.assertEquals(true, result.getIsExecutorApplicable());
+		Assert.assertEquals(CommandType.DISPLAY, result.getCommandType());
+		Assert.assertEquals("20/08/2200", result.getTaskDetails()
+				.getStartDate().toLocalDate().toString("dd/MM/yyyy"));
+		Assert.assertEquals("10/09/2200", result.getTaskDetails().getDueDate()
+				.toLocalDate().toString("dd/MM/yyyy"));
+
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\testCases\TestParser.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\testCases\TestWagnerFischerSearch.java
+	 */
+
+	@Test
+	public void test() {
+		WagnerFischerSearch testing = new WagnerFischerSearch();
+		
+		int editDist = testing.getEditDistance("kitten", "sitting");
+		
+		Assert.assertEquals(3,editDist);
+			
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\testCases\TestWagnerFischerSearch.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\DetailPanel.java
+	 */
+
+	public DetailPanel(Task task) {
+
+		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
+		String taskDetail[] = changetoArr(task);
+		setLayout(new BorderLayout());
+		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		setBorder(Constants.EMPTY_BORDER_DETAIL_PANEL);
+		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
+		Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+		detailPanel = new SoftShadowJPanel();
+		detailPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		addAttributesAndDetails(taskAttribute, taskDetail, size, c);
+		add(detailPanel);
+
+	}
+
+	private void addAttributesAndDetails(String[] taskAttribute,
+			String[] taskDetail, Dimension size, GridBagConstraints c) {
+		addFirstAttribute(taskAttribute, size, c);
+		addFirstDetail(taskDetail, size, c);
+		addSecondAttribute(taskAttribute, size, c);
+		addSecondDetail(taskDetail, size, c);
+		addThirdAttribute(taskAttribute, size, c);
+		addFourthAttribute(taskAttribute, size, c);
+		addThirdDetail(taskDetail, size, c);
+		addFourthDetail(taskDetail, size, c);
+		addFifthAttribute(taskAttribute, size, c);
+		addFifthDetail(taskDetail, size, c);
+		addSixthAttribute(taskAttribute, size, c);
+		addSixthDetail(taskDetail, size, c);
+	}
+
+	private void addSixthDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[5]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 9;
+		detailPanel.add(label, c);
+	}
+
+	private void addSixthAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[5]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 8;
+		detailPanel.add(label, c);
+	}
+
+	private void addFifthDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[4]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 7;
+		detailPanel.add(label, c);
+	}
+
+	private void addFifthAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[4]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 6;
+		detailPanel.add(label, c);
+	}
+
+	private void addFourthDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[3]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 5;
+		detailPanel.add(label, c);
+	}
+
+	private void addThirdDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[2]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 5;
+		detailPanel.add(label, c);
+	}
+
+	private void addFourthAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[3]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setOpaque(true);
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 1;
+		c.gridy = 4;
+		detailPanel.add(label, c);
+	}
+
+	private void addThirdAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[2]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 4;
+		detailPanel.add(label, c);
+	}
+
+	private void addSecondDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[1]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 3;
+		detailPanel.add(label, c);
+	}
+
+	private void addSecondAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[1]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.049)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		detailPanel.add(label, c);
+	}
+
+	private void addFirstDetail(String[] taskDetail, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskDetail[0]);
+		label.setBackground(Color.white);
+		label.setForeground(Color.black);
+		label.setFont(new Font("Calibiri", Font.PLAIN, 15));
+		label.setOpaque(true);
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.050)));
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 1;
+		detailPanel.add(label, c);
+	}
+
+	private void addFirstAttribute(String[] taskAttribute, Dimension size,
+			GridBagConstraints c) {
+		JLabel label;
+		label = new JLabel(taskAttribute[0]);
+		label.setBackground(Constants.COLOR_DETAIL_PANEL_HEADER_BG);
+		label.setForeground(Color.white);
+		label.setFont(new Font("Calibiri", Font.BOLD, 15));
+		label.setPreferredSize(new Dimension(0, (int) (size.height * 0.051)));
+		label.setOpaque(true);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 0;
+		detailPanel.add(label, c);
+	}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\DetailPanel.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\QuickLaunchHotKey.java
+	 */
+
+	public QuickLaunchHotKey(UiViewModifier uiView) {
+		this.uiView = uiView;
+	}
+
+	@Override
+	public void onHotKey(HotKey arg0) {
+		if (uiView.isMinimized()) {
+			uiView.setMinimized(false);
+			uiView.getMainFrame().setState(Frame.NORMAL);
+		} else {
+			if (!uiView.getMainFrame().isVisible()) {
+				uiView.getMainFrame().setVisible(true);
+			} else if (uiView.getMainFrame().isVisible()) {
+				uiView.getMainFrame().setVisible(false);
+
+			}
+		}
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\QuickLaunchHotKey.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\SoftShadowJPanel.java
+	 */
+
+	public SoftShadowJPanel() {
+		Border border = BorderFactory.createEmptyBorder(PIXELS, PIXELS, PIXELS,
+				PIXELS);
+		this.setBorder(BorderFactory.createCompoundBorder(this.getBorder(),
+				border));
+		this.setLayout(new BorderLayout());
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		int shade = 0;
+		int topOpacity = 80;
+		for (int i = 0; i < PIXELS; i++) {
+			g.setColor(new Color(shade, shade, shade,
+					((topOpacity / PIXELS) * i)));
+			g.drawRect(i, i, this.getWidth() - ((i * 2) + 1), this.getHeight()
+					- ((i * 2) + 1));
+		}
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\SoftShadowJPanel.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\SystemTrayManager.java
+	 */
+
+	public SystemTrayManager(final JFrame frame, final Provider provide) {
+		this.frame = frame;
+
+		if (!SystemTray.isSupported()) {
+			return;
+		}
+
+		SystemTray tray = SystemTray.getSystemTray();
+		ImageIcon tray_icon = new ImageIcon(getClass().getResource(
+				Constants.STRING_IMG_MAIN_ICON));
+		Image image = tray_icon.getImage();
+
+		PopupMenu menu = new PopupMenu();
+		MenuItem openItem = new MenuItem(Constants.STRING_OPEN_TASKDO);
+		openItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(true);
+			}
+		});
+		menu.add(openItem);
+		MenuItem closeItem = new MenuItem(Constants.STRING_QUIT_TASKDO);
+		closeItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				provide.reset();
+				provide.stop();
+				System.exit(0);
+			}
+		});
+		menu.add(closeItem);
+		TrayIcon icon = new TrayIcon(image, Constants.PRODUCT_TASKDO, menu);
+		icon.addMouseListener(this);
+		icon.setImageAutoSize(true);
+
+		try {
+			tray.add(icon);
+		} catch (AWTException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		frame.setVisible(true);
+
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\SystemTrayManager.java
+
+
+
+
+

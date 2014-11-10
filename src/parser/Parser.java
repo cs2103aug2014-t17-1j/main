@@ -8,11 +8,11 @@ import org.apache.logging.log4j.Logger;
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
-/*
+/**
  * This class segments the input into parts and manages the calling of mainInterpreter and optional interpreter to parse the input
  */
 public class Parser {
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	private ParsedResult result;
 	private MainCommandInterpreter mainHandler;
 	private OptionalCommandInterpreter optionHandler;

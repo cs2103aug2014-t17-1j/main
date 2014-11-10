@@ -10,12 +10,12 @@ import taskDo.TaskType;
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
-/*
+/**
  * This class is used interpret the optional commands available at Task.Do
  */
 public class OptionalCommandInterpreter extends CommandInterpreter {
 
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	enum OptionalCommand {
 		DUE, FROM, TO, CATEGORY, IMPT, TITLE, NOTE
 	}

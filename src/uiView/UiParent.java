@@ -2,11 +2,12 @@ package uiView;
 
 import javax.swing.JFrame;
 
-/* The interface for all the panels 
+/** 
+ * The interface for all the panels 
  *
  */
 public interface UiParent {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	public void passToParser(String command);
 
 	public void pressedF1();

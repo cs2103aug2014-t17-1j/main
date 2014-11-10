@@ -18,7 +18,7 @@ import commonClasses.SummaryReport;
  *
  */
 public class UpdateSummaryReport {
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 	private static UpdateSummaryReport updateSR;
 
 	public static UpdateSummaryReport getInstance() {

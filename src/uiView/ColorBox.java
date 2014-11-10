@@ -2,13 +2,13 @@ package uiView;
 
 import java.awt.Color;
 
-/* Various colors used for the projects
+/** 
+ * Various colors used for the projects
  * 
- *
  */
 public class ColorBox {
 
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	public static Color[] colorPool = { new Color(0xf5, 0xfa, 0xfa), // greenwish
 																		// blue
 			new Color(0xfa, 0xfa, 0xfa), // Google Grey #fafafa

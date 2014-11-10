@@ -1,7 +1,7 @@
 package taskDo;
 
 public class WagnerFischerSearch {
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 
 	// Calculates the levenshtein distance between 2 Strings
 	public int getEditDistance(String input1, String input2) {

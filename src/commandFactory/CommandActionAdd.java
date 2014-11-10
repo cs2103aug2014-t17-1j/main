@@ -14,7 +14,7 @@ import taskDo.UpdateSummaryReport;
  *
  */
 public class CommandActionAdd implements CommandAction {
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 	@Override
 	public void execute(ParsedResult parsedResult) {
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();

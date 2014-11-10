@@ -15,7 +15,7 @@ import taskDo.Task;
 import commandFactory.CommandType;
 
 public class ExecutorTestCase {
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 	private ArrayList<Task> testArrayList = new ArrayList<Task>();
 	private ParsedResult testParsedResult = new ParsedResult();
 	private Executor executor = new Executor();

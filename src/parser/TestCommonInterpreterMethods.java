@@ -11,7 +11,7 @@ import commonClasses.SummaryReport;
 public class TestCommonInterpreterMethods {
 
 	@Test
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	public void testIsValidSelection() {
 
 		ArrayList<Task> testingList = new ArrayList<Task>();

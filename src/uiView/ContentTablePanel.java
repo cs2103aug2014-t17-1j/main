@@ -26,13 +26,13 @@ import taskDo.Task;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/* This is the content Table Panel where tasks title,seq no and due date
- * 
+/** 
+ * This is the content Table Panel where tasks title,seq no and due date
  * 
  */
 public class ContentTablePanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private ArrayList<Task> taskList;
 	private JTable contentTable;
 	private int rowSelected;

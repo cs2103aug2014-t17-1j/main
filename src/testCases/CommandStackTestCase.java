@@ -10,7 +10,7 @@ public class CommandStackTestCase {
 	private CommandStack commandStack;
 
 	@Test
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	public void test() {
 		String command = "";
 		commandStack = new CommandStack();

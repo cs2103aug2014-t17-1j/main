@@ -21,13 +21,14 @@ import taskDo.TaskType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/* This class is used to read json format and transform into Task object and 
+/** 
+ * This class is used to read json format and transform into Task object and 
  * write whole list of task list into json file
  *
  */
 
 public class ReadAndWriteToFile {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private String jsonText;
 	private static final Logger logger = LogManager.getLogger(Executor.class);
 

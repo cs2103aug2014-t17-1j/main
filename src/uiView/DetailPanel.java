@@ -33,14 +33,14 @@ import taskDo.CategoryList;
 import taskDo.Task;
 import commonClasses.Constants;
 
-/* This is the class for additional panel on the right of the frame
+/** 
+ * This is the class for additional panel on the right of the frame
  * and varies according such as categoryList Table, Help Panel or details Panel
- * 
  * 
  */
 public class DetailPanel extends JPanel implements Observer {
 	private static final long serialVersionUID = 1L;
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private UiParent parent;
 	private JTable categoryListTable;
 	private SoftShadowJPanel detailPanel;
@@ -80,7 +80,7 @@ public class DetailPanel extends JPanel implements Observer {
 		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
 	}
 
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	public DetailPanel(Task task) {
 
 		String taskAttribute[] = Constants.TASK_ATTRIBUTE;
@@ -318,7 +318,7 @@ public class DetailPanel extends JPanel implements Observer {
 		detailPanel.add(label, c);
 	}
 
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private void createCategoryListPanel(UiParent uiparent) {
 		parent = uiparent;
 		ArrayList<Category> categoryList = CategoryList.getCategoryList();

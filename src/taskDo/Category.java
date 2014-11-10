@@ -1,7 +1,11 @@
 package taskDo;
-
+/**
+ * 
+ * Category class to store the information about the category
+ *
+ */
 public class Category {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private String name;
 	private int count;
 

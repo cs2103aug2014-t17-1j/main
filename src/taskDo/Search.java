@@ -16,7 +16,7 @@ import commonClasses.StorageList;
  *
  */
 public class Search {
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 	ArrayList<Task> returnList;
 	SearchType searchType;
 	int taskIndex;
@@ -163,7 +163,7 @@ public class Search {
 		return isNotBefore && isNotAfter;
 	}
 
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	public ArrayList<Task> searchByKeyword(ParsedResult parsedResult) {
 		ArrayList<Task> taskList = StorageList.getInstance().getTaskList();
 		String searchInput = parsedResult.getTaskDetails().getTitle();
@@ -222,7 +222,7 @@ public class Search {
 		}
 	}
 
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 	public ArrayList<Task> searchByCompleted() {
 		for (Task task : StorageList.getInstance().getTaskList()) {
 			if (task.isCompleted()) {

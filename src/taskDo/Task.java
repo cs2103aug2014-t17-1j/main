@@ -3,7 +3,7 @@ package taskDo;
 import org.joda.time.DateTime;
 
 public class Task implements Comparable<Task> {
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	private final int INCREMENT = 1;
 	private static int lastTaskId = 0;
 	private int id;

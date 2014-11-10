@@ -8,14 +8,15 @@ import javax.swing.table.TableCellRenderer;
 
 import commonClasses.Constants;
 
-/* This is class for line wrapper used in table cell 
+/** 
+ * This is class for line wrapper used in table cell 
  *
  */
 public class LineWrapCellRenderer extends JTextArea implements
 		TableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	public LineWrapCellRenderer() {
 		super();
 		setLineWrap(true);

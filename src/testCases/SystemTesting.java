@@ -14,7 +14,7 @@ import commonClasses.SummaryReport;
 public class SystemTesting {
 	@Test
 	public void test() {
-		// @author Paing Zin Oo(Jack) A0112581N
+		// @author  A0112581N
 		String command = "add new ";
 		Parser parser = new Parser();
 		Executor executor = new Executor();

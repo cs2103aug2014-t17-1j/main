@@ -28,12 +28,13 @@ import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
 
-/* The main controller for all the panels 
+/** 
+ * The main controller for all the panels 
  * 
  */
 public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	private static final long serialVersionUID = 1L;
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private JFrame mainFrame;
 	private Executor executor;
 	private UiPanelList uiList;
@@ -106,8 +107,10 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 	public void updateAllPanels() {
 		uiList.notifyUIs();
 	}
-
-	// main API which communicates with Parser and Executor
+ 
+	/**
+	 * main API which communicates with Parser and Executor
+	 */
 	public void passToParser(String command) {
 		if (command != null && !command.trim().isEmpty()) {
 			parseResult = parser.parseString(command);
@@ -198,6 +201,9 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		mainFrame.add(detailPanel, BorderLayout.EAST);
 	}
 
+	/**
+	 * update detail panel whenever there is information updated
+	 */
 	public void updateDetailPanel() {
 		if (rowSelected != Constants.DEFAULT_ROW_SELECTED) {
 			if (isDetailPanelExisting()) {
@@ -214,6 +220,9 @@ public class UiViewModifier extends JFrame implements WindowListener, UiParent {
 		}
 	}
 
+	/**
+	 * checking for whether Detail can be display or not. 
+	 */
 	private boolean isDetailPanelExisting() {
 		if (detailPanel != null) {
 			if (detailPanel.isDisplayable()) {

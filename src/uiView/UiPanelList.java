@@ -2,11 +2,12 @@ package uiView;
 
 import java.util.ArrayList;
 
-/* This class is to store the panel that needs to be updated
+/** 
+ * This class is to store the panel that needs to be updated
  * 
  */
 public class UiPanelList {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private ArrayList<Observer> uiList;
 
 	public UiPanelList() {

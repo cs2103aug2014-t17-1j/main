@@ -7,11 +7,11 @@ import readAndWriteFile.ReadAndWriteToFile;
 import taskDo.CategoryList;
 import taskDo.Task;
 
-/*
+/**
  *  The storage for all the tasks list
  */
 public class StorageList {
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	private static StorageList storageList;
 	private ArrayList<Task> mainTaskList;
 	private ReadAndWriteToFile readWrite;

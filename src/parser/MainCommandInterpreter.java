@@ -10,12 +10,12 @@ import taskDo.Task;
 import commandFactory.CommandType;
 import commonClasses.Constants;
 import commonClasses.SummaryReport;
-/*
+/**
  * This class is used to interpret the main commands that are available for Task.Do
  */
 public class MainCommandInterpreter extends CommandInterpreter {
 
-	// @author Boo Tai Yi A0111936J
+	// @author  A0111936J
 	// Members
 	private CommandType currentCommand;
 

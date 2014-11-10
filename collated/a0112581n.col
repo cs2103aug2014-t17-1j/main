@@ -1,0 +1,2186 @@
+//@author: a0112581n
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\Constants.java
+	 */
+
+
+	public static final String PRODUCT_TASKDO = "Task.Do";
+
+	public static final Dimension SCREEN_SIZE = Toolkit.getDefaultToolkit()
+			.getScreenSize();
+	public static final Dimension DIMENION_TABLE = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.36), (int) (SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_SHORCUT_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.146), (int) (SCREEN_SIZE.height * 0.5));
+	public static final Dimension DIMENSION_DETAIL_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.3), (int) (SCREEN_SIZE.height * 0.46));
+	public static final Dimension DIMENSION_HELP_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.29), (int) (SCREEN_SIZE.height * 0.3));
+	public static final Dimension DIMESION_JSCROLL_PANEL = new Dimension(
+			(int) (SCREEN_SIZE.width * 0.36), (int) (SCREEN_SIZE.height * 0.49));
+
+	public static final int MAX_WIDTH_CATEGORY_NAME = (int) (SCREEN_SIZE.height * 0.5);
+	public static final int MAX_WIDTH_CATEGORY_COUNT = (int) (SCREEN_SIZE.height * 0.2);
+
+	public static final String FILENAME_TASKDO = "TaskDo.json";
+
+	public static final char CHAR_BACKSPACE = '\b';
+
+	public static final String STRING_STRING = "";
+	public static final String STRING_EVENT = "EVENT";
+	public static final String STRING_ERROR_TASKDO_IS_ACTIVE = "TaskDo is Active";
+	public static final String STRING_OPEN_HTML = "<html>";
+	public static final String STRING_CLOSE_HTML = "</html>";
+	public static final String STRING_NA = "NA";
+	public static final String STRING_F1_HELP = "F1 Help";
+	public static final String STRING_F2_DETAILS = "F2 Details";
+	public static final String STRING_F3_CATEGORIES = "F2 Categories";
+	public static final String STRING_IMG_CANCEL_PNG = "/image/cancel-icon.png";
+	public static final String STRING_IMG_MAIN_ICON = "/image/Task.Do Icon.png";
+	public static final String STRING_IMG_DEL_PNG = "/image/delete-icon.png";
+	public static final String STRING_OPEN_TASKDO = "Open Task.Do";
+	public static final String STRING_QUIT_TASKDO = "Quit Task.Do";
+	public static final String STRING_DEFAULT_COMMAND_TEXT = "Enter your command here";
+
+	public static final String CATEGORY_COLUMN_TITLE[] = { "Name", "Count" };
+	public static final String TASKKEYS[] = { "Title", "category", "important",
+			"startDate", "dueDate", "completed", "taskType", "taskNote" };
+
+	public static final String MESSAGE_LOAD_ERROR = "Loading Error! Please check that file format is correct!";
+	public static final String CATEGORYKEYS[] = { "Name", "Count" };
+	public static final String HINT[] = {
+			"<html>add [title] -due [date] -category [categoryname] -impt [y/n] -note [extra notes]<br/>"
+					+ "Reminder: Optional commands have '-' in front</html>",
+			"<html>edit [ID] -title [new title] -due [duedate] -category [category] -impt [y/n] -note [new note]<br/>"
+					+ "Reminder: Optional commands have '-' in front</html>",
+			"<html>delete [ID]<br>"
+					+ "Tip: you can also try del, remove</html>",
+			"<html>complete [ID]</br>" + "Tip: You can also try tick,done",
+			"<html>display [date/category], overdue,all,completed,date -to date</br/>"
+					+ "Tip: you can also try show, view. <br>"
+					+ "Look at help panel for advanced display commands</html>",
+			"<html>search [keyword]"
+
+	};
+	public static final String[] HELPCOMMANDS = {
+			"<html><h3><u><i><b>Main Commands Group 1 <\b</i></u></h3></html>",
+			"<html><font color='red'>add</font> *insert task title*</html>",
+			"<html><font color='red'>edit</font> *corresponding ID*</html>",
+			"<html><h3><u><i>Main Commands Group 2</i></h3></u></html>",
+			"<html><font color='red'>delete</font> *corresponding ID*</html>",
+			"<html><font color='red'>display</font> *date or category*</html>",
+			"<html><font color='red'>undo</font>",
+			"<html><font color='red'>redo</font>",
+			"<html><font color='red'>complete</font> *corresponding ID*</html>",
+			"<html><font color='red'>search</font> *keyword*</html>",
+			"<html><h3><u><i>Common Optional Commands</i></h3></u></html>",
+			"Addtional commands that works with main commands group 1",
+			"<html><font color='#1de9b6'>Note: Optional Command words are recognised by '-'</font></html>",
+			"<html><font color='#1de9b6'>-</font><font color='ff7997'>category</font> *insert category name*</html>",
+			"<html><font color='#1de9b6'>-</font><font color='ff7997'>due</font> *duedate*</html>",
+			"<html><font color='#1de9b6'>-</font><font color='ff7997'>from</font> *startdate* <font color='#1de9b6'>-</font><font color='ff7997'>to</font> *duedate*</html>",
+			"<html><font color='#1de9b6'>-</font><font color='ff7997'>impt</font> *Y or N*</html>",
+			"<html><font color='#1de9b6'>-</font><font color='ff7997'>note</font> *insert reminder notes*</html>",
+			"Example:",
+			"add Homework1 -due 10/09/2014 -category School -impt Y",
+			"add Homework2 -from 20 aug 16:00 -to 10 sep 18:00",
+			"<html><h3><u><i>Specific Optional Commands</i></h3></u></html>",
+			"Addtional commands that only works with some main commands",
+			"<html>For <font color='red'>edit</font>: <font color='#1de9b6'>-</font><font color='ff7997'>title</font> *new Title*</html>",
+			"Example: edit 1 -task homework3",
+			"<html><h3><u><i>Advanced Display Command</i></h3></u></html>",
+			"<html><font color='red'>display</font> *startdate* <font color='#1de9b6'>-</font><font color='ff7997'>to</font> *duedate*</html>",
+			"<html><font color='red'>display</font> all</html>",
+			"<html><font color='red'>display</font> overdue</html>",
+			"<html><font color='red'>display</font> completed</html>",
+			"Example: display 23 mar -to 10 apr"
+
+	};
+	public static final String[] TASK_ATTRIBUTE = { "Note", "Category", "From",
+			"To", "Completed", "Important" };
+
+	public static final String STRING_YES = "Yes";
+	public static final String STRING_NO = "No";
+	public static final String STRING_SOMEDAY = "someday";
+	public static final String STRING_SPACE = " ";
+	public static final String STRING_DASH = "-";
+	public static final String STRING_DATEFORMAT = "dd-MM-yyyy HH:mm";
+
+	public static final String[] COLUMNTITLES = { "ID", "Title", "Due On" };
+	public static final String HEADER_HELP = "HELP PANEL";
+	public static final String HEADER_DETAIL = "DETAILS";
+	public static final String HEADER_CATEGORIES = "CATEGORIES";
+
+	public static final Color COLOR_LEFT_PANEL_BG = ColorBox.colorPool[0];
+	public static final Color COLOR_LEFT_PANEL_TEXT = Color.BLACK;
+	public static final Color COLOR_LEFT_PANEL_HEADER = Color.BLACK;
+
+	public static final Color COLOR_FEEDBACK_MSG = ColorBox.colorPool[8];
+
+	public static final Color COLOR_DETAIL_PANEL_TEXT = Color.BLACK;
+	public static final Color COLOR_DETAIL_PANEL_BG = ColorBox.colorPool[0];
+	public static final Color COLOR_DETAIL_PANEL_HEADER_BG = ColorBox.colorPool[7];
+
+	public static final Color COLOR_TABLE_TEXT = Color.BLACK;
+	public static final Color COLOR_TABLE_TEXT_HIGHLIGHT = Color.WHITE;
+	public static final Color COLOR_TABLE_EVEN_ROW = ColorBox.colorPool[1];
+	public static final Color COLOR_TABLE_ODD_ROW = ColorBox.colorPool[2];
+	public static final Color COLOR_TABLE_IMPT_ROW = ColorBox.colorPool[3];
+	public static final Color COLOR_TABLE_OVERDUE_ROW = ColorBox.colorPool[9];
+	public static final Color COLOR_TABLE_TEXT_IMPT = Color.WHITE;
+	public static final Color COLOR_TABLE_ROW_HIGHLIGHT = ColorBox.colorPool[4];
+	public static final Color COLOR_TABLE_HEADER_BG = ColorBox.colorPool[0];
+	public static final Color COLOR_TABLE_HEADER_TEXT = Color.BLACK;
+	public static final Color COLOR_TABLE_GRID = Color.WHITE;
+
+	public static final Color COLOR_JSCROLL_BG = ColorBox.colorPool[5];
+
+	public static final Color COLOR_CENTRE_PANEL_BG = ColorBox.colorPool[5];
+
+	public static final Color COLOR_COMMAND_PANEL_BG = ColorBox.colorPool[6];
+	public static final Color COLOR_COMMAND_PANEL_TEXT = Color.BLACK;
+
+	public static final Color COLOR_HEADER_PANEL_BG = ColorBox.colorPool[6];
+	public static final Color COLOR_HEADER_PANEL_TEXT = Color.WHITE;
+
+	public static final int DEFAULT_ROW_SELECTED = -1;
+	public static final int TABLE_HEIGHT = 60;
+	public static final int JSON_IDENTATION = 3;
+	public static final int HEADER_FONT_SIZE = 24;
+	public static final int FEEDBACK_MSG_FONT_SIZE = 16;
+
+	public static final EmptyBorder EMPTY_BORDER = new EmptyBorder(0, 0, 0, 0);
+	public static final Border TABLE_FOCUS_BORDER = BorderFactory
+			.createLineBorder(Color.CYAN, 2);
+	public static final EmptyBorder EMPTY_BORDER_DETAIL_PANEL = new EmptyBorder(
+			15, 15, 15, 15);
+	public static final EmptyBorder EMPTY_BORDER_CATEGORY_TABLE = new EmptyBorder(
+			15, 25, 15, 25);
+	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX = new EmptyBorder(
+			20, 20, 20, 20);
+	public static final EmptyBorder EMPTY_BORDER_CONTENT_TABLE = new EmptyBorder(
+			15, 25, 15, 25);
+	public static final EmptyBorder EMPTY_BORDER_LINEWRAPPER = new EmptyBorder(
+			15, 5, 15, 15);
+	public static final EmptyBorder EMPTY_BORDER_COMMAND_BOX_PANEL = new EmptyBorder(
+			10, 10, 10, 10);
+
+	public static final Font FONT_TIME_NEW_ROMAN = Font
+			.getFont("times new roman");
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\Constants.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\StorageList.java
+	 */
+
+	private static StorageList storageList;
+	private ArrayList<Task> mainTaskList;
+	private ReadAndWriteToFile readWrite;
+	private ConvertToJson convertTojson;
+
+	private StorageList() {
+		mainTaskList = new ArrayList<Task>();
+		readWrite = new ReadAndWriteToFile();
+		convertTojson = new ConvertToJson();
+	}
+
+	public static StorageList getInstance() {
+		if (storageList == null) {
+			storageList = new StorageList();
+		}
+		return storageList;
+
+	}
+
+	public ArrayList<Task> getTaskList() {
+		return mainTaskList;
+	}
+
+	public void setTaskList(ArrayList<Task> taskList) {
+		this.mainTaskList = taskList;
+	}
+
+	public void loadFile() {
+		mainTaskList = readWrite.readTasksFromFile();
+		CategoryList.getCategoryList();
+		CategoryList.updateCategoryList(mainTaskList);
+	}
+
+	public void saveToFile() {
+		saveTasksToFile();
+	}
+
+	private void saveTasksToFile() {
+		convertTojson.setTaskList(mainTaskList);
+		readWrite.setjSonText(convertTojson.changeToJsonObj(true));
+		readWrite.writeToFile(true);
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\StorageList.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\SummaryReport.java
+	 */
+
+	private static String feedBackMsg;
+	private static ArrayList<Task> displayList = new ArrayList<Task>();
+	private static ArrayList<Integer> imptRowIndexList;
+	private static ArrayList<Integer> overdueIndexList;
+	private static int rowIndexHighlight = Constants.NOTHING_SELECTED;
+
+	public static ArrayList<Integer> getOverdueIndexList() {
+		extractOverDueIndex();
+		return overdueIndexList;
+	}
+
+	public static int getRowIndexHighlight() {
+		return rowIndexHighlight;
+	}
+
+	public static void setRowIndexHighlight(int rowIndexHighlight) {
+		SummaryReport.rowIndexHighlight = rowIndexHighlight;
+	}
+
+	public static String getFeedBackMsg() {
+		return feedBackMsg;
+	}
+
+	public static void setFeedBackMsg(String feedBackMsg) {
+		SummaryReport.feedBackMsg = feedBackMsg;
+	}
+
+	public static ArrayList<Task> getDisplayList() {
+		return displayList;
+	}
+
+	public static void setDisplayList(ArrayList<Task> displayList) {
+		SummaryReport.displayList = displayList;
+	}
+
+	public static int getTaskId(int id) {
+		return displayList.get(id - 1).getId();
+	}
+
+	public static void sortByDueDate() {
+		Collections.sort(displayList);
+	}
+
+	public static ArrayList<Integer> getImptRowIndexList() {
+		extractImptRowIndex();
+		return imptRowIndexList;
+	}
+
+	private static void extractOverDueIndex() {
+		DateTime today = new DateTime();
+		overdueIndexList = new ArrayList<Integer>();
+		for (int i = 0; i < displayList.size(); i++) {
+			if (displayList.get(i).getDueDate().toLocalDate().getYear() != Constants.NILL_YEAR) {
+				if (displayList.get(i).getDueDate().toLocalDate()
+						.isBefore(today.toLocalDate())) {
+					overdueIndexList.add(i);
+				}
+			}
+
+		}
+	}
+
+	private static void extractImptRowIndex() {
+		imptRowIndexList = new ArrayList<Integer>();
+		for (int i = 0; i < displayList.size(); i++) {
+			if (displayList.get(i).isImportant()) {
+				imptRowIndexList.add(i);
+			}
+		}
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\commonClasses\SummaryReport.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\readAndWriteFile\ConvertToJson.java
+	 */
+
+	private ArrayList<Task> taskList;
+
+	public ArrayList<Task> getTaskList() {
+		return taskList;
+	}
+
+	public void setTaskList(ArrayList<Task> taskList) {
+		this.taskList = taskList;
+	}
+
+	public String changeToJsonObj(boolean isTask) {
+		String result = Constants.STRING_STRING;
+		try {
+			result = extractTaskFields();
+		} catch (Exception e) {
+
+		}
+
+		return result;
+	}
+
+	private String extractTaskFields() throws JSONException {
+		JSONArray tasks = new JSONArray();
+		for (int i = 0; i < taskList.size(); i++) {
+			Task task = taskList.get(i);
+			JSONObject taskJsonObj = new JSONObject();
+			taskJsonObj.put(Constants.TASKKEYS[0], task.getTitle());
+			if (task.getCategory() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[1], "");
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[1], task.getCategory());
+			}
+			taskJsonObj.put(Constants.TASKKEYS[2], task.isImportant());
+			if (task.getStartDate() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[3], "");
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[3], task.getStartDate()
+						.toString());
+			}
+			if (task.getDueDate() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[4], "");
+
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[4], task.getDueDate()
+						.toString());
+			}
+			taskJsonObj.put(Constants.TASKKEYS[5], task.isCompleted());
+			taskJsonObj.put(Constants.TASKKEYS[6], task.getTaskType() + "");
+			if (task.getNote() == null) {
+				taskJsonObj.put(Constants.TASKKEYS[7], "");
+			} else {
+				taskJsonObj.put(Constants.TASKKEYS[7], task.getNote());
+			}
+
+			tasks.put(taskJsonObj);
+
+		}
+		return tasks.toString(Constants.JSON_IDENTATION);
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\readAndWriteFile\ConvertToJson.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\readAndWriteFile\ReadAndWriteToFile.java
+	 */
+
+	private String jsonText;
+	private static final Logger logger = LogManager.getLogger(Executor.class);
+
+	public String getjSonText() {
+		return jsonText;
+	}
+
+	public void setjSonText(String jSonText) {
+		this.jsonText = jSonText;
+	}
+
+	public boolean writeToFile(boolean isTask) {
+		FileWriter file = null;
+		try {
+			file = new FileWriter(Constants.FILENAME_TASKDO);
+			file.write(jsonText);
+			file.flush();
+			file.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public ArrayList<Task> readTasksFromFile() {
+		ArrayList<Task> taskList = new ArrayList<Task>();
+		File f = new File(Constants.FILENAME_TASKDO);
+
+		if (f.exists()) {
+			if (f.length() != 0) {
+				try {
+					JSONTokener tokener = new JSONTokener(new FileReader(
+							Constants.FILENAME_TASKDO));
+
+					JSONArray jsonArray = new JSONArray(tokener);
+					Task task;
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject jsonObject = (JSONObject) jsonArray
+								.getJSONObject(i);
+						try {
+							task = extractTaskFields(jsonObject);
+						} catch (Exception e) {
+							continue;
+						}
+						taskList.add(task);
+					}
+				} catch (Exception e) {
+					logger.info("Error while reading:" + e.toString());
+					SummaryReport.setFeedBackMsg(Constants.MESSAGE_LOAD_ERROR);
+				}
+			}
+		}
+		return taskList;
+
+	}
+
+	private Task extractTaskFields(JSONObject jsonObject) throws JSONException {
+		Task task = new Task();
+		task.setTitle((String) jsonObject.get(Constants.TASKKEYS[0]));
+		task.setCategory((String) jsonObject.get(Constants.TASKKEYS[1]));
+		task.setImportant((boolean) jsonObject.get(Constants.TASKKEYS[2]));
+		String str_startDate = (String) jsonObject.get(Constants.TASKKEYS[3]);
+		if (str_startDate.isEmpty()) {
+			task.setStartDate(null);
+		} else {
+			DateTime startDate = DateTime.parse(str_startDate);
+			task.setStartDate(startDate);
+		}
+		String str_dueDate = (String) jsonObject.get(Constants.TASKKEYS[4]);
+		if (str_dueDate.isEmpty()) {
+			task.setDueDate(null);
+		} else {
+			DateTime dueDate = DateTime.parse(str_dueDate);
+			task.setDueDate(dueDate);
+		}
+		task.setCompleted((boolean) jsonObject.get(Constants.TASKKEYS[5]));
+		task.setTaskType(TaskType.valueOf((String) jsonObject
+				.get(Constants.TASKKEYS[6])));
+		task.setNote((String) jsonObject.get(Constants.TASKKEYS[7]));
+
+		return task;
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\readAndWriteFile\ReadAndWriteToFile.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Category.java
+	 */
+
+	private String name;
+	private int count;
+
+	public Category(String name) {
+		this.name = name;
+		this.count = 1;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getCount() {
+		return this.count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public void addCount() {
+		this.count++;
+	}
+
+	public void decreaseCount() {
+		this.count--;
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\taskDo\Category.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\testCases\CommandStackTestCase.java
+	 */
+
+	public void test() {
+		String command = "";
+		commandStack = new CommandStack();
+		commandStack.insertCommand(command);
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), command);
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), command);
+
+	}
+
+	@Test
+	public void testLongString() {
+		commandStack = new CommandStack();
+		String command = "new task";
+		commandStack.insertCommand(command);
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), command);
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(), command);
+	}
+
+	@Test
+	public void testNull() {
+		commandStack = new CommandStack();
+		String command = null;
+		commandStack.insertCommand(command);
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(), "");
+		assertEquals(commandStack.retrieveCommandFromForwardStack(), null);
+
+	}
+
+	@Test
+	public void testForinvalid() {
+		commandStack = new CommandStack();
+		String command = "ckjfksldjkfl";
+		commandStack.insertCommand(command);
+		assertEquals(commandStack.retrieveCommandFromBackwardStack(), "");
+		assertEquals(commandStack.retrieveCommandFromForwardStack(),
+				"ckjfksldjkfl");
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\testCases\CommandStackTestCase.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\testCases\SystemTesting.java
+	 */
+
+		String command = "add new ";
+		Parser parser = new Parser();
+		Executor executor = new Executor();
+		ParsedResult parseResult = parser.parseString(command);
+		if (parseResult.getIsExecutorApplicable()) {
+			executor.execute(parseResult);
+		}
+		assertEquals(SummaryReport.getFeedBackMsg(),
+				Constants.MESSAGE_SUCCESS_ADD);
+
+		command = "delete 1";
+		parseResult = parser.parseString(command);
+		if (parseResult.getIsExecutorApplicable()) {
+			executor.execute(parseResult);
+		}
+		assertEquals(SummaryReport.getFeedBackMsg(), "TASK 1 IS DELETED");
+
+		command = "fjsklfdklfje";
+		parseResult = parser.parseString(command);
+		if (parseResult.getIsExecutorApplicable()) {
+			executor.execute(parseResult);
+		}
+		assertEquals(SummaryReport.getFeedBackMsg(),
+				Constants.MESSAGE_INVALID_COMMAND);
+
+		command = "delete 50";
+		parseResult = parser.parseString(command);
+		if (parseResult.getIsExecutorApplicable()) {
+			executor.execute(parseResult);
+		}
+		assertEquals(SummaryReport.getFeedBackMsg(),
+				Constants.MESSAGE_INVALID_SELECTION);
+
+		command = "edit 50";
+		parseResult = parser.parseString(command);
+		if (parseResult.getIsExecutorApplicable()) {
+			executor.execute(parseResult);
+		}
+		assertEquals(SummaryReport.getFeedBackMsg(),
+				Constants.MESSAGE_INVALID_SELECTION);
+
+		command = "search abcdefghigklfje";
+		parseResult = parser.parseString(command);
+		if (parseResult.getIsExecutorApplicable()) {
+			executor.execute(parseResult);
+		}
+		assertEquals(SummaryReport.getFeedBackMsg(),
+				Constants.MESSAGE_FAIL_SEARCH);
+
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\testCases\SystemTesting.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\CategoryCustomTableRender.java
+	 */
+
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+
+		Component rendererComp = super.getTableCellRendererComponent(table,
+				value, isSelected, hasFocus, row, column);
+
+		// Set foreground color
+		rendererComp.setForeground(Constants.COLOR_TABLE_TEXT);
+
+		// Set background color
+
+		if (row % 2 == 0) {
+			rendererComp.setBackground(Constants.COLOR_TABLE_EVEN_ROW);
+		} else {
+			rendererComp.setBackground(Constants.COLOR_TABLE_ODD_ROW);
+		}
+
+		// Set background while isSelected
+		if (isSelected) {
+			rendererComp.setBackground(Constants.COLOR_TABLE_ROW_HIGHLIGHT);
+			rendererComp.setForeground(Constants.COLOR_TABLE_TEXT_HIGHLIGHT);
+		}
+
+		setBorder(noFocusBorder);
+		return rendererComp;
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\CategoryCustomTableRender.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\ColorBox.java
+	 */
+
+	public static Color[] colorPool = { new Color(0xf5, 0xfa, 0xfa), // greenwish
+																		// blue
+			new Color(0xfa, 0xfa, 0xfa), // Google Grey #fafafa
+			new Color(0xee, 0xee, 0xee), // Google Grey #eeeeee
+			new Color(0xb0, 0x12, 0x0a), // Google Red #b0120a4
+			new Color(0x45, 0x5a, 0x64), // Google Blue Grey #455a64
+			new Color(0xfa, 0xfa, 0xfa), // Google Grey #fafafa
+			new Color(0x03, 0xa9, 0xf4), // Google Light Blue #03a9f4
+			new Color(0x26, 0x32, 0x38), // Google Blue Grey #263238
+			new Color(0xe9, 0x1e, 0x63), // Google pink #e91e63
+			new Color(0xFF, 0xB7, 0x4D) // Google Orange #FFB74D
+
+	};
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\ColorBox.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\CommandBoxPanel.java
+	 */
+
+	private int typeCount;
+	private JTextField commandBox;
+	private String command;
+	private JLabel lblHintMsg;
+	private JLabel feedbackMsg;
+	private UiParent parent;
+	private CommandStack commandStack;
+	private String pieceOfCommand;
+	private String txtHintMsg;
+
+	public CommandBoxPanel(UiParent parent) {
+		pieceOfCommand = Constants.STRING_STRING;
+		txtHintMsg = Constants.STRING_STRING;
+		commandStack = new CommandStack();
+		this.parent = parent;
+		setLayout(new BorderLayout());
+		initFeedbackMsg();
+		initCommandBox();
+		initHintMsg();
+		add(commandBox, BorderLayout.CENTER);
+		setBackground(Constants.COLOR_COMMAND_PANEL_BG);
+
+	}
+
+	private void initHintMsg() {
+		lblHintMsg = new JLabel();
+		add(lblHintMsg, BorderLayout.SOUTH);
+	}
+
+	private void addHintMsg() {
+		if (isValidCommandType()) {
+			remove(feedbackMsg);
+			lblHintMsg.setText(txtHintMsg);
+		} else {
+			lblHintMsg.setText(Constants.STRING_STRING);
+		}
+		add(lblHintMsg, BorderLayout.SOUTH);
+		revalidate();
+		repaint();
+		parent.updateFrame();
+
+	}
+
+	private void initFeedbackMsg() {
+		assert feedbackMsg != null;
+		String feedBack = SummaryReport.getFeedBackMsg();
+		feedbackMsg = new JLabel(feedBack, JLabel.LEFT);
+	}
+
+	public void setFocusToCommandBox() {
+		commandBox.requestFocusInWindow();
+	}
+
+	private void initCommandBox() {
+		commandBox = new JTextField();
+		commandBox.setBorder(Constants.EMPTY_BORDER_COMMAND_BOX_PANEL);
+		if (typeCount == 0) {
+			setIntroTextInCommandBox();
+		}
+		setFocusToCommandBox();
+		addListenerToCommandBox();
+
+	}
+
+	private void addListenerToCommandBox() {
+		commandBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				command = commandBox.getText();
+				parent.passToParser(command);
+				if (!command.trim().isEmpty()) {
+					commandStack.insertCommand(command);
+				}
+				commandBox.setText(Constants.STRING_STRING);
+			}
+		});
+		commandBox.addKeyListener(this);
+	}
+
+	private void setIntroTextInCommandBox() {
+		commandBox.setForeground(Color.GRAY);
+		commandBox.setText(Constants.STRING_DEFAULT_COMMAND_TEXT);
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if (typeCount == 0) {
+			commandBox.setText(Constants.STRING_STRING);
+			commandBox.setForeground(Color.BLACK);
+		}
+		typeCount++;
+
+		if (arg0.getKeyCode() == KeyEvent.VK_F1) {
+			parent.pressedF1();
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_F2) {
+			parent.pressedF3();
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_DOWN) {
+			commandBox.setText(commandStack.retrieveCommandFromBackwardStack());
+		}
+		if (arg0.getKeyCode() == KeyEvent.VK_UP) {
+			commandBox.setText(commandStack.retrieveCommandFromForwardStack());
+		}
+		keyBackSpace(arg0);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		keyBackSpace(arg0);
+
+	}
+
+	private void keyBackSpace(KeyEvent arg0) {
+		if (arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+			pieceOfCommand = commandBox.getText();
+			addHintMsg();
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		if (arg0.getKeyChar() != Constants.CHAR_BACKSPACE) {
+			pieceOfCommand += arg0.getKeyChar();
+			addHintMsg();
+		}
+	}
+
+	// checking for whether command type is valid or not
+	private boolean isValidCommandType() {
+		String commandType = pieceOfCommand.trim()
+				.split(Constants.STRING_SPACE)[0];
+		if (commandType.equalsIgnoreCase(CommandType.ADD.toString()
+				.toLowerCase())) {
+			txtHintMsg = Constants.HINT[0];
+			return true;
+		} else if (commandType.equalsIgnoreCase(CommandType.EDIT.toString()
+				.toLowerCase())) {
+			txtHintMsg = Constants.HINT[1];
+			return true;
+		} else if (commandType.equalsIgnoreCase(CommandType.DELETE.toString()
+				.toLowerCase())) {
+			txtHintMsg = Constants.HINT[2];
+			return true;
+		} else if (commandType.equalsIgnoreCase(CommandType.COMPLETED
+				.toString().toLowerCase())) {
+			txtHintMsg = Constants.HINT[3];
+			return true;
+		} else if (commandType.equalsIgnoreCase(CommandType.DISPLAY.toString()
+				.toLowerCase())) {
+			txtHintMsg = Constants.HINT[4];
+			return true;
+		} else if (commandType.equalsIgnoreCase(CommandType.SEARCH.toString()
+				.toLowerCase())) {
+			txtHintMsg = Constants.HINT[5];
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void update() {
+		pieceOfCommand = Constants.STRING_STRING;
+		String text_feedBack = SummaryReport.getFeedBackMsg();
+		feedbackMsg.setFont(new Font("Calibri", Font.BOLD,
+				Constants.FEEDBACK_MSG_FONT_SIZE));
+		feedbackMsg.setForeground(Constants.COLOR_FEEDBACK_MSG);
+		if (text_feedBack == null) {
+			feedbackMsg.setText(Constants.STRING_STRING);
+		} else {
+			feedbackMsg.setText(SummaryReport.getFeedBackMsg());
+			SummaryReport.setFeedBackMsg(Constants.STRING_STRING);
+		}
+
+		add(feedbackMsg, BorderLayout.SOUTH);
+		setOpaque(true);
+		revalidate();
+		repaint();
+		parent.updateFrame();
+
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\CommandBoxPanel.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\CommandStack.java
+	 */
+
+	private Stack<String> forwardStack;
+	private Stack<String> backwardStack;
+
+	public CommandStack() {
+		forwardStack = new Stack<String>();
+		backwardStack = new Stack<String>();
+	}
+
+	public void insertCommand(String command) {
+		forwardStack.push(command);
+	}
+
+	public String retrieveCommandFromForwardStack() {
+		String command = Constants.STRING_STRING;
+		if (forwardStack.isEmpty()) {
+			return command;
+		} else {
+			command = forwardStack.pop();
+			backwardStack.add(command);
+		}
+		return command;
+	}
+
+	public String retrieveCommandFromBackwardStack() {
+		String command = Constants.STRING_STRING;
+		if (backwardStack.isEmpty()) {
+			return command;
+		} else {
+			command = backwardStack.pop();
+			forwardStack.add(command);
+		}
+		return command;
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\CommandStack.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\ContentTablePanel.java
+	 */
+
+	private ArrayList<Task> taskList;
+	private JTable contentTable;
+	private int rowSelected;
+	private UiParent parent;
+	private SoftShadowJPanel parentJsp;
+
+	public ContentTablePanel(UiParent parent) {
+		this.parent = parent;
+		setPreferredSize(Constants.DIMENION_TABLE);
+		taskList = SummaryReport.getDisplayList();
+		removeAllComponentsFromCentrePanel();
+		setContentIntoTable();
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+	}
+
+	private void addListActionListener() {
+		contentTable.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+					@Override
+					public void valueChanged(ListSelectionEvent select) {
+						createDetailPanelForSelectedRow();
+					}
+				});
+	}
+
+	public int getSelectedTableRow() {
+		return rowSelected;
+	}
+
+	private void createDetailPanelForSelectedRow() {
+		rowSelected = contentTable.getSelectedRow();
+		SummaryReport.setRowIndexHighlight(rowSelected);
+		parent.setRowSelected(SummaryReport.getRowIndexHighlight());
+		parent.updateDetailPanel();
+	}
+
+	private void setContentIntoTable() {
+		if (taskList.size() != 0) {
+			createTableWithContent();
+		} else {
+			createEmptyTable();
+		}
+
+	}
+
+	private void createTableWithContent() {
+		String[] columnTitle = Constants.COLUMNTITLES;
+		contentTable = new JTable(changeToTwoDArray(taskList), columnTitle) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			};
+
+		};
+		setTableCellProperties(contentTable);
+		setContentTableColumnWidth(contentTable);
+		setContentTableProperties();
+		setJScrollPanePropCentrePane();
+		addListActionListener();
+		add(parentJsp);
+	}
+
+	private void createEmptyTable() {
+		String[] columnTitle = Constants.COLUMNTITLES;
+		DefaultTableModel model = new DefaultTableModel(0, columnTitle.length);
+		model.setColumnIdentifiers(columnTitle);
+		contentTable = new JTable(model);
+		setTableCellProperties(contentTable);
+		setContentTableColumnWidth(contentTable);
+		setContentTableProperties();
+		setJScrollPanePropCentrePane();
+		contentTable.setFocusable(false);
+		add(parentJsp);
+	}
+
+	public void selectRowHightlight(int rowSelected) {
+		if (SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED) {
+			contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+			createDetailPanelForSelectedRow();
+			contentTable.scrollRectToVisible(contentTable.getCellRect(
+					rowSelected, 0, true));
+		}
+	}
+
+	private void setContentTableProperties() {
+		setTableHeaderProperties();
+		setRowAndColumnSelectionMode();
+		contentTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		contentTable.setDefaultRenderer(Object.class, new CustomTableRender());
+		setKeysPressed();
+		addFocusListener();
+	}
+
+	private void addFocusListener() {
+		contentTable.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				contentTable.setBorder(Constants.TABLE_FOCUS_BORDER);
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				contentTable.setBorder(Constants.EMPTY_BORDER);
+
+			}
+		});
+	}
+
+	private void setKeysPressed() {
+		tabKeyPressedAction();
+		f2KeyPressedAction();
+		f1KeyPressedAction();
+	}
+
+	private void setRowAndColumnSelectionMode() {
+		contentTable.setGridColor(Constants.COLOR_TABLE_GRID);
+		contentTable.setRowHeight(Constants.TABLE_HEIGHT);
+		contentTable.setRowSelectionAllowed(true);
+		contentTable.getSelectionModel().setSelectionMode(
+				ListSelectionModel.SINGLE_SELECTION);
+		contentTable.setColumnSelectionAllowed(false);
+	}
+
+	private void setTableHeaderProperties() {
+		contentTable.getTableHeader().setReorderingAllowed(false);
+		contentTable.getTableHeader().setForeground(
+				Constants.COLOR_TABLE_HEADER_TEXT);
+		contentTable.getTableHeader().setResizingAllowed(false);
+		contentTable.getTableHeader().setBackground(
+				Constants.COLOR_TABLE_HEADER_BG);
+
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(ColorBox.colorPool[7]);
+		headerRenderer.setForeground(Color.WHITE);
+		headerRenderer.setFont(new Font("Serif", Font.BOLD, 15));
+
+		for (int i = 0; i < contentTable.getModel().getColumnCount(); i++) {
+			contentTable.getColumnModel().getColumn(i)
+					.setHeaderRenderer(headerRenderer);
+		}
+	}
+
+	private void tabKeyPressedAction() {
+		contentTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0),
+				Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.pressedTab(false);
+					}
+				});
+	}
+
+	private void f2KeyPressedAction() {
+		contentTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0),
+				Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.removeDetailPanel();
+						parent.pressedF3();
+					}
+				});
+	}
+
+	private void f1KeyPressedAction() {
+		contentTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
+				Constants.STRING_EVENT);
+		contentTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.pressedF1();
+					}
+
+				});
+	}
+
+	private void removeAllComponentsFromCentrePanel() {
+		removeAll();
+
+	}
+
+	private String[][] changeToTwoDArray(ArrayList<Task> taskList) {
+		String tableContent[][] = new String[taskList.size()][3];
+		String dueDate = Constants.STRING_STRING;
+		for (int i = 0; i < taskList.size(); i++) {
+			tableContent[i][0] = (i + 1) + Constants.STRING_STRING;
+			tableContent[i][1] = taskList.get(i).getTitle();
+			if (taskList.get(i).getDueDate().toLocalDate().getYear() == Constants.NILL_YEAR) {
+				dueDate = Constants.STRING_SOMEDAY;
+			} else {
+				DateTimeFormatter dateFormat = DateTimeFormat
+						.forPattern("dd-MM-yyyy");
+				dueDate = dateFormat.print(taskList.get(i).getDueDate()
+						.toLocalDate());
+			}
+			tableContent[i][2] = dueDate;
+		}
+		return tableContent;
+	}
+
+	private void setContentTableColumnWidth(JTable contentTable) {
+		contentTable.getColumnModel().getColumn(0).setMaxWidth(20);
+		contentTable.getColumnModel().getColumn(1).setMaxWidth(600);
+		contentTable.getColumnModel().getColumn(2).setMaxWidth(100);
+	}
+
+	private void setTableCellProperties(JTable contentTable) {
+		contentTable.getColumnModel().getColumn(1)
+				.setCellRenderer(new LineWrapCellRenderer());
+	}
+
+	private void setJScrollPanePropCentrePane() {
+		parentJsp = new SoftShadowJPanel();
+		JScrollPane jsp = new JScrollPane(contentTable);
+		jsp.setBorder(Constants.EMPTY_BORDER);
+		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
+		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
+
+		parentJsp.setPreferredSize(Constants.DIMESION_JSCROLL_PANEL);
+		parentJsp.add(jsp);
+	}
+
+	public void highlightRow() {
+		contentTable.setRowSelectionInterval(rowSelected, rowSelected);
+	}
+
+	@Override
+	public void update() {
+		taskList = SummaryReport.getDisplayList();
+		removeAllComponentsFromCentrePanel();
+		setContentIntoTable();
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		repaint();
+		revalidate();
+		parent.updateFrame();
+
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\ContentTablePanel.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\CustomTableRender.java
+	 */
+
+	public ArrayList<Integer> imptRowIndexList = new ArrayList<Integer>();
+
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+
+		Component rendererComp = super.getTableCellRendererComponent(table,
+				value, isSelected, hasFocus, row, column);
+
+		DefaultTableColor.setDefaultBackGroundColor(rendererComp, row,
+				table.getSelectedRow());
+		setBorder(noFocusBorder);
+
+		return rendererComp;
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\CustomTableRender.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\DefaultTableColor.java
+	 */
+
+	public static ArrayList<Integer> imptRowIndexList;
+	public static ArrayList<Integer> overdueRowIndexList;
+
+	public static void setDefaultBackGroundColor(Component component, int row,
+			int selectedRow) {
+		component.setForeground(Constants.COLOR_TABLE_TEXT);
+
+		if (row % 2 == 0) {
+			component.setBackground(Constants.COLOR_TABLE_EVEN_ROW);
+		} else {
+			component.setBackground(Constants.COLOR_TABLE_ODD_ROW);
+		}
+
+		imptRowIndexList = SummaryReport.getImptRowIndexList();
+		for (Integer i : imptRowIndexList) {
+			if (row == i) {
+				component.setBackground(Constants.COLOR_TABLE_IMPT_ROW);
+				component.setForeground(Constants.COLOR_TABLE_TEXT_IMPT);
+			}
+		}
+		overdueRowIndexList = SummaryReport.getOverdueIndexList();
+		for (Integer i : overdueRowIndexList) {
+			if (row == i) {
+				component.setBackground(Constants.COLOR_TABLE_OVERDUE_ROW);
+				component.setForeground(Constants.COLOR_TABLE_TEXT);
+			}
+		}
+		if (row == selectedRow) {
+			component.setBackground(Constants.COLOR_TABLE_ROW_HIGHLIGHT);
+			component.setForeground(Constants.COLOR_TABLE_TEXT_HIGHLIGHT);
+		}
+
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\DefaultTableColor.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\DetailPanel.java
+	 */
+
+	private UiParent parent;
+	private JTable categoryListTable;
+	private SoftShadowJPanel detailPanel;
+
+	public DetailPanel(HotKeyType hotkey, UiParent parent) {
+		switch (hotkey) {
+			case F1:
+				createHelpPanel();
+				break;
+			case F2:
+				createCategoryListPanel(parent);
+				break;
+			default:
+				break;
+		}
+
+	}
+
+	private void createHelpPanel() {
+		String[] helpCommands = Constants.HELPCOMMANDS;
+		setUpLayout(helpCommands, Constants.HEADER_HELP, 1);
+		for (int i = 0; i < helpCommands.length; i++) {
+			JLabel lbl_helpCommand = new JLabel(helpCommands[i]);
+			lbl_helpCommand.setForeground(Constants.COLOR_DETAIL_PANEL_TEXT);
+			add(lbl_helpCommand);
+
+		}
+	}
+
+	private void setUpLayout(String[] helpCommands, String title, int numOfCol) {
+		setLayout(new GridLayout(helpCommands.length, numOfCol));
+		setPreferredSize(Constants.DIMENSION_HELP_PANEL);
+		setBorder(BorderFactory.createTitledBorder(null, title,
+				TitledBorder.DEFAULT_JUSTIFICATION,
+				TitledBorder.DEFAULT_POSITION, Constants.FONT_TIME_NEW_ROMAN,
+				Constants.COLOR_DETAIL_PANEL_TEXT));
+		setBackground(Constants.COLOR_DETAIL_PANEL_BG);
+	}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\DetailPanel.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\DetailPanel.java
+	 */
+
+	private void createCategoryListPanel(UiParent uiparent) {
+		parent = uiparent;
+		ArrayList<Category> categoryList = CategoryList.getCategoryList();
+
+		setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		setBorder(Constants.EMPTY_BORDER_CATEGORY_TABLE);
+		if (categoryList.size() != 0) {
+			createTableWithContent(categoryList);
+		} else {
+			createEmptyTable();
+		}
+		setTableProperties(categoryList);
+
+	}
+
+	private void createEmptyTable() {
+		DefaultTableModel model = new DefaultTableModel(0,
+				Constants.CATEGORYKEYS.length);
+		model.setColumnIdentifiers(Constants.CATEGORYKEYS);
+		categoryListTable = new JTable(model);
+		categoryListTable.setFocusable(false);
+	}
+
+	private void createTableWithContent(ArrayList<Category> categoryList) {
+		String dataArr[][] = changetoTwoDArr(categoryList);
+		categoryListTable = new JTable(dataArr, Constants.CATEGORYKEYS) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			};
+		};
+		categoryListTable.setFocusable(true);
+		categoryListTable.requestFocus();
+		addFocusListener(categoryListTable);
+	}
+
+	private void setTableProperties(ArrayList<Category> categoryList) {
+		setContentTableColumnWidth(categoryListTable);
+		setTableCellProperties(categoryListTable, categoryList);
+		setTableHeaderProperties(categoryListTable);
+		categoryListTable.setGridColor(Constants.COLOR_TABLE_GRID);
+		setKeysPressed(categoryListTable);
+		add(setJScrollPanePropCentrePane(categoryListTable));
+	}
+
+	public void removeAllComponentsFromPanel() {
+		removeAll();
+	}
+
+	public void setFocustoTable() {
+		if (categoryListTable != null) {
+			categoryListTable.requestFocus();
+		}
+
+	}
+
+	private void setKeysPressed(JTable categoryListTable) {
+		tabKeyPressedAction(categoryListTable);
+		f2KeyPressedAction(categoryListTable);
+		f1KeyPressedAction(categoryListTable);
+	}
+
+	private void tabKeyPressedAction(JTable categoryListTable) {
+		categoryListTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_TAB, 0),
+				Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.pressedTab(false);
+					}
+				});
+	}
+
+	private void f2KeyPressedAction(JTable categoryListTable) {
+		categoryListTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_F2, 0),
+				Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.removeDetailPanel();
+					}
+				});
+	}
+
+	private void f1KeyPressedAction(JTable categoryListTable) {
+		categoryListTable.getInputMap().put(
+				KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
+				Constants.STRING_EVENT);
+		categoryListTable.getActionMap().put(Constants.STRING_EVENT,
+				new AbstractAction() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void actionPerformed(ActionEvent actionEvent) {
+						parent.pressedF1();
+					}
+
+				});
+	}
+
+	private void setTableHeaderProperties(JTable categoryListTable) {
+		categoryListTable.getTableHeader().setReorderingAllowed(false);
+		categoryListTable.getTableHeader().setForeground(
+				Constants.COLOR_TABLE_HEADER_TEXT);
+		categoryListTable.getTableHeader().setResizingAllowed(false);
+		categoryListTable.getTableHeader().setBackground(
+				Constants.COLOR_TABLE_HEADER_BG);
+
+		DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+		headerRenderer.setBackground(ColorBox.colorPool[7]);
+		headerRenderer.setForeground(Color.WHITE);
+		headerRenderer.setFont(new Font("Serif", Font.BOLD, 15));
+
+		for (int i = 0; i < categoryListTable.getModel().getColumnCount(); i++) {
+			categoryListTable.getColumnModel().getColumn(i)
+					.setHeaderRenderer(headerRenderer);
+		}
+	}
+
+	private void addFocusListener(final JTable categoryListTable) {
+		categoryListTable.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				categoryListTable.changeSelection(0, 0, false, false);
+			}
+
+			@Override
+			public void focusLost(FocusEvent arg0) {
+				categoryListTable.clearSelection();
+			}
+		});
+	}
+
+	private void setContentTableColumnWidth(JTable contentTable) {
+		contentTable.getColumnModel().getColumn(0)
+				.setMaxWidth(Constants.MAX_WIDTH_CATEGORY_NAME);
+		contentTable.getColumnModel().getColumn(1)
+				.setMaxWidth(Constants.MAX_WIDTH_CATEGORY_COUNT);
+
+	}
+
+	private SoftShadowJPanel setJScrollPanePropCentrePane(
+			JTable categoryListTable) {
+		SoftShadowJPanel parentJsp = new SoftShadowJPanel();
+		JScrollPane jsp = new JScrollPane(categoryListTable);
+		jsp.setBorder(Constants.EMPTY_BORDER);
+		jsp.setBackground(Constants.COLOR_JSCROLL_BG);
+		jsp.getViewport().setBackground(Constants.COLOR_JSCROLL_BG);
+
+		parentJsp.setPreferredSize(Constants.DIMENSION_DETAIL_PANEL);
+		parentJsp.add(jsp);
+		return parentJsp;
+	}
+
+	private void setTableCellProperties(JTable contentTable,
+			ArrayList<Category> categoryList) {
+		for (int i = 0; i < categoryList.size(); i++) {
+			contentTable.getColumnModel().getColumn(0)
+					.setCellRenderer(new CategoryCustomTableRender());
+			contentTable.getColumnModel().getColumn(1)
+					.setCellRenderer(new CategoryCustomTableRender());
+		}
+	}
+
+	public String[][] changetoTwoDArr(ArrayList<Category> categoryList) {
+		String[][] result = new String[categoryList.size()][2];
+		for (int i = 0; i < categoryList.size(); i++) {
+			result[i][0] = categoryList.get(i).getName();
+			result[i][1] = categoryList.get(i).getCount()
+					+ Constants.STRING_STRING;
+		}
+		return result;
+	}
+
+	public String[] changetoArr(Task task) {
+		String arr[] = new String[6];
+		assert task.getTitle() != null;
+		assert task.getCategory() != null;
+		arr[1] = Constants.STRING_OPEN_HTML + task.getCategory()
+				+ Constants.STRING_CLOSE_HTML;
+		if (task.getCategory() == null) {
+			arr[1] = Constants.STRING_NA;
+		}
+		if (task.getStartDate() == null) {
+			arr[2] = Constants.STRING_DASH;
+		} else {
+			DateTimeFormatter dateFormat = DateTimeFormat
+					.forPattern(Constants.STRING_DATEFORMAT);
+			arr[2] = dateFormat.print(task.getStartDate());
+		}
+		if (task.getDueDate().getYear() == Constants.NILL_YEAR) {
+			arr[3] = Constants.STRING_SOMEDAY;
+		} else {
+			DateTimeFormatter dateFormat = DateTimeFormat
+					.forPattern(Constants.STRING_DATEFORMAT);
+			arr[3] = dateFormat.print(task.getDueDate());
+		}
+		if (task.isImportant()) {
+			arr[5] = Constants.STRING_YES;
+		} else {
+			arr[5] = Constants.STRING_NO;
+		}
+		if (task.isCompleted()) {
+			arr[4] = Constants.STRING_YES;
+		} else {
+			arr[4] = Constants.STRING_NO;
+		}
+		assert (task.getNote() != null);
+		if (task.getNote() == null) {
+			arr[0] = Constants.STRING_NA;
+		} else {
+			arr[0] = Constants.STRING_OPEN_HTML + task.getNote()
+					+ Constants.STRING_CLOSE_HTML;
+		}
+
+		return arr;
+	}
+
+	public boolean isExisting() {
+		if (isDisplayable()) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void update() {
+		if (categoryListTable != null) {
+			removeAll();
+			createCategoryListPanel(parent);
+			repaint();
+			revalidate();
+			parent.updateFrame();
+		}
+
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\DetailPanel.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\HeaderPanel.java
+	 */
+
+	JLabel lblHeader;
+	JButton btnHelp, btnCategory;
+	UiParent uiParent;
+
+	public HeaderPanel(LayoutManager layout, UiParent uiParent) {
+		super(layout);
+		this.uiParent = uiParent;
+		createHeaderLbl();
+
+		setBackground(Constants.COLOR_HEADER_PANEL_BG);
+		GridBagConstraints c = new GridBagConstraints();
+
+		createHelpBtn(c);
+		createCategoriesBtn(c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = GridBagConstraints.CENTER;
+		c.weightx = 1.0;
+		c.gridx = 3;
+		c.gridy = 0;
+		add(lblHeader, c);
+
+		createDummyBtn(c);
+		createMinimizeBtn(c);
+		createCloseBtn(c);
+
+	}
+
+	private void createCategoriesBtn(GridBagConstraints c) {
+		JButton btnDetails = new JButton(Constants.STRING_F3_CATEGORIES);
+		btnDetails.setOpaque(false);
+		btnDetails.setContentAreaFilled(false);
+		btnDetails.setBorderPainted(false);
+		btnDetails.setPreferredSize(new Dimension(120, 20));
+		btnDetails.setForeground(Color.WHITE);
+		btnDetails.setFocusable(false);
+		btnDetails.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				uiParent.pressedF3();
+
+			}
+		});
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.WEST;
+		c.weightx = 0.0;
+		c.gridx = 1;
+		c.gridy = 0;
+		add(btnDetails, c);
+	}
+
+	private void createHelpBtn(GridBagConstraints c) {
+		btnHelp = new JButton(Constants.STRING_F1_HELP);
+		btnHelp.setOpaque(false);
+		btnHelp.setContentAreaFilled(false);
+		btnHelp.setBorderPainted(false);
+		btnHelp.setPreferredSize(new Dimension(80, 20));
+		btnHelp.setForeground(Color.WHITE);
+		btnHelp.setFocusable(false);
+		btnHelp.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				uiParent.pressedF1();
+
+			}
+
+		});
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.WEST;
+		c.weightx = 0.0;
+		c.gridx = 0;
+		c.gridy = 0;
+		add(btnHelp, c);
+	}
+
+	private void createHeaderLbl() {
+		lblHeader = new JLabel();
+		lblHeader.setFont(new Font("Calibri", Font.BOLD,
+				Constants.HEADER_FONT_SIZE));
+		lblHeader.setForeground(Constants.COLOR_HEADER_PANEL_TEXT);
+		lblHeader.setText(Constants.PRODUCT_TASKDO);
+		lblHeader.setHorizontalAlignment(JLabel.CENTER);
+	}
+
+	private void createDummyBtn(GridBagConstraints c) { // To center Task.Do
+														// label
+		JButton btnDummy = new JButton();
+		btnDummy.setOpaque(false);
+		btnDummy.setContentAreaFilled(false);
+		btnDummy.setBorderPainted(false);
+		btnDummy.setPreferredSize(new Dimension(160, 20));
+		btnDummy.setFocusable(false);
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.EAST;
+		c.weightx = 0.0;
+		c.gridx = 4;
+		c.gridy = 0;
+		add(btnDummy, c);
+	}
+
+	private void createMinimizeBtn(GridBagConstraints c) {
+		ImageIcon icon = new ImageIcon(getClass().getResource(
+				Constants.STRING_IMG_DEL_PNG));
+		JButton btnMin = new JButton(icon);
+		btnMin.setOpaque(false);
+		btnMin.setContentAreaFilled(false);
+		btnMin.setBorderPainted(false);
+		btnMin.setPreferredSize(new Dimension(20, 20));
+		btnMin.setFocusable(false);
+		btnMin.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				uiParent.getMainFrame().setState(Frame.ICONIFIED);
+
+			}
+
+		});
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.EAST;
+		c.weightx = 0.0;
+		c.gridx = 5;
+		c.gridy = 0;
+		add(btnMin, c);
+	}
+
+	private void createCloseBtn(GridBagConstraints c) {
+		ImageIcon img = new ImageIcon(getClass().getResource(
+				Constants.STRING_IMG_CANCEL_PNG));
+		JButton btnClose = new JButton(img);
+		btnClose.setOpaque(false);
+		btnClose.setContentAreaFilled(false);
+		btnClose.setBorderPainted(false);
+		btnClose.setPreferredSize(new Dimension(20, 20));
+		btnClose.setFocusable(false);
+		btnClose.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				uiParent.setVisible(false);
+			}
+
+		});
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.EAST;
+		c.weightx = 0.0;
+		c.gridx = 6;
+		c.gridy = 0;
+		add(btnClose, c);
+	}
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\HeaderPanel.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\HotKeyType.java
+	 */
+
+public enum HotKeyType {
+	F1, F2, F3;
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\HotKeyType.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\LineWrapCellRenderer.java
+	 */
+
+	public LineWrapCellRenderer() {
+		super();
+		setLineWrap(true);
+		setWrapStyleWord(true);
+		setOpaque(true);
+		this.setBorder(Constants.EMPTY_BORDER_LINEWRAPPER);
+	}
+
+	@Override
+	public Component getTableCellRendererComponent(JTable table, Object value,
+			boolean isSelected, boolean hasFocus, int row, int column) {
+
+		setText((String) value);
+		DefaultTableColor.setDefaultBackGroundColor(this, row,
+				table.getSelectedRow());
+		setSize(table.getColumnModel().getColumn(column).getWidth(), 40);
+
+		if (table.getRowHeight(row) != getPreferredSize().height) {
+			table.setRowHeight(row, getPreferredSize().height);
+		}
+
+		return this;
+	}
+
+}
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\LineWrapCellRenderer.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\Observer.java
+	 */
+
+public interface Observer {
+	public void update();
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\Observer.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\UiPanelList.java
+	 */
+
+	private ArrayList<Observer> uiList;
+
+	public UiPanelList() {
+		uiList = new ArrayList<Observer>();
+	}
+
+	public void addUI(Observer o) {
+		uiList.add(o);
+	}
+
+	public void notifyUIs() {
+
+		for (Observer o : uiList) {
+			o.update();
+		}
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\UiPanelList.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\UiParent.java
+	 */
+
+	public void passToParser(String command);
+
+	public void pressedF1();
+
+	public void pressedF3();
+
+	public void updateFrame();
+
+	public void updateDetailPanel();
+
+	public void pressedTab(boolean isCommandBox);
+
+	public void setRowSelected(int rowSelected);
+
+	public JFrame getMainFrame();
+
+	public void removeDetailPanel();
+
+	public void setVisible(boolean isVisible);
+
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\UiParent.java
+
+
+
+
+
+	/**
+	 * origin: C:\Users\Paing\Desktop\CS 2103\src\uiView\UiViewModifier.java
+	 */
+
+	private JFrame mainFrame;
+	private Executor executor;
+	private UiPanelList uiList;
+	private HeaderPanel headerPanel;
+	private CommandBoxPanel commandBoxPanel;
+	private DetailPanel detailPanel;
+	private ContentTablePanel contentPanel;
+	private int rowSelected;
+	private Parser parser;
+	private ParsedResult parseResult;
+	private boolean isMinimized;
+	private Provider provide;
+	private int x = 0;
+	private int y = 0;
+
+	public UiViewModifier() {
+		provide = Provider.getCurrentProvider(false);
+		setMinimized(false);
+		mainFrame = this;
+		removeOriginalBoundaryFrame();
+		rowSelected = Constants.DEFAULT_ROW_SELECTED;
+		initParserAndExecutor();
+		mainFrame.setLayout(new BorderLayout());
+		initObserverList();
+		setJFrameProperties();
+		updateFrame();
+		new SystemTrayManager(this, provide);
+		setFocusToCommandBox();
+		addGlobalKey(provide);
+	}
+
+	private void initObserverList() {
+		uiList = new UiPanelList();
+		initCommandBoxPanel();
+		headerPanel = new HeaderPanel(new GridBagLayout(), this);
+		JPanel parentContentPanel = initContentPanel();
+		mainFrame.add(headerPanel, BorderLayout.NORTH);
+		mainFrame.add(parentContentPanel, BorderLayout.CENTER);
+		mainFrame.add(commandBoxPanel, BorderLayout.SOUTH);
+		uiList.addUI(contentPanel);
+		uiList.addUI(commandBoxPanel);
+	}
+
+	private void initParserAndExecutor() {
+		parser = new Parser();
+		executor = new Executor();
+		UpdateSummaryReport.getInstance().init();
+	}
+
+	private void removeOriginalBoundaryFrame() {
+		mainFrame.setUndecorated(true);
+		handleDrag(mainFrame);
+	}
+
+	private JPanel initContentPanel() {
+		contentPanel = new ContentTablePanel(this);
+		JPanel parentContentPanel = new JPanel();
+		parentContentPanel.add(contentPanel);
+		parentContentPanel.setBorder(Constants.EMPTY_BORDER_CONTENT_TABLE);
+		parentContentPanel.setBackground(Constants.COLOR_CENTRE_PANEL_BG);
+		return parentContentPanel;
+	}
+
+	private void initCommandBoxPanel() {
+		commandBoxPanel = new CommandBoxPanel(this);
+		commandBoxPanel.setBorder(Constants.EMPTY_BORDER_COMMAND_BOX);
+		commandBoxPanel.setFocusToCommandBox();
+	}
+
+	public void updateAllPanels() {
+		uiList.notifyUIs();
+	}
+ 
+	/**
+	 * main API which communicates with Parser and Executor
+	 */
+	public void passToParser(String command) {
+		if (command != null && !command.trim().isEmpty()) {
+			parseResult = parser.parseString(command);
+			if (parseResult.getIsExecutorApplicable()) {
+				executor.execute(parseResult);
+			}
+			if (parseResult.getCommandType().equals(CommandType.EXIT)) {
+				exitApp();
+			}
+			updateAllPanels();
+			updateDetailPanel();
+			removeDetailPanel();
+			contentPanel.selectRowHightlight(SummaryReport
+					.getRowIndexHighlight());
+			updateFrame();
+		}
+	}
+
+	private void exitApp() {
+		provide.reset();
+		provide.stop();
+		System.exit(0);
+	}
+
+	private void addGlobalKey(Provider provide) {
+		HotKeyListener quickLaunch = new QuickLaunchHotKey(this);
+		provide.register(
+				KeyStroke.getKeyStroke(KeyEvent.VK_M, InputEvent.ALT_MASK
+						| InputEvent.SHIFT_MASK), quickLaunch);
+	}
+
+	private void setJFrameProperties() {
+		ImageIcon icon = new ImageIcon(getClass().getResource(
+				Constants.STRING_IMG_MAIN_ICON));
+		mainFrame.setIconImage(icon.getImage());
+		mainFrame.setVisible(true);
+		mainFrame.setResizable(false);
+		mainFrame.pack();
+		mainFrame.addWindowListener(this);
+		setFrametoCentre();
+	}
+
+	private void setFrametoCentre() {
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		mainFrame.setLocation(dim.width / 2 - mainFrame.getSize().width / 2,
+				dim.height / 2 - mainFrame.getSize().height / 2);
+	}
+
+	public void pressedF1() {
+		if (isDetailPanelExisting()) {
+			mainFrame.remove(detailPanel);
+		} else {
+			createDetailPanel(HotKeyType.F1);
+
+		}
+		updateAllPanels();
+		updateFrame();
+	}
+
+	public void pressedF3() {
+		if (isDetailPanelExisting()) {
+			mainFrame.remove(detailPanel);
+		} else {
+			createDetailPanel(HotKeyType.F2);
+			uiList.addUI(detailPanel);
+		}
+		updateAllPanels();
+		detailPanel.setFocustoTable();
+		updateFrame();
+	}
+
+	private void createDetailPanel(HotKeyType hotkey) {
+		switch (hotkey) {
+			case F1:
+				detailPanel = new DetailPanel(HotKeyType.F1, this);
+				break;
+			case F3:
+				detailPanel = new DetailPanel(SummaryReport.getDisplayList()
+						.get(rowSelected));
+				break;
+			case F2:
+				detailPanel = new DetailPanel(HotKeyType.F2, this);
+				break;
+			default:
+				break;
+
+		}
+		mainFrame.add(detailPanel, BorderLayout.EAST);
+	}
+
+	/**
+	 * update detail panel whenever there is information updated
+	 */
+	public void updateDetailPanel() {
+		if (rowSelected != Constants.DEFAULT_ROW_SELECTED) {
+			if (isDetailPanelExisting()) {
+				mainFrame.remove(detailPanel);
+			}
+			if (SummaryReport.getRowIndexHighlight() != Constants.NOTHING_SELECTED) {
+				detailPanel = new DetailPanel(SummaryReport.getDisplayList()
+						.get(SummaryReport.getRowIndexHighlight()));
+			}
+
+			mainFrame.add(detailPanel, BorderLayout.EAST);
+			detailPanel.revalidate();
+			updateFrame();
+		}
+	}
+
+	/**
+	 * checking for whether Detail can be display or not. 
+	 */
+	private boolean isDetailPanelExisting() {
+		if (detailPanel != null) {
+			if (detailPanel.isDisplayable()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void updateFrame() {
+		mainFrame.pack();
+		mainFrame.revalidate();
+		mainFrame.repaint();
+	}
+
+	public void setRowSelected(int selected) {
+		rowSelected = selected;
+	}
+
+	public void pressedTab(boolean isCommandBox) {
+		if (isCommandBox) {
+			contentPanel.requestFocusInWindow();
+		} else {
+			commandBoxPanel.setFocusToCommandBox();
+		}
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		setMinimized(true);
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void handleDrag(final JFrame frame) {
+		frame.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent me) {
+				x = me.getX();
+				y = me.getY();
+			}
+		});
+		frame.addMouseMotionListener(new MouseMotionAdapter() {
+			@Override
+			public void mouseDragged(MouseEvent me) {
+				me.translatePoint(me.getComponent().getLocation().x - x, me
+						.getComponent().getLocation().y - y);
+				frame.setLocation(me.getX(), me.getY());
+			}
+		});
+	}
+
+	public void removeDetailPanel() {
+		if (detailPanel != null) {
+			mainFrame.remove(detailPanel);
+		}
+		setFocusToCommandBox();
+		updateFrame();
+	}
+
+	public void setFocusToCommandBox() {
+		commandBoxPanel.setFocusToCommandBox();
+	}
+
+	public JFrame getMainFrame() {
+		return mainFrame;
+	}
+
+	public boolean isMinimized() {
+		return isMinimized;
+	}
+
+	public void setMinimized(boolean isMinimized) {
+		this.isMinimized = isMinimized;
+	}
+}
+
+	// End of segment: C:\Users\Paing\Desktop\CS 2103\src\uiView\UiViewModifier.java
+
+
+
+
+

@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-/* This is the class for normal Cell Renderer
- * 
+/** 
+ * This is the class for normal Cell Renderer
  * 
  */
 public class CustomTableRender extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	public ArrayList<Integer> imptRowIndexList = new ArrayList<Integer>();
 
 	public Component getTableCellRendererComponent(JTable table, Object value,

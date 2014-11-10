@@ -1,7 +1,7 @@
 package commandFactory;
 
 public class CommandFactory {
-	// @Author Huang Li A0112508R
+	// @Author  A0112508R
 	public CommandAction getCommandAction(CommandType commandType) {
 		switch (commandType) {
 			case ADD:

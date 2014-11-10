@@ -7,14 +7,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import commonClasses.Constants;
 
-/* This is the class for rendering table's cells for categoryList
- * 
+/** 
+ * This is the class for rendering table's cells for categoryList 
  *
  */
 public class CategoryCustomTableRender extends DefaultTableCellRenderer {
 	private static final long serialVersionUID = 1L;
 
-	// @author Paing Zin Oo(Jack) A0112581N
+	// @author  A0112581N
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 
